@@ -11,13 +11,16 @@
         @media only screen and (max-width: 767px) {
             .download-buttons {
                 display: flex;
-                flex-direction: row; /* Logoları dikey hizala */
+                flex-direction: column; /* Logoları dikey hizala */
                 align-items: center; /* Ortala */
             }
             .download-buttons img {
                 width: 200px; /* Logo genişliği */
                 height: auto; /* Aspect ratio'yu koru */
                 margin-bottom: 20px; /* Logolar arasındaki boşluk */
+            }
+            .download-buttons img:last-child {
+                margin-bottom: 0; /* Son logo için boşluk bırakma */
             }
         }
 
