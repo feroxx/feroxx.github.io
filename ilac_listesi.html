@@ -1,0 +1,3322 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>İlaç Listesi</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #aramaKutusu {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+        tr:hover { background-color: #f1f1f1; }
+    </style>
+</head>
+<body>
+
+<h2>İlaç Listesi</h2>
+<input type="text" id="aramaKutusu" onkeyup="filtrele()" placeholder="İlaç ara...">
+
+<table class="dataframe ilac-tablosu" id="ilacTablosu">
+  <thead>
+    <tr style="text-align: right;">
+      <th>İlaç Adı</th>
+      <th>ATC Kodu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ZITRASIN 500 MG FILM KAPLI TABLET (3 TABLET)</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>CEFORIST 300 MG SERT KAPSUL (20 KAPSUL)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>LEVOWORLD 500 MG/100 ML IV\nINFUZYONLUK COZELTI (1 FLAKON)</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>RIVONA 500 MG/500 MG INFUZYONLUK COZELTI HAZIRLMAK ICIN TOZ (1 ADET)</td>
+      <td>J01DH51</td>
+    </tr>
+    <tr>
+      <td>PROFEN FORT 600 MG 20 TABLET</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>AIRFIBRO 300 MG/5 ML NEBULIZASYON COZELTISI (56 ADET)</td>
+      <td>J01GB01</td>
+    </tr>
+    <tr>
+      <td>PLANICID 200 MG ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>PLANICID 400 MG ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>CATOXFEN 100 MG / 2 ML IM ENJEKSIYONLUK COZELTI 6 AMPUL</td>
+      <td>M01AE03</td>
+    </tr>
+    <tr>
+      <td>ACETUDIL  FORTE 60 MG KAPSUL (20 KAPSUL)</td>
+      <td>M01AB11</td>
+    </tr>
+    <tr>
+      <td>ACETUDIL 90 MG UZATILMIS SALIMLI SERT KAPSUL (10 KAPSUL)</td>
+      <td>M01AB11</td>
+    </tr>
+    <tr>
+      <td>ADVIL LIQUI-GELS 200 MG YUMUSAK KAPSUL (20 KAPSUL)</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>AKLAV BID 200 MG/28,5 MG PEDIATRIK SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AKLAV BID 200 MG/28,5 MG PEDIATRIK SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ (100 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AKLAV BID 400 MG/57 MG FORT SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ (100 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AKLAV BID 400 MG/57 MG FORT SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ (140 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AKLAV BID 400 MG/57 MG FORT SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ (70 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AKSEF 500 MG 10 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>AKSEF 500 MG 14 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>AKSEF 500 MG 20 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>AKSEF 750 MG IM ENJ. TOZ ICEREN 1 FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>AKSEF IM/IV 750 MG 1 FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>ALBITROL 500 MG FILM KAPLI TABLET (10 FILM KAPLI TABLET)</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>ALEVE 220 MG 20 FILM TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>ALGOPET 100 MG 15 FILM KAPLI TABLET</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>ALGOPET SR 200 MG MIKROPELLET 16 KAPSUL</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>AMIJEKSIN 100 MG/2 ML IM/IV ENJ. SOL.ICEREN 1 AMPUL</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMIJEKSIN 500 MG/2 ML IM/IV ENJ. SOL.ICEREN 1 AMPUL</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMIKAVER 100 MG 2ML X 1 AMPUL</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMIKAVER 500 MG 1 AMPUL</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMIKOZIT 100 MG /2ML IM/IV ENJEKSIYONLUK COZELTI</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMIKOZIT 100 MG 1 FLAKON</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMIKOZIT 500 MG IM/IV ENJ. COZ. ICEREN FLAKON, 1 FLAKON</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMIKOZIT 500 MG IM/IV ENJ. COZ. ICEREN FLAKON, 1 FLAKON</td>
+      <td>J01GB06</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 1000 MG 10 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 1000 MG 14 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 200/28,5 MG ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ (100 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 200/28,5 MG ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ (70 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 400/57 100 ML SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 400/57 MG 70 ML SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 400/57 MG FORTE 140 ML ORAL SUS. HAZIRLAMAK ICIN KURU TOZ</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 625 MG 10 TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN BID 625 MG 14 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN ES 600/42,9 MG ORAL SUSPANSIYON ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN ES 600/42,9 MG ORAL SUSPANSIYON ICIN KURU TOZ 150 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AMOKLAVIN IV 1,2 GR 1 FLAKON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>A-NOX FORT 550 MG 20 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APIREKS 100 MG/5 ML 100 ML PEDIATRIK SUSPANSIYON</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>APIREKS COLD&amp;FLU 200 MG/30 MG 24 FILM KAPLI TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>APRALJIN FORTE 550 MG 10 FILM TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APRANAX 275 MG 10 FILM KAPLI TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APRANAX 275 MG 20 FILM KAPLITABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APRANAX FORTE 550 MG 10 FILM KAPLI TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APRANAX FORTE 550 MG 20 FILM KAPLI TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APRAZOL 30 MG 14 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>APRAZOL 30 MG 28 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>APROL 275 MG 10 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APROL 550 MG 10 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APROL 550 MG 20 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APROWELL FORTE 550 MG 10 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>APROWELL FORTE 550 MG 20 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>ARCOTIL 20 MG IV/IM LIYOFILIZE TOZ ICEREN FALAKON (1 FLAKON+1 COZUCU AMPUL)</td>
+      <td>M01AC02</td>
+    </tr>
+    <tr>
+      <td>AREX 25 MG FILM KAPLI TABLET (20 TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>AREX 50 MG FILM KAPLI TABLET (30 TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ARFEN 50 MG/ 2 ML ENJEKSIYONLUK COZELTI 6 AMPUL</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ARINNA 40 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>ARMASEFT 1 G IV ENJEKTABL TOZ ICEREN FLAKON (1 FLAKON+10 ML AMPUL)</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>ARVELES 25 MG 20 FILM TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ARVELES 50 MG/ 2 ML ENJEKSIYONLUK COZELTI (6 AMPUL)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ASEKET-S 25 MG FILM KAPLI TABLET (20 TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ASEKET-S 50 MG FILM KAPLI TABLET (30 TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ATAFLOKS 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>ATOKSILIN 1000 MG 16 TABLET</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>ATOKSILIN 250 MG 80 ML SUSPANSIYON</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>ATOKSILIN 500 MG 16 TABLET</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN 200 MG+28,5 MG/5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 70 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN 400 MG+57 MG/5 ML ORAL\nSUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN 400 MG+57 MG/5 ML ORAL\nSUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 70 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN 500 MG/125 MG FILM KAPLI TABLET (10 ADET)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN 500 MG/125 MG FILM KAPLI TABLET (14 ADET)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN 875 MG/125 MG FILM KAPLI TABLET (10 ADET)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN 875 MG/125 MG FILM KAPLI TABLET (14 ADET)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AUGMENTIN ES 600/42,9 MG 100 ML SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>AVELOX 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>AZAX 500 MG 3 FILM TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZELTIN 200 MG 15 ML ORAL SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZELTIN 200 MG 30 ML ORAL SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZELTIN 250 MG 6 FILM KAPLI TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZELTIN 500 MG 3 FILM KAPLI TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZITRO 250 MG 6 FILM TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZITRO 5 ML 200 MG 15 ML SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZITRO 5 ML 200 MG 30 ML SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZITRO 500 MG 3 FILM TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZOMAX 500 MG 3 FILM TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZOMAX ORAL 5 ML 200 MG 15 ML TOZ</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZOMAX ORAL 5 ML 200 MG 30 ML TOZ</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZRO 5 ML 200 MG 15 ML SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZRO 5 ML 200 MG 30 ML SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>AZRO 500 MG 3 TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>BACTRIM 200/40 MG SUSPANSIYON 100 ML</td>
+      <td>J01EE01</td>
+    </tr>
+    <tr>
+      <td>BACTRIM 30 TABLET</td>
+      <td>J01EE01</td>
+    </tr>
+    <tr>
+      <td>BACTRIM 400MG/80MG IV ENJ. COZ.ICEREN AMPUL</td>
+      <td>J01EE01</td>
+    </tr>
+    <tr>
+      <td>BACTRIM FORT 20 TABLET</td>
+      <td>J01EE01</td>
+    </tr>
+    <tr>
+      <td>BAKSIL 1 G I.M./I.V. ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>J01CG01</td>
+    </tr>
+    <tr>
+      <td>BARCA SR 600 MG 10 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>BEFAZOL 1000 MG IM ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>BEFAZOL 1000 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>BEFAZOL 500 MG IM ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>BEFAZOL 500 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>BENSERI 50 MG FILM KAPLI TABLET (30 TABLET)</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>BERODEX 25 MG FILM KAPLI TABLET (20 TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>BERODEX 50 MG 30 FILM KAPLI TABLET (30 TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>BETAKSIM 1 GR 1 AMPUL</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>BETAKSIM 500 MG 1 AMPUL</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>BIKARAMIN COLD 100/15/1 MG/5ML SURUP (100ML)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>BIOFENAC 100 MG FİLM KAPLI TABLET (20 TABLET)</td>
+      <td>M01AB16</td>
+    </tr>
+    <tr>
+      <td>BIOFLEKS METROSEL %0,5 INTRAVENOZ PERFUZYON SOL 100 ML SETLI</td>
+      <td>J01XD01</td>
+    </tr>
+    <tr>
+      <td>BIOFLEKS METROSEL %0,5 INTRAVENOZ PERFUZYON SOL 100 ML SETSIZ</td>
+      <td>J01XD01</td>
+    </tr>
+    <tr>
+      <td>BIOMENT BID 200/28 ORAL 70 ML SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>BIOMENT BID FORTE 400/57 70 ML ORAL SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>BI-PROFENID 100 MG UZATILMIŞ SALIMLI CENTIKLI 20 TABLET</td>
+      <td>M01AE03</td>
+    </tr>
+    <tr>
+      <td>BI-PROFENID 150 MG 10 TABLET</td>
+      <td>M01AE03</td>
+    </tr>
+    <tr>
+      <td>BITERAL 250 MG 20 FILM KAPLI TABLET</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>BITERAL 500 MG 10 FILM TABLET</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>BITERAL 500 MG/ 3 ML INF. COZ. ICEREN 1 AMPUL</td>
+      <td>J01XD03</td>
+    </tr>
+    <tr>
+      <td>BRAVEX 400 MG YUMUSAK KAPSUL (30 KAPSUL)</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>BRUFEN 400 MG 20 FILM TABLET</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>BRUFEN 600 MG 20 FILM TABLET</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>BRUFEN RETARD 800 MG YAVAS SALIMLI 14 FILM TABLET</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>BRUPREX 200 MG / 5 ML SUSPANSIYON (100 ML)</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>BRUS 100 MG/5 ML PEDIATRIK SUSPANSIYON 100 ML</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>BULSEF 1 GR IM ENJ. COZ. HAZ. ICIN TOZ ICEREN FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>CATAFLAM 50 MG 20 DRAJE</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>CEC 1000 MG 20 EFERVESAN TABLET</td>
+      <td>J01DC04</td>
+    </tr>
+    <tr>
+      <td>CEC 500 MG 20 EFERVESAN TABLET</td>
+      <td>J01DC04</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 250 MG 10 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 250 MG 14 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 250 MG IM ENJ. TOZ ICEREN FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 250 MG/5 ML 100 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN GRANUL</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 5 ML 125 MG 100 ML SUSPANSIYON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 5 ML 125 MG 50 ML SUSPANSIYON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 500 MG 10 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 500 MG 14 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 500 MG 20 FILM TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 500 MG IM ENJEKTABL TOZ ICEREN FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS 750 MG IM ENJ. TOZ ICEREN FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS IV/IM 250 MG 1 FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFAKS IV/IM 750 MG 1 FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>CEFDIFIX 125 MG/5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN TOZ (100 ML)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFDIFIX 250 MG/5 ML ORAL SUSPANSYON HAZIRLAMAK ICIN TOZ (100 ML)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFDIFIX 600 MG 10 FILM KAPLI TABLET (10 FILM KAPLI TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFDIFIX 600 MG 14 FILM KAPLI TABLET (14 FILM KAPLI TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFDIFIX 600 MG FILM KAPLI TABLET (7 FILM KAPLI TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFEC 1000MG 20 EFERVESAN TABLET</td>
+      <td>J01DC04</td>
+    </tr>
+    <tr>
+      <td>CEFEC 500 MG 20 EFERVESAN TABLET</td>
+      <td>J01DC04</td>
+    </tr>
+    <tr>
+      <td>CEFIXIMA 400 MG FILM KAPLI TABLET (10 TABLET)</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>CEFIXIMA 400 MG FILM KAPLI TABLET (5 TABLET)</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>CEFORCE 1 G IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>CEFORIST 125 MG/5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN TOZ (100 ML)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFORIST 250 MG /5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN TOZ (100 ML)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFORIST 600 MG FILM KAPLI TABLET (10 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFORIST 600 MG FILM KAPLI TABLET (14 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFPERAZON 1 GR IM/IV ENJEKSIYON ICIN TOZ ICEREN 1 FLAKON</td>
+      <td>J01DD62</td>
+    </tr>
+    <tr>
+      <td>CEFRIDEM 1 GR I.V. ENJEKSIYON ICIN TOZ ICEREN FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>CEFTINEX 125 MG/5 ML 100 ML ORAL SUSPANSIYON</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFTINEX 250 MG/5 ML 100 ML ORAL SUSPANSIYON ICIN KURU TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFTINEX 600 MG 10 FILM KAPLI TABLET</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFTINEX 600 MG FILM TABLET (7 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEFTİNEX 600 MG FİLM KAPLI TABLET (14 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CELEBREX 200 MG 30 KAPSUL</td>
+      <td>M01AH01</td>
+    </tr>
+    <tr>
+      <td>CELGYN 200 MG 30 KAPSUL</td>
+      <td>M01AH01</td>
+    </tr>
+    <tr>
+      <td>CEMPES 125 MG/5ML 100 ML ORAL SUSPANSIYON ICIN TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEMPES 250 MG/5ML 100 ML ORAL SUSPANSIYON ICIN TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEMPES 300 MG 10 KAPSUL</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEMPES 300 MG 20 KAPSUL</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEMPES 600 MG 10 FILM KAPLI TABLET</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEMPES 600 MG FILM KAPLI TABLET (14 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEMPES 600 MG FILM KAPLI TABLET (7 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CEZOL IM 1 GR 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>CEZOL IM 500 MG 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>CEZOL IM/IV 1 GR 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>CICIFEN 100 MG/5 ML PEDIATRIK SUSPANSIYON (100 ML)</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>CIFLOSIN 500 MG 10 FILM TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIFLOSIN 750 MG 14 FILM TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CILAPEM 500/500 MG IV INF. ICIN TOZ ICEREN FLAKON</td>
+      <td>J01DH51</td>
+    </tr>
+    <tr>
+      <td>CIPRASID 500 MG 14 FILM TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPRASID 750 MG 14 FILM TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPRO 250 MG 14 FILM KAPLI TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPRO 500 MG 14 FILM KAPLI TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPRO 750 MG 14 FILM KAPLI TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPRONATIN 500 MG 14 TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPRONATIN 750 MG 14 TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPROPOL %0,9 SODYUM KLORUR IV INFUZYON ICIN COZELTI 100 ML SETSIZ</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CIPROPOL 2 MG/ML IV INFUZYON ICIN COZELTI 200 ML SETSIZ 1 TORBA</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>CLARICIDE 500 MG 14 TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>CLASEM 250 MG/5ML 100 ML ORAL SUSPANSIYON ICIN TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CLASEM 300 MG 10 KAPSUL</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CLASEM 300 MG 20 KAPSUL</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CLASEM 600 MG FILM KAPLI TABLET (10 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CLASEM 600 MG FILM KAPLI TABLET (7 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CLASEM 600 MG FİLM KAPLI TABLET (14 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CLASEM125 MG/5ML 100 ML ORAL SUSPANSIYON ICIN TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>CLEANOMISIN 500 MG 14 FILM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>CLEOCIN 150 MG 16 KAPSUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>CLIACIL 1,2 MEGA 20 TABLET</td>
+      <td>J01CE02</td>
+    </tr>
+    <tr>
+      <td>CLIN 150 MG 16 KAPSUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>CLIN 300 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>CLIN 600 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>CLODIFEN 75 MG/3 ML I.M. AMPUL (5 AMPUL)</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>COLDAWAY C 200 MG/30 MG/300 MG FİLM TABLET (30 TABLET)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>COLDAWAY COLD FLU 24 FILM TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>COLDAWAY PLUS 100 MG/15 MG/1 MG/5 ML SURUP 100 ML</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>COLDAWAY-C FILM TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>COLDFEN 100 MG+15 MG+1 MG/5 ML SURUP (100 ML)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>COLDFEN ZERO 200 MG / 2 MG FILM KAPLI TABLET (24 TABLET)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>COLIMYCIN 4.500.000 IU IM/IV ENJ. VE INHALASYON ICIN LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>J01XB01</td>
+    </tr>
+    <tr>
+      <td>COLITIM 150 MG IM/IV ENJEKSIYONLUK VE INHALASYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ VE COZUCU</td>
+      <td>J01XB01</td>
+    </tr>
+    <tr>
+      <td>CROXILEX BID 625 MG 14 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID 1000 MG 10 F.TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID 1000 MG 14 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID 200/28 ORAL SUSPANSIYON ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID 200/28 SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID 400/57 FORT ORAL SUSPANSIYON ICIN KURU TOZ 140 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID 400/57 ORAL SUSPANSIYON ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID 625 MG 10 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-BID FORT SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-ES 600/42,9 MG ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ  (100 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CROXILEX-ES 600/42,9 MG ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ  (150 ML)</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>CYCLADOL 20 MG 10 TABLET</td>
+      <td>M01AC01</td>
+    </tr>
+    <tr>
+      <td>DEGASTROL 15 MG 28 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>DEGASTROL 30 MG 14 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>DEGASTROL 30 MG 28 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>DEKLARIT 500 MG 14 FILM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>DEKSOLEX 25 MG FILM KAPLI TABLET (20 TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>DEMEPRAZOL 20 MG 14 KAPSUL</td>
+      <td>A02BC01</td>
+    </tr>
+    <tr>
+      <td>DEPOSILIN 1.200.000 IU ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>J01CE08</td>
+    </tr>
+    <tr>
+      <td>DEPOSILIN 2.400.000 IU ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>J01CE08</td>
+    </tr>
+    <tr>
+      <td>DEPOSILIN 600.000/300.000/300.000 IU ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>J01CE30</td>
+    </tr>
+    <tr>
+      <td>DESEFIN IM 0,5 GR 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>DESEFIN IM 1 GR 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>DESEFIN IV 1 GR 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>DEVAMOX 1 GR 16 TABLET</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>DEVAPEN 400 IU 1 FLAKON</td>
+      <td>J01CE30</td>
+    </tr>
+    <tr>
+      <td>DEVAPEN 800 IU 1 FLAKON</td>
+      <td>J01CE30</td>
+    </tr>
+    <tr>
+      <td>DEXDAY 50 MG 30 EFERVESAN TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>DEX-FORTE 50 MG 30 FILM TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>DEXIREN 25 MG 20 FILM KAPLI TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>DEXIREN 50 MG/2 ML IM/IV ENJEKSIYON VE INFUZYON ICIN COZELTI ICEREN 6 AMPUL</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>DEXOFEN 25 MG 20 FILM TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>DEXPRO 25 MG 20 FILM TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>DICLOFLAM 50 MG KAPLI TABLET (20 KAPLI TABLET)</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DICLOGESIC 50 MG KAPLI TABLET (20 TABLET)</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DICLOMEC 3 ML 75 MG 10 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DICLOMEC 3 ML 75 MG 4 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DICLOMEC SR 100 MG 10 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DICLOMEC SR 75 MG 10 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DICLOPONAC 50 MG KAPLI TABLET (20 TABLET)</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIFENAK 100 MG 10 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIFENJECT 75 MG/3 ML IM ENJEKSIYONLUK 10 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLOJIK 75 MG 3 ML 10 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLOJIK 75 MG 3 ML 4 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLORON 100 MG 10 RETARD FILM TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLORON 25 MG 30 FILM TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLORON 50 MG 20 ENTERIK KAPLI FILM TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLORON 75 MG IM 10 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLORON 75 MG IM 4 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DIKLORON SR 75 MG 10 FILM TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DISPARI 3 GR SASE</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>DOLARIT 300 MG 10 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>DOLARIT 400 MG 14 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>DOLELAC 500 MG FILM KAPLI TABLET (14 TABLET)</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>DOLINE- IM 1000 MG 1 AMPUL</td>
+      <td>M01AG</td>
+    </tr>
+    <tr>
+      <td>DOLOREX 50 MG 20 DRAJE</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>DOLORIN COLD  30 TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>DOLORIN COLD 200 MG/30 MG TABLET (30 TABLET)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>DOLVEN 100 MG/5 ML PEDIYATRIK 100 ML SURUP</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>DORAMYCIN 3000000 IU 10 FILM TABLET</td>
+      <td>J01FA02</td>
+    </tr>
+    <tr>
+      <td>DORAMYCIN 3000000 IU FILM TABLET (14 FILM TABLET)</td>
+      <td>J01FA02</td>
+    </tr>
+    <tr>
+      <td>DORIFEN 400 MG/100 ML IV INFUZYONLUK COZELTI (1 FLAKON)</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>DROFLU COLD 20 TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>DROFLU COLD PLUS SURUP 100 ML</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>DUOCID 250 MG/ 5 ML ORAL SÜSPANSİYON İÇİN KURU TOZ (100 ML)</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>DUOCID 250MG/5ML ORAL SÜSPANSİYON İÇİN KURU TOZ-40 ML\n</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>DUOCID 250MG/5ML ORAL SÜSPANSİYON İÇİN KURU TOZ-70 ML\n</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>DUOCID 375 MG FILM KAPLI TABLET(10 TABLET)</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>DUOCID 375 MG FILM KAPLI TABLET(20 TABLET)</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>DYNABAC 10 ENTERIK KAPLI TABLET</td>
+      <td>J01FA13</td>
+    </tr>
+    <tr>
+      <td>EDOLAR 300 MG FİLM KAPLI TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>EDOLAR 500 MG 14 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>EDOLAR 600 MG 14 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>EDOLAR FORT 400 MG FILM KAPLI TABLET(14 TABLET)</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>EFAMAT 1 GR/2 ML IM ENJ. COZELTI ICEREN AMPUL</td>
+      <td>M01AG</td>
+    </tr>
+    <tr>
+      <td>EKIPERTA 1G IM/IV ENJEKSIYON ICIN LIYOFILIZE TOZ</td>
+      <td>J01DH03</td>
+    </tr>
+    <tr>
+      <td>EKIPIM 0,5 GR IM/IV ENJEKTABL TOZ ICEREN 1 FLAKON</td>
+      <td>J01DE01</td>
+    </tr>
+    <tr>
+      <td>EKIPIM 1 GR IM/IV ENJEKTABL TOZ ICEREN 1 FLAKON</td>
+      <td>J01DE01</td>
+    </tr>
+    <tr>
+      <td>ELEKTRA 25 MG FILM KAPLI TABLET (20 FILM KAPLI TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ELEKTRA FORT 50 MG FILM KAPLI TABLET (30 FILM KAPLI TABLET)</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>ENCEF 125 MG/5ML 100 ML ORAL SUSPANSIYON ICIN KURU TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>ENCEF 250 MG/5ML 100 ML ORAL SUSPANSIYON ICIN KURU TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>ENCEF 300 MG 10 KAPSUL</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>ENCEF 300 MG 20 KAPSUL</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>ENCEF 600 MG FILM KAPLI TABLET ( 10 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>ENCEF 600 MG FILM KAPLI TABLET (14 TABLET)</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>ENDOL 100 MG 10 SUPOZITUAR</td>
+      <td>M01AB01</td>
+    </tr>
+    <tr>
+      <td>ENDOL 25 MG 25 KAPSUL</td>
+      <td>M01AB01</td>
+    </tr>
+    <tr>
+      <td>ENFEXIA 250 MG 10 TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>ENFEXIA 500 MG 10 TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>ENFEXIA 500 MG 14 TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>ENFEXIA 500 MG 20 TABLET</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>ENFEXOL 500 MG FILM KAPLI TABLET (10 TABLET)</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>EQICEFT- IM 1000 MG 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>EQICEFT- IM 500 MG 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>EQICEFT- IV 1000 MG 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>EQICEFT- IV 500 MG 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>EQITAX 0,5 GR IM/IV ENJ.TOZ ICEREN 1 FLAKON</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>EQITAX 1 GR IM/IV ENJ.TOZ ICEREN 15 ML 1 FLAKON+ 4 ML COZ. AMPUL</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>EQIZOLIN- IM 1000 MG 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>EQIZOLIN- IM/IV 1000 MG 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>EQIZOLIN- IM/IV 500 MG 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>ESEMEPROL 40 MG IV INFUZYON / ENJEKSIYON ICIN LIYOFILIZE TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>ESOBLOK 40 MG IV ENJEKSIYON VE INFUZYON ICIN TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>ESODAX 400 MG 14 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>ESOM 40 MG 28 ENTERIK KAPLI MIKROPELLET KAPSUL</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>ESOPRAL 40 MG 28 KAPSUL</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>ESOPRO 40 MG 28 KAPSUL</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>ESPOVIL 40 MG IV ENJEKSIYON VE INFUZYON ICIN LIYOFILIZE TOZ ICEREN FLAKON (1 FLAKON)</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>ESSIUM 40MG IV ENJEKSIYONLUK/INFUZYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>ETOFAST 1 GR/2 ML IM ENJEKSIYONLUK COZELTI</td>
+      <td>M01AG</td>
+    </tr>
+    <tr>
+      <td>ETOL FORT 400 MG 14 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>ETOL SR 600 MG 10 UZATILMIS SALIMLI TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>ETOTAC SR 600 MG UZATILMIS SALIMLI FILM KAPLI TABLET (10 UZATILMIS SALIMLI FILM KAPLI TABLET)</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>EXEN FORT 15 MG 10 TABLET</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>FELDEN FLASH 20 MG 10 TABLET</td>
+      <td>M01AC01</td>
+    </tr>
+    <tr>
+      <td>FEVERE 25 MG/ML ORAL COZELTI (50 ML 1 SISE)</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>FIXEF 100 MG/5 ML PEDIATRIK ORAL SUSPANSIYON 100 ML</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>FIXEF 100 MG/5 ML PEDIATRIK ORAL SUSPANSIYON 50 ML</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>FIXEF 400 MG 10 FILM TABLET</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>FIXEF 400 MG 5 FILM TABLET</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>FLAGENTYL 500 MG 4 FILM TABLET</td>
+      <td>P01AB07</td>
+    </tr>
+    <tr>
+      <td>FLAGYL %0,5 ENJ. 100 ML COZELTI (SETLI)</td>
+      <td>J01XD01</td>
+    </tr>
+    <tr>
+      <td>FLAGYL %0,5 ENJ. 100 ML COZELTI (SETSIZ)</td>
+      <td>J01XD01</td>
+    </tr>
+    <tr>
+      <td>FLAGYL 125 MG/5 ML ORAL SUSPANSIYON</td>
+      <td>P01AB01</td>
+    </tr>
+    <tr>
+      <td>FLAGYL 500 MG 20 FILM TABLET</td>
+      <td>P01AB01</td>
+    </tr>
+    <tr>
+      <td>FLEXO 1 G / 2 ML I.M. ENJEKSIYONLUK COZELTI ICEREN AMPUL (1 AMPUL)</td>
+      <td>M01AG</td>
+    </tr>
+    <tr>
+      <td>FLOTIC 200 MG/100 ML IV INF.COZ.ICEREN FLAKON</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>FLOTIC 400 MG/200 ML IV INF.COZ.ICEREN FLAKON</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>FLOXAPEN 500 MG FILM KAPLI TABLET (16 TABLET)</td>
+      <td>J01CF05</td>
+    </tr>
+    <tr>
+      <td>FLOXILEVO 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>FLOXILEVO 750 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>FORFLU 200 MG / 30 MG FILM KAPLI TABLET (30 FILM KAPLI TABLET)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>FORSEF IM 1000 MG 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>FORSEF IM 500 MG 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>FORTINE 100 MG 15 FILM TABLET</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>FOSIT 1 G IV PERF. ICIN LIYO. TOZ ICEREN 1 FLAKON</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>FOSIT 4 G IV PERF. ICIN LIYO. TOZ ICEREN 1 FLAKON</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>FUCIDIN 500 MG 15 FILM TABLET</td>
+      <td>J01XC01</td>
+    </tr>
+    <tr>
+      <td>GENIUM 40MG. IV INFUZYON VE ENJEKSIYON ICIN LIYOFILIZE TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>GENMISIN 160 MG/2 ML IM/IV ENJEKTABL 1 FLAKON</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENMISIN 80 MG 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENTA 120 MG 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENTA 160 MG 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENTA 20 MG 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENTA 40 MG 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENTA 80 MG 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENTHAVER 160 MG IM/IV INFUZYON ICIN SOLUSYON ICEREN 2ML X 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GENTHAVER 80 MG 1 AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GETAMISIN 80 MG/2 ML IM/IV AMPUL</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>GRIBEX COLD &amp; FLU 200 MG/30 MG/4 MG FILM KAPLI TABLET (24 TABLET)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>GRIBO COLD 30 TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>GROT 50 MG/2 ML I.M./I.V. ENJEKSIYONLUK COZELTI ICEREN 6 AMPUL</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>HIPPURIN 1 GR 28 FILM TABLET</td>
+      <td>J01XX05</td>
+    </tr>
+    <tr>
+      <td>IBU PHARMA BIOS 600 MG DEGISTIRILMIS SALIMLI TABLET (20 TABLET)</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>IBU-BABY 60 MG SUPOZITUVAR</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>IBUCOLD 100 MG + 15 MG + 1 MG/5 ML SURUP</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IBUCOLD 200 MG/30 MG FILM KAPLI TABLET (30 FILM KAPLI TABLET)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IBUCOLD C 200 MG/30 MG/300 MG FILM KAPLI TABLET (30 FILM KAPLI TABLET)</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IBUCOLD PLUS 100 MG+15 MG+1 MG/5 ML SURUP</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IBUFEN 100 MG/5 ML 100 ML PEDIATRIK SURUP</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>IBU-FORT 200 MG/5 ML 100 ML SUSPANSIYON</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>IBUJEZIK BABY 60 MG SUPOZITUVAR (10 ADET)</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>IBURAMIN COLD 100 ML SURUP</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IBURAMIN COLD 24 FILM KAPLI TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IBURAMIN ZERO 100 ML SUSPANSIYON</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IBURAMIN ZERO 24 FILM TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>IECILLINE 400.000 IU ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>J01CE30</td>
+    </tr>
+    <tr>
+      <td>IECILLINE 800.000 IU ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>J01CE30</td>
+    </tr>
+    <tr>
+      <td>IEFORAN 1 GR IM/IV 15ML ENJEKTABL FLAKON+4 ML COZUCU AMPUL</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>IESEF 0.5 G IM ENJEKSIYONLUK COZELTI TOZU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>IESEF 0.5 G IV ENJEKSIYONLUK COZELTI TOZU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>IESEF 1 G IM ENJEKSIYONLUK COZELTI TOZU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>IESEF 1 G IV ENJEKSIYONLUK COZELTI TOZU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>IESETUM IM/IV+ERT 500 MG 1 FLAKON</td>
+      <td>J01DD02</td>
+    </tr>
+    <tr>
+      <td>IESETUM IV/IM 10 ML 1 FLAKON</td>
+      <td>J01DD02</td>
+    </tr>
+    <tr>
+      <td>IESPOR 1000 MG IM ENJEKSIYONLUK COZELTI TOZU (1 AMPUL)</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>IESPOR 1000 MG IM/IV ENJEKSIYONLUK COZELTI TOZU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>IESPOR 250 MG IM ENJEKSIYONLUK COZELTI TOZU (1 AMPUL)</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>IESPOR 500 MG IM ENJEKSIYONLUK COZELTI TOZU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>IESPOR 500 MG IM/IV ENJEKSIYONLUK COZELTI TOZU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>ILKSEF 1000 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>INCLAR 500 MG IV INFUZYON ICIN LIYOFILIZE TOZ VE COZUCU (1 FLAKON)</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>INFEX 100 MG/5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>INFEX 200 MG 15 FILM TABLET</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>INFEX 200 MG 20 FILM TABLET</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>INTRAFEN 400 MG/ML 4 ML IV INFUZYONLUK COZELTI ICEREN 1 FLAKON</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>INTRAFEN 800 MG/ML 8 ML IV INFUZYONLUK COZELTI ICEREN 1 FLAKON</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>KALIDREN 50 MG 20 FILM TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>KETAVEL 25 MG 20 FILM KAPLI TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>KETAVEL 50 MG 30 FILM TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>KETAVEL 50 MG/2 ML I.M./I.V. ENJEKSIYONLUK COZELTI ICEREN 6 AMPUL</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>KINOMOX 400 MG FILM KAPLI TABLET (7 TABLET)</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>KLACID 500 MG 14 FILM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLACID MR 500 MG 14 KONT. SAL. TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLACID MR 500 MG 20 KONT. SAL. TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLACID MR 7 KONT. SAL. TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAMAXIN 500 MG 14 FILM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAMER 125 MG 70 ML SUSPANSIYON</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAMER 250 MG 100 ML SUSPANSIYON</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAMER 250 MG 50 ML SUSPANSIYON</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAMER 500 MG 14 FILM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS 625 MG 10 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS BID 1 GR 10 TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS BID 1000 MG 14 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS BID 200 MG 70 ML SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS BID 200/28 SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS BID 400/57 SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS BID FORT 400/57 SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 140 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS BID FORT 70 ML SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS ES 600/42,9 MG ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 150 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAMOKS ES 600/42,9 MG ORAL SUSPANSIYON ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLARIMAX 250 MG FILM KAPLI TABLET (14 TABLET)</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAROLID 250 MG FILM KAPLI TABLET (14 TABLET)</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAROMIN 500 MG 14 TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>KLAVON BID 1000 MG 10 FILM KAPLI TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVON-BID 1000 MG 14 FILM TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT 625 MG 10 TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT BID 1GR 10 TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT BID 1GR 14 TABLET</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT BID 200/28 MG 100 ML ORAL SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT BID 200/28 MG 70 ML ORAL SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT BID 400/57 MG 100 ML ORAL SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT BID 400/57 MG 70 ML ORAL SUSPANSIYON</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLAVUNAT ES 600/42,9 MG ORAL SUSPANSIYON ICIN KURU TOZ 100 ML</td>
+      <td>J01CR02</td>
+    </tr>
+    <tr>
+      <td>KLINDAN 150 MG 16 KAPSUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>KLINDAN 300 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>KLINDAN 600 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>KLINDAVER 300 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>KLINDAVER 600 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>KOLISOD 150 MG IM/IV ENJ. VE INHALASYON ICIN LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>J01XB01</td>
+    </tr>
+    <tr>
+      <td>KOLISTATE 150 MG IM/IV ENJ. VE INHALASYON ICIN LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>J01XB01</td>
+    </tr>
+    <tr>
+      <td>LANSOPROL 15 MG 28 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LANSOPROL 30 MG 28 MIK.KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LANSOR 15 MG 30 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LANSOR 30 MG 14 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LANSOR 30 MG 28 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LANSOTER 30 MG 28 MIKROPELLET KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LANZEDIN 30 MG ENTERIK KAPLI MIKROPELLET ICEREN 14 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LANZEDIN 30 MG ENTERIK KAPLI MIKROPELLET ICEREN 28 KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LAPILORI 30 MG 28 MIKROPELLET KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>LARGOPEN 1000 MG 16 TABLET</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>LARGOPEN 125 MG 80 ML SUSPANSIYON</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>LARGOPEN 250 MG 80 ML SUSPANSIYON</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>LARGOPEN 500 MG 16 TABLET</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>LARGOPEN 500 MG KAPSUL (16 KAPSUL)</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>LARGOPEN-BID 200 MG 100 ML SUSPANSIYON</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>LARGOPEN-BID 400 MG 100 ML SUSPANSIYON</td>
+      <td>J01CA04</td>
+    </tr>
+    <tr>
+      <td>LARICID 500 MG 14 FILM KAPLI TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>LEBEL 750 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEFOX 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEFOX 500 MG/100 ML IV INF. COZELTI ICIN FLAKON</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEFOX 750 MG FILM TABLET (7 TABLET)</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEODEX 25 MG 20 FILM KAPLI TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>LEODEX 50 MG/2 ML ENJEKSIYONLUK COZELTI ICEREN 6 AMPUL</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>LEVONAT 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEVONIDIN 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEVONIDIN 750 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEVOXIPOLIN 500 MG/ 100 ML IV INF. COZELTISI (100 ML)</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LEXUR 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>LIMEXID 600 MG 10 FILM TABLET</td>
+      <td>J01XX08</td>
+    </tr>
+    <tr>
+      <td>LINCOCIN 600 MG/2 ML IM/IV ENJEKSIYONLUK COZELTI (1 AMPUL)</td>
+      <td>J01FF02</td>
+    </tr>
+    <tr>
+      <td>LINEDOR 600 MG/300 ML I.V. INFUZYON ICIN COZELTI ICEREN FLAKON</td>
+      <td>J01XX08</td>
+    </tr>
+    <tr>
+      <td>LINKOMISIN 600 MG 1 AMPUL</td>
+      <td>J01FF02</td>
+    </tr>
+    <tr>
+      <td>LINKOSOL 600 MG 1 AMPUL</td>
+      <td>J01FF02</td>
+    </tr>
+    <tr>
+      <td>LODINE 300 MG 10 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>LORNOX FAST 8 MG FILM KAPLI TABLET (10 TABLET)</td>
+      <td>M01AC05</td>
+    </tr>
+    <tr>
+      <td>LOSEPROL 40 MG IV ENJEKSIYON ICIN LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>A02BC01</td>
+    </tr>
+    <tr>
+      <td>MACROL 125 MG/5 ML 70 ML SUSPANSIYON</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MACROL 250 MG 14 FILM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MACROL 250 MG/5 ML 100 ML SUSP</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MACROL 250 MG/5 ML 50 ML SUSP</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MACROL 500 MG 14 FILM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MACROL 500 MG MR 14 KONTROLLU SALIM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MACROL 500 MG MR 20 KONTROLLU SALIM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MACROL 500 MG MR 7 KONTROLLU SALIM TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MAJEZIK 100 MG 15 FILM TABLET</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>MAJEZIK 200 MG SR MIKROPELLET 16 KAPSUL</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>MAXICLAR 500 MG FILM KAPLI TABLET (14 FILM KAPLI TABLET)</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>MAXIMUS 100 MG 15 FILM TABLET</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>MAXIPEN 1 GR IV ENJEKSIYON VE INFUZYON ICIN TOZ ICEREN 1 FLAKON</td>
+      <td>J01DH02</td>
+    </tr>
+    <tr>
+      <td>MAXIPEN 500 MG IV ENJEKSIYON VE INFUZYON ICIN TOZ ICEREN 1 FLAKON</td>
+      <td>J01DH02</td>
+    </tr>
+    <tr>
+      <td>MEKSUN FORT 15 MG 10 TABLET</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>MELCAM 15 MG 10 TABLET</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>MELOX 15MG/1,5ML 3 AMPUL</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>MELOX 7,5 MG 10 TABLET</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>MELOX FORT 15 MG 10 TABLET</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>MENEKLIN 300 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>MENEKLIN 600 MG 1 AMPUL</td>
+      <td>J01FF01</td>
+    </tr>
+    <tr>
+      <td>MEROSID 1 GR IV ENJEKTABL TOZ ICEREN 1 FLAKON</td>
+      <td>J01DH02</td>
+    </tr>
+    <tr>
+      <td>MEROSID 500 MG IV ENJEKTABL TOZ ICEREN 1 FLAKON</td>
+      <td>J01DH02</td>
+    </tr>
+    <tr>
+      <td>METADEM 50 MG/2 ML I.M./I.V. ENJEKSIYONLUK COZELTI ICEREN 6 AMPUL</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>MOFELOX 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOKSEFEN 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOKSILOX 400 MG/250 ML IV INF. ICIN COZELTI (250 ML SETSIZ)</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOLCEF 100 MG//5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>MOLCEF 400 MG 10 FILM  TABLET</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>MONODOKS 100 MG 14 KAPSUL</td>
+      <td>J01AA02</td>
+    </tr>
+    <tr>
+      <td>MONUROL 3 G GRANUL ICEREN SASE (1 SASE)</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>MOPEM 1 GR IV ENJEKTABL TOZ ICEREN 1 FLAKON</td>
+      <td>J01DH02</td>
+    </tr>
+    <tr>
+      <td>MOPEM 500 MG IV ENJEKTABL TOZ ICEREN 1 FLAKON</td>
+      <td>J01DH02</td>
+    </tr>
+    <tr>
+      <td>MOTIVAL  100 MG 15 TABLET</td>
+      <td>M01AX17</td>
+    </tr>
+    <tr>
+      <td>MOXACIN 400 MG/250 ML IV INF. ICIN COZELTI ICEREN 1 FLAKON</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOXAI 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOXICUM 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOXITAB 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOXITEC 400 MG 5 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MOXITEC 400 MG 7 FILM TABLET</td>
+      <td>J01MA14</td>
+    </tr>
+    <tr>
+      <td>MRSACIN 50 MG IV INFUZYON COZ. ICIN LIYOFILIZE TOZ ICEREN 10 FLAKON</td>
+      <td>J01AA12</td>
+    </tr>
+    <tr>
+      <td>MULTIFLEX LEVOFLEX 500 MG/100 ML TORBA</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>MULTISEF 250 MG IM ENJ.TOZ ICEREN 1 FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>MULTISEF 500 MG IM ENJEKTABL TOZ ICEREN FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>MULTISEF 750 MG IM ENJ.TOZ ICEREN 1 FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>NAPREN S FORTE 550 MG 20 FILM TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>NAPROFF FORTE 550 MG 10 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>NAPROSYN 500 MG 10 SUPOZITUAR</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>NAPROSYN CR 750 MG 10 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>NAPROSYN EC FORT 500 MG 20 TABLET</td>
+      <td>M01AE02</td>
+    </tr>
+    <tr>
+      <td>NEOFLEKS %0,5 METRONIDAZOL I.V. ENJEKSIYONLUK COZELTI (100 ML, SETSIZ)</td>
+      <td>J01XD01</td>
+    </tr>
+    <tr>
+      <td>NETFEN 200 MG SR 16 KAPSUL</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>NEVAKSON IM 1 GR 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NEVAKSON IM 500 MG 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NEVAKSON IV 1 GR 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NEVOTEK 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>NEXFUL 40 MG IV INFUZYONLUK / ENJEKSIYONLUK COZELTI ICIN TOZ</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>NEXIUM 20 MG ENTERIK KAPLI 28 PELLET TABLET</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>NEXIUM 40 MG ENTERIK KAPLI 28 PELLET TABLET</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>NEXSTEP 40 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>NIDAZOL 250 MG 20 TABLET</td>
+      <td>P01AB01</td>
+    </tr>
+    <tr>
+      <td>NIDAZOL 5 ML 200 MG 100 ML SOLUSYON</td>
+      <td>P01AB01</td>
+    </tr>
+    <tr>
+      <td>NIDAZOL 500 MG 20 F.TABLET</td>
+      <td>P01AB01</td>
+    </tr>
+    <tr>
+      <td>NIDAZOL PED 50 MG SOL.</td>
+      <td>P01AB01</td>
+    </tr>
+    <tr>
+      <td>NIMELID 100 MG 15 TABLET</td>
+      <td>M01AX17</td>
+    </tr>
+    <tr>
+      <td>NIMES 100 MG 15 TABLET</td>
+      <td>M01AX17</td>
+    </tr>
+    <tr>
+      <td>NOVOSEF 0,5 G /2 ML IM ENJEKSIYONLUK TOZ VE COZUCU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NOVOSEF 1 G/10 ML IV ENJEKSIYONLUK TOZ VE COZUCU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NOVOSEF 1 G/3,5 ML IM ENJEKSIYONLUK TOZ VE COZUCU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NOVOSEF 1000 MG IM 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NOVOSEF 1000 MG IV 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NOVOSEF 500 MG IM 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NOVOSEF 500 MG IV 1 FLAKON</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>NUROFEN COLD FLU 24 TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>OKSAMEN 20 MG 10 TABLET</td>
+      <td>M01AC02</td>
+    </tr>
+    <tr>
+      <td>OKSAMEN-L 20 MG 1 FLAKON</td>
+      <td>M01AC02</td>
+    </tr>
+    <tr>
+      <td>OMEPROL 20 MG 28 MIKROPELLET KAPSUL</td>
+      <td>A02BC01</td>
+    </tr>
+    <tr>
+      <td>OMEREF 40 MG IV ENJEKSIYON ICIN LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>A02BC01</td>
+    </tr>
+    <tr>
+      <td>OMESEK 20 MG 14 MIKROPELLET KAPSUL</td>
+      <td>A02BC01</td>
+    </tr>
+    <tr>
+      <td>OMESEK 20 MG 28 MIKROPELLET KAPSUL</td>
+      <td>A02BC01</td>
+    </tr>
+    <tr>
+      <td>OMEX 40 MG IV ENJEKSIYON ICIN LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>A02BC01</td>
+    </tr>
+    <tr>
+      <td>ONCEFT 0,5 G IM ENJKESIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU (1 FLAKON)</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>ONCEFT 0,5 G IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>ONCEFT 1 G IM ENJKESIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU (1 FLAKON)</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>ONCEFT 1 G IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DD04</td>
+    </tr>
+    <tr>
+      <td>OPAGIS 30 MG 28 MIKROPELLET KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>ORADRO 500 MG FILM TABLET (14 TABLET)</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>ORADRO 500 MG IV LIYOFILIZE ENJ. TOZ ICEREN (1 FLAKON+1 AMPUL)</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>ORNIJECT 500 MG/3 ML IV INF. ICIN COZ. ICEREN AMPUL</td>
+      <td>J01XD03</td>
+    </tr>
+    <tr>
+      <td>ORNISID 250 MG 20 FILM TABLET</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>ORNISID FORT 500 MG 10 FILM TABLET</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>ORNITOP 500 MG 10 FILM TABLET</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>OROFEN COLD&amp;FLU 200 MG/30 MG FILM TABLET</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>OSTEOFLEX 90 FILM TABLET</td>
+      <td>M01AX</td>
+    </tr>
+    <tr>
+      <td>PANDEV 20 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANDEV 40 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANDEV 40 MG IV ENJEKSIYONLUK LIYOFILIZE TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANOCER 40 MG 14 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANOCER 40 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANREF 40 MG 14 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANREF 40 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTACTIVE 40 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTHEC 20 MG 28 ENT.TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTHEC 40 MG 14 ENTERIK TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTHEC 40 MG 28 ENTERIK TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTO 20 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTO 40 MG 14 TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTO 40 MG 28 TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTOZOL 40 MG IV ENJ. TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTOZOL 40 MG IV ENJEKSIYONLUK LIYOFILIZE TOZ ICEREN FLAKON (10 FLAKON)</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTPAS 40 MG 30 ENTERIK TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PANTPAS 40 MG ENTERIK KAPLI TABLET (14 TABLET)</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PARIET 20 MG 28 ENTERIK TABLET</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>PASMOL 40 MG ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PATRIL 20 MG ENTERIK TABLET (28 ENTERIK TABLET)</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>PEDIFEN 100 MG 100 ML SURUP</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>PEDIFEN COLD &amp; FLU 100 ML SURUP</td>
+      <td>M01AE51</td>
+    </tr>
+    <tr>
+      <td>PENBISIN 1 GR 1 FLAKON</td>
+      <td>J01CA01</td>
+    </tr>
+    <tr>
+      <td>PENBISIN 250 MG 1 FLAKON</td>
+      <td>J01CA01</td>
+    </tr>
+    <tr>
+      <td>PENBISIN 500 MG 1 FLAKON</td>
+      <td>J01CA01</td>
+    </tr>
+    <tr>
+      <td>PENFLOKS 250 MG/ 5 ML ŞURUP HAZIRLAMAK İÇİN TOZ (100 ML)</td>
+      <td>J01CF05</td>
+    </tr>
+    <tr>
+      <td>PENFLOKS 500 MG FILM TABLET (16)</td>
+      <td>J01CF05</td>
+    </tr>
+    <tr>
+      <td>PENICILLINE-G.POT 1000 IU 1 FLAKON</td>
+      <td>J01CE01</td>
+    </tr>
+    <tr>
+      <td>PENICILLINE-G.POT 500 IU 1 FLAKON</td>
+      <td>J01CE01</td>
+    </tr>
+    <tr>
+      <td>PEN-OS 400.000 IU ORAL SUSPANSIYON ICIN TOZ (160 ML)</td>
+      <td>J01CE10</td>
+    </tr>
+    <tr>
+      <td>PEN-OS 400.000 IU ORAL SÜSPANSIYON ICIN TOZ (80 ML)</td>
+      <td>J01CE10</td>
+    </tr>
+    <tr>
+      <td>PENSILINA 1E+06 IU 1 FLAKON</td>
+      <td>J01CE01</td>
+    </tr>
+    <tr>
+      <td>PEPTICER 30 MG 28 ENTERIK MIKROPELLET KAPSUL</td>
+      <td>A02BC03</td>
+    </tr>
+    <tr>
+      <td>PEPTYRA 20 MG ENTERIK TABLET (28 TABLET)</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>PHOSMYCIN 3 G GRANUL ICEREN SASE (1)</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>PIASCLEDINE 300 MG KAPSUL (30 KAPSUL)</td>
+      <td>M01AX26</td>
+    </tr>
+    <tr>
+      <td>PIASCLEDINE 300 MG KAPSÜL (60 KAPSUL)</td>
+      <td>M01AX26</td>
+    </tr>
+    <tr>
+      <td>PIYELOSEPTYL 100 MG 30 TABLET</td>
+      <td>J01XE01</td>
+    </tr>
+    <tr>
+      <td>PIYELOSEPTYL 25 MG/5 ML ORAL SUSPANSIYON, 100 ML</td>
+      <td>J01XE01</td>
+    </tr>
+    <tr>
+      <td>PIYELOSEPTYL 50 MG 30 KAPSUL</td>
+      <td>J01XE01</td>
+    </tr>
+    <tr>
+      <td>PLAPANT 40 MG IV ENJEKSIYONLUK COZELTI ICIN LIYOFILIZE TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PODORA 200 MG FİLM KAPLI TABLET (14 ADET)</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>PODORA 200 MG FİLM KAPLI TABLET (20 ADET)</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>POLGYL %0,5 IV PERFUZYON SOL 100 ML SETLI</td>
+      <td>J01XD01</td>
+    </tr>
+    <tr>
+      <td>POLGYL %0,5 IV PERFUZYON SOL 100 ML SETSIZ</td>
+      <td>J01XD01</td>
+    </tr>
+    <tr>
+      <td>POLIX 500.000 IU ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ ICEREN 1 FLAKON</td>
+      <td>J01XB02</td>
+    </tr>
+    <tr>
+      <td>PONSTAN FORT 500 MG 20 TABLET</td>
+      <td>M01AG01</td>
+    </tr>
+    <tr>
+      <td>POTANT 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>PRABEX 20 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>PROFENID 1 MG/ML 150 ML SURUP</td>
+      <td>M01AE03</td>
+    </tr>
+    <tr>
+      <td>PROGAS 40 MG IV ENJ. TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PROJEZIK 100 MG 15 FILM TABLET</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>PROTAZ 40 MG IV ENJ. TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PROTECH 40 MG 14 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PROTECH 40 MG 28 ENT.KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PROTINUM 20 MG 28 TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PROTINUM 40 MG 14 TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PROTINUM 40 MG 28 TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PROTONEX 40 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PULCET 40 MG 14 ENTERIK TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PULCET 40 MG 28 E.TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>PURINOL EFERVESAN 140 GR GRANUL</td>
+      <td>J01XX05</td>
+    </tr>
+    <tr>
+      <td>PURINOL EFERVESAN 70 GR GRANUL</td>
+      <td>J01XX05</td>
+    </tr>
+    <tr>
+      <td>RABBY-D 10 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC07</td>
+    </tr>
+    <tr>
+      <td>RABELIS 20 MG ENTERIK KAPLI TABLET (28 TABLET)</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>RABIZA 20 MG 14 ENTERIK KAPLI TABLET</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>RABIZA 20 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>RABOBER 20 MG GASTRO REZISTAN TABLET (28 TABLET)</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>RANEKS 20 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>RANTUDIL 90 MG UZATILMIS SALIMLI 10 KAPSUL</td>
+      <td>M01AB11</td>
+    </tr>
+    <tr>
+      <td>RANTUDIL FORTE 60 MG 20 KAPSUL</td>
+      <td>M01AB11</td>
+    </tr>
+    <tr>
+      <td>RASTEL 25 MG 20 CENTIKLI FILM TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>RAVIVO 500 MG 7 FILM KAPLI TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>RAZOGEN 20 MG 28 ENTERIK KAPLI TABLET</td>
+      <td>A02BC04</td>
+    </tr>
+    <tr>
+      <td>REFASTIL 40 MG IV ENJEKSIYON VE INFUZYON ICIN TOZ ICEREN 1 FLAKON</td>
+      <td>A02BC05</td>
+    </tr>
+    <tr>
+      <td>RESTAFEN 1 G/2 ML IM ENJEKSIYONLUK COZELTI ICEREN 1 AMPUL</td>
+      <td>M01AG</td>
+    </tr>
+    <tr>
+      <td>RHEUMON IM 1G/2 ML ENJEKSIYONLUK COZELTI ICEREN AMPUL</td>
+      <td>M01AG</td>
+    </tr>
+    <tr>
+      <td>ROMACTIL FORTE 60 MG KAPSUL (20 ADET)</td>
+      <td>M01AB11</td>
+    </tr>
+    <tr>
+      <td>ROXIN 500 MG 14 TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>ROXIN 750 MG 14 TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>ROXIPIME 1 GR IM/IV ENJEKTABL TOZ ICEREN 1 FLAKON</td>
+      <td>J01DE01</td>
+    </tr>
+    <tr>
+      <td>RUNOMEX FORT 15 MG 10 TABLET</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>SECNIDOX 500 MG 4 FILM TABLET</td>
+      <td>P01AB07</td>
+    </tr>
+    <tr>
+      <td>SEF 1 GR 16 TABLET</td>
+      <td>J01DB01</td>
+    </tr>
+    <tr>
+      <td>SEF 1 GR 20 TABLET</td>
+      <td>J01DB01</td>
+    </tr>
+    <tr>
+      <td>SEF 250 MG/5 ML ORAL SUSPANSIYON ICIN KURU 100 ML TOZ</td>
+      <td>J01DB01</td>
+    </tr>
+    <tr>
+      <td>SEF 5 ML 250 MG 80 ML SUSPANSIYON</td>
+      <td>J01DB01</td>
+    </tr>
+    <tr>
+      <td>SEF 500 MG 16 TABLET</td>
+      <td>J01DB01</td>
+    </tr>
+    <tr>
+      <td>SEF 500 MG/5 ML ORAL SUSPANSIYON ICIN KURU 100 ML TOZ</td>
+      <td>J01DB01</td>
+    </tr>
+    <tr>
+      <td>SEFAZOL IM 1 GR 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>SEFAZOL IM 250 MG 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>SEFAZOL IM 500 MG 1 FLAKON</td>
+      <td>J01DB04</td>
+    </tr>
+    <tr>
+      <td>SEFBAKTAM 1G/1G IM/IV ENJEKSIYONLUK COZELTI ICIN TOZ ICEREN FLAKON (1 ADET FLAKON+COZUCU)</td>
+      <td>J01DD62</td>
+    </tr>
+    <tr>
+      <td>SEFFUR 750 MG IM ENJEKSIYONLUK TOZ ICEREN FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>SEFFUR 750 MG/IV ENJEKSIYONLUK TOZ ICEREN FLAKON</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>SEFOTAK 0.5 G/2 ML IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>SEFOTAK 1 G/4 ML IM/IV ENJEKSIYONLUK COZELTI\nHAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>SEFOTAK 1000 MG 1 FLAKON</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>SEFOTAK 500 MG 1 FLAKON</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>SEFPODO  200 MG FILM TABLET  (20 TABLET )</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>SEFPODO 200 MG FILM KAPLI TABLET (10 TABLET )</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>SELFLEKS CIPRASEL 200 MG/100 ML IV INFUZYON COZELTISI (1 PVC TORBA, 100 ML)</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>SELKAP 200 MG 30 SERT KAPSÜL</td>
+      <td>M01AH01</td>
+    </tr>
+    <tr>
+      <td>SIFLOKS 500 MG FILM KAPLI TABLET (14 TABLET)</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>SIFLOKS 750 MG 14 TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>SILANEM 500/500 MG IV INF. ICIN TOZ ICEREN FLAKON</td>
+      <td>J01DH51</td>
+    </tr>
+    <tr>
+      <td>SINERAL 500 MG 10 FILM KAPLI TABLET</td>
+      <td>P01AB03</td>
+    </tr>
+    <tr>
+      <td>SIPLONE 500 MG 10 FILM TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>SIPROSAN 500 MG 14 FILM TABLET</td>
+      <td>J01MA02</td>
+    </tr>
+    <tr>
+      <td>STAFINE 500 MG 15 FILM TABLET</td>
+      <td>J01XC01</td>
+    </tr>
+    <tr>
+      <td>STAMIC 40 MG 28 ENTERIK TABLET</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>STREPTOMYCINE-IE 1 GR 1 FLAKON</td>
+      <td>J01GA01</td>
+    </tr>
+    <tr>
+      <td>SULBAKSIT IM 1000 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULBAKSIT IM 500 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULBAKSIT IM/IV 1000 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULBAKSIT IM/IV 250 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULBAKSIT IM/IV 500 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULCID 250 MG/5 ML ORAL SUSPANSIYON HAZ. ICIN KURU TOZ 100 ML</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULCID 375 MG 10 FILM TABLET</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULCID 375 MG 14 FILM TABLET</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULCID 375 MG 20 FILM TABLET</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULCID 750 MG 10 FILM TABLET</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULCID 750 MG 14 FILM TABLET</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULCID IM 1 GR 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULCID IM 250 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULCID IM 500 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULCID IM/IV 1 GR 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULCID IM/IV 500 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULCID IV 250 MG 1 FLAKON</td>
+      <td>J01CR01</td>
+    </tr>
+    <tr>
+      <td>SULCID ORAL 250 MG 70 ML SUSPANSIYON</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULCID PED. 250 MG 40 ML SUSPANSIYON</td>
+      <td>J01CR04</td>
+    </tr>
+    <tr>
+      <td>SULZON 1 GR IM/IV ENJEKSIYONLUK TOZ ICEREN FLAKON</td>
+      <td>J01DD62</td>
+    </tr>
+    <tr>
+      <td>SULZON 2 GR IM/IV ENJEKSIYONLUK TOZ ICEREN FLAKON</td>
+      <td>J01DD62</td>
+    </tr>
+    <tr>
+      <td>SUPRAFEN 400 MG 100 FILM TABLET</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>SUPRAFEN 400 MG 20 FILM TABLET</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>SUPRAFEN 400 MG 30 FILM TABLET</td>
+      <td>M01AE01</td>
+    </tr>
+    <tr>
+      <td>SUPRAX 100 MG 100 ML SUSPANSIYON</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>SUPRAX 100 MG 50 ML SUSPANSIYON</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>SUPRAX 400 MG 10 FILM TABLET</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>SUPRAX 400 MG 5 FILM TABLET</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>SUPRAX-DT 400 MG DAGILABILIR TABLET (10 TABLET)</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>SUPRAX-DT 400 MG DAGILABILIR TABLET (5 TABLET)</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>SURGAM 300 MG 20 TABLET</td>
+      <td>M01AE11</td>
+    </tr>
+    <tr>
+      <td>SURGAM RETARD 300 MG 20 TABLET</td>
+      <td>M01AE11</td>
+    </tr>
+    <tr>
+      <td>TADOLAK FORT 400 MG 14 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>TADOLAK FORT 500 MG 14 FILM TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>TADOLAK SR 600 MG UZATILMIS SALIMLI FILM KAPLI TABLET (10 TABLET)</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>TAKSIDEM 1 G IM/IV ENJEKSIYON ICIN TOZ ICEREN FLAKON</td>
+      <td>J01DD01</td>
+    </tr>
+    <tr>
+      <td>TAMCEF 125 MG / 5ML SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>TAMCEF 250 MG/5 ML SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>TAMCEF 300 MG KAPSUL</td>
+      <td>J01DD15</td>
+    </tr>
+    <tr>
+      <td>TANTUM  50 MG KAPLI TABLET</td>
+      <td>M01AX07</td>
+    </tr>
+    <tr>
+      <td>TARGOCID 200 MG 1 FLAKON</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TARGOCID 400 MG 1 FLAKON</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TAVANIC 500 MG 7 FILM TABLET</td>
+      <td>J01MA12</td>
+    </tr>
+    <tr>
+      <td>TAZERACIN 2,25 G IV ENJEKSIYON VE INFUZYON ICIN LIYOFILIZE TOZ ICEREN 1 FLAKON</td>
+      <td>J01CR05</td>
+    </tr>
+    <tr>
+      <td>TAZERACIN 4,5 G IV ENJEKSIYON VE INFUZYON ICIN LIYOFILIZE TOZ ICEREN 1 FLAKON</td>
+      <td>J01CR05</td>
+    </tr>
+    <tr>
+      <td>TAZOJECT 2,25 G IV ENJEKSIYONLUK LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>J01CR05</td>
+    </tr>
+    <tr>
+      <td>TAZOJECT 4,5 GR IV ENJEKSIYONLUK LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>J01CR05</td>
+    </tr>
+    <tr>
+      <td>TEICOJECT 200 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TEICOJECT 400 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TEIKOPOL 200 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU (1 FLAKON+1 AMPUL)</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TEIKOPOL 400 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU (1 FLAKON+1 AMPUL)</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TEKLONIN 400 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TEKOSIT 200 MG IM/IV LIYOFILIZE TOZ ICEREN 1 AMPUL</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TEKOSIT 400 MG IM/IV LIYOFILIZE TOZ ICEREN 1 FLAKON</td>
+      <td>J01XA02</td>
+    </tr>
+    <tr>
+      <td>TENOKSAN 20 MG KAPSUL (10 KAPSUL)</td>
+      <td>M01AC02</td>
+    </tr>
+    <tr>
+      <td>TETRA 250 MG 16 KAPSUL</td>
+      <td>J01AA07</td>
+    </tr>
+    <tr>
+      <td>TETRA 500 MG 16 KAPSUL</td>
+      <td>J01AA07</td>
+    </tr>
+    <tr>
+      <td>TETRADOX 100 MG 14 KAPSUL</td>
+      <td>J01AA02</td>
+    </tr>
+    <tr>
+      <td>TEXEF 200 MG 20 FILM TABLET</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>TIBERSID 500 MG/ 3 ML IV INFUZYON ICIN ENJEKSIYONLUK COZELTI (1 AMPUL)</td>
+      <td>J01XD03</td>
+    </tr>
+    <tr>
+      <td>TIGECID 50 MG IV INFUZYON COZ. ICIN LIYOFILIZE TOZ ICEREN 10 FLAKON</td>
+      <td>J01AA12</td>
+    </tr>
+    <tr>
+      <td>TIGEJECT 50 MG IV INFUZYON COZ. ICIN LIYOFILIZE TOZ ICEREN 10 FLAKON</td>
+      <td>J01AA12</td>
+    </tr>
+    <tr>
+      <td>TILAC SR 600 MG 10 UZATILMIS SALIMLI TABLET</td>
+      <td>M01AB08</td>
+    </tr>
+    <tr>
+      <td>TILCOTIL 20 MG 1 FLAKON</td>
+      <td>M01AC02</td>
+    </tr>
+    <tr>
+      <td>TILCOTIL 20 MG 10 FILM KAPLI TABLET</td>
+      <td>M01AC02</td>
+    </tr>
+    <tr>
+      <td>TOBI 300 MG/5 ML NEBULIZASYON ICIN COZELTI (56 AMPUL)</td>
+      <td>J01GB01</td>
+    </tr>
+    <tr>
+      <td>TOBLAIR 300 MG/5 ML NEBULIZASYON COZELTISI (56 AMPUL)</td>
+      <td>J01GB01</td>
+    </tr>
+    <tr>
+      <td>TRIMOKS 30 TABLET</td>
+      <td>J01EE01</td>
+    </tr>
+    <tr>
+      <td>TRIMOKS FORT 20 TABLET</td>
+      <td>J01EE01</td>
+    </tr>
+    <tr>
+      <td>TRIMOKS PED. 100 ML SUSPANSIYON</td>
+      <td>J01EE01</td>
+    </tr>
+    <tr>
+      <td>TROCMETAM 20 MG ENJEKSIYONLUK LIYOFILIZE TOZ 1 FLAKON 1 COZUCU AMPUL</td>
+      <td>M01AC02</td>
+    </tr>
+    <tr>
+      <td>TURKTIPSAN DIKLOFENAK SODYUM 75 MG/3 ML IM ENJEKSIYONLUK COZELTI 10 AMPUL</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>TURKTIPSAN GENTAMISIN SULFAT 80 MG/ 2 ML IM/ IV ENJEKSIYONLUK / INFUZYONLUK COZELTI (1 AMPUL)</td>
+      <td>J01GB03</td>
+    </tr>
+    <tr>
+      <td>TYBICID 50 MG INFUZYONLUK COZELTI ICIN LIYOFILIZE TOZ (10 ADET)</td>
+      <td>J01AA12</td>
+    </tr>
+    <tr>
+      <td>TYGACIL 50 MG 10 FLAKON</td>
+      <td>J01AA12</td>
+    </tr>
+    <tr>
+      <td>ULCEZOL 40 MG I.V. ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>ULSEPAN 40 MG ENTERIK KAPLI TABLET (28 TABLET)</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>ULTRACEF 500 MG 10 FILM TABLET</td>
+      <td>J01DC10</td>
+    </tr>
+    <tr>
+      <td>ULTRACEF 500 MG 20 FILM KAPLI TABLET</td>
+      <td>J01DC10</td>
+    </tr>
+    <tr>
+      <td>UNIKLAR 250 MG FiLM KAPLI TABLET (14 TABLET)</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>UNIKLAR 500 MG 14 TABLET</td>
+      <td>J01FA09</td>
+    </tr>
+    <tr>
+      <td>UROCARE 3 GR SASE</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>URODAY 3 GR 1 SASE</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>UROMISIN 3 G TOZ ICEREN SASE (1 SASE)</td>
+      <td>J01XX01</td>
+    </tr>
+    <tr>
+      <td>VAMYCIN 1000 MG IV ENJEKSIYON ICIN LIYOFILIZE TOZ ICEREN FLAKON (1 FLAKON)</td>
+      <td>J01XA01</td>
+    </tr>
+    <tr>
+      <td>VANCOTEK 1 GR IV ENJEKTABL SOLUSYON HAZIRLAMAK ICIN LIYOFILIZE TOZ ICEREN FLAKON</td>
+      <td>J01XA01</td>
+    </tr>
+    <tr>
+      <td>VANCOTEK 500 MG IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ (1 FLAKON)</td>
+      <td>J01XA01</td>
+    </tr>
+    <tr>
+      <td>VANKOMYL 1000 MG IV INFUZYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ (1 FLAKON)</td>
+      <td>J01XA01</td>
+    </tr>
+    <tr>
+      <td>VANKOMYL 500 MG IV INFUZYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ (1 FLAKON)</td>
+      <td>J01XA01</td>
+    </tr>
+    <tr>
+      <td>VANKOPOL 500 MG IV INFUZYONLUK VE ORAL COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ, 1 FLAKON</td>
+      <td>J01XA01</td>
+    </tr>
+    <tr>
+      <td>VEROXICAM 15 MG/1,5 ML ENJEKSIYONLUK COZELTI (3 AMPUL)</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>VOLTAREN 100 MG 10 SUPOZITUAR</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>VOLTAREN 100 MG 5 SUPOZITUAR</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>VOLTAREN 50 MG 20 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>VOLTAREN RETARD 100 MG 10 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>VOLTAREN RETARD 100 MG 30 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>VOLTAREN SR 75 MG 10 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>VOLTAREN SR 75 MG 20 TABLET</td>
+      <td>M01AB05</td>
+    </tr>
+    <tr>
+      <td>WINCEF 400 MG 10 FILM KAPLI TABLET</td>
+      <td>J01DD14</td>
+    </tr>
+    <tr>
+      <td>WINCEF 90 MG/5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
+      <td>J01DD14</td>
+    </tr>
+    <tr>
+      <td>XAPTO 500 MG ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ (1 FLAKON)</td>
+      <td>J01XX09</td>
+    </tr>
+    <tr>
+      <td>XEFO RAPID 8 MG 10 FILM TABLET</td>
+      <td>M01AC05</td>
+    </tr>
+    <tr>
+      <td>ZANNACEF 750 MG IM ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU (1 FLAKON + 1 COZUCU)</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>ZANNACEF 750 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
+      <td>J01DC02</td>
+    </tr>
+    <tr>
+      <td>ZAVICEFTA 2/0,5 G INFUZYONLUK SOLUSYON ICIN TOZ</td>
+      <td>J01DD52</td>
+    </tr>
+    <tr>
+      <td>ZELOXIM 15 MG/1,5 ML IM AMPUL</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>ZELOXIM FORT 15 MG 10 TABLET</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>ZERBAXA 1G/0,5G INF. KONS. COZ. HAZIRLAMAK ICIN TOZ ICEREN 10 FLAKON</td>
+      <td>J01DI54</td>
+    </tr>
+    <tr>
+      <td>ZERO-P 100 MG 15 FILM TABLET</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>ZERO-P 200 MG SR MIKROPELLET 15 KAPSUL</td>
+      <td>M01AE09</td>
+    </tr>
+    <tr>
+      <td>ZIDIM 0,5 GR 1 FLAKON</td>
+      <td>J01DD02</td>
+    </tr>
+    <tr>
+      <td>ZIDIM 1 GR 1 FLAKON</td>
+      <td>J01DD02</td>
+    </tr>
+    <tr>
+      <td>ZIMAKS 100 MG 100 ML SUSPANSIYON</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>ZIMAKS 100 MG/5ML 50 ML SUSPANSIYON</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>ZIMAKS 400 MG 10 TABLET</td>
+      <td>J01DD08</td>
+    </tr>
+    <tr>
+      <td>ZIROMIN 200 MG/5 ML ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>ZITROMAX 200 MG 30 ML SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>ZITROMAX 500 MG 3 FILM TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>ZITROMAX PED. 15 ML SUSPANSIYON</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>ZITROTEK 500 MG 2 FILM KAPLI TABLET</td>
+      <td>J01FA10</td>
+    </tr>
+    <tr>
+      <td>ZOLCER 40 MG IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>ZYGOSIS 40 MG IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ 1 FLAKON</td>
+      <td>A02BC02</td>
+    </tr>
+    <tr>
+      <td>ZYVOXID 600 MG 10 FILM KAPLI TABLET</td>
+      <td>J01XX08</td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+function filtrele() {
+    var input, filtre, tablo, tr, td, i, j, txtDeger;
+    input = document.getElementById("aramaKutusu");
+    filtre = input.value.toLowerCase();
+    tablo = document.getElementById("ilacTablosu");
+    tr = tablo.getElementsByTagName("tr");
+    
+    for (i = 1; i < tr.length; i++) {
+        tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j]) {
+                txtDeger = td[j].textContent || td[j].innerText;
+                if (txtDeger.toLowerCase().indexOf(filtre) > -1) {
+                    tr[i].style.display = "";
+                    break;
+                }
+            }
+        }
+    }
+}
+</script>
+
+</body>
+</html>
