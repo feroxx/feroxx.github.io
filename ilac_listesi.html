@@ -13,6 +13,17 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .filter-btn {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        .filter-btn:hover {
+            background-color: #e0e0e0;
+        }
         table { border-collapse: collapse; width: 100%; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
         tr:hover { background-color: #f1f1f1; }
@@ -21,7 +32,12 @@
 <body>
 
 <h2>İlaç Listesi</h2>
-<input type="text" id="aramaKutusu" onkeyup="filtrele()" placeholder="İlaç ara...">
+<div>
+    <input type="text" id="aramaKutusu" onkeyup="filtrele()" placeholder="İlaç ara...">
+    <button class="filter-btn" onclick="filtreleATC('J01')">AB</button>
+    <button class="filter-btn" onclick="filtreleATC('M01A')">NSAİ</button>
+    <button class="filter-btn" onclick="filtreleATC('A02BC')">PPİ</button>
+</div>
 
 <table class="dataframe ilac-tablosu" id="ilacTablosu">
   <thead>
@@ -3247,6 +3263,25 @@ function filtrele() {
             }
         }
     }
+}
+
+function filtreleATC(atcKodu) {
+    var tablo, tr, td, i, txtDeger;
+    tablo = document.getElementById("ilacTablosu");
+    tr = tablo.getElementsByTagName("tr");
+    
+    for (i = 1; i < tr.length; i++) {
+        tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[1]; // ATC Kodu sütunu
+        if (td) {
+            txtDeger = td.textContent || td.innerText;
+            if (txtDeger.startsWith(atcKodu)) {
+                tr[i].style.display = "";
+            }
+        }
+    }
+    // Arama kutusunu sıfırla
+    document.getElementById("aramaKutusu").value = "";
 }
 </script>
 
