@@ -3,30 +3,49 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İlaç Listesi</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
         #aramaKutusu {
-            width: 300px;
+            width: 100%;
+            max-width: 300px;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
         }
         .filter-btn {
             padding: 10px 15px;
-            margin-right: 10px;
+            margin: 5px 5px 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
             cursor: pointer;
+            box-sizing: border-box;
         }
         .filter-btn:hover {
             background-color: #e0e0e0;
         }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
-        tr:hover { background-color: #f1f1f1; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 <body>
