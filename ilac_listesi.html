@@ -58,7 +58,7 @@
             Titck
         </a>
     </div>
-    <span style="font-size: 14px; color: #555;">Güncellenme tarihi: 22.04.2025</span>
+    <span style="font-size: 14px; color: #555;">Güncellenme tarihi: 29.04.2025</span>
 </div>
 
 <h2>İlaç Listesi</h2>
@@ -77,6 +77,26 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>CELGYN 100 MG KAPSUL (20 KAPSUL)</td>
+      <td>M01AH01</td>
+    </tr>
+    <tr>
+      <td>LORIXAM 8 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN LIYOFILIZE TOZ VE COZUCU (1 FLAKON)</td>
+      <td>M01AC05</td>
+    </tr>
+    <tr>
+      <td>ROLGICIN 30 MG/ML IM/IV ENJEKSIYONLUK COZELTI (5 AMPUL)</td>
+      <td>M01AB15</td>
+    </tr>
+    <tr>
+      <td>LOXIDOL 15 MG/1,5 ML IM ENJEKSIYONLUK COZELTI ICEREN AMPUL (3 AMPUL)</td>
+      <td>M01AC06</td>
+    </tr>
+    <tr>
+      <td>RYOFEL 500 MG/2 ML I.M./I.V. ENJEKSIYONLUK COZELTI (1 FLAKON)</td>
+      <td>J01GB06</td>
+    </tr>
     <tr>
       <td>CEFORIST 300 MG SERT KAPSUL (10 KASUL)</td>
       <td>J01DD15</td>
@@ -3279,7 +3299,7 @@ function filtrele() {
     filtre = input.value.toLowerCase();
     tablo = document.getElementById("ilacTablosu");
     tr = tablo.getElementsByTagName("tr");
-    
+
     for (i = 1; i < tr.length; i++) {
         tr[i].style.display = "none";
         td = tr[i].getElementsByTagName("td");
@@ -3299,7 +3319,7 @@ function filtreleATC(atcKodu) {
     var tablo, tr, td, i, txtDeger;
     tablo = document.getElementById("ilacTablosu");
     tr = tablo.getElementsByTagName("tr");
-    
+
     for (i = 1; i < tr.length; i++) {
         tr[i].style.display = "none";
         td = tr[i].getElementsByTagName("td")[1]; // ATC Kodu sütunu
