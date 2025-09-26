@@ -65,7 +65,7 @@
 <h2>İlaç Listesi</h2>
 <div>
     <input type="text" id="aramaKutusu" onkeyup="filtrele()" placeholder="İlaç ara...">
-    <button class="filter-btn" onclick="filtreleATC(['J01', 'P01AB'])">AB</button>
+    <button class="filter-btn" onclick="filtreleATC(['J01','P01AB'])">AB</button>
     <button class="filter-btn" onclick="filtreleATC('M01A')">NSAİ</button>
     <button class="filter-btn" onclick="filtreleATC('A02BC')">PPİ</button>
 </div>
@@ -3313,6 +3313,7 @@ function filtrele() {
 }
 
 function filtreleATC(atcKodu) {
+    var codes = Array.isArray(atcKodu) ? atcKodu : [atcKodu];
     var tablo, tr, td, i, txtDeger;
     tablo = document.getElementById("ilacTablosu");
     tr = tablo.getElementsByTagName("tr");
@@ -3322,7 +3323,7 @@ function filtreleATC(atcKodu) {
         td = tr[i].getElementsByTagName("td")[1]; // ATC Kodu sütunu
         if (td) {
             txtDeger = td.textContent || td.innerText;
-            if (txtDeger.startsWith(atcKodu)) {
+            if (codes.some(code => txtDeger.startsWith(code))) {
                 tr[i].style.display = "";
             }
         }
