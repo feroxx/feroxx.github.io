@@ -1,0 +1,140 @@
+/* Genel Ayarlar ve Değişkenler */
+:root {
+    --primary-color: #007bff; /* HYP Blue - Vurgu Rengi */
+    --primary-hover: #0056b3;
+    --text-color: #333;
+    --background-color: #ffffff;
+    --light-gray: #f8f9fa;
+    --warning-bg: #fff3cd; /* Yasal uyarı için sarı arka plan */
+    --warning-text: #856404; /* Yasal uyarı için koyu metin */
+}
+
+/* Temel Sıfırlama ve Font */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, yaygın font */
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Sayfa Yapısı --- */
+
+header {
+    text-align: center;
+    padding: 40px 20px 20px;
+    background-color: var(--light-gray);
+    border-bottom: 1px solid #ddd;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto; /* Sayfayı ortalar */
+    padding: 30px 20px;
+}
+
+footer {
+    padding: 30px 20px;
+    background-color: #f1f1f1;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* --- Başlıklar --- */
+h1 {
+    color: var(--primary-hover);
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: var(--text-color);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 8px;
+    margin-top: 30px;
+    font-size: 1.7em;
+}
+
+/* --- İndirme Butonları (CTA) --- */
+.download-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Butonlar arasındaki boşluk */
+    flex-wrap: wrap; 
+}
+
+.download-buttons img {
+    width: 180px;
+    height: auto;
+    transition: transform 0.2s; /* Hafif animasyon */
+}
+
+.download-buttons a:hover img {
+    transform: scale(1.05);
+}
+
+/* --- Özellikler Listesi --- */
+.features ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.features li {
+    margin-bottom: 15px;
+    padding-left: 35px;
+    position: relative;
+    text-align: left;
+}
+
+.features li::before {
+    content: '✅'; /* Modern tik işareti */
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.2em;
+}
+
+/* --- Yasal Uyarı Bölümü --- */
+.legal-disclaimer {
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+    padding: 15px;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.legal-disclaimer p {
+    margin: 5px 0;
+    font-size: 0.95em;
+}
+
+/* --- Footer Linkleri --- */
+footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* --- Mobil Uyumlu Tasarım --- */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .download-buttons {
+        flex-direction: column; /* Mobil cihazlarda dikey hizalama */
+        gap: 15px;
+    }
+
+    .download-buttons img {
+        width: 160px;
+    }
+}

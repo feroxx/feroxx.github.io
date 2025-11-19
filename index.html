@@ -1,76 +1,83 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "HYP Katsayı Hesaplama Uygulaması",
+  "description": "HYP Katsayı hesaplamaları ve oran takibi için hızlı ve güvenilir mobil uygulama. Dr Ferhat Fırat tarafından geliştirilmektedir.",
+  "keywords": "hyp hesaplama, hyp katsayı hesaplama, aile hekimi maaş hesaplama, hyp mobil hesaplama, hyp uygulaması"
+  "applicationCategory": "ToolsApplication",
+  "operatingSystem": "ANDROID, IOS",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.7",
+    "ratingCount": "26"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "TL"
+  },
+  "url": "https://feroxx.github.io/"
+}
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HYP Katsayı Hesaplama Uygulaması</title>
+    <meta name="description" content="HYP Katsayı Hesaplama uygulaması ile maaş katsayılarınızı hızlıca hesaplayın. Android ve iOS için mevcuttur.">
+    
+    <title>HYP Katsayı Hesaplama Uygulaması | Mobil Uygulama</title>
 
-    <!-- Internal CSS -->
-    <style>
-        /* Mobile Logo Size Adjustment */
-        @media only screen and (max-width: 767px) {
-            .download-buttons {
-                display: flex;
-                flex-direction: column; /* Logoları dikey hizala */
-                align-items: center; /* Ortala */
-            }
-            .download-buttons img {
-                width: 200px; /* Logo genişliği */
-                height: auto; /* Aspect ratio'yu koru */
-                margin-bottom: 20px; /* Logolar arasındaki boşluk */
-            }
-            .download-buttons img:last-child {
-                margin-bottom: 0; /* Son logo için boşluk bırakma */
-            }
-        }
+    <link rel="stylesheet" href="style.css">
 
-        /* Desktop Logo Size Adjustment */
-        @media only screen and (min-width: 768px) {
-            .download-buttons {
-                display: flex;
-                align-items: center; /* Yatay hizala */
-            }
-            .download-buttons img {
-                width: 200px; /* Logo genişliği */
-                height: auto; /* Aspect ratio'yu koru */
-                margin-right: 20px; /* Logolar arasındaki boşluk */
-            }
-        }
-    </style>
 </head>
 <body>
 
-<!-- Uygulama İndirme Bağlantıları -->
-<div class="download-buttons" style="padding: 20px;">
-    <a href="https://play.google.com/store/apps/details?id=com.ferox.hyp&hl=tr-tr" target="_blank">
-        <img src="https://www.freepnglogos.com/uploads/play-store-logo-png/play-store-logo-nisi-filters-australia-11.png" alt="Download on Google Play" width="200" height="60">
-    </a>
-    <a href="https://apps.apple.com/tr/app/hyp/id6740060539" target="_blank">
-        <img src="https://toolbox.marketingtools.apple.com/api/assets/featured-content/apps/badges/badge-2/en-us.svg" alt="Download on Apple Store" width="200" height="60">
-    </a>
-</div>
+    <header>
+        <h1>HYP Katsayı Hesaplama Uygulaması</h1>
+        <p class="tagline" style="font-size: 1.2em; color: #666; margin-top: -10px;">Hesaplamalarınızı Hızlandırın ve Takip Edin!</p>
 
-<!-- Uygulama Açıklaması Bölümü -->
-<section class="app-description" style="padding: 20px; text-align: left;">
-    <h2>HYP Katsayı Hesaplama Uygulaması</h2>
-    <p>HYP, kullanıcıların katsayı hesaplamalarını kolaylaştıran bir mobil uygulamadır. Hem Android hem de iOS platformlarında kullanılabilen bu uygulama, kullanıcı dostu arayüzü ve hızlı hesaplama özellikleri ile dikkat çekmektedir.</p>
+        <div class="download-buttons">
+            <a href="https://play.google.com/store/apps/details?id=com.ferox.hyp&hl=tr-tr" target="_blank" aria-label="Google Play'den İndir">
+                <img src="https://www.freepnglogos.com/uploads/play-store-logo-png/play-store-logo-nisi-filters-australia-11.png" alt="Google Play Store Logosu" width="180" height="54">
+            </a>
+            <a href="https://apps.apple.com/tr/app/hyp/id6740060539" target="_blank" aria-label="Apple App Store'dan İndir">
+                <img src="https://toolbox.marketingtools.apple.com/api/assets/featured-content/apps/badges/badge-2/en-us.svg" alt="Apple App Store Logosu" width="180" height="54">
+            </a>
+        </div>
+    </header>
 
-    <h3>Özellikler:</h3>
-    <ul>
-        <li>Kullanıcı Dostu Arayüz: HYP, basit ve anlaşılır tasarımı sayesinde herkesin rahatlıkla kullanabileceği bir deneyim sunar.</li>
-        <li>Hızlı Hesaplamalar: Kullanıcıların girdiği verilere dayanarak anında sonuçlar sağlar.</li>
-        <li>Gelişmiş Güvenlik: Uygulama, kullanıcı verilerini korumak için en son güvenlik standartlarını uygular.</li>
-        <li>Offline Kullanım: İnternet bağlantısı olmadan da hesaplamalarınızı yapabilirsiniz.</li>
-    </ul>
+    <main>
+        <section class="app-description">
+            <h2>Uygulama Hakkında</h2>
+            <p><strong>HYP</strong>, kullanıcıların **katsayı hesaplamalarını** kolaylaştırmak ve mobil ortamda anlık sonuçlar almak için tasarlanmış modern bir uygulamadır. Hem Android hem de iOS platformlarında kullanılabilen bu uygulama, kullanıcı dostu arayüzü ve hızlı hesaplama motoru ile binlerce kullanıcının tercihi olmuştur.</p>
+        </section>
 
-    <p><strong>BİR DEVLET KURULUŞUNU TEMSİL ETMEMEKTEDİR.</strong></p>
-    <p>Bu uygulama, Türkiye Cumhuriyeti hükümeti, Sağlık Bakanlığı veya herhangi bir resmi kurum ile bağlantılı değildir. Hesaplamalar tamamen kullanıcıların verdiği bilgilere dayanır ve resmi bir ödeme taahhüdü oluşturmaz.</p>
+        <section class="features">
+            <h2>✨ Temel Özellikler</h2>
+            <ul>
+                <li><strong>Kullanıcı Dostu Arayüz:</strong> Sezgisel ve anlaşılır tasarımı sayesinde herkesin rahatlıkla kullanabileceği bir deneyim sunar.</li>
+                <li><strong>Hızlı ve Doğru Hesaplamalar:</strong> Girdiğiniz verilere dayanarak anında ve güvenilir sonuçlar alırsınız.</li>
+                <li><strong>Gelişmiş Veri Güvenliği:</strong> Kullanıcı verilerini korumak için en güncel güvenlik standartlarını uygularız.</li>
+                <li><strong>Offline Kullanım Desteği:</strong> İnternet bağlantısı olmadan da tüm hesaplamalarınızı sorunsuz bir şekilde yapabilirsiniz.</li>
+            </ul>
+        </section>
 
-    <!-- Gizlilik Politikası Bağlantısı -->
-    <p style="margin-top: 20px;">
-        <strong>Gizlilik Politikası</strong>: <a href="privacy-policy.html">Gizlilik Politikamızı görüntüleyin</a>
-    </p>
-</section>
+    </main>
+
+    <footer>
+        <div class="legal-disclaimer">
+            <p><strong>⚠️ ÖNEMLİ YASAL UYARI</strong></p>
+            <p><strong>HYP BİR DEVLET VEYA RESMİ KURULUŞU TEMSİL ETMEMEKTEDİR.</strong></p>
+            <p style="font-size: 0.9em;">Bu mobil uygulama; Türkiye Cumhuriyeti hükümeti, Sağlık Bakanlığı veya herhangi bir resmi kurum ile bağlantılı değildir. Hesaplamalar tamamen kullanıcıların verdiği bilgilere dayanır ve resmi bir ödeme taahhüdü oluşturmaz. Lütfen resmi işlemleriniz ve ödeme taahhütleri için yalnızca ilgili resmi kurumların kaynaklarını kullanın.</p>
+        </div>
+
+        <p style="margin-top: 15px;">
+            <a href="privacy-policy.html">Gizlilik Politikası</a>
+        </p>
+        <p style="font-size: 0.8em; color: #777;">&copy; 2025 HYP Mobil Uygulama. Tüm hakları saklıdır.</p>
+    </footer>
 
 </body>
 </html>
