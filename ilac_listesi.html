@@ -46,6 +46,45 @@
         tr:hover {
             background-color: #f1f1f1;
         }
+        .copy-section {
+            margin: 20px 0;
+        }
+        .link-box {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+        .copy-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin: 10px 0;
+        }
+        .copy-button:hover {
+            background-color: #007BFF;
+        }
+        .copy-button:active {
+            transform: scale(0.98);
+        }
+        .success-message {
+            background: #4007BFF;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -64,22 +103,71 @@
 
 <p style="font-size: 14px; color: #555; margin-bottom: 10px;"><strong>Akılcı İlaç kullanım oranları hesaplamaları için SİNA sayfasında belirtildiği gibi Antibiyotikler için J01 ve P01AB, NSAİ için M01A ve PPİ için A02BC ATC kodlu ilaçlar yer almaktadır.</strong></p>
 
-<a href="#"
-   data-url="aHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc3RvcmUvYXBwcy9kZXRhaWxzP2lkPWNvbS5mZXJveC5haGFnZW50"
-   onclick="openStore(this); return false;"
-   class="store-link">
-    Uygulamayı Play Store'da Görüntüle
-</a>
+<div class="instruction">
+    <strong>📋 Android Uygulamasını İndirmek İçin:</strong>
+    <p style="margin: 10px 0;">
+        Play Store'da <strong>"Aile Hekimi Asistanı"</strong> aramasını yapın
+        ya da linki kopyalayıp tarayıcıya yapıştırın.
+    </p>
+</div>
 
-<script>
-function openStore(element) {
-    var encodedUrl = element.getAttribute('data-url');
-    var url = atob(encodedUrl); // Base64 decode
-    window.location = url;
-    return false;
-}
-</script>
+<div class="copy-section">
+    <strong>🔗 Android Uygulama Linki:</strong>
+    <div class="link-box" id="linkText">
+        https://play.google.com/store/apps/details?id=com.ferox.ahagent
+    </div>
+    <button class="copy-button" onclick="copyLink()">
+        📋 Linki Kopyala
+    </button>
+    <div class="success-message" id="successMessage">
+        ✅ Link kopyalandı! Tarayıcınızı açın ve yapıştırın.
+    </div>
 
+    <script>
+        function copyLink() {
+            var linkText = document.getElementById('linkText').textContent.trim();
+            
+            // Modern tarayıcılar için
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(linkText).then(function() {
+                    showSuccess();
+                }).catch(function(err) {
+                    fallbackCopy(linkText);
+                });
+            } else {
+                fallbackCopy(linkText);
+            }
+        }
+
+        function fallbackCopy(text) {
+            // Eski yöntem
+            var textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showSuccess();
+            } catch (err) {
+                alert('Link: ' + text + '\n\nLütfen manuel olarak kopyalayın.');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showSuccess() {
+            var message = document.getElementById('successMessage');
+            message.style.display = 'block';
+            
+            setTimeout(function() {
+                message.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+    
 <h2>İlaç Listesi</h2>
 <div>
     <input type="text" id="aramaKutusu" onkeyup="filtrele()" placeholder="İlaç ara...">
