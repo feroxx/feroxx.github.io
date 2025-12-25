@@ -64,26 +64,50 @@
 
 <p style="font-size: 14px; color: #555; margin-bottom: 10px;"><strong>Akılcı İlaç kullanım oranları hesaplamaları için SİNA sayfasında belirtildiği gibi Antibiyotikler için J01 ve P01AB, NSAİ için M01A ve PPİ için A02BC ATC kodlu ilaçlar yer almaktadır.</strong></p>
 
-<p>Uygulamayı indirmek için aşağıdaki butona tıklayın:</p>
-
 <button class="store-button" onclick="openPlayStore()">
-    Uygulamayı Play Store'da Görüntüle
-</button>
+        Uygulamayı Play Store'da Görüntüle
+    </button>
 
-<script>
-    function openPlayStore() {
-        var packageName = 'com.ferox.ahagent';
-        var playStoreUrl = 'https://play.google.com/store/apps/details?id=' + packageName;
-        
-        // Yeni sekmede açmayı dene
-        var opened = window.open(playStoreUrl, '_blank');
-        
-        // Eğer popup engellenirse veya açılamazsa, aynı pencerede aç
-        if (!opened || opened.closed || typeof opened.closed == 'undefined') {
-            window.location.href = playStoreUrl;
+    <iframe id="hiddenFrame"></iframe>
+
+    <script>
+        function openPlayStore() {
+            var packageName = 'com.ferox.ahagent';
+            
+            // URL'i parçalara ayırarak oluştur (otomatik intent dönüşümünü engeller)
+            var protocol = 'https:';
+            var domain = '//play.google.com';
+            var path = '/store/apps/details';
+            var params = '?id=' + packageName;
+            
+            var fullUrl = protocol + domain + path + params;
+            
+            // Iframe içinde aç
+            try {
+                var iframe = document.getElementById('hiddenFrame');
+                iframe.src = fullUrl;
+                
+                // 500ms sonra ana pencereyi de yönlendir (fallback)
+                setTimeout(function() {
+                    window.top.location.href = fullUrl;
+                }, 500);
+            } catch(e) {
+                // Hata durumunda direkt yönlendir
+                window.top.location.href = fullUrl;
+            }
         }
-    }
-</script>
+        
+        // Alternatif: Sayfa yüklendiğinde kullanıcı dokunsa bile çalışacak şekilde hazırla
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('.store-button');
+            buttons.forEach(function(button) {
+                button.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    openPlayStore();
+                });
+            });
+        });
+    </script>
 
 <h2>İlaç Listesi</h2>
 <div>
