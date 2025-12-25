@@ -64,17 +64,25 @@
 
 <p style="font-size: 14px; color: #555; margin-bottom: 10px;"><strong>Akılcı İlaç kullanım oranları hesaplamaları için SİNA sayfasında belirtildiği gibi Antibiyotikler için J01 ve P01AB, NSAİ için M01A ve PPİ için A02BC ATC kodlu ilaçlar yer almaktadır.</strong></p>
 
-<a href="market://details?id=com.ferox.ahagent"
-   onclick="fallbackToWeb(event)">
-   Uygulamayı Play Store'da Görüntüle
-</a>
+<p>Uygulamayı indirmek için aşağıdaki butona tıklayın:</p>
+
+<button class="store-button" onclick="openPlayStore()">
+    Uygulamayı Play Store'da Görüntüle
+</button>
 
 <script>
-function fallbackToWeb(event) {
-    setTimeout(function() {
-        window.location.href = 'https://play.google.com/store/apps/details?id=com.ferox.ahagent';
-    }, 500);
-}
+    function openPlayStore() {
+        var packageName = 'com.ferox.ahagent';
+        var playStoreUrl = 'https://play.google.com/store/apps/details?id=' + packageName;
+        
+        // Yeni sekmede açmayı dene
+        var opened = window.open(playStoreUrl, '_blank');
+        
+        // Eğer popup engellenirse veya açılamazsa, aynı pencerede aç
+        if (!opened || opened.closed || typeof opened.closed == 'undefined') {
+            window.location.href = playStoreUrl;
+        }
+    }
 </script>
 
 <h2>İlaç Listesi</h2>
