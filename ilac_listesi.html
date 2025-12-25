@@ -64,17 +64,21 @@
 
 <p style="font-size: 14px; color: #555; margin-bottom: 10px;"><strong>Akılcı İlaç kullanım oranları hesaplamaları için SİNA sayfasında belirtildiği gibi Antibiyotikler için J01 ve P01AB, NSAİ için M01A ve PPİ için A02BC ATC kodlu ilaçlar yer almaktadır.</strong></p>
 
-<button onclick="openPlayStore()">
-    Uygulamayı Play Store'da Görüntüle
-</button>
+<div style="padding: 20px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 10px; text-align: center;">
+    <p><strong>Uygulamayı Play Store'dan indirin:</strong></p>
+    <p>Linke tıklayın ve adres çubuğundan kopyalayıp tarayıcıda açın:</p>
+    <p style="word-break: break-all; font-weight: bold;">
+        https://play.google.com/store/apps/details?id=com.ferox.ahagent
+    </p>
+    <button onclick="navigator.clipboard.writeText('https://play.google.com/store/apps/details?id=com.ferox.ahagent').then(() => alert('Link panoya kopyalandı! Tarayıcıda açın.'));">
+        Linki Kopyala
+    </button>
+</div>
 
 <script>
-function openPlayStore() {
-    window.location.href = 'https://play.google.com/store/apps/details?id=com.ferox.ahagent';
-    
-    setTimeout(function() {
-        window.location.href = 'https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.ferox.ahagent';
-    }, 500);
+// Clipboard API (modern Android'lerde çalışır)
+if (!navigator.clipboard) {
+    alert('Clipboard desteklenmiyor, linki manuel kopyalayın.');
 }
 </script>
 
