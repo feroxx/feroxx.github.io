@@ -64,12 +64,34 @@
 
 <p style="font-size: 14px; color: #555; margin-bottom: 10px;"><strong>Akılcı İlaç kullanım oranları hesaplamaları için SİNA sayfasında belirtildiği gibi Antibiyotikler için J01 ve P01AB, NSAİ için M01A ve PPİ için A02BC ATC kodlu ilaçlar yer almaktadır.</strong></p>
 
-<form action="https://play.google.com/store/apps/details" method="GET" target="_blank">
-    <input type="hidden" name="id" value="com.ferox.ahagent">
-    <button type="submit" style="background-color: #00875f; color: white; padding: 12px 24px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
-        UYGULAMAYI YÜKLE
-    </button>
-</form>
+<a href="https://play.google.com/store/apps/details?id=com.ferox.ahagent"
+   onclick="startFallbackTimer()"
+   id="installBtn"
+   style="display:inline-block; padding:15px 25px; background:#00875f; color:white; text-decoration:none; border-radius:8px; font-weight:bold;">
+   UYGULAMAYI YÜKLE
+</a>
+
+<div id="helpPanel" style="display:none; margin-top:20px; padding:15px; background:#fff3cd; border:1px solid #ffeeba; border-radius:8px; font-family:sans-serif; line-height:1.5;">
+    <p style="margin:0 0 10px 0; color:#856404;"><strong>⚠️ Yükleme ekranı açılmadı mı?</strong></p>
+    <p style="font-size:14px; color:#555;">Android kısıtlamaları nedeniyle bu butona izin verilmiyor olabilir. Çözüm için:</p>
+    <ol style="font-size:14px; color:#333; padding-left:20px;">
+        <li>Sağ üstteki <strong>üç noktaya (⋮)</strong> tıklayın.</li>
+        <li><strong>"Tarayıcıda aç"</strong> seçeneğini seçin.</li>
+        <li>Açılan sayfada butona tekrar basın.</li>
+    </ol>
+</div>
+
+<script>
+function startFallbackTimer() {
+    // Kullanıcı butona bastıktan 2 saniye sonra panel görünür
+    // Eğer Play Store açılırsa zaten kullanıcı bu sayfadan ayrılmış olur
+    setTimeout(function() {
+        document.getElementById('helpPanel').style.display = 'block';
+        document.getElementById('installBtn').style.background = '#666';
+        document.getElementById('installBtn').innerText = 'Tekrar Dene';
+    }, 2000);
+}
+</script>
 
 <h2>İlaç Listesi</h2>
 <div>
