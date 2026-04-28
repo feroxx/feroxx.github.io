@@ -475,7 +475,7 @@
       <!-- Paneller (ARIA) -->
       <div id="panel-age" role="tabpanel" aria-labelledby="tab-age">
       </div>
-      <div id="panel-start" role="tabpanel" aria-labelledby="tab-start" hidden>
+      <div id="panel-start" role="tabpanel" aria-labelledby="tab-start">
       </div>
 
       <!-- Girdi -->
@@ -995,6 +995,10 @@ class VaccineScheduler {
         age:   document.getElementById('tab-age'),
         start: document.getElementById('tab-start')
       },
+	  panels: {
+        age: document.getElementById('panel-age'),
+        start: document.getElementById('panel-start')
+      },
       input: {
         field:  document.getElementById('age-input'),
         unit:   document.getElementById('unit-select'),
@@ -1002,6 +1006,7 @@ class VaccineScheduler {
         hint:   document.getElementById('hint-text')
       },
       results: document.getElementById('results'),
+	  calculateBtn: document.getElementById('calculate-btn'),
       // Radio seçici
       menacwyRadios: document.querySelectorAll('input[name="menacwy"]')
     };
@@ -1722,25 +1727,34 @@ class VaccineScheduler {
 }
 
 // Başlat
-let app;
-document.addEventListener('DOMContentLoaded', function() {
-  app = new VaccineScheduler();
+// Uygulama Başlatma Modülü (Initialization)
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const app = new VaccineScheduler();
 
-  // Tab buttons
-  var tabAge = document.getElementById('tab-age-btn');
-  var tabStart = document.getElementById('tab-start-btn');
-  var calcBtn = document.getElementById('calculate-btn');
+    // DOM Elementlerini Cache'leme (Performans ve okunabilirlik için)
+    const uiElements = {
+      tabAge: document.getElementById('tab-age'),
+      tabStart: document.getElementById('tab-start'),
+      calcBtn: document.getElementById('calculate-btn')
+    };
 
-  if (tabAge) tabAge.addEventListener('click', function() { app.setMode('age'); });
-  if (tabStart) tabStart.addEventListener('click', function() { app.setMode('start'); });
-  if (calcBtn) calcBtn.addEventListener('click', function() { app.calculate(); });
-
-  // PDF button — dynamically rendered, use event delegation
-  document.addEventListener('click', function(e) {
-    if (e.target && (e.target.id === 'save-pdf-btn' || e.target.closest('#save-pdf-btn'))) {
-      app.savePDF();
+    // Event Listener Bağlamaları (Güvenli atama)
+    if (uiElements.tabAge) {
+      uiElements.tabAge.addEventListener('click', () => app.setMode('age'));
     }
-  });
+
+    if (uiElements.tabStart) {
+      uiElements.tabStart.addEventListener('click', () => app.setMode('start'));
+    }
+
+    if (uiElements.calcBtn) {
+      uiElements.calcBtn.addEventListener('click', () => app.calculate());
+    }
+
+  } catch (error) {
+    console.error("Uygulama başlatılırken bir hata oluştu:", error);
+  }
 });
 </script>
 </body>
