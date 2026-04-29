@@ -97,7 +97,6 @@
   }
   .header__icon svg { width: 32px; height: 32px; color: white; }
   .header h1 {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-weight: 700;
     font-size: clamp(1.5rem, 5vw, 2rem);
     font-weight: 700; color: var(--gray-900);
     margin-bottom: 0.5rem; letter-spacing: -0.02em;
@@ -271,7 +270,7 @@
     border-radius: var(--radius-lg); margin-bottom: 1.5rem;
     box-shadow: var(--shadow-md);
   }
-  .results-header h2 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 1.125rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .results-header h2 { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.25rem; }
   .results-header p { font-size: 0.875rem; opacity: 0.9; }
 
   /* ─── Vaccine Cards ─── */
@@ -308,7 +307,7 @@
   .vaccine-badge--menactra  { background: #e0f2fe; color: #0369a1; }
   .vaccine-badge--menquadfi { background: #ffe4e6; color: #be123c; }
 
-  .vaccine-name { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-weight: 700; font-size: 1.125rem; font-weight: 700; color: var(--gray-900); }
+  .vaccine-name { font-weight: 700; font-size: 1.125rem; color: var(--gray-900); }
   .vaccine-dose-count {
     font-size: 0.8rem; font-weight: 700; color: var(--gray-500);
     background: var(--gray-100); border: 1px solid var(--gray-200);
@@ -464,10 +463,10 @@
 
       <!-- Sekmeler -->
       <nav class="tabs" role="tablist" aria-label="Hesaplama modu seçimi">
-        <button class="tab active" id="tab-age" role="tab" aria-selected="true" aria-controls="panel-age" id="tab-age-btn">
+        <button class="tab active" id="tab-age" role="tab" aria-selected="true" aria-controls="panel-age">
           <span>Kişinin Yaşına Göre</span>
         </button>
-        <button class="tab" id="tab-start" role="tab" aria-selected="false" aria-controls="panel-start" id="tab-start-btn">
+        <button class="tab" id="tab-start" role="tab" aria-selected="false" aria-controls="panel-start">
           <span>Başlangıç Zamanına Göre</span>
         </button>
       </nav>
@@ -1478,6 +1477,11 @@ class VaccineScheduler {
     `;
 
     this.elements.results.innerHTML = html;
+
+    // PDF butonuna listener bağla — innerHTML sonrası DOM'a eklendiği için burada yapılmalı
+    const pdfBtn = document.getElementById('save-pdf-btn');
+    if (pdfBtn) pdfBtn.addEventListener('click', () => this.savePDF());
+
     // Sadece ilk hesaplamada scroll; radio değişiminde scroll olmaz
     if (scrollToResults) {
       this.elements.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1573,14 +1577,15 @@ class VaccineScheduler {
 
   /* ─── PDF ─── */
   savePDF() {
-    // Bug #10: jsPDF guard
-    if (!window.jspdf) {
+    // jsPDF UMD bundle window.jspdf olarak expose eder
+    const jspdfLib = window.jspdf;
+    if (!jspdfLib || !jspdfLib.jsPDF) {
       this.showError('PDF kütüphanesi yüklenemedi. Lütfen internet bağlantınızı kontrol edin.');
       return;
     }
     if (!this.state.lastCalculation) return;
 
-    const { jsPDF } = window.jspdf;
+    const { jsPDF } = jspdfLib;
     const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
 
     const margin       = 20;
@@ -1726,34 +1731,17 @@ class VaccineScheduler {
   }
 }
 
-// Başlat
-// Uygulama Başlatma Modülü (Initialization)
+// Uygulama başlatma
 document.addEventListener('DOMContentLoaded', () => {
   try {
     const app = new VaccineScheduler();
 
-    // DOM Elementlerini Cache'leme (Performans ve okunabilirlik için)
-    const uiElements = {
-      tabAge: document.getElementById('tab-age'),
-      tabStart: document.getElementById('tab-start'),
-      calcBtn: document.getElementById('calculate-btn')
-    };
-
-    // Event Listener Bağlamaları (Güvenli atama)
-    if (uiElements.tabAge) {
-      uiElements.tabAge.addEventListener('click', () => app.setMode('age'));
-    }
-
-    if (uiElements.tabStart) {
-      uiElements.tabStart.addEventListener('click', () => app.setMode('start'));
-    }
-
-    if (uiElements.calcBtn) {
-      uiElements.calcBtn.addEventListener('click', () => app.calculate());
-    }
+    document.getElementById('tab-age')?.addEventListener('click', () => app.setMode('age'));
+    document.getElementById('tab-start')?.addEventListener('click', () => app.setMode('start'));
+    document.getElementById('calculate-btn')?.addEventListener('click', () => app.calculate());
 
   } catch (error) {
-    console.error("Uygulama başlatılırken bir hata oluştu:", error);
+    console.error('Uygulama başlatılırken bir hata oluştu:', error);
   }
 });
 </script>
