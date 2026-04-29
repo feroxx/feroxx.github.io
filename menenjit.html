@@ -511,7 +511,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            MenACWY Aşısı Seçimi (ikisinden biri yapılır)
+            MenACWY Aşısı Seçimi (Dördünden biri yapılır)
           </div>
           <div class="vaccine-selector__options">
             <div class="vaccine-option">
@@ -1451,7 +1451,7 @@ class VaccineScheduler {
 
       <div class="vaccine-section">
         <div class="section-label">Her Zaman Yapılacak</div>
-        ${this.renderVaccineCard('bexsero', 'Bexsero', 'MenB', schedules.bexsero)}
+        ${this.renderVaccineCard('Bexsero', 'Bexsero', 'MenB', schedules.bexsero)}
       </div>
 
       <div class="vaccine-section">
@@ -1617,7 +1617,7 @@ class VaccineScheduler {
     doc.setTextColor(100, 100, 100);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
-    doc.text(tr(`bexsero (MenB) + ${menLabel} (MenACWY)`), margin, y);
+    doc.text(tr(`Bexsero (MenB) + ${menLabel} (MenACWY)`), margin, y);
     y += 6;
 
     // ── Oluşturma tarihi (erken, başlığın hemen altında)
@@ -1649,7 +1649,7 @@ class VaccineScheduler {
 
     // ── Aşı kartları
     const vaccines = [
-      { name: 'bexsero', group: 'MenB',    key: 'bexsero', color: [168, 85, 247] },
+      { name: 'Bexsero', group: 'MenB',    key: 'bexsero', color: [168, 85, 247] },
       {
         name:  menLabel,
         group: 'MenACWY',
