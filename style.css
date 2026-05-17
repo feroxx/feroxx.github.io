@@ -1,140 +1,334 @@
-/* Genel Ayarlar ve Değişkenler */
+/* ==========================================================================
+   1. VARIABLES & RESET
+   ========================================================================== */
 :root {
-    --primary-color: #007bff; /* HYP Blue - Vurgu Rengi */
-    --primary-hover: #0056b3;
-    --text-color: #333;
-    --background-color: #ffffff;
-    --light-gray: #f8f9fa;
-    --warning-bg: #fff3cd; /* Yasal uyarı için sarı arka plan */
-    --warning-text: #856404; /* Yasal uyarı için koyu metin */
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #0f172a;
+    --text-color: #334155;
+    --text-light: #64748b;
+    --bg-light: #f8fafc;
+    --card-bg: #ffffff;
+    --warning-bg: #fffbeb;
+    --warning-border: #fef3c7;
+    --warning-text: #b45309;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Temel Sıfırlama ve Font */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, yaygın font */
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--background-color);
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* --- Sayfa Yapısı --- */
-
-header {
-    text-align: center;
-    padding: 40px 20px 20px;
-    background-color: var(--light-gray);
-    border-bottom: 1px solid #ddd;
-}
-
-main {
-    max-width: 800px;
-    margin: 0 auto; /* Sayfayı ortalar */
-    padding: 30px 20px;
-}
-
-footer {
-    padding: 30px 20px;
-    background-color: #f1f1f1;
-    text-align: center;
-    border-top: 1px solid #e0e0e0;
-}
-
-/* --- Başlıklar --- */
-h1 {
-    color: var(--primary-hover);
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-h2 {
+body {
+    font-family: var(--font-stack);
+    background-color: var(--bg-light);
     color: var(--text-color);
-    border-bottom: 2px solid #eee;
-    padding-bottom: 8px;
-    margin-top: 30px;
-    font-size: 1.7em;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* --- İndirme Butonları (CTA) --- */
+/* ==========================================================================
+   2. LAYOUT & CONTAINERS
+   ========================================================================== */
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ==========================================================================
+   3. HEADER SECTION
+   ========================================================================== */
+header {
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent), var(--card-bg);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 60px 0 40px 0;
+    text-align: center;
+}
+
+.header-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--secondary-color);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+header h1 .ampersand {
+    color: var(--primary-color);
+    font-weight: 400;
+}
+
+header h1 .platform {
+    background: linear-gradient(to right, #2563eb, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header .tagline {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-top: 12px;
+    font-weight: 500;
+}
+
 .download-buttons {
-    margin-top: 30px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 20px; /* Butonlar arasındaki boşluk */
-    flex-wrap: wrap; 
+    gap: 16px;
+    margin-top: 32px;
+    flex-wrap: wrap;
 }
 
-.download-buttons img {
-    width: 180px;
-    height: auto;
-    transition: transform 0.2s; /* Hafif animasyon */
+.btn-store {
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s;
+    border-radius: 8px;
+    overflow: hidden;
+    display: inline-flex;
 }
 
-.download-buttons a:hover img {
-    transform: scale(1.05);
+.btn-store:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
 }
 
-/* --- Özellikler Listesi --- */
-.features ul {
-    list-style: none;
-    padding-left: 0;
+.btn-store:active {
+    transform: translateY(0);
 }
 
-.features li {
-    margin-bottom: 15px;
-    padding-left: 35px;
-    position: relative;
+/* ==========================================================================
+   4. MAIN CONTENT & CARDS
+   ========================================================================== */
+main {
+    padding: 40px 0;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1px solid #edf2f7;
+    box-shadow: var(--shadow-md);
+}
+
+.app-description {
+    margin-bottom: 40px;
+}
+
+.app-description h2 {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.app-description p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   5. FEATURES GRID (Senior UI Improvement)
+   ========================================================================== */
+.features h2 {
+    font-size: 1.75rem;
+    color: var(--secondary-color);
+    margin-bottom: 24px;
+    font-weight: 700;
     text-align: left;
 }
 
-.features li::before {
-    content: '✅'; /* Modern tik işareti */
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 1.2em;
+/* Esas düz liste yapısını, taraması kolay modern kartlı grid yapısına çevirdik */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
 }
 
-/* --- Yasal Uyarı Bölümü --- */
+.feature-item {
+    background-color: var(--card-bg);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+
+.feature-item:hover {
+    border-color: #cbd5e1;
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-item h3 {
+    font-size: 1.15rem;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+/* Her özelliğin başına şık bir check ikonu (CSS ile) */
+.feature-item h3::before {
+    content: "✓";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(37, 99, 235, 0.1);
+    color: var(--primary-color);
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.feature-item p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+.opacity-8 {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   6. FOOTER & LEGAL DISCLAIMER
+   ========================================================================== */
+footer {
+    background-color: var(--card-bg);
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 0;
+    margin-top: 60px;
+}
+
 .legal-disclaimer {
     background-color: var(--warning-bg);
+    border: 1px solid var(--warning-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.disclaimer-title {
     color: var(--warning-text);
-    padding: 15px;
-    border: 1px solid #ffeeba;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 1rem;
 }
 
-.legal-disclaimer p {
-    margin: 5px 0;
-    font-size: 0.95em;
+.legal-disclaimer strong {
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
-/* --- Footer Linkleri --- */
-footer a {
+.disclaimer-text {
+    font-size: 0.875rem;
+    color: #92400e;
+    line-height: 1.6;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.footer-links a {
     color: var(--primary-color);
     text-decoration: none;
-    margin: 0 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
 }
 
-footer a:hover {
+.footer-links a:hover {
     text-decoration: underline;
 }
 
-/* --- Mobil Uyumlu Tasarım --- */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2em;
+.copyright {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE DESIGN (Media Queries)
+   ========================================================================== */
+
+/* Tablet ve Küçük Ekranlar */
+@media (max-width: 768px) {
+    header {
+        padding: 40px 0 30px 0;
+    }
+
+    header h1 {
+        font-size: 1.85rem;
+    }
+
+    header .tagline {
+        font-size: 1.05rem;
     }
 
     .download-buttons {
-        flex-direction: column; /* Mobil cihazlarda dikey hizalama */
-        gap: 15px;
+        gap: 12px;
     }
 
     .download-buttons img {
-        width: 160px;
+        width: 140px;
+        height: auto; /* Orantılı küçülme */
+    }
+
+    .card {
+        padding: 24px;
+    }
+
+    .features h2 {
+        font-size: 1.4rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr; /* Mobilde alt alta temiz listeleme */
+        gap: 16px;
+    }
+}
+
+/* Akıllı Telefonlar (Çok Küçük Ekranlar) */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.6rem;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .download-buttons {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .btn-store {
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
     }
 }
