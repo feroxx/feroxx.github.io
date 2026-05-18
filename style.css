@@ -1,28 +1,31 @@
 /* ==========================================================================
-   1. VARIABLES & RESET (Modernized Color Palette)
+   1. VARIABLES & RESET (High-Contrast Corporate Palette)
    ========================================================================== */
 :root {
-    --primary-color: #3b82f6;      /* Modern Bright Blue */
-    --primary-dark: #1d4ed8;       /* Deep Corporate Blue */
+    --primary-color: #2563eb;      /* Deeper Bright Blue */
+    --primary-dark: #1e40af;       /* Deeper Corporate Blue */
     --secondary-color: #0f172a;    /* Slate 900 (Deep Text/Headers) */
     --text-color: #334155;         /* Slate 700 (Body Text) */
-    --text-light: #64748b;        /* Slate 500 (Subtitles) */
-    --bg-light: #f8fafc;          /* Slate 50 (App Background) */
-    --card-bg: #ffffff;
+    --text-light: #64748b;         /* Slate 500 (Subtitles) */
     
-    /* Warning/Disclaimer Palette (More Professional) */
-    --warning-bg: #fff1f2;        /* Soft Rose/Amber Blend */
-    --warning-border: #ffe4e6;
+    /* UI Contrast Variables */
+    --bg-light: #f1f5f9;           /* Slate 100: Darker background to make white cards POP */
+    --card-bg: #ffffff;            /* Pure white for maximum contrast */
+    --card-border: #cbd5e1;        /* Slate 300: More defined, professional borders */
+    
+    /* Warning/Disclaimer Palette */
+    --warning-bg: #fff1f2;        
+    --warning-border: #fecdd3;
     --warning-text: #9f1239;
     
-    --radius-lg: 20px;
-    --radius-md: 14px;
+    --radius-lg: 24px;
+    --radius-md: 16px;
     
-    /* Premium Senior Shadows (Soft & Deep) */
-    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-    --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
-    --shadow-hover: 0 25px 50px -12px rgba(15, 23, 42, 0.12);
+    /* Senior Depth/Shadow Architecture */
+    --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    --shadow-hover: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
     
     --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
@@ -39,6 +42,7 @@ body {
     color: var(--text-color);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.01em;
 }
 
@@ -56,11 +60,12 @@ body {
    3. HEADER SECTION
    ========================================================================== */
 header {
-    background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 40%), 
-                radial-gradient(circle at top left, rgba(29, 78, 216, 0.03), transparent 30%),
-                var(--card-bg);
-    border-bottom: 1px solid #e2e8f0;
-    padding: 80px 0 50px 0;
+    /* Smoother gradient blending with the new darker background */
+    background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.06), transparent 40%), 
+                radial-gradient(circle at top left, rgba(30, 64, 175, 0.04), transparent 30%),
+                var(--bg-light);
+    border-bottom: 1px solid var(--card-border);
+    padding: 80px 0 60px 0;
     text-align: center;
 }
 
@@ -74,7 +79,7 @@ header h1 {
     font-weight: 800;
     color: var(--secondary-color);
     letter-spacing: -0.03em;
-    line-height: 1.15;
+    line-height: 1.2;
 }
 
 header h1 .ampersand {
@@ -84,7 +89,7 @@ header h1 .ampersand {
 }
 
 header h1 .platform {
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -97,7 +102,7 @@ header .tagline {
     letter-spacing: -0.01em;
 }
 
-/* Fixed the HTML/CSS class mismatch for buttons & enhanced UI */
+/* Store Buttons */
 .download-buttons {
     display: flex;
     justify-content: center;
@@ -113,15 +118,15 @@ header .tagline {
     display: inline-flex;
     align-items: center;
     box-shadow: var(--shadow-md);
-    background-color: #000000; /* Standard Premium Badge Background */
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .btn-store:hover, .cta-btn:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(59, 130, 246, 0.4);
-    filter: brightness(1.1);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(59, 130, 246, 0.5);
+    filter: brightness(1.05);
 }
 
 .btn-store:active, .cta-btn:active {
@@ -134,123 +139,142 @@ header .tagline {
 }
 
 /* ==========================================================================
-   4. MAIN CONTENT & CARDS (Enhanced Card UI)
+   4. MAIN CONTENT & CARDS (Highly Distinct UI)
    ========================================================================== */
 main {
-    padding: 60px 0;
+    padding: 70px 0;
 }
 
+/* Main Description Card */
 .card {
     background-color: var(--card-bg);
     border-radius: var(--radius-lg);
-    padding: 40px;
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: var(--shadow-lg); /* Made main card highly distinct */
+    padding: 48px;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-lg);
     position: relative;
     overflow: hidden;
+    margin-bottom: 60px;
 }
 
-/* Subtle premium top-border accent line for the main card */
+/* Stronger premium top-border accent */
 .card::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
-}
-
-.app-description {
-    margin-bottom: 50px;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary-dark), #60a5fa);
 }
 
 .app-description h2 {
-    font-size: 1.75rem;
+    font-size: 1.85rem;
     color: var(--secondary-color);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     font-weight: 800;
     letter-spacing: -0.02em;
 }
 
 .app-description p {
     color: var(--text-color);
-    font-size: 1.125rem;
-    line-height: 1.75;
+    font-size: 1.15rem;
+    line-height: 1.8;
 }
 
 /* ==========================================================================
-   5. FEATURES GRID (Senior Premium Grid UI)
+   5. FEATURES GRID (Distinct & Interactive Feature Cards)
    ========================================================================== */
 .features h2 {
-    font-size: 1.85rem;
+    font-size: 2rem;
     color: var(--secondary-color);
-    margin-bottom: 32px;
+    margin-bottom: 40px;
     font-weight: 800;
     letter-spacing: -0.02em;
+    text-align: center;
 }
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px; /* Increased gap for better breathing room */
 }
 
 .feature-item {
     background-color: var(--card-bg);
-    border: 1px solid rgba(226, 232, 240, 0.7);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-md);
-    padding: 28px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: var(--shadow-md); /* Clear, distinct cards */
+    padding: 32px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-md);
     position: relative;
+    overflow: hidden; /* For the bottom highlight effect */
+    z-index: 1;
 }
 
-/* Card Highlighting on Hover */
+/* Premium Bottom Highlight Line on Hover */
+.feature-item::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Highlighting and lifting the card on Hover */
 .feature-item:hover {
-    border-color: rgba(59, 130, 246, 0.3);
-    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-hover);
+    z-index: 2;
+}
+
+.feature-item:hover::after {
+    transform: scaleX(1);
 }
 
 .feature-item h3 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--secondary-color);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     font-weight: 700;
     display: flex;
     align-items: center;
     letter-spacing: -0.01em;
 }
 
-/* Premium Custom Check Icon */
 .feature-item h3::before {
     content: "✓";
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
-    background-color: rgba(59, 130, 246, 0.08);
+    width: 24px;
+    height: 24px;
+    background-color: #eff6ff; /* Very soft blue */
     color: var(--primary-color);
-    border-radius: 6px; /* Modern squircle instead of circle */
-    margin-right: 12px;
-    font-size: 0.85rem;
+    border-radius: 8px; 
+    margin-right: 14px;
+    font-size: 0.9rem;
     font-weight: 900;
     flex-shrink: 0;
-    border: 1px solid rgba(59, 130, 246, 0.15);
+    border: 1px solid #bfdbfe;
 }
 
 .feature-item p {
-    font-size: 0.975rem;
+    font-size: 1rem;
     color: var(--text-light);
-    line-height: 1.6;
+    line-height: 1.65;
 }
 
-/* Better handling for secondary cards opacity */
+/* Secondary utility cards differentiation */
 .opacity-8 {
-    background-color: rgba(255, 255, 255, 0.75);
-    border-style: dashed; /* Differentiate utility cards subtly */
+    background-color: #f8fafc; /* Slightly off-white to distinguish */
+    border-style: dashed;
 }
 
 /* ==========================================================================
@@ -258,16 +282,16 @@ main {
    ========================================================================== */
 footer {
     background-color: var(--card-bg);
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--card-border);
     padding: 60px 0 40px 0;
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 .legal-disclaimer {
     background-color: var(--warning-bg);
     border: 1px solid var(--warning-border);
     border-radius: var(--radius-md);
-    padding: 28px;
+    padding: 32px;
     margin-bottom: 40px;
     box-shadow: var(--shadow-sm);
 }
@@ -275,35 +299,38 @@ footer {
 .disclaimer-title {
     color: var(--warning-text);
     font-weight: 800;
-    margin-bottom: 10px;
-    font-size: 1.05rem;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
     letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .legal-disclaimer strong {
     color: var(--secondary-color);
     display: block;
-    margin-bottom: 8px;
-    font-size: 1rem;
+    margin-bottom: 10px;
+    font-size: 1.05rem;
 }
 
 .disclaimer-text {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--warning-text);
-    opacity: 0.9;
-    line-height: 1.65;
+    opacity: 0.95;
+    line-height: 1.7;
 }
 
 .footer-links {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .footer-links a {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.975rem;
+    font-size: 1rem;
     transition: color 0.2s;
 }
 
@@ -314,12 +341,12 @@ footer {
 
 .copyright {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--text-light);
 }
 
 /* ==========================================================================
-   7. RESPONSIVE DESIGN (Media Queries Optmized)
+   7. RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 768px) {
     header {
@@ -327,39 +354,30 @@ footer {
     }
 
     header h1 {
-        font-size: 2.1rem;
-    }
-
-    header .tagline {
-        font-size: 1.1rem;
-    }
-
-    .download-buttons {
-        gap: 14px;
-    }
-
-    main {
-        padding: 40px 0;
+        font-size: 2.2rem;
     }
 
     .card {
-        padding: 28px;
+        padding: 32px;
     }
 
     .features h2 {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 1.6rem;
     }
 
     .features-grid {
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 20px;
+    }
+    
+    .feature-item {
+        padding: 24px;
     }
 }
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.75rem;
+        font-size: 1.85rem;
     }
 
     .container {
@@ -374,7 +392,7 @@ footer {
 
     .btn-store, .cta-btn {
         width: 100%;
-        max-width: 220px;
+        max-width: 240px;
         justify-content: center;
     }
 }
