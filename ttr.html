@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birinci Basamak Tanı ve Tedavi Rehberi 2026</title>
+<meta name="description" content="T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Tanı ve Tedavi Rehberleri 2026">
+<style>
+/* ─── Design Tokens ───────────────────────────────────────── */
+:root {
+  --ink:       #0f1923;
+  --ink-soft:  #3d5166;
+  --ink-muted: #7a8fa3;
+  --bg:        #f7f9fc;
+  --bg-card:   #ffffff;
+  --bg-alt:    #edf2f7;
+  --accent:    #005a9e;
+  --accent-lt: #dbeafe;
+  --accent-dk: #003d73;
+  --green:     #0e7c5b;
+  --green-lt:  #d1fae5;
+  --amber:     #b45309;
+  --amber-lt:  #fef3c7;
+  --red:       #be3535;
+  --red-lt:    #fee2e2;
+  --border:    #dde4ed;
+  --radius:    6px;
+  --shadow:    0 1px 3px rgba(0,0,0,.08), 0 1px 1px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.10);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ─── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { cursor: pointer; font-family: inherit; }
+
+/* ─── Layout ──────────────────────────────────────────────── */
+#app { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ─── Top Bar ─────────────────────────────────────────────── */
+#topbar {
+  background: var(--accent-dk);
+  color: #fff;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+#topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#topbar-logo svg { opacity: .9; }
+#topbar-logo span.year {
+  background: rgba(255,255,255,.18);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+#search-wrap {
+  flex: 1;
+  max-width: 540px;
+  position: relative;
+}
+#search-input {
+  width: 100%;
+  padding: .5rem .75rem .5rem 2.2rem;
+  border: none;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.15);
+  color: #fff;
+  font-size: .875rem;
+  outline: none;
+  transition: background .15s;
+}
+#search-input::placeholder { color: rgba(255,255,255,.55); }
+#search-input:focus { background: rgba(255,255,255,.25); }
+#search-icon {
+  position: absolute;
+  left: .6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: .7;
+  pointer-events: none;
+}
+#search-clear {
+  position: absolute;
+  right: .5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.6);
+  font-size: 1rem;
+  line-height: 1;
+  display: none;
+  padding: 2px 4px;
+}
+#search-clear.visible { display: block; }
+#search-clear:hover { color: #fff; }
+
+/* ─── Main Content Area ───────────────────────────────────── */
+#main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  height: calc(100vh - 56px);
+}
+
+/* ─── Sidebar ─────────────────────────────────────────────── */
+#sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#sidebar-header {
+  padding: .875rem 1rem .5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+#cat-tabs {
+  display: flex;
+  gap: 4px;
+}
+.cat-tab {
+  flex: 1;
+  padding: .35rem .4rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  transition: all .15s;
+}
+.cat-tab:hover { border-color: var(--accent); color: var(--accent); }
+.cat-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+#sidebar-count {
+  font-size: .72rem;
+  color: var(--ink-muted);
+  padding: .4rem 1rem .2rem;
+}
+#sidebar-list {
+  flex: 1;
+  padding: .25rem 0 1rem;
+}
+.sidebar-item {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  padding: .45rem 1rem;
+  cursor: pointer;
+  transition: background .1s;
+  border-left: 3px solid transparent;
+  user-select: none;
+}
+.sidebar-item:hover { background: var(--bg-alt); }
+.sidebar-item.active {
+  background: var(--accent-lt);
+  border-left-color: var(--accent);
+}
+.sidebar-item .item-num {
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 44px;
+  flex-shrink: 0;
+}
+.sidebar-item .item-title {
+  font-size: .8rem;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.sidebar-item.depth-1 .item-title { font-weight: 600; }
+.sidebar-item.depth-2 .item-title { font-weight: 500; }
+.sidebar-item.depth-3 .item-title { font-weight: 400; color: var(--ink-soft); }
+.sidebar-item.depth-4 { padding-left: 1.5rem; }
+.sidebar-item.depth-4 .item-title { font-size: .75rem; color: var(--ink-muted); }
+
+/* ─── Detail Pane ─────────────────────────────────────────── */
+#detail {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 2.5rem;
+  max-width: 860px;
+}
+
+/* ─── Welcome Screen ──────────────────────────────────────── */
+#welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: 1rem;
+}
+#welcome .emblem {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dk) 100%);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto .5rem;
+  box-shadow: 0 8px 24px rgba(0,90,158,.25);
+}
+#welcome h1 { font-size: 1.5rem; font-weight: 700; color: var(--ink); }
+#welcome p { font-size: .9rem; color: var(--ink-soft); max-width: 360px; }
+#welcome .stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: .5rem;
+}
+#welcome .stat { text-align: center; }
+#welcome .stat .n { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+#welcome .stat .l { font-size: .72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; }
+
+/* ─── Section Content ─────────────────────────────────────── */
+#section-content { display: none; }
+#section-content.visible { display: block; }
+
+.section-breadcrumb {
+  font-size: .75rem;
+  color: var(--ink-muted);
+  margin-bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  flex-wrap: wrap;
+}
+.section-breadcrumb span { color: var(--ink-muted); }
+.section-breadcrumb a { color: var(--accent); }
+
+.section-badge {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-bottom: .6rem;
+}
+.section-badge.semptomlar { background: var(--amber-lt); color: var(--amber); }
+.section-badge.hastaliklar { background: var(--accent-lt); color: var(--accent-dk); }
+.section-badge.koruyucu { background: var(--green-lt); color: var(--green); }
+
+.section-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: .3rem;
+}
+.section-header .section-meta {
+  font-size: .78rem;
+  color: var(--ink-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* ─── Subsection cards ────────────────────────────────────── */
+.subsection {
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.subsection-header {
+  padding: .65rem 1rem;
+  background: var(--bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  transition: background .1s;
+}
+.subsection-header:hover { background: #e2eaf4; }
+.subsection-title {
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.subsection-icon { font-size: .9rem; }
+.subsection-chevron {
+  color: var(--ink-muted);
+  transition: transform .2s;
+  font-size: .75rem;
+}
+.subsection.open .subsection-chevron { transform: rotate(90deg); }
+.subsection-body {
+  padding: 1rem;
+  background: var(--bg-card);
+  display: none;
+  font-size: .875rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.subsection.open .subsection-body { display: block; }
+
+/* Text styling in subsection bodies */
+.subsection-body p { margin-bottom: .6rem; }
+.subsection-body ul, .subsection-body ol {
+  padding-left: 1.4rem;
+  margin-bottom: .6rem;
+}
+.subsection-body li { margin-bottom: .25rem; }
+.subsection-body .diamond-list { list-style: none; padding-left: .5rem; }
+.subsection-body .diamond-list li::before {
+  content: "◇";
+  color: var(--accent);
+  margin-right: .4rem;
+  font-size: .75em;
+}
+.subsection-body strong { color: var(--ink); }
+
+/* Alarm / sevk — özel stil */
+.alarm-box {
+  background: var(--red-lt);
+  border: 1px solid #fca5a5;
+  border-radius: var(--radius);
+  padding: .75rem 1rem;
+  margin-bottom: .75rem;
+}
+.alarm-box .alarm-title {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: .4rem;
+}
+
+/* ─── Full text fallback ──────────────────────────────────── */
+.full-text-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  font-size: .875rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ─── Search results ──────────────────────────────────────── */
+#search-results {
+  display: none;
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(100% + 4px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 200;
+}
+#search-results.open { display: block; }
+.result-item {
+  padding: .65rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+}
+.result-item:last-child { border-bottom: none; }
+.result-item:hover { background: var(--bg-alt); }
+.result-num { font-size: .68rem; font-weight: 700; color: var(--ink-muted); }
+.result-title { font-size: .875rem; font-weight: 600; color: var(--ink); }
+.result-preview { font-size: .75rem; color: var(--ink-muted); margin-top: 2px; line-height: 1.4; }
+.result-badge { font-size: .65rem; font-weight: 700; text-transform: uppercase;
+  padding: 1px 5px; border-radius: 2px; vertical-align: middle; margin-left: 4px; }
+.result-badge.semptomlar { background: var(--amber-lt); color: var(--amber); }
+.result-badge.hastaliklar { background: var(--accent-lt); color: var(--accent-dk); }
+.result-badge.koruyucu { background: var(--green-lt); color: var(--green); }
+
+/* ─── Loading spinner ─────────────────────────────────────── */
+.spinner {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .6s linear infinite;
+  margin: 2rem auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #main { flex-direction: column; height: auto; overflow: visible; }
+  #sidebar {
+    width: 100%;
+    height: 260px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  #detail { padding: 1.25rem 1rem; }
+  #topbar-logo span:not(.year) { display: none; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ── Top Bar ───────────────────────────────────────────────── -->
+<nav id="topbar">
+  <div id="topbar-logo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+    </svg>
+    <span>Birinci Basamak Rehberi</span>
+    <span class="year">2026</span>
+  </div>
+  <div id="search-wrap">
+    <svg id="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input id="search-input" type="search" placeholder="Hastalık veya semptom ara…" autocomplete="off" spellcheck="false">
+    <button id="search-clear" title="Temizle">✕</button>
+    <div id="search-results"></div>
+  </div>
+</nav>
+
+<!-- ── Main ──────────────────────────────────────────────────── -->
+<div id="main">
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div id="sidebar-header">
+      <div id="cat-tabs">
+        <button class="cat-tab active" data-cat="all">Tümü</button>
+        <button class="cat-tab" data-cat="semptomlar">Semptom</button>
+        <button class="cat-tab" data-cat="hastaliklar">Hastalık</button>
+        <button class="cat-tab" data-cat="koruyucu">Koruyucu</button>
+      </div>
+    </div>
+    <div id="sidebar-count"></div>
+    <div id="sidebar-list"></div>
+  </aside>
+
+  <!-- Detail -->
+  <main id="detail">
+    <!-- Welcome -->
+    <div id="welcome">
+      <div class="emblem">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+      </div>
+      <h1>Tanı ve Tedavi Rehberi 2026</h1>
+      <p>T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Klinik Rehber</p>
+      <div class="stats">
+        <div class="stat"><div class="n" id="stat-total">—</div><div class="l">Bölüm</div></div>
+        <div class="stat"><div class="n" id="stat-symptoms">—</div><div class="l">Semptom</div></div>
+        <div class="stat"><div class="n" id="stat-diseases">—</div><div class="l">Hastalık</div></div>
+        <div class="stat"><div class="n" id="stat-pages">1054</div><div class="l">Sayfa</div></div>
+      </div>
+    </div>
+
+    <!-- Section Detail -->
+    <div id="section-content">
+      <div id="section-inner"></div>
+    </div>
+  </main>
+</div>
+</div>
+
+<script>
+// ── State ────────────────────────────────────────────────────
+let INDEX = [];
+let activeCat = 'all';
+let activeId = null;
+let searchDebounce = null;
+const cache = {};
+
+// ── Bootstrap ────────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('data/search_index.json');
+    INDEX = await res.json();
+  } catch(e) {
+    // fallback for file:// protocol - show error
+    document.getElementById('welcome').innerHTML = 
+      '<p style="color:var(--red)">⚠ Yerel dosya erişimi için bir HTTP sunucusu gerekli.<br><code>python3 -m http.server 8080</code> ile başlatın.</p>';
+    return;
+  }
+
+  // Stats
+  const sem = INDEX.filter(s => s.category === 'semptomlar').length;
+  const has = INDEX.filter(s => s.category === 'hastaliklar').length;
+  document.getElementById('stat-total').textContent = INDEX.length;
+  document.getElementById('stat-symptoms').textContent = sem;
+  document.getElementById('stat-diseases').textContent = has;
+
+  renderSidebar();
+  setupSearch();
+  setupCatTabs();
+  
+  // URL hash navigation
+  if (location.hash) {
+    const id = decodeURIComponent(location.hash.slice(1));
+    setTimeout(() => loadSection(id), 100);
+  }
+}
+
+// ── Sidebar ──────────────────────────────────────────────────
+function renderSidebar(filter = null) {
+  const list = document.getElementById('sidebar-list');
+  const countEl = document.getElementById('sidebar-count');
+  
+  let items = INDEX;
+  if (activeCat !== 'all') items = items.filter(s => s.category === activeCat);
+  if (filter) {
+    const q = filter.toLowerCase();
+    items = items.filter(s =>
+      s.title.toLowerCase().includes(q) ||
+      s.num.includes(q)
+    );
+  }
+
+  countEl.textContent = `${items.length} bölüm`;
+
+  list.innerHTML = items.map(s => `
+    <div class="sidebar-item depth-${s.depth} ${s.id === activeId ? 'active' : ''}"
+         data-id="${s.id}" onclick="loadSection('${s.id}')">
+      <span class="item-num">${s.num}</span>
+      <span class="item-title">${s.title}</span>
+    </div>
+  `).join('');
+}
+
+// ── Category Tabs ─────────────────────────────────────────────
+function setupCatTabs() {
+  document.querySelectorAll('.cat-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCat = btn.dataset.cat;
+      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSidebar();
+    });
+  });
+}
+
+// ── Load Section ─────────────────────────────────────────────
+async function loadSection(id) {
+  activeId = id;
+  
+  // Update sidebar active state
+  document.querySelectorAll('.sidebar-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === id);
+  });
+
+  // Scroll sidebar item into view
+  const activeEl = document.querySelector(`.sidebar-item[data-id="${id}"]`);
+  if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+  // Show loading
+  document.getElementById('welcome').style.display = 'none';
+  const content = document.getElementById('section-content');
+  const inner = document.getElementById('section-inner');
+  content.classList.add('visible');
+  inner.innerHTML = '<div class="spinner"></div>';
+
+  // Fetch section data
+  let data;
+  if (cache[id]) {
+    data = cache[id];
+  } else {
+    try {
+      const res = await fetch(`data/${id}.json`);
+      data = await res.json();
+      cache[id] = data;
+    } catch(e) {
+      inner.innerHTML = '<p style="color:var(--red)">Bölüm yüklenemedi.</p>';
+      return;
+    }
+  }
+
+  // Render
+  inner.innerHTML = renderSection(data);
+  
+  // Update URL
+  history.replaceState(null, '', `#${encodeURIComponent(id)}`);
+  
+  // Auto-open first subsection
+  const first = inner.querySelector('.subsection');
+  if (first) toggleSubsection(first);
+}
+
+// ── Render Section ────────────────────────────────────────────
+const SUBSECTION_ICONS = {
+  'Tanım': '📋', 'Tanı': '🔍', 'Tanı Kriterleri': '✅',
+  'Etiyoloji': '🔬', 'Epidemiyoloji': '📊', 'Risk Faktörleri': '⚠️',
+  'Klinik Bulgular': '🩺', 'Tedavi': '💊', 'Tedavi Prensipleri': '💊',
+  'Farmakolojik Tedavi': '💊', 'Non-farmakolojik Tedavi': '🏃',
+  'Anamnez': '📝', 'Fizik Muayene': '🩺',
+  'Laboratuvar': '🧪', 'Laboratuvar Testleri': '🧪',
+  'Görüntüleme': '🖼️', 'Görüntüleme Yöntemleri': '🖼️',
+  'Alarm Bulguları': '🚨', 'Alarm Bulguları / Sevk Kriterleri': '🚨',
+  'Sevk Kriterleri': '🚨', 'Algoritma': '📐',
+  'Güncel Kılavuzlar': '📚', 'Kaynakça': '📚',
+  'Ayırıcı Tanı': '↔️', 'Komplikasyonlar': '⚡', 'Önleme': '🛡️',
+  'Takip': '📅', 'İzlem': '📅',
+};
+
+function renderSection(data) {
+  const catLabel = {
+    semptomlar: 'Semptomlar ve Bulgular',
+    hastaliklar: 'Hastalıklara Yaklaşım',
+    koruyucu: 'Koruyucu Sağlık',
+  }[data.category] || '';
+
+  const sub = data.subsections || {};
+  const hasSubsections = Object.keys(sub).length > 0;
+
+  let subsHtml = '';
+  if (hasSubsections) {
+    for (const [heading, body] of Object.entries(sub)) {
+      const icon = SUBSECTION_ICONS[heading] || '•';
+      const isAlarm = heading.includes('Alarm') || heading.includes('Sevk');
+      const formatted = formatBody(body, isAlarm);
+      subsHtml += `
+        <div class="subsection" onclick="toggleSubsection(this)">
+          <div class="subsection-header">
+            <div class="subsection-title">
+              <span class="subsection-icon">${icon}</span>
+              ${heading}
+            </div>
+            <span class="subsection-chevron">▶</span>
+          </div>
+          <div class="subsection-body">${formatted}</div>
+        </div>`;
+    }
+  } else if (data.full_text) {
+    subsHtml = `<div class="full-text-wrap">${escHtml(data.full_text)}</div>`;
+  }
+
+  return `
+    <div class="section-breadcrumb">
+      <a href="#" onclick="showWelcome()">Ana Sayfa</a>
+      <span>/</span>
+      <span>${catLabel}</span>
+      <span>/</span>
+      <span>${data.num}</span>
+    </div>
+    <div class="section-header">
+      <div class="section-badge ${data.category}">${catLabel}</div>
+      <h2>${data.title}</h2>
+      <div class="section-meta">
+        Rehber Sayfa ${data.pdf_page}
+        &nbsp;·&nbsp;
+        ${data.word_count?.toLocaleString('tr-TR')} kelime
+      </div>
+    </div>
+    ${subsHtml}
+  `;
+}
+
+function formatBody(text, isAlarm) {
+  if (!text) return '';
+  
+  // Escape first
+  let html = escHtml(text);
+  
+  // Diamond bullets (◊) → styled list items
+  if (html.includes('◊') || html.includes('◇')) {
+    const lines = html.split('\n');
+    const out = [];
+    let inList = false;
+    for (const line of lines) {
+      const s = line.trim();
+      if (s.startsWith('◊') || s.startsWith('◇')) {
+        if (!inList) { out.push('<ul class="diamond-list">'); inList = true; }
+        out.push(`<li>${s.replace(/^[◊◇]\s*/, '')}</li>`);
+      } else {
+        if (inList) { out.push('</ul>'); inList = false; }
+        if (s) out.push(`<p>${s}</p>`);
+        else out.push('');
+      }
+    }
+    if (inList) out.push('</ul>');
+    html = out.join('\n');
+  } else {
+    // Simple paragraphs
+    html = html
+      .split(/\n{2,}/)
+      .filter(Boolean)
+      .map(p => `<p>${p.replace(/\n/g, ' ')}</p>`)
+      .join('\n');
+  }
+
+  if (isAlarm) {
+    return `<div class="alarm-box"><div class="alarm-title">⚠ Dikkat / Sevk Kriterleri</div>${html}</div>`;
+  }
+  return html;
+}
+
+function escHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function toggleSubsection(el) {
+  el.classList.toggle('open');
+}
+
+function showWelcome() {
+  activeId = null;
+  document.getElementById('welcome').style.display = '';
+  document.getElementById('section-content').classList.remove('visible');
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  history.replaceState(null, '', location.pathname);
+}
+
+// ── Search ────────────────────────────────────────────────────
+function setupSearch() {
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  const clearBtn = document.getElementById('search-clear');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    clearBtn.classList.toggle('visible', q.length > 0);
+    clearTimeout(searchDebounce);
+    if (q.length < 2) { results.classList.remove('open'); return; }
+    searchDebounce = setTimeout(() => doSearch(q), 120);
+  });
+
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    clearBtn.classList.remove('visible');
+    results.classList.remove('open');
+    input.focus();
+  });
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#search-wrap')) results.classList.remove('open');
+  });
+
+  // Keyboard nav
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { results.classList.remove('open'); input.blur(); }
+  });
+}
+
+function doSearch(q) {
+  const ql = q.toLowerCase();
+  const hits = INDEX.filter(s =>
+    s.title.toLowerCase().includes(ql) ||
+    s.num.includes(q) ||
+    (s.preview && s.preview.toLowerCase().includes(ql))
+  ).slice(0, 12);
+
+  const results = document.getElementById('search-results');
+  if (!hits.length) {
+    results.innerHTML = '<div class="result-item" style="color:var(--ink-muted);cursor:default">Sonuç bulunamadı</div>';
+    results.classList.add('open');
+    return;
+  }
+
+  const highlight = (str, q) => {
+    const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return str.replace(re, '<mark style="background:var(--amber-lt);padding:0 1px">$1</mark>');
+  };
+
+  results.innerHTML = hits.map(s => `
+    <div class="result-item" onclick="selectResult('${s.id}')">
+      <div>
+        <span class="result-num">${s.num}</span>
+        <span class="result-badge ${s.category}">${
+          {semptomlar:'Semptom',hastaliklar:'Hastalık',koruyucu:'Koruyucu'}[s.category]||''
+        }</span>
+      </div>
+      <div class="result-title">${highlight(s.title, q)}</div>
+      ${s.preview ? `<div class="result-preview">${highlight(s.preview.slice(0,120), q)}…</div>` : ''}
+    </div>
+  `).join('');
+  results.classList.add('open');
+}
+
+function selectResult(id) {
+  document.getElementById('search-results').classList.remove('open');
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').classList.remove('visible');
+  
+  // Sync category tab
+  const item = INDEX.find(s => s.id === id);
+  if (item) {
+    activeCat = 'all';
+    document.querySelectorAll('.cat-tab').forEach(b => {
+      b.classList.toggle('active', b.dataset.cat === 'all');
+    });
+    renderSidebar();
+  }
+  
+  loadSection(id);
+}
+
+// ── Start ─────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
