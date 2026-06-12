@@ -291,12 +291,12 @@ body.fs-mode #fs-close { display: flex; }
   width: 44px; height: 72px; border-radius: 4px;
   align-items: center; justify-content: center;
   backdrop-filter: blur(4px);
-  transition: background .15s, opacity .15s;
+  transition: background .15s, opacity .3s;
 }
 #fs-prev { left: 8px; }
 #fs-next { right: 8px; }
 #fs-prev:hover, #fs-next:hover { background: rgba(0,0,0,.75); }
-#fs-prev:disabled, #fs-next:disabled { opacity: .2; pointer-events: none; }
+#fs-prev:disabled, #fs-next:disabled { opacity: .0 !important; pointer-events: none; }
 body.fs-mode #fs-prev,
 body.fs-mode #fs-next { display: flex; }
 
@@ -307,9 +307,19 @@ body.fs-mode #fs-next { display: flex; }
   z-index: 600; background: rgba(0,0,0,.5); color: #fff;
   font-size: .78rem; font-weight: 600; padding: 4px 14px;
   border-radius: 20px; backdrop-filter: blur(4px); pointer-events: none;
-  letter-spacing: .04em;
+  letter-spacing: .04em; transition: opacity .3s;
 }
 body.fs-mode #fs-counter { display: block; }
+
+/* Auto-hide: controls fade out when .fs-idle class is on body */
+body.fs-mode.fs-idle #fs-close,
+body.fs-mode.fs-idle #fs-prev,
+body.fs-mode.fs-idle #fs-next,
+body.fs-mode.fs-idle #fs-counter { opacity: 0 !important; pointer-events: none; }
+body.fs-mode #fs-close,
+body.fs-mode #fs-prev,
+body.fs-mode #fs-next,
+body.fs-mode #fs-counter { transition: opacity .4s; }
 
 /* ── Swipe hint (mobile) ── */
 #swipe-hint {
@@ -638,6 +648,15 @@ function selectResult(id) {
 
 // ── Fullscreen ──
 let isFullscreen = false;
+let fsIdleTimer = null;
+
+function fsResetIdle() {
+  document.body.classList.remove('fs-idle');
+  clearTimeout(fsIdleTimer);
+  fsIdleTimer = setTimeout(() => {
+    if (isFullscreen) document.body.classList.add('fs-idle');
+  }, 2500);
+}
 
 function toggleFullscreen() {
   isFullscreen = !isFullscreen;
@@ -646,14 +665,24 @@ function toggleFullscreen() {
   document.getElementById('fs-icon-shrink').style.display = isFullscreen ? '' : 'none';
   updateFsCounter();
 
-  // Show swipe hint once on mobile
-  if (isFullscreen && window.matchMedia('(pointer:coarse)').matches) {
-    const hint = document.getElementById('swipe-hint');
-    hint.style.animation = 'none';
-    void hint.offsetWidth;
-    hint.style.animation = '';
+  if (isFullscreen) {
+    fsResetIdle();
+    // Show swipe hint once on mobile
+    if (window.matchMedia('(pointer:coarse)').matches) {
+      const hint = document.getElementById('swipe-hint');
+      hint.style.animation = 'none';
+      void hint.offsetWidth;
+      hint.style.animation = '';
+    }
+  } else {
+    clearTimeout(fsIdleTimer);
+    document.body.classList.remove('fs-idle');
   }
 }
+
+// Mouse / touch movement wakes up controls in fullscreen
+document.addEventListener('mousemove', () => { if (isFullscreen) fsResetIdle(); });
+document.addEventListener('touchstart', () => { if (isFullscreen) fsResetIdle(); }, { passive: true });
 
 function updateFsCounter() {
   document.getElementById('fs-counter').textContent = `${currentPage} / ${totalPages}`;
