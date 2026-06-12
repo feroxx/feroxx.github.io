@@ -145,7 +145,18 @@ button { cursor: pointer; font-family: inherit; }
 .stats { display: flex; gap: 1.5rem; margin-top: .5rem; }
 .stat .n { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
 .stat .l { font-size: .72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; }
-
+.source-warning {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background-color: var(--amber-lt);
+  color: var(--amber);
+  border: 1px solid rgba(180, 83, 9, 0.2);
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: 500px;
+}
 /* Section viewer */
 #viewer { flex: 1; display: none; flex-direction: column; overflow: hidden; }
 #viewer.visible { display: flex; }
@@ -389,6 +400,9 @@ body.fs-mode #swipe-hint { display: block; }
         <div class="stat"><div class="n" id="stat-symptoms">—</div><div class="l">Semptom</div></div>
         <div class="stat"><div class="n" id="stat-diseases">—</div><div class="l">Hastalık</div></div>
         <div class="stat"><div class="n">1054</div><div class="l">Sayfa</div></div>
+      </div>
+	  <div class="source-warning">
+        <strong>Kaynak:</strong> Birinci Basamağa Yönelik Tanı ve Tedavi Rehberleri 2026, T.C. Sağlık Bakanlığı Halk Sağlığı Genel Müdürlüğü, 1395, Ankara, 2026
       </div>
     </div>
 
