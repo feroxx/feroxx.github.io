@@ -1,130 +1,541 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "HYP iOS ve Aile Hekimi Asistanı Android Uygulaması",
-  "description": "HYP Katsayı hesaplamaları, SINA, EKİP ve SBOS entegrasyonları ile aile hekimliği süreç ve maaş takibi için hızlı ve güvenilir mobil uygulama. Dr Ferhat Fırat tarafından geliştirilmektedir.",
-  "keywords": "hyp hesaplama, hyp katsayı hesaplama, aile hekimi maaş hesaplama, hyp mobil hesaplama, hyp uygulaması, aile hekimi asistanı, sina kht, sbos rapor, ekip bordro",
-  "applicationCategory": "ToolsApplication",
-  "operatingSystem": "ANDROID, IOS",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.7",
-    "ratingCount": "26"
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "TL"
-  },
-  "url": "https://feroxx.github.io/"
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birinci Basamak Tanı ve Tedavi Rehberi 2026</title>
+<meta name="description" content="T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Tanı ve Tedavi Rehberleri 2026">
+<style>
+:root {
+  --ink:       #0f1923;
+  --ink-soft:  #3d5166;
+  --ink-muted: #7a8fa3;
+  --bg:        #f7f9fc;
+  --bg-card:   #ffffff;
+  --bg-alt:    #edf2f7;
+  --accent:    #005a9e;
+  --accent-lt: #dbeafe;
+  --accent-dk: #003d73;
+  --green:     #0e7c5b;
+  --green-lt:  #d1fae5;
+  --amber:     #b45309;
+  --amber-lt:  #fef3c7;
+  --border:    #dde4ed;
+  --radius:    6px;
+  --shadow-md: 0 4px 12px rgba(0,0,0,.10);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HYP iOS ve Aile Hekimi Asistanı Android uygulaması ile maaş, katsayı, SINA ve hyp.saglik verilerinizi hızlıca hesaplayın ve takip edin.">
-    
-    <title>HYP iOS ve Aile Hekimi Asistanı Android Uygulaması | Mobil Uygulama</title>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+a { color: var(--accent); text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
 
-    <link rel="stylesheet" href="style.css">
+/* ── Top Bar ── */
+#topbar {
+  background: var(--accent-dk);
+  color: #fff;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+#topbar-logo {
+  display: flex; align-items: center; gap: .6rem;
+  font-size: .85rem; font-weight: 600; color: #fff;
+  white-space: nowrap; flex-shrink: 0;
+}
+#topbar-logo .year {
+  background: rgba(255,255,255,.18); border-radius: 3px;
+  padding: 1px 6px; font-size: .72rem; font-weight: 700; letter-spacing: .05em;
+}
+#search-wrap { flex: 1; max-width: 560px; position: relative; }
+#search-input {
+  width: 100%; padding: .5rem .75rem .5rem 2.2rem;
+  border: none; border-radius: var(--radius);
+  background: rgba(255,255,255,.15); color: #fff;
+  font-size: .875rem; outline: none; transition: background .15s;
+}
+#search-input::placeholder { color: rgba(255,255,255,.55); }
+#search-input:focus { background: rgba(255,255,255,.25); }
+#search-icon { position: absolute; left: .6rem; top: 50%; transform: translateY(-50%); opacity: .7; pointer-events: none; }
+#search-clear {
+  position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: rgba(255,255,255,.6);
+  font-size: 1rem; display: none; padding: 2px 4px;
+}
+#search-clear.visible { display: block; }
+#search-results {
+  display: none; position: absolute; left: 0; right: 0; top: calc(100% + 4px);
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-md);
+  max-height: 420px; overflow-y: auto; z-index: 200;
+}
+#search-results.open { display: block; }
+.result-item { padding: .65rem 1rem; cursor: pointer; border-bottom: 1px solid var(--border); transition: background .1s; }
+.result-item:last-child { border-bottom: none; }
+.result-item:hover { background: var(--bg-alt); }
+.result-num { font-size: .68rem; font-weight: 700; color: var(--ink-muted); }
+.result-title { font-size: .875rem; font-weight: 600; color: var(--ink); }
+.result-preview { font-size: .75rem; color: var(--ink-muted); margin-top: 2px; line-height: 1.4; }
+.result-badge { font-size: .65rem; font-weight: 700; text-transform: uppercase; padding: 1px 5px; border-radius: 2px; vertical-align: middle; margin-left: 4px; }
+.result-badge.semptomlar { background: var(--amber-lt); color: var(--amber); }
+.result-badge.hastaliklar { background: var(--accent-lt); color: var(--accent-dk); }
+.result-badge.koruyucu { background: var(--green-lt); color: var(--green); }
 
+/* ── Layout ── */
+#main { display: flex; height: calc(100vh - 56px); overflow: hidden; }
+
+/* ── Sidebar ── */
+#sidebar {
+  width: 300px; flex-shrink: 0;
+  background: var(--bg-card); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+#sidebar-header { padding: .875rem 1rem .5rem; border-bottom: 1px solid var(--border); background: var(--bg-card); }
+#cat-tabs { display: flex; gap: 4px; }
+.cat-tab {
+  flex: 1; padding: .35rem .4rem;
+  border: 1.5px solid var(--border); border-radius: var(--radius);
+  background: transparent; color: var(--ink-muted);
+  font-size: .72rem; font-weight: 600; letter-spacing: .02em; text-transform: uppercase;
+  transition: all .15s;
+}
+.cat-tab:hover { border-color: var(--accent); color: var(--accent); }
+.cat-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+#sidebar-count { font-size: .72rem; color: var(--ink-muted); padding: .4rem 1rem .2rem; }
+#sidebar-list { flex: 1; overflow-y: auto; padding: .25rem 0 1rem; }
+.sidebar-item {
+  display: flex; align-items: baseline; gap: .5rem;
+  padding: .45rem 1rem; cursor: pointer; transition: background .1s;
+  border-left: 3px solid transparent; user-select: none;
+}
+.sidebar-item:hover { background: var(--bg-alt); }
+.sidebar-item.active { background: var(--accent-lt); border-left-color: var(--accent); }
+.sidebar-item .item-num { font-size: .68rem; font-weight: 700; color: var(--ink-muted); min-width: 44px; flex-shrink: 0; }
+.sidebar-item .item-title { font-size: .8rem; color: var(--ink); line-height: 1.35; }
+.sidebar-item.depth-1 .item-title { font-weight: 600; }
+.sidebar-item.depth-2 .item-title { font-weight: 500; }
+.sidebar-item.depth-3 .item-title { font-weight: 400; color: var(--ink-soft); }
+.sidebar-item.depth-4 { padding-left: 1.5rem; }
+.sidebar-item.depth-4 .item-title { font-size: .75rem; color: var(--ink-muted); }
+
+/* ── Detail pane ── */
+#detail { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Welcome */
+#welcome {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; gap: 1rem; padding: 2rem;
+}
+.emblem {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dk) 100%);
+  border-radius: 16px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto .5rem; box-shadow: 0 8px 24px rgba(0,90,158,.25);
+}
+#welcome h1 { font-size: 1.5rem; font-weight: 700; }
+#welcome p { font-size: .9rem; color: var(--ink-soft); max-width: 360px; }
+.stats { display: flex; gap: 1.5rem; margin-top: .5rem; }
+.stat .n { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+.stat .l { font-size: .72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; }
+
+/* Section viewer */
+#viewer { flex: 1; display: none; flex-direction: column; overflow: hidden; }
+#viewer.visible { display: flex; }
+
+#viewer-header {
+  padding: .75rem 1.25rem;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: .75rem; flex-shrink: 0;
+}
+#viewer-back {
+  background: none; border: 1px solid var(--border);
+  border-radius: var(--radius); padding: .3rem .65rem;
+  font-size: .78rem; color: var(--ink-soft);
+  display: flex; align-items: center; gap: .3rem;
+  transition: all .15s; flex-shrink: 0;
+}
+#viewer-back:hover { background: var(--bg-alt); }
+.viewer-badge {
+  font-size: .68rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 3px; flex-shrink: 0;
+}
+.viewer-badge.semptomlar { background: var(--amber-lt); color: var(--amber); }
+.viewer-badge.hastaliklar { background: var(--accent-lt); color: var(--accent-dk); }
+.viewer-badge.koruyucu { background: var(--green-lt); color: var(--green); }
+#viewer-title { font-size: .95rem; font-weight: 700; color: var(--ink); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#viewer-pages-info { font-size: .75rem; color: var(--ink-muted); flex-shrink: 0; }
+
+/* Page navigation */
+#page-nav {
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: .5rem 1rem; background: var(--bg-card);
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.page-btn {
+  width: 32px; height: 32px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--ink); font-size: .8rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .1s;
+}
+.page-btn:hover:not(:disabled) { background: var(--accent); color: #fff; border-color: var(--accent); }
+.page-btn:disabled { opacity: .35; cursor: default; }
+.page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+#nav-prev, #nav-next {
+  padding: .3rem .75rem; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--ink-soft); font-size: .8rem;
+  transition: all .1s;
+}
+#nav-prev:hover:not(:disabled), #nav-next:hover:not(:disabled) {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+#nav-prev:disabled, #nav-next:disabled { opacity: .35; cursor: default; }
+#page-dots { display: flex; gap: 4px; align-items: center; }
+
+/* Page image display */
+#page-display {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  background: #e8ecf0; display: flex; align-items: flex-start; justify-content: center;
+  padding: 1rem;
+}
+#page-img-wrap {
+  background: white;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  border-radius: 4px;
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  max-width: 780px;
+}
+#page-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity .2s;
+}
+#page-img.loading { opacity: 0; }
+.page-loading {
+  display: flex; align-items: center; justify-content: center;
+  height: 400px; color: var(--ink-muted); font-size: .875rem; gap: .5rem;
+}
+.spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  #main { flex-direction: column; height: auto; overflow: visible; }
+  #sidebar { width: 100%; height: 220px; border-right: none; border-bottom: 1px solid var(--border); }
+  #detail { height: calc(100vh - 56px - 220px); }
+  #topbar-logo span:not(.year) { display: none; }
+  #page-display { padding: .5rem; }
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="header-container">
-            <h1>HYP iOS <span class="ampersand">&amp;</span> Aile Hekimi Asistanı <span class="platform">Android</span></h1>
-            <p class="tagline">Hesaplamalarınızı Hızlandırın ve Takip Edin!</p>
+<!-- Top Bar -->
+<nav id="topbar">
+  <div id="topbar-logo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <span>Birinci Basamak Rehberi</span>
+    <span class="year">2026</span>
+  </div>
+  <div id="search-wrap">
+    <svg id="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input id="search-input" type="search" placeholder="Hastalık veya semptom ara…" autocomplete="off" spellcheck="false">
+    <button id="search-clear" title="Temizle">✕</button>
+    <div id="search-results"></div>
+  </div>
+</nav>
 
-            <div class="download-buttons">
-    <a href="https://play.google.com/store/apps/details?id=com.ferox.ahagent&hl=tr-tr" target="_blank" class="cta-btn cta-btn-android">
-        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play'den Alın" width="165" height="64" style="margin: 4px;">
-    </a>
-    <a href="https://apps.apple.com/tr/app/hyp/id6740060539" target="_blank" class="cta-btn cta-btn-ios">
-        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/tr-tr?size=250x83" alt="App Store'dan İndirin" width="165" height="64" style="padding: 4px;">
-    </a>
-</div>
+<!-- Main -->
+<div id="main">
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div id="sidebar-header">
+      <div id="cat-tabs">
+        <button class="cat-tab active" data-cat="all">Tümü</button>
+        <button class="cat-tab" data-cat="semptomlar">Semptom</button>
+        <button class="cat-tab" data-cat="hastaliklar">Hastalık</button>
+        <button class="cat-tab" data-cat="koruyucu">Koruyucu</button>
+      </div>
+    </div>
+    <div id="sidebar-count"></div>
+    <div id="sidebar-list"></div>
+  </aside>
+
+  <!-- Detail -->
+  <div id="detail">
+
+    <!-- Welcome -->
+    <div id="welcome">
+      <div class="emblem">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <h1>Tanı ve Tedavi Rehberi 2026</h1>
+      <p>T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Klinik Rehber</p>
+      <div class="stats">
+        <div class="stat"><div class="n" id="stat-total">—</div><div class="l">Bölüm</div></div>
+        <div class="stat"><div class="n" id="stat-symptoms">—</div><div class="l">Semptom</div></div>
+        <div class="stat"><div class="n" id="stat-diseases">—</div><div class="l">Hastalık</div></div>
+        <div class="stat"><div class="n">1054</div><div class="l">Sayfa</div></div>
+      </div>
+    </div>
+
+    <!-- Page Viewer -->
+    <div id="viewer">
+      <div id="viewer-header">
+        <button id="viewer-back" onclick="showWelcome()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Geri
+        </button>
+        <span id="viewer-badge" class="viewer-badge"></span>
+        <span id="viewer-title"></span>
+        <span id="viewer-pages-info"></span>
+      </div>
+
+      <div id="page-nav">
+        <button id="nav-prev" onclick="changePage(-1)">◀ Önceki</button>
+        <div id="page-dots"></div>
+        <button id="nav-next" onclick="changePage(1)">Sonraki ▶</button>
+      </div>
+
+      <div id="page-display">
+        <div id="page-img-wrap">
+          <img id="page-img" src="" alt="Sayfa" draggable="false">
         </div>
-    </header>
+      </div>
+    </div>
 
-    <main class="container">
-        <section class="app-description card">
-            <h2>Uygulama Hakkında</h2>
-            <p><strong>HYP iOS ve Aile Hekimi Asistanı Android Uygulaması</strong>, kullanıcıların katsayı hesaplamalarını kolaylaştırmak, resmi portallardaki verileri konsolide etmek ve mobil ortamda anlık sonuçlar almak için tasarlanmış modern bir asistan uygulamasıdır. Hem Android hem de iOS platformlarında kullanılabilen bu uygulama, kullanıcı dostu arayüzü ve hızlı hesaplama motoru ile binlerce kullanıcının tercihi olmuştur.</p>
-        </section>
+  </div><!-- #detail -->
+</div><!-- #main -->
 
-        <section class="features">
-            <h2>✨ Temel Özellikler</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>Dr ve ASÇ Maaş Hesaplama</h3>
-                    <p>Hekim ve Aile Sağlığı Çalışanları için güncel mevzuata uygun net maaş hesaplamaları.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Dr ve ASÇ HYP Katsayı</h3>
-                    <p>Teşvik ve performans katsayılarının hatasız simülasyonu.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>SINA Entegrasyonu</h3>
-                    <p>SINA bağlantısı sayesinde Kronik Hastalık Takibi (KHT) verilerini tek ekranda görme kolaylığı.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>SINA ile Otomatik HYP</h3>
-                    <p>SINA bağlantısı üzerinden güncel HYP verilerini çekme ve doğrudan katsayı hesaplama.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>hyp.saglik Otizm Takibi</h3>
-                    <p>Otizm taraması yapılması gereken hasta listesini ve tarama için son yapılabilir tarihleri görebilme.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Anlık HYP Performansı</h3>
-                    <p>hyp.saglik üzerinden anlık yapılan işlem sayılarını uygulamaya aktarıp dinamik katsayı hesaplama.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Gelecek Ay Tahmin Modülü</h3>
-                    <p>hyp.saglik bağlantısı ile bir sonraki ayın tahmini verilerini analiz etme.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>EKİP Bordro Görüntüleme</h3>
-                    <p>EKİP bağlantısı entegrasyonu ile maaş bordrolarına hızlı erişim.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>SBOS Rapor Takibi</h3>
-                    <p>SBOS bağlantısı ile verilen ve ücreti ödenmiş rapor sayılarını anlık sorgulama.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Kodlu İlaç Listesi</h3>
-                    <p>SINA'da belirtilen muafiyet ve takibe tabi kodlu ilaç listesini tek tıkla inceleme.</p>
-                </div>
-                <div class="feature-item opacity-8">
-                    <h3>Kullanıcı Dostu Arayüz</h3>
-                    <p>Sezgisel ve anlaşılır tasarımı sayesinde herkesin rahatlıkla kullanabileceği deneyim.</p>
-                </div>
-                <div class="feature-item opacity-8">
-                    <h3>Offline Kullanım Desteği</h3>
-                    <p>İnternet bağlantısı olmadan da yerel verilerinizle tüm hesaplamaları yapabilme.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+<script>
+let INDEX = [];
+let activeCat = 'all';
+let activeId = null;
+let currentPage = 1;
+let totalPages = 1;
+let searchDebounce = null;
 
-    <footer>
-        <div class="container">
-            <div class="legal-disclaimer">
-                <p class="disclaimer-title">⚠️ ÖNEMLİ YASAL UYARI</p>
-                <p><strong>HYP BİR DEVLET VEYA RESMİ KURULUŞU TEMSİL ETMEMEKTEDİR.</strong></p>
-                <p class="disclaimer-text">Bu mobil uygulama; Türkiye Cumhuriyeti hükümeti, Sağlık Bakanlığı veya herhangi bir resmi kurum ile bağlantılı değildir. Hesaplamalar tamamen kullanıcıların verdiği bilgilere ve entegre edilen açık/izinli sistem verilerine dayanır, resmi bir ödeme taahhüdü oluşturmaz. Lütfen resmi işlemleriniz ve ödeme taahhütleri için yalnızca ilgili resmi kurumların kaynaklarını kullanın.</p>
-            </div>
+// ── Init ──
+async function init() {
+  try {
+    const res = await fetch('data/search_index.json');
+    INDEX = await res.json();
+  } catch(e) {
+    document.getElementById('welcome').innerHTML =
+      '<p style="color:#be3535;padding:2rem">⚠ Yerel test için: <code>python -m http.server 8080</code> veya <code>py -m http.server 8080</code></p>';
+    return;
+  }
+  const sem = INDEX.filter(s => s.category === 'semptomlar').length;
+  const has = INDEX.filter(s => s.category === 'hastaliklar').length;
+  document.getElementById('stat-total').textContent = INDEX.length;
+  document.getElementById('stat-symptoms').textContent = sem;
+  document.getElementById('stat-diseases').textContent = has;
 
-            <p class="footer-links">
-                <a href="privacy-policy.html">Gizlilik Politikası</a>
-            </p>
-            <p class="copyright">&copy; 2024 Dr.Ferhat FIRAT. Tüm hakları saklıdır.</p>
-        </div>
-    </footer>
+  renderSidebar();
+  setupSearch();
+  setupCatTabs();
 
+  if (location.hash) {
+    const id = decodeURIComponent(location.hash.slice(1));
+    setTimeout(() => loadSection(id), 100);
+  }
+}
+
+// ── Sidebar ──
+function renderSidebar(filter) {
+  const list  = document.getElementById('sidebar-list');
+  const count = document.getElementById('sidebar-count');
+  let items = INDEX;
+  if (activeCat !== 'all') items = items.filter(s => s.category === activeCat);
+  if (filter) {
+    const q = filter.toLowerCase();
+    items = items.filter(s => s.title.toLowerCase().includes(q) || s.num.includes(q));
+  }
+  count.textContent = `${items.length} bölüm`;
+  list.innerHTML = items.map(s => `
+    <div class="sidebar-item depth-${s.depth} ${s.id === activeId ? 'active' : ''}"
+         data-id="${s.id}" onclick="loadSection('${s.id}')">
+      <span class="item-num">${s.num}</span>
+      <span class="item-title">${s.title}</span>
+    </div>`).join('');
+}
+
+function setupCatTabs() {
+  document.querySelectorAll('.cat-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCat = btn.dataset.cat;
+      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSidebar();
+    });
+  });
+}
+
+// ── Load Section ──
+async function loadSection(id) {
+  activeId = id;
+  currentPage = 1;
+
+  document.querySelectorAll('.sidebar-item').forEach(el =>
+    el.classList.toggle('active', el.dataset.id === id));
+  const activeEl = document.querySelector(`.sidebar-item[data-id="${id}"]`);
+  if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+  // Fetch manifest
+  let manifest;
+  try {
+    const res = await fetch(`data/pages/${id}/manifest.json`);
+    manifest = await res.json();
+  } catch(e) {
+    manifest = { count: 1, title: '' };
+  }
+  totalPages = manifest.count || 1;
+
+  // Get section info from index
+  const info = INDEX.find(s => s.id === id) || {};
+  const catLabel = { semptomlar:'Semptom', hastaliklar:'Hastalık', koruyucu:'Koruyucu' }[info.category] || '';
+
+  // Update header
+  const badge = document.getElementById('viewer-badge');
+  badge.textContent = catLabel;
+  badge.className = `viewer-badge ${info.category || ''}`;
+  document.getElementById('viewer-title').textContent = info.title || '';
+  document.getElementById('viewer-pages-info').textContent = `${totalPages} sayfa`;
+
+  // Show viewer
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('viewer').classList.add('visible');
+
+  buildPageDots();
+  showPage(1);
+  history.replaceState(null, '', `#${encodeURIComponent(id)}`);
+}
+
+// ── Page display ──
+function buildPageDots() {
+  const dots = document.getElementById('page-dots');
+  if (totalPages <= 1) { dots.innerHTML = ''; return; }
+  const MAX = 12;
+  if (totalPages <= MAX) {
+    dots.innerHTML = Array.from({length: totalPages}, (_, i) => `
+      <button class="page-btn ${i+1 === currentPage ? 'active' : ''}"
+              onclick="showPage(${i+1})">${i+1}</button>`).join('');
+  } else {
+    dots.innerHTML = `<span style="font-size:.8rem;color:var(--ink-muted)">${currentPage} / ${totalPages}</span>`;
+  }
+}
+
+function showPage(n) {
+  currentPage = Math.max(1, Math.min(n, totalPages));
+  const img = document.getElementById('page-img');
+  img.classList.add('loading');
+  img.onload = () => img.classList.remove('loading');
+  img.onerror = () => { img.classList.remove('loading'); };
+  img.src = `data/pages/${activeId}/p${currentPage}.jpg`;
+
+  document.getElementById('nav-prev').disabled = currentPage <= 1;
+  document.getElementById('nav-next').disabled = currentPage >= totalPages;
+
+  // Update dots
+  buildPageDots();
+
+  // Scroll to top of page display
+  document.getElementById('page-display').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function changePage(delta) { showPage(currentPage + delta); }
+
+// ── Welcome ──
+function showWelcome() {
+  activeId = null;
+  document.getElementById('welcome').style.display = '';
+  document.getElementById('viewer').classList.remove('visible');
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  history.replaceState(null, '', location.pathname);
+}
+
+// ── Search ──
+function setupSearch() {
+  const input   = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  const clear   = document.getElementById('search-clear');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    clear.classList.toggle('visible', q.length > 0);
+    clearTimeout(searchDebounce);
+    if (q.length < 2) { results.classList.remove('open'); return; }
+    searchDebounce = setTimeout(() => doSearch(q), 120);
+  });
+  clear.addEventListener('click', () => {
+    input.value = ''; clear.classList.remove('visible');
+    results.classList.remove('open'); input.focus();
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#search-wrap')) results.classList.remove('open');
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { results.classList.remove('open'); input.blur(); }
+  });
+}
+
+function doSearch(q) {
+  const ql   = q.toLowerCase();
+  const hits = INDEX.filter(s =>
+    s.title.toLowerCase().includes(ql) ||
+    s.num.includes(q) ||
+    (s.preview && s.preview.toLowerCase().includes(ql))
+  ).slice(0, 12);
+
+  const results = document.getElementById('search-results');
+  if (!hits.length) {
+    results.innerHTML = '<div class="result-item" style="color:var(--ink-muted);cursor:default">Sonuç bulunamadı</div>';
+    results.classList.add('open'); return;
+  }
+
+  const hl = (str, q) => str.replace(
+    new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
+    '<mark style="background:var(--amber-lt);padding:0 1px">$1</mark>'
+  );
+
+  results.innerHTML = hits.map(s => `
+    <div class="result-item" onclick="selectResult('${s.id}')">
+      <div><span class="result-num">${s.num}</span>
+        <span class="result-badge ${s.category}">${
+          {semptomlar:'Semptom',hastaliklar:'Hastalık',koruyucu:'Koruyucu'}[s.category]||''
+        }</span>
+      </div>
+      <div class="result-title">${hl(s.title, q)}</div>
+      ${s.preview ? `<div class="result-preview">${hl(s.preview.slice(0,120), q)}…</div>` : ''}
+    </div>`).join('');
+  results.classList.add('open');
+}
+
+function selectResult(id) {
+  document.getElementById('search-results').classList.remove('open');
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').classList.remove('visible');
+  activeCat = 'all';
+  document.querySelectorAll('.cat-tab').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
+  renderSidebar();
+  loadSection(id);
+}
+
+init();
+</script>
 </body>
 </html>
