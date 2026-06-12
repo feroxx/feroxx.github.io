@@ -655,7 +655,7 @@ function fsResetIdle() {
   clearTimeout(fsIdleTimer);
   fsIdleTimer = setTimeout(() => {
     if (isFullscreen) document.body.classList.add('fs-idle');
-  }, 2500);
+  }, 800);
 }
 
 function toggleFullscreen() {
