@@ -231,7 +231,96 @@ button { cursor: pointer; font-family: inherit; }
 .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Mobile ── */
+/* ── Fullscreen button ── */
+#fullscreen-btn {
+  background: none; border: 1px solid var(--border);
+  border-radius: var(--radius); padding: .3rem .5rem;
+  color: var(--ink-soft); display: flex; align-items: center;
+  transition: all .15s; flex-shrink: 0;
+}
+#fullscreen-btn:hover { background: var(--bg-alt); color: var(--accent); border-color: var(--accent); }
+
+/* ── Fullscreen overlay mode ── */
+body.fs-mode #topbar,
+body.fs-mode #sidebar,
+body.fs-mode #viewer-header,
+body.fs-mode #page-nav {
+  display: none !important;
+}
+body.fs-mode #main {
+  height: 100vh;
+  position: fixed; inset: 0; z-index: 500;
+}
+body.fs-mode #detail {
+  height: 100vh;
+}
+body.fs-mode #viewer {
+  background: #111;
+}
+body.fs-mode #page-display {
+  background: #111;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+body.fs-mode #page-img-wrap {
+  max-width: min(100vw, calc(100vh * 0.75));
+  border-radius: 0;
+  box-shadow: none;
+}
+/* ESC / close button in fullscreen */
+#fs-close {
+  display: none;
+  position: fixed; top: 12px; right: 16px; z-index: 600;
+  background: rgba(0,0,0,.55); border: none; border-radius: 50%;
+  width: 40px; height: 40px; color: #fff; font-size: 1.1rem;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background .15s;
+}
+#fs-close:hover { background: rgba(0,0,0,.8); }
+body.fs-mode #fs-close { display: flex; }
+
+/* ── Fullscreen page arrows ── */
+#fs-prev, #fs-next {
+  display: none;
+  position: fixed; top: 50%; z-index: 600;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,.45); border: none;
+  color: #fff; font-size: 1.4rem;
+  width: 44px; height: 72px; border-radius: 4px;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background .15s, opacity .15s;
+}
+#fs-prev { left: 8px; }
+#fs-next { right: 8px; }
+#fs-prev:hover, #fs-next:hover { background: rgba(0,0,0,.75); }
+#fs-prev:disabled, #fs-next:disabled { opacity: .2; pointer-events: none; }
+body.fs-mode #fs-prev,
+body.fs-mode #fs-next { display: flex; }
+
+/* ── Fullscreen page counter ── */
+#fs-counter {
+  display: none;
+  position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+  z-index: 600; background: rgba(0,0,0,.5); color: #fff;
+  font-size: .78rem; font-weight: 600; padding: 4px 14px;
+  border-radius: 20px; backdrop-filter: blur(4px); pointer-events: none;
+  letter-spacing: .04em;
+}
+body.fs-mode #fs-counter { display: block; }
+
+/* ── Swipe hint (mobile) ── */
+#swipe-hint {
+  display: none;
+  position: fixed; bottom: 48px; left: 50%; transform: translateX(-50%);
+  z-index: 601; background: rgba(0,0,0,.4); color: rgba(255,255,255,.7);
+  font-size: .72rem; padding: 3px 12px; border-radius: 12px;
+  pointer-events: none; animation: fadeHint 2.5s ease forwards;
+}
+@keyframes fadeHint { 0%{opacity:0} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
+body.fs-mode #swipe-hint { display: block; }
 @media (max-width: 768px) {
   #main { flex-direction: column; height: auto; overflow: visible; }
   #sidebar { width: 100%; height: 220px; border-right: none; border-bottom: 1px solid var(--border); }
@@ -303,6 +392,10 @@ button { cursor: pointer; font-family: inherit; }
         <span id="viewer-badge" class="viewer-badge"></span>
         <span id="viewer-title"></span>
         <span id="viewer-pages-info"></span>
+        <button id="fullscreen-btn" onclick="toggleFullscreen()" title="Tam Ekran">
+          <svg id="fs-icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          <svg id="fs-icon-shrink" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+        </button>
       </div>
 
       <div id="page-nav">
@@ -320,6 +413,13 @@ button { cursor: pointer; font-family: inherit; }
 
   </div><!-- #detail -->
 </div><!-- #main -->
+
+<!-- Fullscreen overlay controls -->
+<button id="fs-close"  onclick="toggleFullscreen()" title="Tam ekrandan çık (ESC)">✕</button>
+<button id="fs-prev"   onclick="changePage(-1)" title="Önceki sayfa">‹</button>
+<button id="fs-next"   onclick="changePage(1)"  title="Sonraki sayfa">›</button>
+<div    id="fs-counter"></div>
+<div    id="swipe-hint">← Kaydırarak sayfa değiştirin →</div>
 
 <script>
 let INDEX = [];
@@ -455,6 +555,7 @@ function showPage(n) {
 
   // Scroll to top of page display
   document.getElementById('page-display').scrollTo({ top: 0, behavior: 'smooth' });
+  if (isFullscreen) updateFsCounter();
 }
 
 function changePage(delta) { showPage(currentPage + delta); }
@@ -534,6 +635,74 @@ function selectResult(id) {
   renderSidebar();
   loadSection(id);
 }
+
+// ── Fullscreen ──
+let isFullscreen = false;
+
+function toggleFullscreen() {
+  isFullscreen = !isFullscreen;
+  document.body.classList.toggle('fs-mode', isFullscreen);
+  document.getElementById('fs-icon-expand').style.display = isFullscreen ? 'none' : '';
+  document.getElementById('fs-icon-shrink').style.display = isFullscreen ? '' : 'none';
+  updateFsCounter();
+
+  // Show swipe hint once on mobile
+  if (isFullscreen && window.matchMedia('(pointer:coarse)').matches) {
+    const hint = document.getElementById('swipe-hint');
+    hint.style.animation = 'none';
+    void hint.offsetWidth;
+    hint.style.animation = '';
+  }
+}
+
+function updateFsCounter() {
+  document.getElementById('fs-counter').textContent = `${currentPage} / ${totalPages}`;
+  document.getElementById('fs-prev').disabled = currentPage <= 1;
+  document.getElementById('fs-next').disabled = currentPage >= totalPages;
+}
+
+// ── Keyboard navigation ──
+document.addEventListener('keydown', e => {
+  if (!activeId) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); changePage(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); changePage(-1); }
+  if (e.key === 'Escape' && isFullscreen) toggleFullscreen();
+  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+});
+
+// ── Touch / Swipe ──
+(function() {
+  let startX = 0, startY = 0, dragging = false;
+  const display = document.getElementById('page-display');
+
+  display.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    dragging = true;
+  }, { passive: true });
+
+  display.addEventListener('touchend', e => {
+    if (!dragging || !activeId) return;
+    dragging = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    // Only horizontal swipes (dx dominant, at least 50px)
+    if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 50) {
+      if (dx < 0) changePage(1);   // swipe left → next
+      else        changePage(-1);  // swipe right → prev
+    }
+  }, { passive: true });
+
+  display.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    // If clearly horizontal swipe, prevent vertical scroll
+    if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 10) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+})();
 
 init();
 </script>
