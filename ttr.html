@@ -343,11 +343,35 @@ body.fs-mode #fs-counter { transition: opacity .4s; }
 @keyframes fadeHint { 0%{opacity:0} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
 body.fs-mode #swipe-hint { display: block; }
 @media (max-width: 768px) {
-  #main { flex-direction: column; height: auto; overflow: visible; }
-  #sidebar { width: 100%; height: 220px; border-right: none; border-bottom: 1px solid var(--border); }
-  #detail { height: calc(100vh - 56px - 220px); }
+  #main { flex-direction: column; height: calc(100vh - 56px); overflow: hidden; }
   #topbar-logo span:not(.year) { display: none; }
   #page-display { padding: .5rem; }
+
+  /* Master-Detail UI: Liste ve Detay ekranları arası geçiş */
+  body:not(.viewing-section) #sidebar {
+    width: 100%;
+    height: 100%;
+    border-right: none;
+    border-bottom: none;
+  }
+  body:not(.viewing-section) #detail {
+    display: none !important;
+  }
+
+  body.viewing-section #sidebar {
+    display: none !important;
+  }
+  body.viewing-section #detail {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+
+  /* Mobilde viewer başlık kısmını daraltıp elementleri sığdıralım */
+  #viewer-header { padding: .5rem .75rem; gap: .4rem; }
+  #viewer-title { font-size: .85rem; }
+  #viewer-back { padding: .3rem .5rem; font-size: .75rem; }
+  .viewer-badge { font-size: .6rem; padding: 2px 4px; }
 }
 </style>
 </head>
@@ -511,6 +535,8 @@ function setupCatTabs() {
 
 // ── Load Section ──
 async function loadSection(id) {
+  document.body.classList.add('viewing-section');
+
   activeId = id;
   currentPage = 1;
 
@@ -586,6 +612,8 @@ function changePage(delta) { showPage(currentPage + delta); }
 
 // ── Welcome ──
 function showWelcome() {
+  document.body.classList.remove('viewing-section');
+
   activeId = null;
   document.getElementById('welcome').style.display = '';
   document.getElementById('viewer').classList.remove('visible');
