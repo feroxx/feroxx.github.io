@@ -343,21 +343,44 @@ body.fs-mode #fs-counter { transition: opacity .4s; }
 @keyframes fadeHint { 0%{opacity:0} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
 body.fs-mode #swipe-hint { display: block; }
 @media (max-width: 768px) {
-  #main { flex-direction: column; height: calc(100vh - 56px); overflow: hidden; }
   #topbar-logo span:not(.year) { display: none; }
   #page-display { padding: .5rem; }
 
-  /* Master-Detail UI: Liste ve Detay ekranları arası geçiş */
-  body:not(.viewing-section) #sidebar {
-    width: 100%;
-    height: 100%;
-    border-right: none;
-    border-bottom: none;
+  /* 1. LİSTE GÖRÜNÜMÜ (Master - Liste ve Welcome Ekranı) */
+  body:not(.viewing-section) #main {
+    flex-direction: column-reverse; /* CSS Harikası: DOM'u değiştirmeden #detail'i (Welcome) üste, #sidebar'ı (Liste) alta alır */
+    height: calc(100vh - 56px);
   }
   body:not(.viewing-section) #detail {
-    display: none !important;
+    display: flex !important;
+    height: auto; /* Sadece içeriği kadar yer kaplasın */
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
   }
+  body:not(.viewing-section) #sidebar {
+    width: 100%;
+    flex: 1; /* Ekranın geri kalanını liste kaplasın */
+    height: auto;
+  }
+  
+  /* Mobilde karşılama ekranını biraz küçültelim (Kullanıcı listeye daha rahat ulaşsın) */
+  body:not(.viewing-section) #welcome {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  body:not(.viewing-section) #welcome .emblem { width: 42px; height: 42px; margin-bottom: 0; }
+  body:not(.viewing-section) #welcome h1 { font-size: 1.1rem; }
+  body:not(.viewing-section) #welcome p { font-size: 0.8rem; margin: 0; }
+  body:not(.viewing-section) #welcome .stats { gap: 0.8rem; margin-top: 0; flex-wrap: wrap; justify-content: center; }
+  body:not(.viewing-section) #welcome .stat .n { font-size: 1rem; }
+  body:not(.viewing-section) #welcome .stat .l { font-size: 0.65rem; }
+  body:not(.viewing-section) #welcome .source-warning { margin-top: 0.5rem; padding: 0.5rem; font-size: 0.7rem; line-height: 1.2; }
 
+  /* 2. DETAY GÖRÜNÜMÜ (Sadece İçerik/Algoritma okuma ekranı) */
+  body.viewing-section #main {
+    flex-direction: column;
+    height: calc(100vh - 56px);
+  }
   body.viewing-section #sidebar {
     display: none !important;
   }
@@ -367,7 +390,7 @@ body.fs-mode #swipe-hint { display: block; }
     display: flex;
   }
 
-  /* Mobilde viewer başlık kısmını daraltıp elementleri sığdıralım */
+  /* Mobilde viewer başlık kısmı (Geri butonu, başlık vs.) */
   #viewer-header { padding: .5rem .75rem; gap: .4rem; }
   #viewer-title { font-size: .85rem; }
   #viewer-back { padding: .3rem .5rem; font-size: .75rem; }
