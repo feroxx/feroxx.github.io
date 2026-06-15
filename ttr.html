@@ -621,7 +621,7 @@ async function loadSection(id) {
 function buildPageDots() {
   const dots = document.getElementById('page-dots');
   if (totalPages <= 1) { dots.innerHTML = ''; return; }
-  const MAX = 12;
+  const MAX = 11;
   if (totalPages <= MAX) {
     dots.innerHTML = Array.from({length: totalPages}, (_, i) => `
       <button class="page-btn ${i+1 === currentPage ? 'active' : ''}"
