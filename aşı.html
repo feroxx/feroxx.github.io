@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Çocukluk Çağı Aşı Takvimi Asistanı</title>
+    <title>AHEF Çocukluk Çağı Aşı Takvimi Asistanı</title>
     <!-- Modern ikonlar için FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary: #2563eb;       /* Tıbbi güven veren mavi */
+            --primary: #2563eb;
             --primary-hover: #1d4ed8;
             --surface: #ffffff;
             --background: #f1f5f9;
@@ -250,8 +250,8 @@
         <div class="input-group">
             <label for="gender">Cinsiyet</label>
             <select id="gender">
-                <option value="kiz">Kız Çocuğu</option>
-                <option value="erkek">Erkek Çocuğu</option>
+                <option value="kiz">Kız</option>
+                <option value="erkek">Erkek </option>
             </select>
         </div>
         
@@ -373,7 +373,7 @@
         container.innerHTML = `
             <div class="summary-badge">
                 <i class="fa-solid fa-clipboard-user"></i>
-                ${displayUnit} ${genderText} Hastası Planı
+                ${displayUnit} ${genderText} için Aşı Planı
             </div>
         `;
 
