@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AHEF Çocukluk Çağı Aşı Asistanı - V2</title>
-    <!-- FontAwesome Entegrasyonu -->
+    <title>AHEF Çocukluk Çağı Aşı Asistanı</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -19,8 +19,8 @@
             --border: #e2e8f0;
             --success-bg: #dcfce7;
             --success-text: #166534;
-            --warning-bg: #fef9c3;
-            --warning-text: #854d0e;
+            --special-bg: #fffbeb;
+            --special-border: #f59e0b;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,15 +48,23 @@
             background: linear-gradient(135deg, #1e40af, #3b82f6);
             padding: 2rem;
             color: white;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .header img {
+            height: 70px;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
+        .header-text { text-align: left; }
+        .header h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.3rem; }
         .header p { color: #bfdbfe; font-size: 0.95rem; }
 
         .form-section {
@@ -68,202 +76,129 @@
             align-items: end;
         }
 
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+        .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .input-group label { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }
 
-        .input-group label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        select, input {
-            padding: 0.875rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            width: 100%;
+        select, input[type="number"], input[type="date"] {
+            padding: 0.875rem 1rem; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 1rem; font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; width: 100%;
         }
 
         select:focus, input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background-color: white;
+            outline: none; border-color: var(--primary); background-color: white;
             box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.875rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            height: 48px;
-            width: 100%;
+        .toggle-wrapper { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 0.5rem; background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(24px); }
+        .toggle-label { font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+
+        .btn-primary, .btn-secondary, .btn-pdf {
+            border: none; padding: 0.875rem 1.5rem; border-radius: 8px;
+            font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; height: 48px;
         }
 
+        .btn-primary { background-color: var(--primary); color: white; }
         .btn-primary:hover { background-color: var(--primary-hover); }
-
-        .btn-secondary {
-            background-color: #e2e8f0;
-            color: var(--text-main);
-            border: none;
-            padding: 0.875rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            height: 48px;
-            width: 100%;
-        }
-
+        .btn-secondary { background-color: #e2e8f0; color: var(--text-main); }
         .btn-secondary:hover { background-color: #cbd5e1; }
+        
+        .btn-pdf { background-color: #ef4444; color: white; width: auto; font-size: 0.9rem; height: 40px; padding: 0 1.5rem; }
+        .btn-pdf:hover { background-color: #dc2626; }
 
-        .results-section {
-            padding: 2rem;
-            background-color: #f8fafc;
-        }
+        .results-section { padding: 2rem; background-color: #f8fafc; }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
 
         .summary-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            background-color: #e0e7ff;
-            color: #3730a3;
-            font-weight: 600;
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+            border-radius: 9999px; background-color: #e0e7ff; color: #3730a3; font-weight: 600; font-size: 0.875rem;
         }
 
-        /* Kartların Grid Yapısı */
-        .vaccine-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
+        .vaccine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
 
         .vaccine-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            overflow: hidden;
+            background: white; border: 1px solid var(--border); border-radius: 12px;
+            padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid var(--primary);
+            page-break-inside: avoid;
         }
 
-        .vaccine-card::before {
-            content: '';
-            position: absolute; left: 0; top: 0; bottom: 0;
-            width: 4px; background-color: var(--primary);
-        }
-
-        .vaccine-card.special-card::before { background-color: #f59e0b; }
+        .vaccine-card.special-card { background-color: var(--special-bg); border-color: #fde68a; border-left-color: var(--special-border); }
         .vaccine-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
 
+        .card-top { display: flex; gap: 1rem; align-items: flex-start; }
+        
         .card-icon {
-            background-color: #eff6ff;
-            color: var(--primary);
-            width: 44px; height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
+            background-color: #eff6ff; color: var(--primary); width: 44px; height: 44px;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
         }
 
         .special-card .card-icon { background-color: #fef3c7; color: #d97706; }
+        .card-content h3 { font-size: 1.05rem; color: var(--text-main); margin-bottom: 0.4rem; }
+        .card-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.4rem; }
+        .card-content .dosage { font-weight: 600; color: var(--primary); font-size: 0.8rem; display: inline-block; background: #eff6ff; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
+        .special-card .card-content .dosage { color: #d97706; background: #fef3c7; }
 
-        .card-content h3 { font-size: 1.05rem; color: var(--text-main); margin-bottom: 0.3rem; }
-        .card-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
-
-        /* Pop-up Modal CSS */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            display: none; /* Varsayılan olarak gizli */
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.2s ease;
+        .date-range {
+            font-size: 0.85rem; color: var(--primary); background: #f1f5f9;
+            padding: 8px 12px; border-radius: 6px; display: flex; align-items: center;
+            gap: 8px; font-weight: 500; border: 1px solid #e2e8f0; width: 100%;
         }
+        .special-card .date-range { background: #fef3c7; color: #b45309; border-color: #fde68a; }
 
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.2s; }
         .modal-overlay.active { display: flex; opacity: 1; }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            transform: scale(0.95);
-            transition: transform 0.2s ease;
-        }
-
+        .modal-content { background: white; border-radius: 16px; width: 90%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: scale(0.95); transition: transform 0.2s; overflow: hidden; }
         .modal-overlay.active .modal-content { transform: scale(1); }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
+        .modal-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .modal-header h3 { font-size: 1.2rem; }
-        
-        .close-btn {
-            background: none; border: none; font-size: 1.2rem;
-            color: var(--text-muted); cursor: pointer;
-        }
-        .close-btn:hover { color: var(--text-main); }
-
+        .close-btn { background: none; border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; }
         .modal-body { padding: 1.5rem; }
         .modal-footer { padding: 1.5rem; background: #f8fafc; border-top: 1px solid var(--border); }
-
-        /* Empty State Utilities */
+        
         .empty-state { text-align: center; padding: 3rem 1rem; grid-column: 1 / -1; }
         .empty-state i { font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem; }
-        .empty-state h3 { color: var(--text-main); margin-bottom: 0.5rem; }
-        .empty-state p { color: var(--text-muted); max-width: 400px; margin: 0 auto 1.5rem auto; line-height: 1.5; }
-        .next-appointment { background-color: var(--success-bg); color: var(--success-text); padding: 1rem; border-radius: 8px; display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 500; }
-        
         .hidden { display: none !important; }
+
+        #pdfExportArea { padding: 1rem; background: white; border-radius: 8px; }
+        .pdf-title { display: none; text-align: center; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        
+        .pdf-mode .vaccine-grid { display: block !important; }
+        .pdf-mode .vaccine-card { margin-bottom: 1.5rem; }
+        
+        .warning-text { color: #dc2626; font-weight: 700; }
+		
+		.pdf-mode .vaccine-grid { 
+            display: flex !important; 
+            flex-wrap: wrap !important; 
+            justify-content: space-between !important;
+            gap: 0 !important; /* html2canvas gap ile sorun yaşayabilir, margin kullanıyoruz */
+        }
+        
+        .pdf-mode .vaccine-card { 
+            width: 48.5% !important; /* A4 sayfasında iki kart yan yana sığsın diye */
+            margin-bottom: 1.5rem !important;
+            page-break-inside: avoid !important;
+            box-sizing: border-box !important;
+        }
     </style>
 </head>
 <body>
 
 <div class="dashboard-container">
     <div class="header">
-        <h1>Çocukluk Çağı Aşı Asistanı</h1>
-        <p>Ulusal aşı takvimi ve özel aşı algoritmaları</p>
+        <img src="https://ahef.org.tr/upload/files/8424122c-a4bd-41bb-badd-ecafbc8dd05d.png" alt="AHEF Logosu">
+        <div class="header-text">
+            <h1>AHEF Çocukluk Çağı Aşı Asistanı</h1>
+            <p>Ulusal aşı takvimi ve detaylı özel aşı algoritmaları</p>
+        </div>
     </div>
     
     <div class="form-section">
@@ -285,34 +220,40 @@
         </div>
         
         <div class="input-group" id="inputWrapper">
-            <!-- Normal sayı girişi -->
             <div id="numberInputArea">
-                <label for="ageValue" id="ageValueLabel">Değer Giriniz</label>
+                <label for="ageValue">Değer Giriniz</label>
                 <input type="number" id="ageValue" min="0" value="0">
             </div>
             
-            <!-- Doğum tarihi seçildiğinde görünecek alan -->
             <div id="dobInputArea" class="hidden">
                 <label>Doğum Tarihi</label>
                 <button class="btn-secondary" id="openModalBtn">
                     <i class="fa-regular fa-calendar"></i> Tarih Seçiniz
                 </button>
                 <input type="hidden" id="calculatedMonths" value="0">
+                <input type="hidden" id="rawDobValue" value="">
                 <input type="hidden" id="selectedDateString" value="">
             </div>
         </div>
+
+        <div class="toggle-wrapper">
+            <label class="switch">
+                <input type="checkbox" id="includeSpecial" checked>
+                <span class="slider"></span>
+            </label>
+            <label for="includeSpecial" class="toggle-label">Özel Aşıları (Rota, Menenjit, HPV vb.) Takvime Dahil Et</label>
+        </div>
         
-        <button id="calculateBtn" class="btn-primary">
-            <i class="fa-solid fa-stethoscope"></i> Sorgula
+        <button id="calculateBtn" class="btn-primary" style="grid-column: 1 / -1;">
+            <i class="fa-solid fa-stethoscope"></i> Sorgula ve Takvim Oluştur
         </button>
     </div>
 
     <div class="results-section" id="resultsContainer">
-        <!-- JS ile dinamik render edilecek -->
+        <!-- JS ile doldurulacak -->
     </div>
 </div>
 
-<!-- DOĞUM TARİHİ MODALI -->
 <div class="modal-overlay" id="dobModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -320,219 +261,308 @@
             <button class="close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="modal-body">
-            <label style="font-size: 0.875rem; font-weight: 600; margin-bottom:0.5rem; display:block;">Takvimden Seçiniz</label>
             <input type="date" id="dobPicker">
         </div>
         <div class="modal-footer">
-            <button class="btn-primary" id="confirmDobBtn">
-                <i class="fa-solid fa-check"></i> Tarihi Onayla
-            </button>
+            <button class="btn-primary" id="confirmDobBtn">Tarihi Onayla</button>
         </div>
     </div>
 </div>
 
 <script>
-    /**
-     * SENIOR DEV NOTU:
-     * Aşılar "Atomik" hale getirildi. Artık aynı ayda olan her aşının kendi objesi var.
-     * Döngü çalışırken hepsi için otomatik olarak ayrı kart render edilecek.
-     */
-    const vaccineData = [
-        { month: 0, name: "Hep-B (1. Doz)", desc: "Doğumda uygulanır.", isSpecial: false },
-
-        { month: 2, name: "Hep-B (2. Doz)", desc: "2. Ay sonu rutin aşısı.", isSpecial: false },
-        { month: 2, name: "BCG", desc: "Verem aşısı. 2. Ay sonu rutin aşısı.", isSpecial: false },
-        { month: 2, name: "KPA (1. Doz)", desc: "Konjuge Pnömokok Aşısı. 2. Ay sonu.", isSpecial: false },
-        { month: 2, name: "DaBT-İPA-Hib-HepB (1. Doz)", desc: "5'li Karma aşı. 2. Ay sonu.", isSpecial: false },
-
-        { month: 4, name: "KPA (2. Doz)", desc: "Konjuge Pnömokok Aşısı. 4. Ay sonu.", isSpecial: false },
-        { month: 4, name: "DaBT-İPA-Hib-HepB (2. Doz)", desc: "5'li Karma aşı. 4. Ay sonu.", isSpecial: false },
-
-        { month: 6, name: "DaBT-İPA-Hib-HepB (3. Doz)", desc: "5'li Karma aşı. 6. Ay sonu.", isSpecial: false },
-        { month: 6, name: "OPA (1. Doz)", desc: "Oral Polio Aşısı. 6. Ay sonu.", isSpecial: false },
-        { month: 6, name: "Meningokok (6. Ay Senaryosu)", desc: "Daha önce aşılanmadıysa konjuge veya rekombinant aşı planlaması başlatılır.", isSpecial: true },
-
-        { month: 9, name: "KKK (Ek Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak ek dozu.", isSpecial: false },
-
-        { month: 12, name: "KPA (Rapel)", desc: "Konjuge Pnömokok Pekiştirme. 12. Ay sonu.", isSpecial: false },
-        { month: 12, name: "Suçiçeği", desc: "1 Yaş rutin aşısı.", isSpecial: false },
-        { month: 12, name: "KKK (1. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak. 1 Yaş.", isSpecial: false },
-        { month: 12, name: "Meningokok (12. Ay Senaryosu)", desc: "12 aylık veya büyük ve aşılanmadıysa aşılama planlanabilir.", isSpecial: true },
-
-        { month: 18, name: "DaBT-İPA-Hib-HepB (Rapel)", desc: "5'li Karma aşı pekiştirme dozu.", isSpecial: false },
-        { month: 18, name: "OPA (2. Doz)", desc: "Oral Polio Aşısı pekiştirme.", isSpecial: false },
-        { month: 18, name: "Hep-A (1. Doz)", desc: "Hepatit A aşısı başlangıcı.", isSpecial: false },
-
-        { month: 24, name: "Hep-A (2. Doz)", desc: "Hepatit A aşısı ikinci dozu. 2 Yaş.", isSpecial: false },
-        { month: 24, name: "Meningokok (24. Ay Senaryosu)", desc: "24 aylık veya büyükse hekim kontrolünde başlatılabilir.", isSpecial: true },
-
-        { month: 48, name: "DaBT-İPA (Rapel)", desc: "4'lü Karma aşı pekiştirme. 4 Yaş.", isSpecial: false },
-        { month: 48, name: "KKK (2. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak. 4 Yaş.", isSpecial: false },
-
-        { month: 156, name: "Td (Rapel)", desc: "Erişkin Tetanos Difteri. 13 Yaş pekiştirme dozu.", isSpecial: false }
+    const routineVaccines = [
+        { month: 0, name: "Hep-B (1. Doz)", desc: "Doğumda uygulanır." },
+        { month: 2, name: "Hep-B (2. Doz)", desc: "2. Ay sonu rutin aşısı." },
+        { month: 2, name: "BCG", desc: "Verem aşısı. 2. Ay sonu." },
+        { month: 2, name: "KPA (1. Doz)", desc: "Konjuge Pnömokok Aşısı." },
+        { month: 2, name: "DaBT-İPA-Hib-HepB (1. Doz)", desc: "5'li Karma aşı." },
+        { month: 4, name: "KPA (2. Doz)", desc: "Konjuge Pnömokok Aşısı." },
+        { month: 4, name: "DaBT-İPA-Hib-HepB (2. Doz)", desc: "5'li Karma aşı." },
+        { month: 6, name: "DaBT-İPA-Hib-HepB (3. Doz)", desc: "5'li Karma aşı." },
+        { month: 6, name: "OPA (1. Doz)", desc: "Oral Polio Aşısı." },
+        { month: 9, name: "KKK (Ek Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak ek dozu." },
+        { month: 12, name: "KPA (Rapel)", desc: "Konjuge Pnömokok Pekiştirme." },
+        { month: 12, name: "Suçiçeği", desc: "1 Yaş rutin aşısı." },
+        { month: 12, name: "KKK (1. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak." },
+        { month: 18, name: "DaBT-İPA-Hib-HepB (Rapel)", desc: "5'li Karma aşı pekiştirme dozu." },
+        { month: 18, name: "OPA (2. Doz)", desc: "Oral Polio Aşısı pekiştirme." },
+        { month: 18, name: "Hep-A (1. Doz)", desc: "Hepatit A aşısı başlangıcı." },
+        { month: 24, name: "Hep-A (2. Doz)", desc: "Hepatit A aşısı ikinci dozu." },
+        { month: 48, name: "DaBT-İPA (Rapel)", desc: "4'lü Karma aşı pekiştirme." },
+        { month: 48, name: "KKK (2. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak." },
+        { month: 156, name: "Td (Rapel)", desc: "Erişkin Tetanos Difteri." }
     ];
 
-    const getRangeVaccines = (monthAge) => {
-        const ranges = [];
+    const getSpecialVaccines = (monthAge, baseDob) => {
+        const specials = [];
+        const addMonths = (date, m) => {
+            const d = new Date(date);
+            d.setMonth(d.getMonth() + m);
+            return d.toLocaleDateString('tr-TR');
+        };
+
         if (monthAge >= 1 && monthAge <= 7) {
-            ranges.push({ name: "Rotavirüs", desc: "Monovalan veya Pentavalan uygulaması.", isSpecial: true, icon: "fa-shield-virus" });
+            specials.push({ 
+                name: "Rotavirüs Aşısı", 
+                desc: "Monovalan veya Pentavalan Rotavirüs aşılaması.", 
+                dosage: "Son doz en geç 7. ayda bitmelidir.", 
+                icon: "fa-shield-virus",
+                dateRange: `Uygulama Aralığı: ${addMonths(baseDob, 1)} - ${addMonths(baseDob, 7)}`
+            });
         }
+        
+        // MENİNGOKOK ALGORİTMASI
+        if (monthAge >= 2 && monthAge < 6) {
+            specials.push({ 
+                name: "Meningokok ACWY (4 Serogrup)", 
+                desc: "Nimenrix™ (3 Doz+Rapel) veya Menveo™ (2 Doz+Rapel) aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
+                dosage: "Dozlar arası en az 2 ay olmalıdır.", 
+                icon: "fa-brain",
+                dateRange: `Başlangıç: ${addMonths(baseDob, 2)}`
+            });
+            specials.push({ 
+                name: "Meningokok B (1 Serogrup)", 
+                desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
+                dosage: "3 Doz + Rapel (En az 2 ay arayla).", 
+                icon: "fa-brain",
+                dateRange: `1.Doz: ${addMonths(baseDob, 2)} | 2.Doz: ${addMonths(baseDob, 4)} | 3.Doz: ${addMonths(baseDob, 6)}`
+            });
+        } else if (monthAge >= 6 && monthAge < 12) {
+            specials.push({ 
+                name: "Meningokok ACWY (4 Serogrup)", 
+                desc: "Nimenrix™ (1 Doz+Rapel) veya Menveo™/Menactra (1 Doz+Rapel) aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
+                dosage: "Dozlar arası en az 2 ay olmalıdır.", 
+                icon: "fa-brain",
+                dateRange: `Başlangıç: ${addMonths(baseDob, monthAge)}`
+            });
+            specials.push({ 
+                name: "Meningokok B (1 Serogrup)", 
+                desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
+                dosage: "2 Doz + Rapel (En az 2 ay arayla).", 
+                icon: "fa-brain",
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`
+            });
+        } else if (monthAge >= 12 && monthAge < 24) {
+            specials.push({ 
+                name: "Meningokok ACWY (4 Serogrup)", 
+                desc: "Nimenrix™, Menveo™ veya Menactra aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
+                dosage: "Tek (1) DOZ uygulanır.", 
+                icon: "fa-brain",
+                dateRange: `Uygulama: ${addMonths(baseDob, monthAge)}`
+            });
+            specials.push({ 
+                name: "Meningokok B (1 Serogrup)", 
+                desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
+                dosage: "2 Doz + Rapel.", 
+                icon: "fa-brain",
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`
+            });
+        } else if (monthAge >= 24 && monthAge <= 120) {
+            specials.push({ 
+                name: "Meningokok ACWY (4 Serogrup)", 
+                desc: "Nimenrix™, Menveo™, Menactra veya MenQuadfi aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
+                dosage: "Tek (1) DOZ uygulanır.", 
+                icon: "fa-brain",
+                dateRange: `Uygulama: ${addMonths(baseDob, monthAge)}`
+            });
+            specials.push({ 
+                name: "Meningokok B (1 Serogrup)", 
+                desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
+                dosage: "2 DOZ uygulanır.", 
+                icon: "fa-brain",
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`
+            });
+        }
+        
+        // HPV
         if (monthAge >= 108 && monthAge <= 168) {
-            ranges.push({ name: "HPV (9-14 Yaş)", desc: "6-12 ay arayla 2 DOZ uygulanır.", isSpecial: true, icon: "fa-vial" });
+            specials.push({ 
+                name: "HPV Aşıları (9-14 Yaş)", 
+                desc: "Kız ve erkek çocuklarına uygulanabilir.", 
+                dosage: "6-12 ay arayla 2 DOZ.", 
+                icon: "fa-vial",
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 6)}`
+            });
+        } else if (monthAge >= 180) {
+            specials.push({ 
+                name: "HPV Aşıları (15+ Yaş)", 
+                desc: "Kız ve erkek çocuklarına uygulanabilir.", 
+                dosage: "6 ay boyunca 3 DOZ.", 
+                icon: "fa-vial",
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)} | 3.Doz: ${addMonths(baseDob, monthAge + 6)}`
+            });
         }
-        if (monthAge >= 180) {
-            ranges.push({ name: "HPV (15+ Yaş)", desc: "6 ay boyunca 3 DOZ gereklidir.", isSpecial: true, icon: "fa-vial" });
-        }
-        return ranges;
+        return specials;
     };
 
-    // --- DOM ELEMENTLERİ VE OLAY DİNLEYİCİLERİ ---
     document.addEventListener("DOMContentLoaded", () => {
-        // Date input max değerini bugüne ayarla (Gelecekten doğmuş bebek seçilmesin)
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('dobPicker').setAttribute('max', today);
 
-        // Dinleyiciler
-        document.getElementById('ageType').addEventListener('change', handleTypeChange);
-        document.getElementById('openModalBtn').addEventListener('click', openModal);
-        document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-        document.getElementById('confirmDobBtn').addEventListener('click', confirmDob);
-        document.getElementById('calculateBtn').addEventListener('click', calculateVaccines);
-        
-        // Modal dışına tıklandığında kapanma
-        document.getElementById('dobModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
+        document.getElementById('ageType').addEventListener('change', (e) => {
+            if (e.target.value === 'dob') {
+                document.getElementById('numberInputArea').classList.add('hidden');
+                document.getElementById('dobInputArea').classList.remove('hidden');
+                document.getElementById('dobModal').classList.add('active');
+            } else {
+                document.getElementById('numberInputArea').classList.remove('hidden');
+                document.getElementById('dobInputArea').classList.add('hidden');
+            }
         });
 
-        calculateVaccines(); // İlk yüklemede varsayılan 0 değerini hesapla
+        document.getElementById('openModalBtn').addEventListener('click', () => document.getElementById('dobModal').classList.add('active'));
+        document.getElementById('closeModalBtn').addEventListener('click', () => document.getElementById('dobModal').classList.remove('active'));
+        
+        document.getElementById('confirmDobBtn').addEventListener('click', () => {
+            const dateVal = document.getElementById('dobPicker').value;
+            if(!dateVal) return alert("Lütfen geçerli bir tarih seçin.");
+
+            const birthDate = new Date(dateVal);
+            const today = new Date();
+            let months = (today.getFullYear() - birthDate.getFullYear()) * 12 + (today.getMonth() - birthDate.getMonth());
+            if (today.getDate() < birthDate.getDate()) months--;
+            months = Math.max(0, months);
+
+            document.getElementById('calculatedMonths').value = months;
+            document.getElementById('rawDobValue').value = dateVal;
+            
+            const formattedDate = birthDate.toLocaleDateString('tr-TR');
+            document.getElementById('selectedDateString').value = formattedDate;
+            
+            const btn = document.getElementById('openModalBtn');
+            btn.innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${formattedDate} (${months} Aylık)`;
+            btn.style.backgroundColor = 'var(--success-bg)';
+            btn.style.color = 'var(--success-text)';
+            document.getElementById('dobModal').classList.remove('active');
+        });
+
+        document.getElementById('calculateBtn').addEventListener('click', calculateVaccines);
+        calculateVaccines();
     });
 
-    // --- MODAL VE TİP DEĞİŞİMİ MANTIĞI ---
-    const handleTypeChange = (e) => {
-        const type = e.target.value;
-        const numInput = document.getElementById('numberInputArea');
-        const dobInput = document.getElementById('dobInputArea');
-
-        if (type === 'dob') {
-            numInput.classList.add('hidden');
-            dobInput.classList.remove('hidden');
-            openModal(); // Seçer seçmez otomatik aç
-        } else {
-            numInput.classList.remove('hidden');
-            dobInput.classList.add('hidden');
-        }
-    };
-
-    const openModal = () => document.getElementById('dobModal').classList.add('active');
-    const closeModal = () => document.getElementById('dobModal').classList.remove('active');
-
-    const confirmDob = () => {
-        const dateVal = document.getElementById('dobPicker').value;
-        if(!dateVal) {
-            alert("Lütfen geçerli bir doğum tarihi seçiniz.");
-            return;
-        }
-
-        const birthDate = new Date(dateVal);
-        const today = new Date();
-        
-        // Yaşı ay olarak hesaplama algoritması
-        let months = (today.getFullYear() - birthDate.getFullYear()) * 12;
-        months -= birthDate.getMonth();
-        months += today.getMonth();
-        if (today.getDate() < birthDate.getDate()) {
-            months--; // Gün olarak henüz o ayı doldurmadıysa
-        }
-        
-        months = months < 0 ? 0 : months; // Eksi çıkmasını engelle
-
-        // Verileri gizli inputlara yaz ve butonu güncelle
-        document.getElementById('calculatedMonths').value = months;
-        const formattedDate = birthDate.toLocaleDateString('tr-TR');
-        document.getElementById('selectedDateString').value = formattedDate;
-        
-        document.getElementById('openModalBtn').innerHTML = `<i class="fa-solid fa-calendar-check"></i> ${formattedDate} (${months} Aylık)`;
-        document.getElementById('openModalBtn').style.backgroundColor = 'var(--success-bg)';
-        document.getElementById('openModalBtn').style.color = 'var(--success-text)';
-
-        closeModal();
-    };
-
-
-    // --- HESAPLAMA VE EKRANA BASMA ---
     const calculateVaccines = () => {
         const ageType = document.getElementById('ageType').value;
         const gender = document.getElementById('gender').value;
+        const includeSpecial = document.getElementById('includeSpecial').checked;
+        
         let totalMonths = 0;
         let badgeTextPrefix = "";
+        let baseDob = new Date();
 
         if (ageType === 'yas') {
             const val = parseInt(document.getElementById('ageValue').value) || 0;
             totalMonths = val * 12;
             badgeTextPrefix = `${val} Yaş`;
+            baseDob.setMonth(baseDob.getMonth() - totalMonths);
         } else if (ageType === 'ay') {
             const val = parseInt(document.getElementById('ageValue').value) || 0;
             totalMonths = val;
             badgeTextPrefix = `${val} Aylık`;
+            baseDob.setMonth(baseDob.getMonth() - totalMonths);
         } else if (ageType === 'dob') {
             totalMonths = parseInt(document.getElementById('calculatedMonths').value) || 0;
+            const rawDob = document.getElementById('rawDobValue').value;
+            if (rawDob) baseDob = new Date(rawDob);
+            
             const dobStr = document.getElementById('selectedDateString').value;
-            badgeTextPrefix = dobStr ? `D.Tarihi: ${dobStr} (${totalMonths} Aylık)` : `${totalMonths} Aylık`;
+            badgeTextPrefix = dobStr ? `D.Tarihi: ${dobStr} (${totalMonths} Ay)` : `${totalMonths} Aylık`;
         }
         
-        const exactMatches = vaccineData.filter(v => v.month === totalMonths);
-        const rangeMatches = getRangeVaccines(totalMonths);
-        const allMatches = [...exactMatches, ...rangeMatches];
+        const exactMatches = routineVaccines.filter(v => v.month === totalMonths).map(v => {
+            const targetDate = new Date(baseDob);
+            targetDate.setMonth(targetDate.getMonth() + v.month);
+            return {
+                ...v, 
+                isSpecial: false,
+                dateRange: `Uygulama Tarihi: ${targetDate.toLocaleDateString('tr-TR')}`
+            };
+        });
+        
+        const specialMatches = includeSpecial ? getSpecialVaccines(totalMonths, baseDob).map(v => ({...v, isSpecial: true})) : [];
+        const allMatches = [...exactMatches, ...specialMatches];
         
         renderResults(allMatches, totalMonths, gender, badgeTextPrefix);
     };
 
     const renderResults = (vaccines, totalMonths, gender, badgeTextPrefix) => {
         const container = document.getElementById('resultsContainer');
-        container.innerHTML = ''; 
-
+        
         if (vaccines.length === 0) {
-            const nextVaccine = vaccineData.find(v => v.month > totalMonths);
-            let nextDisplay = nextVaccine ? (nextVaccine.month >= 12 && nextVaccine.month % 12 === 0 ? `${nextVaccine.month / 12} Yaşı` : `${nextVaccine.month}. Ayı`) : '';
-
             container.innerHTML = `
                 <div class="empty-state">
                     <i class="fa-regular fa-calendar-xmark"></i>
-                    <h3>Rutin Aşı Bulunmuyor</h3>
-                    <p>Girilen periyot için ulusal takvimde tanımlı rutin bir aşı noktası saptanmadı.</p>
-                    ${nextVaccine ? `<div class="next-appointment"><i class="fa-solid fa-clock-rotate-left"></i> Sonraki rutin aşılama: <strong>${nextDisplay}</strong></div>` : ''}
+                    <h3>Bu Periyotta Aşı Bulunmuyor</h3>
+                    <p>Seçilen ay/yaş periyodu için rutin veya özel bir aşı saptanmadı.</p>
                 </div>
             `;
             return;
         }
 
         const genderText = gender === 'kiz' ? 'Kız' : 'Erkek';
+        const dateStr = new Date().toLocaleDateString('tr-TR');
         
-        // Özet Etiketi (Badge)
         container.innerHTML = `
-            <div class="summary-badge">
-                <i class="fa-solid fa-clipboard-user"></i>
-                ${badgeTextPrefix} - ${genderText} için Aşı Planı
+            <div class="results-header">
+                <div class="summary-badge">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                    ${badgeTextPrefix} - ${genderText} Çocuğu Aşı Planı
+                </div>
+                <button onclick="downloadPDF()" class="btn-pdf"><i class="fa-solid fa-file-pdf"></i> PDF Olarak İndir</button>
             </div>
-            <div class="vaccine-grid" id="vaccineGrid"></div>
+            
+            <div id="pdfExportArea">
+                <h2 class="pdf-title">Çocukluk Çağı Aşı Takvimi Raporu <br><span style="font-size:0.9rem; color:#64748b;">Oluşturulma: ${dateStr} | Hasta: ${badgeTextPrefix} ${genderText}</span></h2>
+                <div class="vaccine-grid" id="vaccineGrid"></div>
+            </div>
         `;
 
         const gridContainer = document.getElementById('vaccineGrid');
 
-        // Ayrı ayrı kartları basıyoruz
         vaccines.forEach(vaccine => {
             const cardClass = vaccine.isSpecial ? "vaccine-card special-card" : "vaccine-card";
             const iconClass = vaccine.icon ? vaccine.icon : "fa-syringe";
+            const dosageHtml = vaccine.dosage ? `<span class="dosage">${vaccine.dosage}</span>` : '';
+            const dateHtml = vaccine.dateRange ? `<div class="date-range"><i class="fa-regular fa-calendar-days"></i> ${vaccine.dateRange}</div>` : '';
             
             gridContainer.innerHTML += `
                 <div class="${cardClass}">
-                    <div class="card-icon"><i class="fa-solid ${iconClass}"></i></div>
-                    <div class="card-content">
-                        <h3>${vaccine.name}</h3>
-                        <p>${vaccine.desc}</p>
+                    <div class="card-top">
+                        <div class="card-icon"><i class="fa-solid ${iconClass}"></i></div>
+                        <div class="card-content">
+                            <h3>${vaccine.name}</h3>
+                            <p>${vaccine.desc}</p>
+                            ${dosageHtml}
+                        </div>
                     </div>
+                    ${dateHtml}
                 </div>
             `;
+        });
+    };
+
+    const downloadPDF = () => {
+        const element = document.getElementById('pdfExportArea');
+        const title = element.querySelector('.pdf-title');
+        
+        title.style.display = 'block';
+        element.classList.add('pdf-mode');
+
+        const opt = {
+            margin:       10,
+            filename:     'asi-takvimi-raporu.pdf',
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: true, 
+                letterRendering: true, 
+                scrollY: 0 
+            },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            title.style.display = 'none';
+            element.classList.remove('pdf-mode');
         });
     };
 </script>
