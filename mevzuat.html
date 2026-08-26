@@ -696,6 +696,44 @@
       if (e.key === "ArrowRight") loadPage(currentPage + 1);
     });
 
+// ── Dokunmatik Kaydırma (Swipe) ile Sayfa Değiştirme ──
+(function() {
+  let startX = 0, startY = 0, dragging = false;
+  const viewerMain = document.getElementById('viewer-main');
+
+  viewerMain.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    dragging = true;
+  }, { passive: true });
+
+  viewerMain.addEventListener('touchend', e => {
+    if (!dragging) return;
+    dragging = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+
+    // Yatay hareket dikey hareketten belirgin ve en az 45px ise
+    if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 45) {
+      if (dx < 0) {
+        loadPage(currentPage + 1); // Sola kaydırınca -> Sonraki Sayfa
+      } else {
+        loadPage(currentPage - 1); // Sağa kaydırınca -> Önceki Sayfa
+      }
+    }
+  }, { passive: true });
+
+  viewerMain.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    // Belirgin bir yatay kaydırma varsa dikey kaydırmayı engelle
+    if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 10) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+})();
+
     init();
   </script>
 </body>
