@@ -130,8 +130,112 @@
             page-break-inside: avoid;
         }
 
-        .vaccine-card.special-card { background-color: var(--special-bg); border-color: #fde68a; border-left-color: var(--special-border); }
-        .vaccine-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        /* Geçmişte Yapılmış Aşılar (Daha Küçük Görünüm) */
+        .vaccine-card.card-past {
+            background-color: #f0fdf4 !important;
+            border-color: #bbf7d0 !important;
+            border-left: 4px solid #16a34a !important;
+            padding: 0.85rem 1.15rem !important;
+            gap: 0.4rem !important;
+            transform: scale(0.96);
+            opacity: 0.92;
+        }
+        .vaccine-card.card-past .card-icon {
+            background-color: #dcfce7 !important;
+            color: #16a34a !important;
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 0.95rem !important;
+            border-radius: 6px !important;
+        }
+        .vaccine-card.card-past .card-content h3 {
+            font-size: 0.92rem !important;
+            margin-bottom: 0.15rem !important;
+        }
+        .vaccine-card.card-past .card-content p {
+            font-size: 0.78rem !important;
+            line-height: 1.35 !important;
+            margin-bottom: 0.2rem !important;
+        }
+        .vaccine-card.card-past .dosage {
+            background-color: #dcfce7 !important;
+            color: #166534 !important;
+            font-size: 0.72rem !important;
+            padding: 1px 6px !important;
+        }
+        .vaccine-card.card-past .date-range {
+            background-color: #dcfce7 !important;
+            color: #15803d !important;
+            border-color: #bbf7d0 !important;
+            font-size: 0.78rem !important;
+            padding: 4px 8px !important;
+        }
+        .vaccine-card.card-past .status-badge {
+            font-size: 0.65rem !important;
+            padding: 2px 6px !important;
+            margin-bottom: 0.2rem !important;
+        }
+
+        /* Yapılacak / Güncel / Kritik Aşılar (1 Aylık Pencere Dahil) */
+        .vaccine-card.card-due,
+        .vaccine-card.card-critical {
+            background-color: #fef2f2 !important;
+            border-color: #fecaca !important;
+            border-left: 5px solid #ef4444 !important;
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.18), 0 4px 6px -2px rgba(239, 68, 68, 0.06);
+            position: relative;
+            z-index: 2;
+        }
+        .vaccine-card.card-due .card-icon,
+        .vaccine-card.card-critical .card-icon {
+            background-color: #fee2e2 !important;
+            color: #dc2626 !important;
+        }
+        .vaccine-card.card-due .dosage,
+        .vaccine-card.card-critical .dosage {
+            background-color: #fee2e2 !important;
+            color: #991b1b !important;
+        }
+        .vaccine-card.card-due .date-range,
+        .vaccine-card.card-critical .date-range {
+            background-color: #fee2e2 !important;
+            color: #991b1b !important;
+            border-color: #fecaca !important;
+        }
+
+        /* Kaçırılmış / Artık Yapılamaz Aşılar */
+        .vaccine-card.card-expired {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+            border-left: 5px solid #94a3b8 !important;
+            opacity: 0.8;
+            transform: scale(0.95);
+        }
+        .vaccine-card.card-expired .card-icon {
+            background-color: #f1f5f9 !important;
+            color: #64748b !important;
+        }
+        .vaccine-card.card-expired .card-content h3 {
+            color: #64748b;
+            text-decoration: line-through;
+        }
+        .vaccine-card.card-expired .status-badge {
+            background-color: #f1f5f9 !important;
+            color: #64748b !important;
+        }
+
+        .vaccine-card.special-card {
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+        }
+
+        .vaccine-card:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.12);
+        }
+        .vaccine-card.card-past:hover {
+            transform: translateY(-2px) scale(0.97);
+        }
 
         .card-top { display: flex; gap: 1rem; align-items: flex-start; }
         
@@ -140,8 +244,43 @@
             border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
         }
 
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.6rem;
+            border-radius: 9999px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.03em; margin-bottom: 0.4rem;
+        }
+        .status-badge.badge-past { background-color: #dcfce7; color: #166534; }
+        .status-badge.badge-critical { background-color: #fee2e2; color: #991b1b; }
+        .status-badge.badge-due { background-color: #fee2e2; color: #b91c1c; }
+        .status-badge.badge-expired { background-color: #f1f5f9; color: #475569; }
+        .status-badge.badge-catchup { background-color: #ffedd5; color: #c2410c; }
+
+        .section-divider {
+            grid-column: 1 / -1;
+            width: 100%;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+        .section-divider.active-divider {
+            color: #991b1b;
+            border-bottom-color: #fecaca;
+            margin-top: 0.5rem;
+        }
+        .section-divider.past-divider {
+            color: #166534;
+            border-bottom-color: #bbf7d0;
+            margin-top: 2.25rem;
+        }
+
         .special-card .card-icon { background-color: #fef3c7; color: #d97706; }
-        .card-content h3 { font-size: 1.05rem; color: var(--text-main); margin-bottom: 0.4rem; }
+        .card-content h3 { font-size: 1.05rem; color: var(--text-main); margin-bottom: 0.2rem; }
         .card-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.4rem; }
         .card-content .dosage { font-weight: 600; color: var(--primary); font-size: 0.8rem; display: inline-block; background: #eff6ff; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
         .special-card .card-content .dosage { color: #d97706; background: #fef3c7; }
@@ -170,23 +309,171 @@
         #pdfExportArea { padding: 1rem; background: white; border-radius: 8px; }
         .pdf-title { display: none; text-align: center; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
         
-        .pdf-mode .vaccine-grid { display: block !important; }
-        .pdf-mode .vaccine-card { margin-bottom: 1.5rem; }
-        
         .warning-text { color: #dc2626; font-weight: 700; }
 		
-		.pdf-mode .vaccine-grid { 
+		/* PDF Mode Single Page Full Width Optimization */
+        #pdfExportArea.pdf-mode,
+        .pdf-mode#pdfExportArea {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 8px 10px !important;
+            background: #ffffff !important;
+            box-sizing: border-box !important;
+            display: block !important;
+            position: static !important;
+            transform: none !important;
+        }
+
+        .pdf-mode .pdf-title {
+            display: block !important;
+            text-align: center !important;
+            color: var(--primary) !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 6px !important;
+            padding-bottom: 4px !important;
+            border-bottom: 1.5px solid var(--border) !important;
+            line-height: 1.25 !important;
+        }
+
+        .pdf-mode .pdf-title span {
+            font-size: 0.76rem !important;
+            color: #64748b !important;
+            font-weight: normal !important;
+        }
+
+        .pdf-mode .section-divider {
+            display: flex !important;
+            width: 100% !important;
+            margin-top: 6px !important;
+            margin-bottom: 4px !important;
+            padding-bottom: 2px !important;
+            font-size: 0.78rem !important;
+            border-bottom-width: 1.5px !important;
+            page-break-after: avoid !important;
+            box-sizing: border-box !important;
+        }
+
+        .pdf-mode .vaccine-grid { 
             display: flex !important; 
             flex-wrap: wrap !important; 
             justify-content: space-between !important;
-            gap: 0 !important; /* html2canvas gap ile sorun yaşayabilir, margin kullanıyoruz */
+            gap: 0 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
         }
-        
+
         .pdf-mode .vaccine-card { 
-            width: 48.5% !important; /* A4 sayfasında iki kart yan yana sığsın diye */
-            margin-bottom: 1.5rem !important;
+            width: 48.8% !important;
+            margin-bottom: 4px !important;
+            padding: 5px 8px !important;
+            gap: 2px !important;
+            border-radius: 5px !important;
+            box-shadow: none !important;
+            transform: none !important;
             page-break-inside: avoid !important;
             box-sizing: border-box !important;
+        }
+
+        .pdf-mode .vaccine-card .card-top {
+            display: flex !important;
+            gap: 6px !important;
+            align-items: flex-start !important;
+        }
+
+        .pdf-mode .vaccine-card .card-icon {
+            width: 22px !important;
+            height: 22px !important;
+            font-size: 0.72rem !important;
+            border-radius: 4px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .pdf-mode .vaccine-card .card-content {
+            width: 100% !important;
+        }
+
+        .pdf-mode .vaccine-card .card-content h3 {
+            font-size: 0.76rem !important;
+            margin-bottom: 1px !important;
+            line-height: 1.15 !important;
+        }
+
+        .pdf-mode .vaccine-card .card-content p {
+            font-size: 0.64rem !important;
+            line-height: 1.15 !important;
+            margin-bottom: 1px !important;
+        }
+
+        .pdf-mode .vaccine-card .dosage {
+            font-size: 0.6rem !important;
+            padding: 1px 4px !important;
+            margin-top: 1px !important;
+            border-radius: 3px !important;
+        }
+
+        .pdf-mode .vaccine-card .date-range {
+            font-size: 0.63rem !important;
+            padding: 2px 5px !important;
+            border-radius: 3px !important;
+        }
+
+        .pdf-mode .vaccine-card .status-badge {
+            font-size: 0.55rem !important;
+            padding: 1px 4px !important;
+            margin-bottom: 1px !important;
+            border-radius: 3px !important;
+        }
+
+        /* PDF Çıktısında Yapılmış Aşılar Sayfanın Altında 3 Sütunlu Kompakt Mini Kartlar */
+        .pdf-mode .vaccine-card.card-past {
+            width: 32.2% !important;
+            padding: 3px 6px !important;
+            margin-bottom: 3px !important;
+            gap: 0 !important;
+            border-left-width: 3px !important;
+            border-radius: 4px !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            box-sizing: border-box !important;
+            transform: none !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-top {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 5px !important;
+            width: 100% !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-icon {
+            width: 16px !important;
+            height: 16px !important;
+            font-size: 0.62rem !important;
+            border-radius: 3px !important;
+            flex-shrink: 0 !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-content {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            overflow: hidden !important;
+            width: 100% !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-content h3 {
+            font-size: 0.68rem !important;
+            margin: 0 !important;
+            line-height: 1.1 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-content p,
+        .pdf-mode .vaccine-card.card-past .dosage,
+        .pdf-mode .vaccine-card.card-past .status-badge,
+        .pdf-mode .vaccine-card.card-past .date-range {
+            display: none !important;
         }
     </style>
 </head>
@@ -197,7 +484,7 @@
         <img src="https://ahef.org.tr/upload/files/8424122c-a4bd-41bb-badd-ecafbc8dd05d.png" alt="AHEF Logosu">
         <div class="header-text">
             <h1>AHEF Çocukluk Çağı Aşı Asistanı</h1>
-            <p>Ulusal aşı takvimi ve detaylı özel aşı algoritmaları</p>
+            <p>Ulusal aşı takvimi, yakalama (catch-up) ve detaylı özel aşı algoritmaları</p>
         </div>
     </div>
     
@@ -207,6 +494,15 @@
             <select id="gender">
                 <option value="kiz">Kız </option>
                 <option value="erkek">Erkek </option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="vaccineStatus">Aşı Durumu</label>
+            <select id="vaccineStatus">
+                <option value="tam" selected>Tam Aşılı</option>
+                <option value="eksik">Eksik Aşılı</option>
+                <option value="hic">Hiç Aşılanmamış</option>
             </select>
         </div>
         
@@ -253,7 +549,7 @@
         <!-- JS ile doldurulacak -->
     </div>
 </div>
-
+        
 <div class="modal-overlay" id="dobModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -271,26 +567,26 @@
 
 <script>
     const routineVaccines = [
-        { month: 0, name: "Hep-B (1. Doz)", desc: "Doğumda uygulanır." },
-        { month: 2, name: "Hep-B (2. Doz)", desc: "2. Ay sonu rutin aşısı." },
-        { month: 2, name: "BCG", desc: "Verem aşısı. 2. Ay sonu." },
-        { month: 2, name: "KPA (1. Doz)", desc: "Konjuge Pnömokok Aşısı." },
-        { month: 2, name: "DaBT-İPA-Hib-HepB (1. Doz)", desc: "5'li Karma aşı." },
-        { month: 4, name: "KPA (2. Doz)", desc: "Konjuge Pnömokok Aşısı." },
-        { month: 4, name: "DaBT-İPA-Hib-HepB (2. Doz)", desc: "5'li Karma aşı." },
-        { month: 6, name: "DaBT-İPA-Hib-HepB (3. Doz)", desc: "5'li Karma aşı." },
-        { month: 6, name: "OPA (1. Doz)", desc: "Oral Polio Aşısı." },
-        { month: 9, name: "KKK (Ek Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak ek dozu." },
-        { month: 12, name: "KPA (Rapel)", desc: "Konjuge Pnömokok Pekiştirme." },
-        { month: 12, name: "Suçiçeği", desc: "1 Yaş rutin aşısı." },
-        { month: 12, name: "KKK (1. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak." },
-        { month: 18, name: "DaBT-İPA-Hib-HepB (Rapel)", desc: "5'li Karma aşı pekiştirme dozu." },
-        { month: 18, name: "OPA (2. Doz)", desc: "Oral Polio Aşısı pekiştirme." },
-        { month: 18, name: "Hep-A (1. Doz)", desc: "Hepatit A aşısı başlangıcı." },
-        { month: 24, name: "Hep-A (2. Doz)", desc: "Hepatit A aşısı ikinci dozu." },
-        { month: 48, name: "DaBT-İPA (Rapel)", desc: "4'lü Karma aşı pekiştirme." },
-        { month: 48, name: "KKK (2. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak." },
-        { month: 156, name: "Td (Rapel)", desc: "Erişkin Tetanos Difteri." }
+        { month: 0, name: "Hep-B (1. Doz)", desc: "Doğumda uygulanır.", code: "hepb_1" },
+        { month: 2, name: "Hep-B (2. Doz)", desc: "2. Ay sonu rutin aşısı.", code: "hepb_2" },
+        { month: 2, name: "BCG", desc: "Verem aşısı. 2. Ay sonu.", code: "bcg" },
+        { month: 2, name: "KPA (1. Doz)", desc: "Konjuge Pnömokok Aşısı.", code: "kpa_1" },
+        { month: 2, name: "DaBT-İPA-Hib-HepB (1. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_1" },
+        { month: 4, name: "KPA (2. Doz)", desc: "Konjuge Pnömokok Aşısı.", code: "kpa_2" },
+        { month: 4, name: "DaBT-İPA-Hib-HepB (2. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_2" },
+        { month: 6, name: "DaBT-İPA-Hib-HepB (3. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_3" },
+        { month: 6, name: "OPA (1. Doz)", desc: "Oral Polio Aşısı.", code: "opa_1" },
+        { month: 9, name: "KKK (Ek Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak ek dozu.", code: "kkk_ek" },
+        { month: 12, name: "KPA (Rapel)", desc: "Konjuge Pnömokok Pekiştirme.", code: "kpa_rapel" },
+        { month: 12, name: "Suçiçeği", desc: "1 Yaş rutin aşısı.", code: "sucicegi_1" },
+        { month: 12, name: "KKK (1. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak.", code: "kkk_1" },
+        { month: 18, name: "DaBT-İPA-Hib-HepB (Rapel)", desc: "Karma aşı pekiştirme dozu.", code: "karma_rapel" },
+        { month: 18, name: "OPA (2. Doz)", desc: "Oral Polio Aşısı pekiştirme.", code: "opa_2" },
+        { month: 18, name: "Hep-A (1. Doz)", desc: "Hepatit A aşısı başlangıcı.", code: "hepa_1" },
+        { month: 24, name: "Hep-A (2. Doz)", desc: "Hepatit A aşısı ikinci dozu.", code: "hepa_2" },
+        { month: 48, name: "DaBT-İPA (Rapel)", desc: "4'lü Karma aşı pekiştirme.", code: "dabt_ipa_rapel" },
+        { month: 48, name: "KKK (2. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak 2. dozu.", code: "kkk_2" },
+        { month: 156, name: "Td (Rapel)", desc: "Erişkin Tetanos Difteri.", code: "td_rapel" }
     ];
 
     const getSpecialVaccines = (monthAge, baseDob) => {
@@ -301,13 +597,27 @@
             return d.toLocaleDateString('tr-TR');
         };
 
-        if (monthAge >= 1 && monthAge <= 7) {
+        // ROTAVİRÜS
+        if (monthAge <= 7) {
             specials.push({ 
                 name: "Rotavirüs Aşısı", 
                 desc: "Monovalan veya Pentavalan Rotavirüs aşılaması.", 
                 dosage: "Son doz en geç 7. ayda bitmelidir.", 
                 icon: "fa-shield-virus",
-                dateRange: `Uygulama Aralığı: ${addMonths(baseDob, 1)} - ${addMonths(baseDob, 7)}`
+                month: Math.max(1, monthAge),
+                dateRange: `Uygulama Aralığı: ${addMonths(baseDob, 1)} - ${addMonths(baseDob, 7)}`,
+                isSpecial: true
+            });
+        } else {
+            specials.push({
+                name: "Rotavirüs Aşısı (Süresi Geçti)",
+                desc: "Rotavirüs aşısı son dozu <span class='warning-text'>en geç 7. ayda bitmelidir</span>. 7. aydan sonra invajinasyon riski ve resmi kılavuzlar nedeniyle KESİNLİKLE YAPILMAZ.",
+                dosage: "7. aydan sonra yapılamaz.",
+                icon: "fa-ban",
+                month: 7,
+                dateRange: "Uygulama Aralığı: 1 - 7. Aylar (Kaçırıldı)",
+                isSpecial: true,
+                isExpired: true
             });
         }
         
@@ -318,14 +628,18 @@
                 desc: "Nimenrix™ (3 Doz+Rapel) veya Menveo™ (2 Doz+Rapel) aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
                 dosage: "Dozlar arası en az 2 ay olmalıdır.", 
                 icon: "fa-brain",
-                dateRange: `Başlangıç: ${addMonths(baseDob, 2)}`
+                month: monthAge,
+                dateRange: `Başlangıç: ${addMonths(baseDob, 2)}`,
+                isSpecial: true
             });
             specials.push({ 
                 name: "Meningokok B (1 Serogrup)", 
                 desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
                 dosage: "3 Doz + Rapel (En az 2 ay arayla).", 
                 icon: "fa-brain",
-                dateRange: `1.Doz: ${addMonths(baseDob, 2)} | 2.Doz: ${addMonths(baseDob, 4)} | 3.Doz: ${addMonths(baseDob, 6)}`
+                month: monthAge,
+                dateRange: `1.Doz: ${addMonths(baseDob, 2)} | 2.Doz: ${addMonths(baseDob, 4)} | 3.Doz: ${addMonths(baseDob, 6)}`,
+                isSpecial: true
             });
         } else if (monthAge >= 6 && monthAge < 12) {
             specials.push({ 
@@ -333,14 +647,18 @@
                 desc: "Nimenrix™ (1 Doz+Rapel) veya Menveo™/Menactra (1 Doz+Rapel) aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
                 dosage: "Dozlar arası en az 2 ay olmalıdır.", 
                 icon: "fa-brain",
-                dateRange: `Başlangıç: ${addMonths(baseDob, monthAge)}`
+                month: monthAge,
+                dateRange: `Başlangıç: ${addMonths(baseDob, monthAge)}`,
+                isSpecial: true
             });
             specials.push({ 
                 name: "Meningokok B (1 Serogrup)", 
                 desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
                 dosage: "2 Doz + Rapel (En az 2 ay arayla).", 
                 icon: "fa-brain",
-                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`
+                month: monthAge,
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`,
+                isSpecial: true
             });
         } else if (monthAge >= 12 && monthAge < 24) {
             specials.push({ 
@@ -348,14 +666,18 @@
                 desc: "Nimenrix™, Menveo™ veya Menactra aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
                 dosage: "Tek (1) DOZ uygulanır.", 
                 icon: "fa-brain",
-                dateRange: `Uygulama: ${addMonths(baseDob, monthAge)}`
+                month: monthAge,
+                dateRange: `Uygulama: ${addMonths(baseDob, monthAge)}`,
+                isSpecial: true
             });
             specials.push({ 
                 name: "Meningokok B (1 Serogrup)", 
                 desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
-                dosage: "2 Doz + Rapel.", 
+                dosage: "2 Doz + Rapel (En az 2 ay arayla).", 
                 icon: "fa-brain",
-                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`
+                month: monthAge,
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`,
+                isSpecial: true
             });
         } else if (monthAge >= 24 && monthAge <= 120) {
             specials.push({ 
@@ -363,14 +685,18 @@
                 desc: "Nimenrix™, Menveo™, Menactra veya MenQuadfi aşılarından <span class='warning-text'>SADECE BİRİ</span> seçilir.", 
                 dosage: "Tek (1) DOZ uygulanır.", 
                 icon: "fa-brain",
-                dateRange: `Uygulama: ${addMonths(baseDob, monthAge)}`
+                month: monthAge,
+                dateRange: `Uygulama: ${addMonths(baseDob, monthAge)}`,
+                isSpecial: true
             });
             specials.push({ 
                 name: "Meningokok B (1 Serogrup)", 
                 desc: "Bexsero. ACWY aşısından bağımsız olarak ayrıca uygulanır.", 
-                dosage: "2 DOZ uygulanır.", 
+                dosage: "2 DOZ uygulanır (En az 2 ay arayla).", 
                 icon: "fa-brain",
-                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`
+                month: monthAge,
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)}`,
+                isSpecial: true
             });
         }
         
@@ -381,18 +707,477 @@
                 desc: "Kız ve erkek çocuklarına uygulanabilir.", 
                 dosage: "6-12 ay arayla 2 DOZ.", 
                 icon: "fa-vial",
-                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 6)}`
+                month: monthAge,
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 6)}`,
+                isSpecial: true
             });
         } else if (monthAge >= 180) {
             specials.push({ 
                 name: "HPV Aşıları (15+ Yaş)", 
                 desc: "Kız ve erkek çocuklarına uygulanabilir.", 
-                dosage: "6 ay boyunca 3 DOZ.", 
+                dosage: "6 ay içinde 3 DOZ (0, 2, 6. aylar).", 
                 icon: "fa-vial",
-                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)} | 3.Doz: ${addMonths(baseDob, monthAge + 6)}`
+                month: monthAge,
+                dateRange: `1.Doz: ${addMonths(baseDob, monthAge)} | 2.Doz: ${addMonths(baseDob, monthAge + 2)} | 3.Doz: ${addMonths(baseDob, monthAge + 6)}`,
+                isSpecial: true
             });
         }
         return specials;
+    };
+
+    /**
+     * Sağlık Bakanlığı GBP Kılavuzlarına göre
+     * Eksik Aşılı veya Hiç Aşılanmamış Çocuklar için Hızlandırılmış Yakalama (Catch-up) Takvimi
+     */
+    const calculateCatchUpVaccines = (currentMonth, baseDob, status, includeSpecial) => {
+        const catchUpList = [];
+        const addMonths = (date, m) => {
+            const d = new Date(date);
+            d.setMonth(d.getMonth() + m);
+            return d.toLocaleDateString('tr-TR');
+        };
+
+        // 1. BCG (Verem)
+        if (currentMonth < 2) {
+            catchUpList.push({
+                name: "BCG (Verem)",
+                month: 2,
+                desc: "2. Ay sonu rutin BCG aşısı.",
+                dosage: "Tek Doz (İntradermal)",
+                icon: "fa-shield-halved",
+                dateRange: `Planlanan Tarih: ${addMonths(baseDob, 2)}`,
+                statusType: 'due'
+            });
+        } else if (currentMonth >= 2 && currentMonth < 72) {
+            if (currentMonth <= 3) {
+                catchUpList.push({
+                    name: "BCG (Verem - Hızlı Telafi)",
+                    month: currentMonth,
+                    desc: "2. ayda kaçırılan BCG aşısı 3. aya kadar PPD testi gerekmeksizin hemen uygulanabilir.",
+                    dosage: "Tek Doz (Hemen Uygulanmalı)",
+                    icon: "fa-shield-halved",
+                    dateRange: `Uygulama: ${addMonths(baseDob, currentMonth)}`,
+                    statusType: 'critical'
+                });
+            } else {
+                catchUpList.push({
+                    name: "BCG (Verem - PPD ile Telafi)",
+                    month: currentMonth,
+                    desc: "3. aydan büyük çocuklarda BCG öncesi <span class='warning-text'>PPD (Cilt Testi)</span> yapılmalı; sonuç negatifse BCG uygulanmalıdır.",
+                    dosage: "PPD Negatifse Tek Doz",
+                    icon: "fa-shield-halved",
+                    dateRange: `Uygulama: ${addMonths(baseDob, currentMonth)} (PPD Sonrası)`,
+                    statusType: 'critical'
+                });
+            }
+        } else {
+            catchUpList.push({
+                name: "BCG (Verem - Süresi Geçti)",
+                month: 72,
+                desc: "6 yaşından (72 ay) sonra daha önce aşılanmamış sağlıklı çocuklarda BCG aşısı rutin olarak önerilmez/yapılmaz.",
+                dosage: "6 yaş üstü rutin dışı.",
+                icon: "fa-ban",
+                dateRange: "Uygulama süresi geçti (>6 Yaş)",
+                statusType: 'expired',
+                isExpired: true
+            });
+        }
+
+        // 2. Karma Aşı (DaBT-İPA-Hib-HepB veya Td-İPA)
+        if (currentMonth < 60) {
+            catchUpList.push({
+                name: "DaBT-İPA-Hib-HepB (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "5'li veya 6'lı Karma aşı yakalama şeması başlangıcı.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-syringe",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "DaBT-İPA-Hib-HepB (2. Telafi Dozu)",
+                month: currentMonth + 1,
+                desc: "1. dozdan en az 4 hafta (1 ay) sonra uygulanır.",
+                dosage: "1. dozdan 1 ay sonra",
+                icon: "fa-syringe",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 1)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "DaBT-İPA-Hib-HepB (3. Telafi Dozu)",
+                month: currentMonth + 2,
+                desc: "2. dozdan en az 4 hafta (1 ay) sonra uygulanır.",
+                dosage: "2. dozdan 1 ay sonra",
+                icon: "fa-syringe",
+                dateRange: `3. Doz: ${addMonths(baseDob, currentMonth + 2)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "DaBT-İPA-Hib (Rapel Doz)",
+                month: currentMonth + 14,
+                desc: "3. dozdan 12 ay sonra pekiştirme dozu uygulanır.",
+                dosage: "3. dozdan 12 ay sonra",
+                icon: "fa-syringe",
+                dateRange: `Rapel: ${addMonths(baseDob, currentMonth + 14)}`,
+                statusType: 'due'
+            });
+        } else {
+            // >= 5 yaş (60 ay): Hib aşısı yapılmaz
+            catchUpList.push({
+                name: "Td-İPA / DaBT-İPA (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "5 yaşından büyük çocuklarda Hib yapılmaz; Td-İPA / DaBT-İPA uygulanır.",
+                dosage: "Hemen uygulanmalı (Hib Hariç)",
+                icon: "fa-syringe",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "Td-İPA / DaBT-İPA (2. Telafi Dozu)",
+                month: currentMonth + 1,
+                desc: "1. dozdan en az 4 hafta (1 ay) sonra uygulanır.",
+                dosage: "1. dozdan 1 ay sonra",
+                icon: "fa-syringe",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 1)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "Td-İPA / DaBT-İPA (3. Telafi Dozu)",
+                month: currentMonth + 7,
+                desc: "2. dozdan en az 6 ay sonra uygulanır.",
+                dosage: "2. dozdan 6 ay sonra",
+                icon: "fa-syringe",
+                dateRange: `3. Doz: ${addMonths(baseDob, currentMonth + 7)}`,
+                statusType: 'due'
+            });
+        }
+
+        // 3. Hep-B (Hepatit B) - Eğer karma aşı içinde verilmiyorsa veya bağımsız Hep-B şeması
+        if (currentMonth >= 60) {
+            catchUpList.push({
+                name: "Hep-B (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "Hepatit B yakalama şeması başlangıcı.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-syringe",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "Hep-B (2. Telafi Dozu)",
+                month: currentMonth + 1,
+                desc: "1. dozdan en az 1 ay sonra.",
+                dosage: "1. dozdan 1 ay sonra",
+                icon: "fa-syringe",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 1)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "Hep-B (3. Telafi Dozu)",
+                month: currentMonth + 6,
+                desc: "1. dozdan 6 ay sonra (2. dozdan en az 5 ay sonra).",
+                dosage: "1. dozdan 6 ay sonra",
+                icon: "fa-syringe",
+                dateRange: `3. Doz: ${addMonths(baseDob, currentMonth + 6)}`,
+                statusType: 'due'
+            });
+        }
+
+        // 4. KPA (Konjuge Pnömokok Aşısı - KPA13)
+        if (currentMonth < 7) {
+            catchUpList.push({
+                name: "KPA (1. Doz)",
+                month: Math.max(2, currentMonth),
+                desc: "Konjuge Pnömokok primer aşılama başlangıcı.",
+                dosage: "En erken 2. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, Math.max(2, currentMonth))}`,
+                statusType: currentMonth >= 2 ? 'critical' : 'due'
+            });
+            catchUpList.push({
+                name: "KPA (2. Doz)",
+                month: Math.max(4, currentMonth + 2),
+                desc: "1. dozdan en az 4-8 hafta sonra.",
+                dosage: "4. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, Math.max(4, currentMonth + 2))}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "KPA (Rapel Doz)",
+                month: Math.max(12, currentMonth + 4),
+                desc: "12. ayda pekiştirme dozu.",
+                dosage: "12. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `Rapel: ${addMonths(baseDob, Math.max(12, currentMonth + 4))}`,
+                statusType: 'due'
+            });
+        } else if (currentMonth >= 7 && currentMonth <= 11) {
+            catchUpList.push({
+                name: "KPA (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "7-11 ay yakalama şeması 1. dozu.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "KPA (2. Telafi Dozu)",
+                month: currentMonth + 1,
+                desc: "1. dozdan en az 4 hafta sonra.",
+                dosage: "1. dozdan 1 ay sonra",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 1)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "KPA (Rapel Dozu)",
+                month: Math.max(12, currentMonth + 3),
+                desc: "12. aydan sonra, son dozdan en az 8 hafta sonra.",
+                dosage: "12. aydan sonra rapel",
+                icon: "fa-shield-virus",
+                dateRange: `Rapel: ${addMonths(baseDob, Math.max(12, currentMonth + 3))}`,
+                statusType: 'due'
+            });
+        } else if (currentMonth >= 12 && currentMonth < 24) {
+            catchUpList.push({
+                name: "KPA (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "12-24 ay yakalama şeması 1. dozu.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "KPA (2. Telafi Dozu)",
+                month: currentMonth + 2,
+                desc: "1. dozdan en az 8 hafta (2 ay) sonra. (Rapel gerekmez).",
+                dosage: "1. dozdan 2 ay sonra",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 2)}`,
+                statusType: 'due'
+            });
+        } else if (currentMonth >= 24 && currentMonth < 60) {
+            catchUpList.push({
+                name: "KPA (Tek Telafi Dozu)",
+                month: currentMonth,
+                desc: "24-59 ay arası daha önce aşılanmamış çocuklar için tek doz KPA13 yeterlidir.",
+                dosage: "Tek Doz (Hemen Uygulanmalı)",
+                icon: "fa-shield-virus",
+                dateRange: `Uygulama: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+        }
+
+        // 5. KKK (Kızamık-Kızamıkçık-Kabakulak)
+        if (currentMonth < 9) {
+            catchUpList.push({
+                name: "KKK (Ek Doz)",
+                month: 9,
+                desc: "9. Ay ek kızamık dozu.",
+                dosage: "9. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `Ek Doz: ${addMonths(baseDob, 9)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "KKK (1. Doz)",
+                month: 12,
+                desc: "12. Ay rutin 1. dozu.",
+                dosage: "12. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, 12)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "KKK (2. Doz)",
+                month: 48,
+                desc: "48. Ay rutin 2. dozu.",
+                dosage: "48. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, 48)}`,
+                statusType: 'due'
+            });
+        } else if (currentMonth >= 9 && currentMonth < 12) {
+            catchUpList.push({
+                name: "KKK (Ek Doz - Telafi)",
+                month: currentMonth,
+                desc: "9-11 ay ek kızamık dozu hemen uygulanmalıdır.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-shield-virus",
+                dateRange: `Ek Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "KKK (1. Doz)",
+                month: 12,
+                desc: "12. Ay rutin dozu.",
+                dosage: "12. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, 12)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "KKK (2. Doz)",
+                month: 48,
+                desc: "48. Ay rutin dozu.",
+                dosage: "48. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, 48)}`,
+                statusType: 'due'
+            });
+        } else if (currentMonth >= 12 && currentMonth < 48) {
+            catchUpList.push({
+                name: "KKK (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "1 yaş sonrası kaçırılan 1. doz KKK aşısı hemen uygulanmalıdır.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "KKK (2. Doz)",
+                month: 48,
+                desc: "48. Ay rutin 2. dozu (1. dozdan en az 4 hafta sonra).",
+                dosage: "48. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, 48)}`,
+                statusType: 'due'
+            });
+        } else {
+            // >= 48 ay
+            catchUpList.push({
+                name: "KKK (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "4 yaş ve üzeri çocuklar için 1. doz KKK aşısı.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "KKK (2. Telafi Dozu)",
+                month: currentMonth + 1,
+                desc: "1. dozdan en az 4 hafta (1 ay) sonra 2. doz.",
+                dosage: "1. dozdan 1 ay sonra",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 1)}`,
+                statusType: 'due'
+            });
+        }
+
+        // 6. Suçiçeği
+        if (currentMonth < 12) {
+            catchUpList.push({
+                name: "Suçiçeği",
+                month: 12,
+                desc: "1 Yaş rutin aşısı.",
+                dosage: "12. ayda tek doz",
+                icon: "fa-shield-virus",
+                dateRange: `Planlanan Tarih: ${addMonths(baseDob, 12)}`,
+                statusType: 'due'
+            });
+        } else if (currentMonth >= 12 && currentMonth < 156) {
+            catchUpList.push({
+                name: "Suçiçeği (Telafi Dozu)",
+                month: currentMonth,
+                desc: "1 yaş sonrası kaçırılan suçiçeği aşısı için tek doz uygulanır.",
+                dosage: "Hemen tek doz",
+                icon: "fa-shield-virus",
+                dateRange: `Uygulama: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+        } else {
+            // >= 13 yaş
+            catchUpList.push({
+                name: "Suçiçeği (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "13 yaş üzeri adölesanlarda 2 doz uygulanır.",
+                dosage: "Hemen 1. doz",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "Suçiçeği (2. Telafi Dozu)",
+                month: currentMonth + 1,
+                desc: "1. dozdan en az 4-8 hafta sonra 2. doz.",
+                dosage: "1. dozdan 1 ay sonra",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 1)}`,
+                statusType: 'due'
+            });
+        }
+
+        // 7. Hep-A (Hepatit A)
+        if (currentMonth < 18) {
+            catchUpList.push({
+                name: "Hep-A (1. Doz)",
+                month: 18,
+                desc: "18. Ay rutin başlangıcı.",
+                dosage: "18. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, 18)}`,
+                statusType: 'due'
+            });
+            catchUpList.push({
+                name: "Hep-A (2. Doz)",
+                month: 24,
+                desc: "24. Ay rutin 2. dozu.",
+                dosage: "24. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, 24)}`,
+                statusType: 'due'
+            });
+        } else {
+            catchUpList.push({
+                name: "Hep-A (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "18. ay sonrası kaçırılan Hepatit A aşısı.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+            catchUpList.push({
+                name: "Hep-A (2. Telafi Dozu)",
+                month: currentMonth + 6,
+                desc: "1. dozdan en az 6 ay sonra 2. doz uygulanır.",
+                dosage: "1. dozdan 6 ay sonra",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 6)}`,
+                statusType: 'due'
+            });
+        }
+
+        // 8. OPA (Oral Polio)
+        if (currentMonth >= 6 && currentMonth < 60) {
+            catchUpList.push({
+                name: "OPA (Oral Polio)",
+                month: currentMonth,
+                desc: "Çocuk felcine karşı oral canlı aşı pekiştirmesi.",
+                dosage: "Hemen 2 damla oral",
+                icon: "fa-shield-virus",
+                dateRange: `Uygulama: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical'
+            });
+        }
+
+        // Özel Aşılar
+        if (includeSpecial) {
+            const specials = getSpecialVaccines(currentMonth, baseDob);
+            specials.forEach(s => {
+                catchUpList.push({
+                    ...s,
+                    statusType: s.isExpired ? 'expired' : (s.month === currentMonth ? 'critical' : 'due')
+                });
+            });
+        }
+
+        return catchUpList;
     };
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -437,12 +1222,14 @@
         });
 
         document.getElementById('calculateBtn').addEventListener('click', calculateVaccines);
+        document.getElementById('vaccineStatus').addEventListener('change', calculateVaccines);
         calculateVaccines();
     });
 
     const calculateVaccines = () => {
         const ageType = document.getElementById('ageType').value;
         const gender = document.getElementById('gender').value;
+        const vaccineStatus = document.getElementById('vaccineStatus').value; // 'tam', 'eksik', 'hic'
         const includeSpecial = document.getElementById('includeSpecial').checked;
         
         let totalMonths = 0;
@@ -467,24 +1254,80 @@
             const dobStr = document.getElementById('selectedDateString').value;
             badgeTextPrefix = dobStr ? `D.Tarihi: ${dobStr} (${totalMonths} Ay)` : `${totalMonths} Aylık`;
         }
-        
-        const exactMatches = routineVaccines.filter(v => v.month === totalMonths).map(v => {
-            const targetDate = new Date(baseDob);
-            targetDate.setMonth(targetDate.getMonth() + v.month);
-            return {
-                ...v, 
-                isSpecial: false,
-                dateRange: `Uygulama Tarihi: ${targetDate.toLocaleDateString('tr-TR')}`
+
+        let processedVaccines = [];
+
+        if (vaccineStatus === 'eksik' || vaccineStatus === 'hic') {
+            // Catch-up / Yakalama Takvimi Algoritması
+            processedVaccines = calculateCatchUpVaccines(totalMonths, baseDob, vaccineStatus, includeSpecial);
+        } else {
+            // Tam Aşılı Takvim (1 Aylık Pencere ve Geçmiş vs Gelecek Ayrımı)
+            const addMonths = (date, m) => {
+                const d = new Date(date);
+                d.setMonth(d.getMonth() + m);
+                return d.toLocaleDateString('tr-TR');
             };
-        });
+
+            routineVaccines.forEach(v => {
+                const targetDate = new Date(baseDob);
+                targetDate.setMonth(targetDate.getMonth() + v.month);
+                
+                let statusType = 'past';
+                
+                if (v.month < totalMonths) {
+                    // Geçmişte kalmış aşı
+                    // 1 Aylık Yapılabilir Pencere Kuralı:
+                    // Eğer currentMonth === vaccineMonth + 1 (yani tam 1 ay geçmişse), bu aşı kritik hemen yapılmalı penceresindedir
+                    if (totalMonths === v.month + 1) {
+                        statusType = 'critical';
+                    } else {
+                        statusType = 'past';
+                    }
+                } else if (v.month === totalMonths) {
+                    // Tam o ayda olan aşı -> Kritik / Hemen Yapılmalı
+                    statusType = 'critical';
+                } else {
+                    // Gelecekte yapılacak aşı
+                    statusType = 'due';
+                }
+
+                processedVaccines.push({
+                    ...v,
+                    isSpecial: false,
+                    statusType: statusType,
+                    dateRange: `Planlanan Tarih: ${targetDate.toLocaleDateString('tr-TR')}`
+                });
+            });
+
+            if (includeSpecial) {
+                const specials = getSpecialVaccines(totalMonths, baseDob);
+                specials.forEach(s => {
+                    let statusType = 'critical';
+                    if (s.isExpired) {
+                        statusType = 'expired';
+                    } else if (s.month < totalMonths) {
+                        if (totalMonths === s.month + 1) {
+                            statusType = 'critical';
+                        } else {
+                            statusType = 'past';
+                        }
+                    } else if (s.month === totalMonths) {
+                        statusType = 'critical';
+                    } else {
+                        statusType = 'due';
+                    }
+                    processedVaccines.push({
+                        ...s,
+                        statusType: statusType
+                    });
+                });
+            }
+        }
         
-        const specialMatches = includeSpecial ? getSpecialVaccines(totalMonths, baseDob).map(v => ({...v, isSpecial: true})) : [];
-        const allMatches = [...exactMatches, ...specialMatches];
-        
-        renderResults(allMatches, totalMonths, gender, badgeTextPrefix);
+        renderResults(processedVaccines, totalMonths, gender, vaccineStatus, badgeTextPrefix);
     };
 
-    const renderResults = (vaccines, totalMonths, gender, badgeTextPrefix) => {
+    const renderResults = (vaccines, totalMonths, gender, vaccineStatus, badgeTextPrefix) => {
         const container = document.getElementById('resultsContainer');
         
         if (vaccines.length === 0) {
@@ -492,42 +1335,88 @@
                 <div class="empty-state">
                     <i class="fa-regular fa-calendar-xmark"></i>
                     <h3>Bu Periyotta Aşı Bulunmuyor</h3>
-                    <p>Seçilen ay/yaş periyodu için rutin veya özel bir aşı saptanmadı.</p>
+                    <p>Seçilen kriterler için herhangi bir aşı kaydı oluşturulamadı.</p>
                 </div>
             `;
             return;
         }
 
+        // Sıralama Önceliği:
+        // 1. Kritik / Hemen Yapılmalı (En Üstte)
+        // 2. Planlanan / Yapılacak Aşılar (Ortada)
+        // 3. Kaçırıldı / Süresi Geçti
+        // 4. Geçmişte Yapılmış Aşılar (En Altta)
+        const priorityOrder = { 'critical': 1, 'due': 2, 'expired': 3, 'past': 4 };
+        vaccines.sort((a, b) => {
+            const pA = priorityOrder[a.statusType] || 99;
+            const pB = priorityOrder[b.statusType] || 99;
+            if (pA !== pB) return pA - pB;
+            return (a.month || 0) - (b.month || 0);
+        });
+
+        const activeVaccines = vaccines.filter(v => v.statusType !== 'past');
+        const pastVaccines = vaccines.filter(v => v.statusType === 'past');
+
         const genderText = gender === 'kiz' ? 'Kız' : 'Erkek';
         const dateStr = new Date().toLocaleDateString('tr-TR');
-        
+        let statusLabel = 'Tam Aşılı';
+        if (vaccineStatus === 'eksik') statusLabel = 'Eksik Aşılı (Yakalama Takvimi)';
+        if (vaccineStatus === 'hic') statusLabel = 'Hiç Aşılanmamış (Hızlandırılmış Takvim)';
+
         container.innerHTML = `
             <div class="results-header">
                 <div class="summary-badge">
                     <i class="fa-solid fa-clipboard-user"></i>
-                    ${badgeTextPrefix} - ${genderText} Çocuğu Aşı Planı
+                    ${badgeTextPrefix} - ${genderText} Çocuğu (${statusLabel})
                 </div>
                 <button onclick="downloadPDF()" class="btn-pdf"><i class="fa-solid fa-file-pdf"></i> PDF Olarak İndir</button>
             </div>
             
             <div id="pdfExportArea">
-                <h2 class="pdf-title">Çocukluk Çağı Aşı Takvimi Raporu <br><span style="font-size:0.9rem; color:#64748b;">Oluşturulma: ${dateStr} | Hasta: ${badgeTextPrefix} ${genderText}</span></h2>
+                <h2 class="pdf-title">Çocukluk Çağı Aşı Takvimi Raporu <br><span style="font-size:0.9rem; color:#64748b;">Oluşturulma: ${dateStr} | Durum: ${statusLabel} | Hasta: ${badgeTextPrefix} ${genderText}</span></h2>
                 <div class="vaccine-grid" id="vaccineGrid"></div>
             </div>
         `;
 
         const gridContainer = document.getElementById('vaccineGrid');
 
-        vaccines.forEach(vaccine => {
-            const cardClass = vaccine.isSpecial ? "vaccine-card special-card" : "vaccine-card";
-            const iconClass = vaccine.icon ? vaccine.icon : "fa-syringe";
+        const renderCard = (vaccine) => {
+            let cardModClass = "";
+            let statusBadgeHtml = "";
+            let iconHtml = "";
+
+            if (vaccine.statusType === 'past') {
+                cardModClass = "card-past";
+                iconHtml = '<i class="fa-solid fa-circle-check"></i>';
+                statusBadgeHtml = '<span class="status-badge badge-past"><i class="fa-solid fa-check"></i> Tamamlandı (Geçmiş Doz)</span>';
+            } else if (vaccine.statusType === 'critical') {
+                cardModClass = "card-critical";
+                iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                statusBadgeHtml = '<span class="status-badge badge-critical"><i class="fa-solid fa-bolt"></i> Kritik / Hemen Yapılmalı</span>';
+            } else if (vaccine.statusType === 'expired') {
+                cardModClass = "card-expired";
+                iconHtml = '<i class="fa-solid fa-ban"></i>';
+                statusBadgeHtml = '<span class="status-badge badge-expired"><i class="fa-solid fa-circle-xmark"></i> Kaçırıldı / Artık Yapılamaz</span>';
+            } else {
+                // due / future
+                cardModClass = "card-due";
+                const customIcon = vaccine.icon ? vaccine.icon : "fa-syringe";
+                iconHtml = `<i class="fa-solid ${customIcon}"></i>`;
+                statusBadgeHtml = '<span class="status-badge badge-due"><i class="fa-regular fa-clock"></i> Planlanan / Yapılacak Aşı</span>';
+            }
+
+            if (vaccine.isSpecial && vaccine.statusType !== 'expired') {
+                cardModClass += " special-card";
+            }
+
             const dosageHtml = vaccine.dosage ? `<span class="dosage">${vaccine.dosage}</span>` : '';
             const dateHtml = vaccine.dateRange ? `<div class="date-range"><i class="fa-regular fa-calendar-days"></i> ${vaccine.dateRange}</div>` : '';
             
-            gridContainer.innerHTML += `
-                <div class="${cardClass}">
+            return `
+                <div class="vaccine-card ${cardModClass}">
+                    ${statusBadgeHtml}
                     <div class="card-top">
-                        <div class="card-icon"><i class="fa-solid ${iconClass}"></i></div>
+                        <div class="card-icon">${iconHtml}</div>
                         <div class="card-content">
                             <h3>${vaccine.name}</h3>
                             <p>${vaccine.desc}</p>
@@ -537,7 +1426,19 @@
                     ${dateHtml}
                 </div>
             `;
-        });
+        };
+
+        let html = "";
+        if (activeVaccines.length > 0 && pastVaccines.length > 0) {
+            html += `<div class="section-divider active-divider"><i class="fa-solid fa-bell"></i> Kritik ve Yapılacak Aşılar (${activeVaccines.length})</div>`;
+            activeVaccines.forEach(v => { html += renderCard(v); });
+            html += `<div class="section-divider past-divider"><i class="fa-solid fa-clock-rotate-left"></i> Geçmişte Yapılmış Aşılar (${pastVaccines.length})</div>`;
+            pastVaccines.forEach(v => { html += renderCard(v); });
+        } else {
+            vaccines.forEach(v => { html += renderCard(v); });
+        }
+
+        gridContainer.innerHTML = html;
     };
 
     const downloadPDF = () => {
@@ -548,19 +1449,24 @@
         element.classList.add('pdf-mode');
 
         const opt = {
-            margin:       10,
+            margin:       [8, 8, 8, 8],
             filename:     'asi-takvimi-raporu.pdf',
-            image:        { type: 'jpeg', quality: 1 },
+            image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { 
                 scale: 2, 
                 useCORS: true, 
                 letterRendering: true, 
-                scrollY: 0 
+                scrollY: 0,
+                scrollX: 0
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
+            title.style.display = 'none';
+            element.classList.remove('pdf-mode');
+        }).catch(err => {
+            console.error("PDF oluşturma hatası:", err);
             title.style.display = 'none';
             element.classList.remove('pdf-mode');
         });
