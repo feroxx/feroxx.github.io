@@ -26,13 +26,14 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  height: 100vh;
+  height: 100dvh; /* Mobil dinamik viewport (Android adres çubuğu taşmasını önler) */
+  overflow: hidden;
+}
 
     /* Sol Panel (Sidebar) */
     aside {
@@ -214,14 +215,18 @@
     }
 
     footer {
-      height: 48px;
-      background-color: var(--surface);
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-    }
+  height: 52px;
+  min-height: 52px;
+  flex-shrink: 0; /* İçeriğin footer'ı ezmesini ve ekrandan dışarı itmesini engeller */
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  padding-bottom: env(safe-area-inset-bottom, 0px); /* Cihaz alt bar çentiği koruması */
+  z-index: 10;
+}
 
     .nav-btn {
       background: var(--surface-2);
