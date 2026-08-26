@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>HSGM Mevzuat Kitabı</title>
+  
+  <style>
+    :root {
+      --primary: #0288d1;
+      --primary-hover: #0277bd;
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --surface-2: #f0f2f5;
+      --text: #212121;
+      --text-muted: #666666;
+      --border: #e0e0e0;
+      --sidebar-width: 320px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sol Panel (Sidebar) */
+    aside {
+      width: var(--sidebar-width);
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+      z-index: 50;
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--surface);
+    }
+
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .toc-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+
+    .toc-category {
+      padding: 12px 16px 4px 16px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: var(--text);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .toc-item:hover {
+      background-color: var(--surface-2);
+    }
+
+    .toc-item.active {
+      background-color: #e1f5fe;
+      border-left-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .toc-item .page-badge {
+      font-size: 11px;
+      background: #e0e0e0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-muted);
+      margin-left: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Ana İçerik Alanı */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    header {
+      height: 56px;
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 10;
+    }
+
+    .left-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .page-indicator {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-input {
+      width: 56px;
+      padding: 4px 6px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-align: center;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .search-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .search-btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* Görsel Alanı */
+    main {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+      background-color: var(--bg);
+    }
+
+    .page-card {
+      max-width: 960px;
+      width: 100%;
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    #page-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    footer {
+      height: 48px;
+      background-color: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .nav-btn {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Arama Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(2px);
+      display: none;
+      z-index: 100;
+    }
+
+    .modal-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 600px;
+      height: 75vh;
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background-color: var(--surface);
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 10px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background-color: var(--bg);
+    }
+
+    .search-result {
+      background: var(--surface);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .search-result:hover {
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .result-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .result-snippet {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .highlight {
+      background-color: #fff59d;
+      color: #000;
+      font-weight: bold;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    /* Mobil Görünüm */
+    @media (max-width: 768px) {
+      aside {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+      }
+
+      aside.open {
+        transform: translateX(0);
+      }
+
+      .modal-box {
+        width: 100%;
+        height: 85vh;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        transform: none;
+        border-radius: 16px 16px 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sol Panel: İçindekiler / Fihrist -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <h2>İçindekiler</h2>
+      <button class="menu-toggle" id="close-sidebar-btn">✕</button>
+    </div>
+    <div class="toc-container" id="toc-list"></div>
+  </aside>
+
+  <!-- Sağ Panel: Görüntüleyici -->
+  <div class="main-wrapper">
+    <header>
+      <div class="left-controls">
+        <button class="menu-toggle" id="open-sidebar-btn">☰ Menü</button>
+        <div class="page-indicator">
+          <span>Sayfa</span>
+          <input type="number" id="page-input" class="page-input" min="1" max="627" value="1">
+          <span id="total-pages-txt">/ 627</span>
+        </div>
+      </div>
+      <button class="search-btn" id="open-search-btn">🔍 Ara</button>
+    </header>
+
+    <main id="viewer-main">
+      <div class="page-card">
+        <img id="page-img" src="" alt="Mevzuat Sayfası">
+      </div>
+    </main>
+
+    <footer>
+      <button class="nav-btn" id="prev-page-btn">◀ Önceki</button>
+      <span id="index-status" style="font-size: 11px; color: var(--text-muted);">İndeks yükleniyor...</span>
+      <button class="nav-btn" id="next-page-btn">Sonraki ▶</button>
+    </footer>
+  </div>
+
+  <!-- Arama Modal -->
+  <div class="modal-backdrop" id="search-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <input type="text" id="search-box" class="search-input" placeholder="Mevzuat içinde arayın (örn: nöbet, şua, izin)..." autocomplete="off">
+        <button class="menu-toggle" id="close-search-btn">✕</button>
+      </div>
+      <div class="modal-body" id="search-results">
+        <div style="text-align: center; color: var(--text-muted); margin-top: 30px;">Aramak istediğiniz terimi yazın.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Resmi Fihrist Ağacı (PDF Sayfa Numaralarıyla)
+    const TOC_DATA = [
+      {
+        category: "KANUN VE KHK'LAR",
+        items: [
+          { title: "Cumhurbaşkanlığı Teşkilatı Kararnamesi", page: 7 },
+          { title: "Sağlık Alanında Bazı Düzenlemeler Hakkında KHK (663)", page: 17 },
+          { title: "Aile Hekimliği Kanunu (5258)", page: 37 },
+          { title: "Sağlık Hizmetleri Temel Kanunu (3359)", page: 42 },
+          { title: "Tababet ve Şuabatı San'atlarının Tarzı İcrasına Dair Kanun (1219)", page: 55 },
+          { title: "Tütün Ürünlerinin Zararlarının Önlenmesi Kanunu (4207)", page: 75 },
+          { title: "İş Sağlığı ve Güvenliği Kanunu (6331)", page: 80 }
+        ]
+      },
+      {
+        category: "TÜZÜKLER & YÖNETMELİKLER",
+        items: [
+          { title: "Tıbbi Deontoloji Nizamnamesi", page: 95 },
+          { title: "Aile Hekimliği Uygulama Yönetmeliği", page: 99 },
+          { title: "ASM Gideri Olarak Yapılacak Katkılar (Gruplandırma)", page: 114 },
+          { title: "Aile Hekimliği Sözleşme ve Ödeme Yönetmeliği", page: 115 },
+          { title: "Toplum Sağlığı Merkezi ve Bağlı Birimler Yönetmeliği", page: 163 },
+          { title: "Eğitim Aile Sağlığı Merkezleri Yönetmeliği", page: 180 },
+          { title: "Sağlık Meslek Mensupları İş ve Görev Tanımları", page: 188 },
+          { title: "Sağlık Bakanlığı Disiplin Amirleri Yönetmeliği", page: 205 },
+          { title: "Tıbbi Atıkların Kontrolü Yönetmeliği", page: 209 },
+          { title: "Tıbbi Cihazların Test, Kontrol ve Kalibrasyonu", page: 222 },
+          { title: "Geçici Koruma Yönetmeliği", page: 231 },
+          { title: "Bulaşıcı Hastalıklar Sürveyans ve Kontrol Esasları", page: 245 },
+          { title: "Hemoglobinopati Kontrol Programı ve Merkezleri", page: 252 },
+          { title: "Kanser Bildirimi ve Kayıt Merkezleri Yönetmeliği", page: 259 },
+          { title: "Devlet Arşiv Hizmetleri Hakkında Yönetmelik", page: 263 },
+          { title: "Resmî Yazışmalarda Uygulanacak Usul ve Esaslar", page: 272 },
+          { title: "Halk Sağlığı Laboratuvarları Çalışma Usul ve Esasları", page: 314 },
+          { title: "Kamu Sağlık Tesisleri Ruhsatlandırma Yönetmeliği", page: 327 },
+          { title: "Çalışanların Sağlık Gözetimine Yönelik Tıbbi Tetkikler", page: 336 },
+          { title: "Sağlık Hizmet Sunucularının Basamaklandırılması", page: 349 }
+        ]
+      },
+      {
+        category: "YÖNERGELER & GENELGELER",
+        items: [
+          { title: "HSGM Hizmet Birimleri ve Görevleri Hakkında Yönerge", page: 354 },
+          { title: "Taşra Teşkilatı Kadro Standartları ve Çalışma Esasları", page: 372 },
+          { title: "Birinci Basamak Sağlık Kuruluşlarına Ad Verilmesi", page: 429 },
+          { title: "Aile Hekimliği Tarama ve Takip Katsayısına İlişkin Yönerge", page: 434 },
+          { title: "İl Sağlık Müdürlükleri Teşvik Ek Ödeme Yönergesi", page: 438 },
+          { title: "Çalışan Güvenliğinin Sağlanması Genelgesi", page: 452 },
+          { title: "Doğrudan Gözetimli Tedavi (DGT) Genelgesi", page: 456 },
+          { title: "Tüberküloz Aktif Sürveyansı Genelgesi", page: 462 },
+          { title: "Yetkilendirilmiş Aile Hekimliği", page: 472 },
+          { title: "Renkli Reçete Sistemi Genelgesi", page: 476 },
+          { title: "Mobil Sağlık Hizmetleri Genelgesi", page: 484 },
+          { title: "Bebek, Çocuk, Ergen İzlem Protokolleri Genelgesi", page: 493 },
+          { title: "ASM-AHB İzleme ve Değerlendirme Rehberi", page: 521 },
+          { title: "ASM Asgari Fiziki Şartlar, Standartlar ve Cihazlar", page: 533 },
+          { title: "Gezici Sağlık Hizmeti Planlaması ve Ödemesi", page: 600 },
+          { title: "Aile Hekimliğinde İzin Usulleri", page: 612 },
+          { title: "SAHU Esnek Mesai Uygulaması", page: 615 }
+        ]
+      }
+    ];
+
+    // Gelişmiş Türkçe Arama Normalizasyonu
+    function normalizeTr(text) {
+      if (!text) return "";
+      return text
+        .toLocaleLowerCase('tr-TR')
+        .replace(/â|á|à/g, 'a')
+        .replace(/ê|é|è/g, 'e')
+        .replace(/î|í|ì/g, 'i')
+        .replace(/ı/g, 'i')
+        .replace(/ô|ó|ò/g, 'o')
+        .replace(/û|ú|ù/g, 'u')
+        .replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u')
+        .replace(/ş/g, 's')
+        .replace(/ö/g, 'o')
+        .replace(/ç/g, 'c');
+    }
+
+    let searchIndex = [];
+    let currentPage = 1;
+    const totalPages = 627;
+
+    // DOM Elementleri
+    const pageImg = document.getElementById("page-img");
+    const pageInput = document.getElementById("page-input");
+    const totalPagesTxt = document.getElementById("total-pages-txt");
+    const prevBtn = document.getElementById("prev-page-btn");
+    const nextBtn = document.getElementById("next-page-btn");
+    const sidebar = document.getElementById("sidebar");
+    const openSidebarBtn = document.getElementById("open-sidebar-btn");
+    const closeSidebarBtn = document.getElementById("close-sidebar-btn");
+    const tocList = document.getElementById("toc-list");
+    const searchModal = document.getElementById("search-modal");
+    const searchBox = document.getElementById("search-box");
+    const searchResults = document.getElementById("search-results");
+    const openSearchBtn = document.getElementById("open-search-btn");
+    const closeSearchBtn = document.getElementById("close-search-btn");
+    const indexStatus = document.getElementById("index-status");
+
+    // 3. Başlatma
+    async function init() {
+      renderTOC();
+      await loadSearchIndex();
+
+      // Hash Sayfa Kontrolü (örn: #45)
+      const hash = parseInt(window.location.hash.replace("#", ""));
+      if (!isNaN(hash) && hash >= 1 && hash <= totalPages) {
+        currentPage = hash;
+      }
+
+      loadPage(currentPage);
+    }
+
+    // Sol Menüyü (TOC) Doldur
+    function renderTOC() {
+      let html = "";
+      TOC_DATA.forEach(cat => {
+        html += `<div class="toc-category">${cat.category}</div>`;
+        cat.items.forEach(item => {
+          html += `
+            <div class="toc-item" data-page="${item.page}" onclick="goToPage(${item.page})">
+              <span>${item.title}</span>
+              <span class="page-badge">S.${item.page}</span>
+            </div>
+          `;
+        });
+      });
+      tocList.innerHTML = html;
+    }
+
+    // JSON İndeksini Garantiye Alan Yükleyici
+    async function loadSearchIndex() {
+      const possiblePaths = [
+        "mevzuatassets/data/mevzuat_index.json",
+        "./mevzuatassets/data/mevzuat_index.json",
+        "data/mevzuat_index.json"
+      ];
+
+      for (const path of possiblePaths) {
+        try {
+          const res = await fetch(path);
+          if (res.ok) {
+            searchIndex = await res.json();
+            // Arama hızını artırmak için text'leri önceden normalize et
+            searchIndex.forEach(item => {
+              item._norm = normalizeTr(item.text);
+            });
+            indexStatus.textContent = "Arama Hazır";
+            return;
+          }
+        } catch (e) {}
+      }
+
+      indexStatus.textContent = "Arama Verisi Yüklenemedi";
+      console.error("mevzuat_index.json dosyası bulunamadı.");
+    }
+
+    // Sayfa Değiştir
+    function loadPage(pageNo) {
+      if (pageNo < 1) pageNo = 1;
+      if (pageNo > totalPages) pageNo = totalPages;
+
+      currentPage = pageNo;
+      window.location.hash = currentPage;
+
+      pageImg.src = `mevzuatassets/pages/page_${currentPage}.jpg`;
+      pageInput.value = currentPage;
+
+      prevBtn.disabled = (currentPage <= 1);
+      nextBtn.disabled = (currentPage >= totalPages);
+
+      // Sol menüde aktif sayfayı işaretle
+      document.querySelectorAll(".toc-item").forEach(el => {
+        if (parseInt(el.dataset.page) === currentPage) {
+          el.classList.add("active");
+        } else {
+          el.classList.remove("active");
+        }
+      });
+
+      document.getElementById("viewer-main").scrollTop = 0;
+
+      // Mobilde menüyü kapat
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove("open");
+      }
+    }
+
+    window.goToPage = function(pageNo) {
+      loadPage(pageNo);
+    };
+
+    // Navigasyon Eventleri
+    prevBtn.addEventListener("click", () => loadPage(currentPage - 1));
+    nextBtn.addEventListener("click", () => loadPage(currentPage + 1));
+    pageInput.addEventListener("change", (e) => loadPage(parseInt(e.target.value)));
+
+    openSidebarBtn.addEventListener("click", () => sidebar.classList.toggle("open"));
+    closeSidebarBtn.addEventListener("click", () => sidebar.classList.remove("open"));
+
+    // 4. Arama Fonksiyonu
+    openSearchBtn.addEventListener("click", () => {
+      searchModal.style.display = "block";
+      searchBox.focus();
+    });
+
+    closeSearchBtn.addEventListener("click", () => {
+      searchModal.style.display = "none";
+    });
+
+    searchModal.addEventListener("click", (e) => {
+      if (e.target === searchModal) searchModal.style.display = "none";
+    });
+
+    searchBox.addEventListener("input", (e) => {
+      const q = e.target.value.trim();
+      const normQ = normalizeTr(q);
+
+      if (normQ.length < 2) {
+        searchResults.innerHTML = '<div style="text-align: center; color: var(--text-muted); margin-top: 30px;">En az 2 harf girin.</div>';
+        return;
+      }
+
+      if (searchIndex.length === 0) {
+        searchResults.innerHTML = '<div style="text-align: center; color: red; margin-top: 30px;">Arama veritabanı (JSON) bulunamadı. Lütfen dosya yolunu kontrol edin.</div>';
+        return;
+      }
+
+      const matches = [];
+      for (const item of searchIndex) {
+        const matchIdx = item._norm.indexOf(normQ);
+
+        if (matchIdx !== -1) {
+          const start = Math.max(0, matchIdx - 40);
+          const end = Math.min(item.text.length, matchIdx + q.length + 60);
+          const snippet = item.text.substring(start, end);
+
+          matches.push({
+            page: item.page,
+            snippet: snippet
+          });
+        }
+      }
+
+      if (matches.length === 0) {
+        searchResults.innerHTML = '<div style="text-align: center; color: var(--text-muted); margin-top: 30px;">Sonuç bulunamadı.</div>';
+        return;
+      }
+
+      searchResults.innerHTML = matches.map(m => `
+        <div class="search-result" onclick="selectSearchResult(${m.page})">
+          <div class="result-badge">SAYFA ${m.page}</div>
+          <div class="result-snippet">...${highlightMatch(m.snippet, q)}...</div>
+        </div>
+      `).join("");
+    });
+
+    function highlightMatch(text, query) {
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escaped})`, "gi");
+      return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    window.selectSearchResult = function(pageNo) {
+      searchModal.style.display = "none";
+      loadPage(pageNo);
+    };
+
+    // Klavye yön tuşları
+    window.addEventListener("keydown", (e) => {
+      if (searchModal.style.display === "block") return;
+      if (e.key === "ArrowLeft") loadPage(currentPage - 1);
+      if (e.key === "ArrowRight") loadPage(currentPage + 1);
+    });
+
+    init();
+  </script>
+</body>
+</html>
