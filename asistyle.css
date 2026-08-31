@@ -1,0 +1,560 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --surface: #ffffff;
+            --background: #f1f5f9;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --special-bg: #fffbeb;
+            --special-border: #f59e0b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            background-color: var(--surface);
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            padding: 2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .header img {
+            height: 70px;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-text { text-align: left; }
+        .header h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .header p { color: #bfdbfe; font-size: 0.95rem; }
+
+        .form-section {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            align-items: end;
+        }
+
+        .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .input-group label { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }
+
+        select, input[type="number"], input[type="date"] {
+            padding: 0.875rem 1rem; border: 1px solid var(--border);
+            border-radius: 8px; font-size: 1rem; font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; width: 100%;
+        }
+
+        select:focus, input:focus {
+            outline: none; border-color: var(--primary); background-color: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .toggle-wrapper { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 0.5rem; background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(24px); }
+        .toggle-label { font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+
+        .btn-primary, .btn-secondary, .btn-pdf {
+            border: none; padding: 0.875rem 1.5rem; border-radius: 8px;
+            font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; height: 48px;
+        }
+
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-secondary { background-color: #e2e8f0; color: var(--text-main); }
+        .btn-secondary:hover { background-color: #cbd5e1; }
+        
+        .btn-pdf { background-color: #ef4444; color: white; width: auto; font-size: 0.9rem; height: 40px; padding: 0 1.5rem; }
+        .btn-pdf:hover { background-color: #dc2626; }
+
+        .results-section { padding: 2rem; background-color: #f8fafc; }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+
+        .summary-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+            border-radius: 9999px; background-color: #e0e7ff; color: #3730a3; font-weight: 600; font-size: 0.875rem;
+        }
+
+        .vaccine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+
+        .vaccine-card {
+            background: white; border: 1px solid var(--border); border-radius: 12px;
+            padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid var(--primary);
+            page-break-inside: avoid;
+        }
+
+        /* Geçmişte Yapılmış Aşılar (Daha Küçük Görünüm) */
+        .vaccine-card.card-past {
+            background-color: #f0fdf4 !important;
+            border-color: #bbf7d0 !important;
+            border-left: 4px solid #16a34a !important;
+            padding: 0.85rem 1.15rem !important;
+            gap: 0.4rem !important;
+            transform: scale(0.96);
+            opacity: 0.92;
+        }
+        .vaccine-card.card-past .card-icon {
+            background-color: #dcfce7 !important;
+            color: #16a34a !important;
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 0.95rem !important;
+            border-radius: 6px !important;
+        }
+        .vaccine-card.card-past .card-content h3 {
+            font-size: 0.92rem !important;
+            margin-bottom: 0.15rem !important;
+        }
+        .vaccine-card.card-past .card-content p {
+            font-size: 0.78rem !important;
+            line-height: 1.35 !important;
+            margin-bottom: 0.2rem !important;
+        }
+        .vaccine-card.card-past .dosage {
+            background-color: #dcfce7 !important;
+            color: #166534 !important;
+            font-size: 0.72rem !important;
+            padding: 1px 6px !important;
+        }
+        .vaccine-card.card-past .date-range {
+            background-color: #dcfce7 !important;
+            color: #15803d !important;
+            border-color: #bbf7d0 !important;
+            font-size: 0.78rem !important;
+            padding: 4px 8px !important;
+        }
+        .vaccine-card.card-past .status-badge {
+            font-size: 0.65rem !important;
+            padding: 2px 6px !important;
+            margin-bottom: 0.2rem !important;
+        }
+
+        /* Kritik / Hemen Yapılmalı Aşılar (1 Aylık Pencere Dahil) - Kırmızı */
+        .vaccine-card.card-critical {
+            background-color: #fef2f2 !important;
+            border-color: #fecaca !important;
+            border-left: 5px solid #ef4444 !important;
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.18), 0 4px 6px -2px rgba(239, 68, 68, 0.06);
+            position: relative;
+            z-index: 2;
+        }
+        .vaccine-card.card-critical .card-icon {
+            background-color: #fee2e2 !important;
+            color: #dc2626 !important;
+        }
+        .vaccine-card.card-critical .dosage {
+            background-color: #fee2e2 !important;
+            color: #991b1b !important;
+        }
+        .vaccine-card.card-critical .date-range {
+            background-color: #fee2e2 !important;
+            color: #991b1b !important;
+            border-color: #fecaca !important;
+        }
+
+        /* Planlanan / Yapılacak Aşılar - Sarı */
+        .vaccine-card.card-due {
+            background-color: #fffbeb !important;
+            border-color: #fde68a !important;
+            border-left: 5px solid #f59e0b !important;
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        .vaccine-card.card-due .card-icon {
+            background-color: #fef3c7 !important;
+            color: #d97706 !important;
+        }
+        .vaccine-card.card-due .dosage {
+            background-color: #fef3c7 !important;
+            color: #92400e !important;
+        }
+        .vaccine-card.card-due .date-range {
+            background-color: #fef3c7 !important;
+            color: #92400e !important;
+            border-color: #fde68a !important;
+        }
+
+        /* Kaçırılmış / Artık Yapılamaz Aşılar */
+        .vaccine-card.card-expired {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+            border-left: 5px solid #94a3b8 !important;
+            opacity: 0.8;
+            transform: scale(0.95);
+        }
+        .vaccine-card.card-expired .card-icon {
+            background-color: #f1f5f9 !important;
+            color: #64748b !important;
+        }
+        .vaccine-card.card-expired .card-content h3 {
+            color: #64748b;
+            text-decoration: line-through;
+        }
+        .vaccine-card.card-expired .status-badge {
+            background-color: #f1f5f9 !important;
+            color: #64748b !important;
+        }
+
+        .vaccine-card.special-card {
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+        }
+
+        .vaccine-card:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.12);
+        }
+        .vaccine-card.card-past:hover {
+            transform: translateY(-2px) scale(0.97);
+        }
+
+        .card-top { display: flex; gap: 1rem; align-items: flex-start; }
+        
+        .card-icon {
+            background-color: #eff6ff; color: var(--primary); width: 44px; height: 44px;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            margin-bottom: 0.35rem;
+        }
+
+        .dose-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            white-space: nowrap;
+            margin-left: auto;
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+        .vaccine-card.card-past .dose-badge {
+            background-color: #dcfce7 !important;
+            color: #166534 !important;
+            border-color: #bbf7d0 !important;
+            font-size: 0.65rem !important;
+            padding: 1px 5px !important;
+        }
+        .vaccine-card.card-due .dose-badge {
+            background-color: #fef3c7 !important;
+            color: #92400e !important;
+            border-color: #fde68a !important;
+        }
+        .vaccine-card.card-critical .dose-badge {
+            background-color: #fee2e2 !important;
+            color: #991b1b !important;
+            border-color: #fecaca !important;
+        }
+        .vaccine-card.card-expired .dose-badge {
+            background-color: #f1f5f9 !important;
+            color: #64748b !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0;
+        }
+        .status-badge.badge-past { background-color: #dcfce7; color: #166534; }
+        .status-badge.badge-critical { background-color: #fee2e2; color: #991b1b; }
+        .status-badge.badge-due { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .status-badge.badge-expired { background-color: #f1f5f9; color: #475569; }
+        .status-badge.badge-catchup { background-color: #ffedd5; color: #c2410c; }
+
+        .section-divider {
+            grid-column: 1 / -1;
+            width: 100%;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+        .section-divider.active-divider {
+            color: #991b1b;
+            border-bottom-color: #fecaca;
+            margin-top: 0.5rem;
+        }
+        .section-divider.past-divider {
+            color: #166534;
+            border-bottom-color: #bbf7d0;
+            margin-top: 2.25rem;
+        }
+
+        .special-card .card-icon { background-color: #fef3c7; color: #d97706; }
+        .card-content h3 { font-size: 1.05rem; color: var(--text-main); margin-bottom: 0.2rem; }
+        .card-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.4rem; }
+        .card-content .dosage { font-weight: 600; color: var(--primary); font-size: 0.8rem; display: inline-block; background: #eff6ff; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
+        .special-card .card-content .dosage { color: #d97706; background: #fef3c7; }
+
+        .date-range {
+            font-size: 0.85rem; color: var(--primary); background: #f1f5f9;
+            padding: 8px 12px; border-radius: 6px; display: flex; align-items: center;
+            gap: 8px; font-weight: 500; border: 1px solid #e2e8f0; width: 100%;
+        }
+        .special-card .date-range { background: #fef3c7; color: #b45309; border-color: #fde68a; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.2s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: white; border-radius: 16px; width: 90%; max-width: 400px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); transform: scale(0.95); transition: transform 0.2s; overflow: hidden; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1.2rem; }
+        .close-btn { background: none; border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer { padding: 1.5rem; background: #f8fafc; border-top: 1px solid var(--border); }
+        
+        .empty-state { text-align: center; padding: 3rem 1rem; grid-column: 1 / -1; }
+        .empty-state i { font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem; }
+        .hidden { display: none !important; }
+
+        #pdfExportArea { padding: 1rem; background: white; border-radius: 8px; }
+        .pdf-title { display: none; text-align: center; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        
+        .warning-text { color: #dc2626; font-weight: 700; }
+		
+		/* PDF Mode Single Page Full Width Optimization */
+        #pdfExportArea.pdf-mode,
+        .pdf-mode#pdfExportArea {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 8px 10px !important;
+            background: #ffffff !important;
+            box-sizing: border-box !important;
+            display: block !important;
+            position: static !important;
+            transform: none !important;
+        }
+
+        .pdf-mode .pdf-title {
+            display: block !important;
+            text-align: center !important;
+            color: var(--primary) !important;
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            margin-bottom: 6px !important;
+            padding-bottom: 4px !important;
+            border-bottom: 1.5px solid var(--border) !important;
+            line-height: 1.25 !important;
+        }
+
+        .pdf-mode .pdf-title span {
+            font-size: 0.76rem !important;
+            color: #64748b !important;
+            font-weight: normal !important;
+        }
+
+        .pdf-mode .section-divider {
+            display: flex !important;
+            width: 100% !important;
+            margin-top: 6px !important;
+            margin-bottom: 4px !important;
+            padding-bottom: 2px !important;
+            font-size: 0.78rem !important;
+            border-bottom-width: 1.5px !important;
+            page-break-after: avoid !important;
+            box-sizing: border-box !important;
+        }
+
+        .pdf-mode .vaccine-grid { 
+            display: flex !important; 
+            flex-wrap: wrap !important; 
+            justify-content: space-between !important;
+            gap: 0 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .pdf-mode .vaccine-card { 
+            width: 48.8% !important;
+            margin-bottom: 4px !important;
+            padding: 5px 8px !important;
+            gap: 2px !important;
+            border-radius: 5px !important;
+            box-shadow: none !important;
+            transform: none !important;
+            page-break-inside: avoid !important;
+            box-sizing: border-box !important;
+        }
+
+        .pdf-mode .vaccine-card .card-top {
+            display: flex !important;
+            gap: 6px !important;
+            align-items: flex-start !important;
+        }
+
+        .pdf-mode .vaccine-card .card-icon {
+            width: 22px !important;
+            height: 22px !important;
+            font-size: 0.72rem !important;
+            border-radius: 4px !important;
+            flex-shrink: 0 !important;
+        }
+
+        .pdf-mode .vaccine-card .card-content {
+            width: 100% !important;
+        }
+
+        .pdf-mode .vaccine-card .card-content h3 {
+            font-size: 0.76rem !important;
+            margin-bottom: 1px !important;
+            line-height: 1.15 !important;
+        }
+
+        .pdf-mode .vaccine-card .card-content p {
+            font-size: 0.64rem !important;
+            line-height: 1.15 !important;
+            margin-bottom: 1px !important;
+        }
+
+        .pdf-mode .vaccine-card .dosage {
+            font-size: 0.6rem !important;
+            padding: 1px 4px !important;
+            margin-top: 1px !important;
+            border-radius: 3px !important;
+        }
+
+        .pdf-mode .vaccine-card .date-range {
+            font-size: 0.63rem !important;
+            padding: 2px 5px !important;
+            border-radius: 3px !important;
+        }
+
+        .pdf-mode .card-header-row {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100% !important;
+            margin-bottom: 2px !important;
+            gap: 4px !important;
+        }
+
+        .pdf-mode .dose-badge {
+            font-size: 0.55rem !important;
+            padding: 1px 4px !important;
+            border-radius: 3px !important;
+        }
+
+        .pdf-mode .vaccine-card .status-badge {
+            font-size: 0.55rem !important;
+            padding: 1px 4px !important;
+            margin-bottom: 0 !important;
+            border-radius: 3px !important;
+        }
+
+        /* PDF Çıktısında Yapılmış Aşılar Sayfanın Altında 3 Sütunlu Kompakt Mini Kartlar */
+        .pdf-mode .vaccine-card.card-past .card-header-row,
+        .pdf-mode .vaccine-card.card-past .dose-badge {
+            display: none !important;
+        }
+        .pdf-mode .vaccine-card.card-past {
+            width: 32.2% !important;
+            padding: 3px 6px !important;
+            margin-bottom: 3px !important;
+            gap: 0 !important;
+            border-left-width: 3px !important;
+            border-radius: 4px !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            box-sizing: border-box !important;
+            transform: none !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-top {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 5px !important;
+            width: 100% !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-icon {
+            width: 16px !important;
+            height: 16px !important;
+            font-size: 0.62rem !important;
+            border-radius: 3px !important;
+            flex-shrink: 0 !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-content {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            overflow: hidden !important;
+            width: 100% !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-content h3 {
+            font-size: 0.68rem !important;
+            margin: 0 !important;
+            line-height: 1.1 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+        .pdf-mode .vaccine-card.card-past .card-content p,
+        .pdf-mode .vaccine-card.card-past .dosage,
+        .pdf-mode .vaccine-card.card-past .status-badge,
+        .pdf-mode .vaccine-card.card-past .date-range {
+            display: none !important;
+        }
