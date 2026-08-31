@@ -267,33 +267,35 @@ document.addEventListener("DOMContentLoaded", () => {
         gridContainer.innerHTML = html;
     };
 
-    const downloadPDF = () => {
-        const element = document.getElementById('pdfExportArea');
-        const title = element.querySelector('.pdf-title');
-        
-        title.style.display = 'block';
-        element.classList.add('pdf-mode');
+    // app.js dosyasının en altına ekleyin veya fonksiyonu şu şekilde güncelleyin:
+window.downloadPDF = () => {
+    const element = document.getElementById('pdfExportArea');
+    if (!element) return;
 
-        const opt = {
-            margin:       [8, 8, 8, 8],
-            filename:     'asi-takvimi-raporu.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { 
-                scale: 2, 
-                useCORS: true, 
-                letterRendering: true, 
-                scrollY: 0,
-                scrollX: 0
-            },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+    const title = element.querySelector('.pdf-title');
+    if (title) title.style.display = 'block';
+    element.classList.add('pdf-mode');
 
-        html2pdf().set(opt).from(element).save().then(() => {
-            title.style.display = 'none';
-            element.classList.remove('pdf-mode');
-        }).catch(err => {
-            console.error("PDF oluşturma hatası:", err);
-            title.style.display = 'none';
-            element.classList.remove('pdf-mode');
-        });
+    const opt = {
+        margin:       [8, 8, 8, 8],
+        filename:     'asi-takvimi-raporu.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+            scale: 2, 
+            useCORS: true, 
+            letterRendering: true, 
+            scrollY: 0,
+            scrollX: 0
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        if (title) title.style.display = 'none';
+        element.classList.remove('pdf-mode');
+    }).catch(err => {
+        console.error("PDF oluşturma hatası:", err);
+        if (title) title.style.display = 'none';
+        element.classList.remove('pdf-mode');
+    });
+};
