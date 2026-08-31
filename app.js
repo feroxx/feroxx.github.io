@@ -267,7 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
         gridContainer.innerHTML = html;
     };
 
-    // app.js dosyasının en altına ekleyin veya fonksiyonu şu şekilde güncelleyin:
 window.downloadPDF = () => {
     const element = document.getElementById('pdfExportArea');
     if (!element) return;
@@ -290,7 +289,18 @@ window.downloadPDF = () => {
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    html2pdf().set(opt).from(element).save().then(() => {
+    // PDF çıktısını al
+    html2pdf().set(opt).from(element).toPdf().get('pdf').then((pdf) => {
+        const pdfDataUri = pdf.output('datauristring');
+        
+        // 1. Flutter Uygulama İçi WebView Kontrolü:
+        if (window.PdfDownloadChannel && window.PdfDownloadChannel.postMessage) {
+            window.PdfDownloadChannel.postMessage(pdfDataUri);
+        } else {
+            // 2. Standart Web Tarayıcısı (Chrome/Safari vb.) Fallback:
+            pdf.save('asi-takvimi-raporu.pdf');
+        }
+
         if (title) title.style.display = 'none';
         element.classList.remove('pdf-mode');
     }).catch(err => {
