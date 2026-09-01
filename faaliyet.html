@@ -1,1372 +1,321 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<title>AHEF Faaliyet Raporu (Ocak - Şubat - Mart 2026)</title>
-<meta name="description" content="Aile Hekimleri Dernekleri Federasyonu (AHEF) Ocak-Şubat-Mart 2026 Faaliyet Raporu">
-<meta name="theme-color" content="#0f1e36">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Google Fonts Inter -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
-<style>
-:root {
-  --ink: #0f172a;
-  --ink-muted: #64748b;
-  --bg: #f8fafc;
-  --bg-card: #ffffff;
-  --bg-topbar: #0f1e36;
-  --primary: #0284c7;
-  --primary-hover: #0369a1;
-  --primary-light: #e0f2fe;
-  --border: #e2e8f0;
-  --radius: 14px;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>AHEF Faaliyet Raporları</title>
 
-body.dark-theme {
-  --ink: #f1f5f9;
-  --ink-muted: #94a3b8;
-  --bg: #0b1329;
-  --bg-card: #132247;
-  --bg-topbar: #070d1e;
-  --border: #1e3a5f;
-  --primary-light: #1e3a8a;
-}
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --border: #e2e8f0;
+      --radius: 14px;
+    }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg);
-  color: var(--ink);
-  line-height: 1.6;
-  min-height: 100vh;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-/* Topbar */
-.topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--bg-topbar);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-.topbar-left { display: flex; align-items: center; gap: 0.75rem; }
-.topbar-left img { height: 36px; background: white; padding: 3px; border-radius: 6px; }
-.topbar-title h1 { font-size: 0.95rem; font-weight: 700; color: white; }
-.topbar-title p { font-size: 0.7rem; color: #94a3b8; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-top: max(16px, env(safe-area-inset-top));
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      line-height: 1.4;
+    }
 
-.topbar-actions button {
-  background: rgba(255,255,255,0.1);
-  border: none;
-  color: white;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-/* Main Container */
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 1.25rem 1rem;
-}
+    .header {
+      margin-bottom: 20px;
+    }
 
-/* Hero Section */
-.hero-card {
-  background: linear-gradient(135deg, #0f1e36, #1e3a8a);
-  color: white;
-  padding: 1.75rem 1.25rem;
-  border-radius: var(--radius);
-  margin-bottom: 1.5rem;
-  box-shadow: 0 10px 20px -5px rgba(15, 30, 54, 0.3);
-  text-align: center;
-}
-.hero-badge {
-  display: inline-block;
-  background: rgba(255,255,255,0.15);
-  padding: 0.3rem 0.8rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-}
-.hero-card h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; line-height: 1.3; }
-.hero-card p { color: #cbd5e1; font-size: 0.85rem; max-width: 600px; margin: 0 auto; }
+    .header h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
 
-/* Stats Grid */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 1rem 0.75rem;
-  border-radius: var(--radius);
-  text-align: center;
-  box-shadow: var(--shadow);
-}
-.stat-num { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 0.2rem; }
-.stat-label { font-size: 0.72rem; color: var(--ink-muted); font-weight: 600; line-height: 1.3; }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
 
-/* Filter Controls */
-.filter-bar {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius);
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow);
-}
-.search-box-wrap {
-  position: relative;
-  margin-bottom: 0.75rem;
-}
-.search-box-wrap i {
-  position: absolute;
-  left: 0.85rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--ink-muted);
-  font-size: 0.9rem;
-}
-.search-input {
-  width: 100%;
-  padding: 0.6rem 1rem 0.6rem 2.3rem;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  color: var(--ink);
-  font-size: 0.875rem;
-  outline: none;
-  font-family: inherit;
-}
-.search-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
-}
+    .list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-/* Filter Chips */
-.chips-group {
-  display: flex;
-  gap: 0.4rem;
-  overflow-x: auto;
-  padding-bottom: 0.25rem;
-  scrollbar-width: none;
-}
-.chips-group::-webkit-scrollbar { display: none; }
-.filter-chip {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--ink);
-  padding: 0.35rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: 0.15s;
-}
-.filter-chip.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: transform 0.15s ease, background-color 0.15s ease;
+      user-select: none;
+    }
 
-/* Activities Grid */
-.activities-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
+    .card:active {
+      transform: scale(0.98);
+      background-color: #f1f5f9;
+    }
 
-.activity-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.activity-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-}
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      background: #fee2e2;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
 
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.75rem;
-  gap: 0.5rem;
-}
-.badge-cat {
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-.badge-date {
-  font-size: 0.72rem;
-  color: var(--ink-muted);
-  font-weight: 600;
-}
+    .card-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: #dc2626;
+    }
 
-.card-title {
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-}
+    .card-info {
+      flex: 1;
+      min-width: 0;
+    }
 
-.card-body p {
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-  line-height: 1.6;
-  text-align: left;
-}
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 3px;
+      line-height: 1.35;
+    }
 
-.card-footer {
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.72rem;
-  color: var(--ink-muted);
-}
+    .card-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-/* Floating Button */
-#backToTop {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1rem;
-  background: var(--bg-topbar);
-  color: white;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.2);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  cursor: pointer;
-  z-index: 90;
-}
+    .card-arrow {
+      color: #94a3b8;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
 
-.empty-state {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--ink-muted);
-}
-.empty-state i { font-size: 2.5rem; margin-bottom: 0.75rem; }
-</style>
+    /* Web Tarayıcısı Modal Fallback */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .modal-backdrop.active {
+      transform: translateY(0);
+    }
+
+    .modal-navbar {
+      padding-top: max(10px, env(safe-area-inset-top));
+      padding-bottom: 10px;
+      padding-left: 16px;
+      padding-right: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      gap: 8px;
+    }
+
+    .modal-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-external {
+      font-size: 0.75rem;
+      text-decoration: none;
+      color: var(--primary);
+      background: #eff6ff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .btn-close {
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .modal-body {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #525659;
+      position: relative;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Topbar -->
-<header class="topbar">
-  <div class="topbar-left">
-    <img src="https://ahef.org.tr/upload/files/8424122c-a4bd-41bb-badd-ecafbc8dd05d.png" alt="AHEF">
-    <div class="topbar-title">
-      <h1>AHEF Faaliyet Raporu</h1>
-      <p>Ocak - Şubat - Mart 2026</p>
-    </div>
-  </div>
-  <div class="topbar-actions">
-    <button id="themeToggleBtn" aria-label="Karanlık Mod">
-      <i class="fa-solid fa-moon" id="themeIcon"></i>
-    </button>
-  </div>
-</header>
+  <div class="container">
+    <header class="header">
+      <h1>AHEF Faaliyet Raporları</h1>
+      <p>Görüntülemek veya indirmek için rapora tıklayın</p>
+    </header>
 
-<div class="container">
-  <!-- Hero Section -->
-  <div class="hero-card">
-    <span class="hero-badge"><i class="fa-solid fa-chart-line"></i> DÖNEM FAALİYET RAPORU</span>
-    <h2>AHEF 2026 1. Çeyrek Faaliyet Raporu</h2>
-    <p>Ocak, Şubat ve Mart 2026 aylarında AHEF Yönetim Kurulu, Akademi ve Komisyonları tarafından gerçekleştirilen tüm hukuki kazanımlar, bilimsel eğitimler ve saha çalışmaları.</p>
+    <main class="list-container" id="cards-container"></main>
   </div>
 
-  <!-- Stats Grid -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-num">12x</div>
-      <div class="stat-label">Akademi Tekil İzlenme Büyümesi</div>
+  <!-- Standart Tarayıcılar İçin Modal -->
+  <div class="modal-backdrop" id="pdfModal" role="dialog" aria-modal="true">
+    <div class="modal-navbar">
+      <span class="modal-title" id="modalTitle">Belge Adı</span>
+      <div class="modal-actions">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-external" id="modalExternal">Yeni Sekmede Aç</a>
+        <button class="btn-close" id="modalClose" aria-label="Kapat">&times;</button>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-num">17.487</div>
-      <div class="stat-label">ASM Yaşam Dergi Okunma Sayısı</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">10+</div>
-      <div class="stat-label">Canlı Bilimsel & Hukuki Seminer</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">3 İl</div>
-      <div class="stat-label">Deprem Bölgesi Saha Ziyaretleri</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">7+</div>
-      <div class="stat-label">Bakanlık & TBMM Üst Düzey Görüşme</div>
+    <div class="modal-body">
+      <iframe id="pdfFrame" src="" title="PDF Dokümanı"></iframe>
     </div>
   </div>
 
-  <!-- Filter & Search Section -->
-  <div class="filter-bar">
-    <div class="search-box-wrap">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="searchInput" class="search-input" placeholder="Faaliyet veya konu ara (Böbrek, Bordro, Aksa, Deprem, TBMM)...">
-    </div>
-    <div class="chips-group" id="monthFilter">
-      <button class="filter-chip active" data-filter="all">Tüm Aylar</button>
-      <button class="filter-chip" data-filter="Ocak">Ocak (1. Ay)</button>
-      <button class="filter-chip" data-filter="Şubat">Şubat (2. Ay)</button>
-      <button class="filter-chip" data-filter="Mart">Mart (3. Ay)</button>
-    </div>
-  </div>
+  <script>
+    const pdfDocuments = [
+      {
+        id: "doc-1",
+        title: "2025 EKİM-KASIM-ARALIK FAALİYET RAPORU",
+        fileName: "cdf0a67b-cb13-452c-aa3d-e30dfd0bab00.pdf",
+        url: "https://ahef.org.tr/upload/files/cdf0a67b-cb13-452c-aa3d-e30dfd0bab00.pdf"
+      },
+      {
+        id: "doc-2",
+        title: "2026 NİSAN-MAYIS-HAZİRAN FAALİYET RAPORU",
+        fileName: "9c471ce0-1209-45c1-99c8-8b3a5eb8fc58.pdf",
+        url: "https://ahef.org.tr/upload/files/9c471ce0-1209-45c1-99c8-8b3a5eb8fc58.pdf"
+      },
+      {
+        id: "doc-3",
+        title: "DEPREM BÖLGELERİ FAALİYET RAPORU",
+        fileName: "896cf776-c3c1-41e0-a39a-c0920151069b.pdf",
+        url: "https://ahef.org.tr/upload/files/896cf776-c3c1-41e0-a39a-c0920151069b.pdf"
+      }
+    ];
 
-  <!-- Activities List -->
-  <div class="activities-grid" id="activitiesGrid">
-    
-    <div class="activity-card" data-month="Ocak" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">AHEF Tarihinde ilk kez :</h3>
-        <div class="card-body">
-            <p>Derneklere yüzbinlerce TL kazandıran anlaşmaları<br>imzalayarak , dernekleri maddi anlamda kalkınmasını<br>sağlayan,<br>On yılı aşkındır &quot;Çözülemez&quot; denen sigortalı<br>personellerin promosyon sorunun çözerek binlerce<br>gruplama elemanın Promosyon sorununu çözen ,<br>Bakanlıkla uzun zaman sonra İLK KEZ masaya sorunlar<br>için oturtabilen ve iletişim kurabilen,<br>ASM&#x27;lerde AKSA anlaşması ile ilk kez elektrik indirimi<br>sağlayabilen,<br>Bir kaç kişinin veya STK&#x27;nın tekelinde-himayesinde-<br>önderliğinde değil sahanın fikirleri ile yürüyen<br>Yönetim kurulu olarak tarihe geçtik . Ayrıca :<br>AHEF AKADEMİ&#x27;yi ölü durumdan canlanır vaziyete<br>getirdik ,<br>5 Milyon TL borç ödedik,<br>Deprem yıl dönümünde sahaya inip 7 İl dolaşıp 2.000<br>Km yaptık,<br>Kusursuz derece iyi şekilde ASMYAŞAM&#x27;ı ölü durumdan<br>canlandırdık,<br>70&#x27;e yakın ASM&#x27;nin ISI TAKİP cihazını değiştirdik, yüzlerce<br>hekimin sorununu çözdük,<br>Kurumsal duruş sayesinde firmaların güvenini<br>kazanarak tekrar AHEF&#x27;e kurumsal olarak güvenilir<br>olabilmesini sağladık,<br>Basın açıklaması ile medya da yer aldık , sosyal medya<br>da bazı kampanyalarımız milyon görüntülemeye ulaştı,<br>Meclisi gezdik , bir çok MV ile yakın temas sağladık ,<br>bağlantılar kurduk ,<br>Bir çok toplantı ve projeye neredeyse hiç çağırılmazken<br>muhattap alınıp çağırılmaya başlandık , fikirlerimiz değer<br>görmeye başladı.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #2</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Şubat 2026</span>
-        </div>
-        <h3 class="card-title">AHEF Tarihinde ilk kez :</h3>
-        <div class="card-body">
-            <p>ASM YAŞAM eğitim ve dergilerinin görüntülenme sayıları yüz<br>binleri aştı<br>DERGİ TIKLANMALARI:<br>Ocak:4781<br>Şubat:6745<br>Mart:5961</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #3</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">İlk yayın tarihinden itibaren tekil görüntülemede 12 kat büyüme</h3>
-        <div class="card-body">
-            <p>Çoğul görüntüleme de 14 kat artış<br>Site ziyaretlerinde 7 kat artış<br>Desteğiniz ve güveniniz için teşekkür ederiz.<br>AHEF AKADEMİ YAYINLARIMIZ</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #4</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Şubat 2026</span>
-        </div>
-        <h3 class="card-title">9 Şubat&#x27;ta 2:15&#x27;de Prof Dr Mehmet Akif Büyükbeşe&#x27;nin</h3>
-        <div class="card-body">
-            <p>sunumuyla Ramazan ve Diyabet konuştuk.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #5</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Şubat 2026</span>
-        </div>
-        <h3 class="card-title">Pediatrik Pnömokok Aşısında Güncellemeler Doç. Dr. Adnan</h3>
-        <div class="card-body">
-            <p>Barutçu ile 16 Şubat Pazartesi 12.15&#x27;te ahefakademi.org<br>tarihinde gerçekleştirdik.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #6</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Şubat 2026</span>
-        </div>
-        <h3 class="card-title">23 Şubat 2026 tarihinde saat12.15 te Bordro okuma eğitimi</h3>
-        <div class="card-body">
-            <p>yayınımız Sivas Aile Hekimleri Derneği Başkanımız Dr Murat Teke<br>ve Finans Experti Kaan Kasapan ileahefakademi.org’ ta<br>gerçekleştirdik.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #7</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Mart 2026</span>
-        </div>
-        <h3 class="card-title">D Vitamini Dengeli Kullanım:</h3>
-        <div class="card-body">
-            <p>Nerede? Ne Zaman?  yayınımız 2 Mart Pazartesi 12:15&#x27;de Dr Elif<br>Pahsa anlatımıyla AHEF Akademide gerçekştirildi.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #8</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Mart 2026</span>
-        </div>
-        <h3 class="card-title">Dr Elif Pahsa&#x27;nın sunumuyla Uykudan Daha Fazlası: Melatonin</h3>
-        <div class="card-body">
-            <p>yayını 16 Mart 12:15&#x27;de www.ahefakademi.org adresinde<br>gerçekleşti.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #9</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 30.03.2025</span>
-        </div>
-        <h3 class="card-title">30.03.2025 tarihinde Prof. Dr. Hakan Karpuz ile Dr. Taner Balbay</h3>
-        <div class="card-body">
-            <p>moderatörlüğnde hipertansiyon konuştuk.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #10</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 11.01.2016</span>
-        </div>
-        <h3 class="card-title">11.01.2016 tarihinde ASM Yaşam Ocak Sayımız yayınlandı.</h3>
-        <div class="card-body">
-            <p>Tıklanma sayısı : 4781<br>ASM YAŞAM DERGİLERİMİZ</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #11</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 06.02.2026</span>
-        </div>
-        <h3 class="card-title">06.02.2026 tarihinde ASM Yaşam Dergimizin Deprem Özel sayısı</h3>
-        <div class="card-body">
-            <p>Tüm kayıplarımızın anısına, saygıyla…..<br>Tıklanma sayısı : 6745</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #12</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Mart 2026</span>
-        </div>
-        <h3 class="card-title">ASM Yaşam Dergimizin Mart ayı &#x27;Hekim&#x27; özel sayısı</h3>
-        <div class="card-body">
-            <p>Tıklanma sayısı : 5961</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #13</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 08.01.2026</span>
-        </div>
-        <h3 class="card-title">08.01.2026 ASM - Ev yolunda dinlemek için başladığımız projemizin</h3>
-        <div class="card-body">
-            <p>ilki..<br>5 SORU 5 CEVAP HEKİMİNE SOR YAYINLARIMIZ<br>Prof. Dr Görkem Eskiizmir&#x27;in yanıtıyla ikinci sorumuz &#x27;Ksilametazolin&#x27;in<br>hayat kalitesi üzerindeki etkisi&#x27;, AHEF Akademi sitesinde</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #14</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 12.02.2026</span>
-        </div>
-        <h3 class="card-title">12.02.2026 Prof Dr İlker Devrim&#x27;in yanıtıyla üçüncü sorumuz &#x27;Topikal</h3>
-        <div class="card-body">
-            <p>Nazal Dekonjestanların Pediatrik Yaş Grubunda Kullanımı&#x27;, AHEF<br>Akademi sitesinde sizlerle<br>19.02.2026 Pediatrik pnömokok aşısındaki güncellemelere dair 5 soru<br>5 cevap videomuz www.ahefakafemi.org adresinde yayında.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #15</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 25.02.2026</span>
-        </div>
-        <h3 class="card-title">25.02.2026 tarihinde Meteoroloji mühendisi ve sunucu Bünyamin</h3>
-        <div class="card-body">
-            <p>Sürmeli’den iklim değişiklikleri sunumu yayında.<br>12.03.2025 tarihinde Prof. Dr. Dilek Yılmaz&#x27;ın sunumuyla 5soru 5cevap<br>videosunun yeni sorusu yayında.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #16</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 05.01.2026</span>
-        </div>
-        <h3 class="card-title">05.01.2026 Tarihinde 10:10 gibi başlayan bakanlık ziyaret ve</h3>
-        <div class="card-body">
-            <p>toplantıları gece 22:20 ‘ye dek sürmüştür.<br>1. Görüşme : Sağlık Hizmetleri Genel Müdürlüğü, Sosyal<br>Güvenlik Uygulamaları Dairesi Başkanı Ersin Karabulut ile<br>görüşülmüştür. Ersin Karabulut, raporlar ve SUT konusunda<br>eskiden beri en çok emeği veren daire başkanlarından bir<br>tanesidir.<br>Talep: Evlilik raporlarının E-rapor şekilde düzenerek<br>standardizasyona alınması<br>Geri dönüş : Bu konuda çalışmanın olduğu, talebimizin en<br>kısa zamanda dikkate alınacağını, ancak evlilik raporlarının<br>2025’te başlayan aile yılı kapsamı nedeniyle başlangıç için<br>ücretlendirme dışı bırakılacağını belirtilmiştir.<br>Talep: Rapora gerek olmayan kurumlardan farklı isteklerle<br>rapor taleplerinin gelmesi, rapor konusunda bakanlıklar<br>arası entegrasyon sorunu ve ibare eklenmesi isteği konusu.<br>OCAK</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #17</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 06.01.2026</span>
-        </div>
-        <h3 class="card-title">Geri dönüş:</h3>
-        <div class="card-body">
-            <p>Raporlar için beyana ve e-nabız verilerine dayalı, aile<br>hekimlerinin rapor yükünü azaltan bir çalışma<br>planladıklarını, bu sistem için anlattığımız detaylara<br>düzenleme getirecekleri sistem için çalışacaklarını belirttiler.<br>İbare eklenmesini kesinlikle istemediklerini, yönetmelikle<br>elimizi güçlendireceklerini ve diğer bakanlıklarla temasla<br>geçeceklerini belirttiler.<br>Talep: Raporlarla ilgili düzenlenen her planlamada,<br>çalıştayda Aile Hekimlerinin sahada ki en büyük temsilcisi<br>olan AHEF’in çalıştayda olması gerekliliğini vurguladık.<br>Geri Dönüş: Yeni iletişim dönemi ile ilgili çalıştaylarda<br>AHEF’i görmek istediklerini belirterek talebe olumlu cevap<br>verildi .<br>Çalıştaylardaki temsiliyetimizin önemi bir sonraki gün<br>06.01.2026 tarihinde düzenlenen Uzm Dr Çiğdem Akaydın<br>temsiliyetinde katıldığımız “Koruyucu Aile ve Evlat Edinme”<br>çalıştayında kanıtlanmış oldu.<br>“Pedofilinin, psikotik bozuklukların ve alkol madde<br>bağımlılığının tanılarının ancak detaylı psikiyatrik muayene<br>ile koyulabileceğini ve madde kullanımını anlamak için<br>gerekli testlerin ASM şartlarında bakılamayacağı<br>vurgulandığı için raporun aile hekimlerince değil heyet<br>raporu şeklinde alınması” sağlandı.<br>Suudi Arabistan tarafından istenen Hac ve Umre<br>raporlarının Aile Hekimlerine verilmemesini sağladıklarını<br>belirttiler.<br>Talep: ASM şartlarının raporlar için çoğu kez yetersiz kaldığı,<br>hekimin; üzerindeki sorumluluk nedeniyle akli meleke -<br>sporcu - tüfek ruhsatı gibi raporları vermede bu nedenle<br>endişe duydukları/ vermedikleri belirtildi. Hekimi koruyacak<br>bir yönetmelik maddesi ve sadece aile hekimiden iş yükünü<br>alacak bir sistemin önemini vurgulandı.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #18</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Kazanımlar ve Anlaşmalar">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #4f46e515; color: #4f46e5; border-color: #4f46e530;">
-                <i class="fa-solid fa-scale-balanced"></i> Kazanımlar ve Anlaşmalar
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Geri Dönüş : Hukuki anlamda raporlar konusunda</h3>
-        <div class="card-body">
-            <p>uygulamaya konacak yeni uygulamaların olduğunu ve aile<br>hekimlerini bu anlamda korumaya çalışacakları belirtildi.<br>Daha önce raporu sunulan ilaç yetkileri konusundaki<br>gelişmeler hakkında bilgi alınmış önemi vurgulanmıştır.<br>Rapor ücretlerinin arttırılacağı bilgisi alınmıştır.<br>Sosyal Güvenlik Uygulamaları Dairesi Başkanı Ersin<br>Karabulut’a teşekkür ederiz.<br>2. Görüşme Kronik Hastalıklar ve Yaşlı Sağlığı Dairesi<br>Başkanı Dr. Kanuni KEKLİK ile görüşülmüştür. Dr. Kanuni<br>KEKLİK HYP ile ilgili çalışmaların planlanmasında önemli rol<br>almaktadır.<br>Talep: HYP konusunda sayıların çok yüksek olduğu ve<br>HYP’lerin yoğunluğu nedeniyle hekimlerin hastalarına<br>dokunamaz hale geldiğini , çok ciddi bir iş yükü<br>oluşturduğunu.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #19</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Özellikle Yaşlı Sağlığı izlem gibi izlemlerin her ne kadar</h3>
-        <div class="card-body">
-            <p>revize edilse de hala ciddi manada zaman aldığı konusu<br>vurgulanmıştır. Kronik Hastalıkların takibi ve taranması<br>konusunun Aile Hekiminin görevlerinden biri olduğu fakat<br>mevcut nüfus ve istenen hedef rakamlarıyla HYP sisteminin<br>gerçeklikten gün ve gün uzaklaştığı belirtilmiş. İstenen hedef<br>nüfusların gerçeklikten uzak olduğu söylenmiş sahadaki<br>durum çekinmeden bütün gerçekliği ile aktarılmıştır.<br>Geri Dönüş: Bu konunun farkında olunulduğu ve HYP’nin<br>aslında hastanın tanısının ve takibinin kolaylaştırılması için<br>bir araç olarak tasarlandığını, fakat bazı hekimlerde bu<br>aracın amaç haline geldiğinin görüldüğü dile getirildi .<br>Amacın hastanın daha iyi takibi ve taramasının yapılması<br>olduğu, AHEF tarafından gelecek her türlü bilimsel görüş ve<br>bilimsel öneriye açık olunduğu ifade edildi. Mevcut HYP’ler<br>ve yeni getirilen HYP kriterlerinin saha da uygulanabilirliği<br>konusunda da bilimsel bir rapor talep etti<br>Talep: İzne çıkan Aile Hekiminin döndüğünde hiç izin<br>kullanmamış gibi 1000li rakamlarda veri girişi talep edildiği,<br>vekalet bırakılan birimin mevcut muayene yüküyle vekalet<br>ettiği birimin HYP’lerini düzgün girmesinin çok zor olduğu,<br>yapılamadığı, raporlu olunan, hasta olunan veya izin<br>kullanılan dönemin sonunda kalan 5 gün içerisinde 30<br>günlük veri girişinin yapılabilmesinin imkansız olduğu<br>belirtilmiştir.<br>Bu duruma bağlı olarak aile hekiminin maddi kaybına<br>uğradığını veya yapılan HYP’lerde “ Uzaktan erişim”<br>methodlarının kullanıldığı ve bu durumun verilerde “çeşitli<br>sapmalara” neden olduğu açıkça belirtilmiştir.<br>Çözüm önerisi olarak kişinin aynı muayene sayılarındaki gibi<br>raporlu , izinli , SAHU’da veya görevlendirmede olduğu<br>süreçlerde HYP sayısının AKTİF ÇALIŞMA GÜNÜNE<br>ORANLANARAK hesaplanmasının adil ve uygulanması daha<br>doğru bir metot olduğu savunulmuştur.<br>Aynı talep ilgili tüm görüşmede özellikle üzerinden<br>geçilmiştir.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #20</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Geri Dönüş ( Çoklu Cevap ) : Sonuç olarak çoklu cevap</h3>
-        <div class="card-body">
-            <p>alınan bu konunun değerlendirilebileceği ve üzerinde<br>çalışılması gerektiği konusu Genel Müdürümüz Sn. Dr.<br>Muhammed Emin Demirkol tarafından ifade edilmiştir<br>Talep: HYP Katsayılarında yeni izlemlerle kat sayılarda artış<br>olup olmayacağı , yeni kriterlerin ne zaman hesaplamaya<br>alınması düşünüldüğü soruları sorulmuştur.<br>Geri Dönüş 3: Konuyla ilgili henüz yönetmelik çıkmadığı ve<br>yeni yönetelikte dahil edilmedikçe negatif performansa<br>dahil edilmeyeceği, saha da uygulanabilirlik konusunda geri<br>dönüşlere bakıldığı ve izlendiği. İleriki dönemde kat sayılarla<br>ilgili yeni bir kat sayı yönetmeliği hazırlanacağı belirtildi.<br>Sahadaki HYP ile ilgili birçok durum kendisine açıklıkla<br>aktarıldı.<br>Görüşmelerde yeni dönemde AHEF’i çalıştayların<br>tamamında görmek istedikleri belirtildi. Telefonların açık<br>olduğu ve raporlarla ilgili düzeltmelerin bilimsel sınırlara<br>uygun olduğu sürece değiştirilip düzeltilebileceği ifade<br>edildi. Samimiyeti, içtenliği, ilgi ve alakası nedeniyle Kronik<br>Hastalıklar ve Yaşlı Sağlığı Dairesi Başkanı Dr. Kanuni<br>KEKLİK’e teşekkür ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #21</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Kazanımlar ve Anlaşmalar">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #4f46e515; color: #4f46e5; border-color: #4f46e530;">
-                <i class="fa-solid fa-scale-balanced"></i> Kazanımlar ve Anlaşmalar
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">3. Görüşme Hukuk Hizmetleri Genel Müdürlüğü Genel</h3>
-        <div class="card-body">
-            <p>Müdür Yardımcısı Av. Hakan BOZKURT. 2005 Yılından beri<br>Bakanlıkta Avukat olarak görev yapmaktadır.<br>Defin ruhsatları konusunda özellikle meslektaşlarımızın<br>gece geç saatlerde bazı bölgelerde defin nöbetleri<br>konusunda güvenlik sorunu yaşadığı, kolluk<br>kuvvetlerinin bu definlere eşlik edebilmesi ile ilgili bir<br>planlamanın yapılmasının sahanın güvenlik endişelerini<br>azaltacağını belirttik. Konu hakkında detaylı ve<br>örneklerle anlatım yaptık.<br>Konuyla ilgili resmi bir talep yazısı göndermemizi, Bakanlık<br>olarak yazının üzerinden işlemlere başlanabileceğini belirtti.<br>E-Onamkonusu talep edildi.<br>Sahadaki güncel hukuki sorunlar aktarıldı<br>İletişimin sürdürülmesi ve iyi niyet dilekleri ile görüşme<br>sonlandırıldı.<br>Hukuk Hizmetleri Genel Müdürlüğü Genel Müdür<br>Yardımcısı Av. Hakan BOZKURT’a bizlere gösterdiği ilgi ,<br>alaka , nezaket ve destekleri nedeniyle teşekkür ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #22</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Kazanımlar ve Anlaşmalar">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #4f46e515; color: #4f46e5; border-color: #4f46e530;">
-                <i class="fa-solid fa-scale-balanced"></i> Kazanımlar ve Anlaşmalar
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">4. ve 5. Görüşme : Halk Sağlığı Genel Müdürlüğü Hukuk</h3>
-        <div class="card-body">
-            <p>ve Mevzuat Daire Başkanı Av. Halil ŞEN ile Sağlığın<br>Geliştirilmesi Genel Müdürü Doç Dr Muhammed ATAK<br>görüşme notlarını içermektedir. Taleplerin birçoğu Genel<br>Müdürümüz Sn. Dr. Muhammed Emin Demirkol ile yapılan<br>geniş toplantıda bir defa daha dile getirilmiştir.<br>E-Onam konusu soruldu ve Cimer şikayetleri konusunda<br>Milli Eğitim Bakanlığının uygulaması olan usulsüz şikayetler<br>için yaptırım konusu hem kendisine, hem de Halk Sağlığı<br>Genel Müdürüne, SABİM konusundan sorumlu Genel<br>Müdür Doç Dr Muhammed ATAK’a ve diğer ilgili daire<br>başkanlarına aktarıldı.<br>E-Onam konusunda sistemin çalışıldığını Halk Sağlığı Genel<br>Müdürlüğü Hukuk ve Mevzuat Daire Başkanı Av. Halil<br>ŞEN’den,<br>Usulsüz şikayetler ile ilgili benzer hatta daha gelişmiş bir<br>uygulama için çalışmaların başlandığını, il veya ilçe sağlık<br>müdürlükleri tarafından gereksiz sabimlerin inceleme<br>olmaksızın kapatılması gerektiğini savunduklarını ve<br>uygulamaya koyacaklarını,</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #23</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">SABİM’in halkın şikayet noktası algısından çıkılmasının</h3>
-        <div class="card-body">
-            <p>planlandığını ve bunun için sitede gerekli düzenlemelerin<br>yapılmakta olduğunu sorumlu Genel Müdür Doç. Dr.<br>Muhammed ATAK’tan öğrendik.<br>Cimer şikayetlerinin özellikle yeni idareciler kısmın da<br>yoğunlaştığı ve bu durumun saha da aile hekimi üzerinde<br>baskı unsuru haline geldiği bu konudan sahada rahatsızlık<br>oluştuğu bilgisi Daire Başkanı ve Genel Müdürlerle<br>paylaşıldı.<br>SAHU Asistanlarının bazı üniversitelerde asistanlığın 4<br>seneye düşmesi konusunda hala zorluklar yaşadıkları<br>yeniden işlendi.<br>SAHU haftalık eğitim süreleri mevzuatı konusunda görüşler<br>aktarıldı.<br>SAHU kapsamında uzun rotasyon sürelerinin ay ay<br>değerlendirilmesi ve bölünebilmesine olanak sağlamanın<br>SAHU Asistanlarının maddi kayıplarının önüne geçebileceği<br>konusunda bilgi verildi.<br>Aile Hekimi Uzmanlarının uzmanlık farklarının sadece ilk<br>1000 puanla sınırlı kalmayıp tüm nüfus ve tüm performans<br>ödemelerini kapsaması gerektiği, bu artırımın hem Aile<br>Hekimi Uzmanlarının 2. 3. Basamağa geçmesini<br>engelleyeceği, hem sahada uzmanlık yapma isteğini<br>arttıracağı, hem de özlük hakları açısından uygulanması<br>gereken bir durum olduğu hem ilgili daire başkanlarına hem<br>Halk Sağlığı Genel Müdürüne ifade edilmiştir.<br>Yine ASÇlerin maaş iyileştirmesinin önemi ilgili tüm<br>yöneticilere aktarılmış ve önceliklendirildiği bilgisi alınmıştır.<br>Doç. Dr. Muhammed ATAK’a bunlara ek olarak Bakanlıkla<br>halk sağlığının geliştirilmesine ve sağlık okuryazarlığın<br>artırılmasına yönelik projelerde paydaş olarak yer almak<br>istediğimizi, özellikle aşı reddi ve aşı kararsızlığının önemini<br>belirttik. Kamu spotlarıyla bilinçlendirme noktasında iş<br>birliğinin önemi konuşuldu.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #24</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Hekimlere yapılan aramaların tek tek detaylı olarak</h3>
-        <div class="card-body">
-            <p>dinlendiğini, talep içerenlerin pek çoğunun kendisine<br>sunulduğunu kendisinin de dinleyip değerlendirmeye<br>aldığını iletti, örnek olarak hekim arkadaşlarımızdan<br>kurumsal anlaşmaların iyi olacağı yönünde teklifler bile<br>olduğunu bunla ilgili anlaşmalara başladıklarını iletti.<br>Sağlığın Geliştirilmesi Genel Müdürü Doç Dr Muhammed<br>ATAK’ı ve Halk Sağlığı Genel Müdürü Dr. Muhammed Emin<br>Demirkolu AHEF Akademiye davet ettik.<br>Samimi ilgileri ve deontolojik yaklaşımları için Sağlığın<br>Geliştirilmesi Genel Müdürü Doç Dr Muhammed ATAK’a<br>teşekkür ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #25</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">6. Görüşme : Birinci Basamak Sağlık Kuruluşları</h3>
-        <div class="card-body">
-            <p>Planlama ve Organizasyon Daire Başkanı Tacettin<br>KIZILBOĞA 2011 Yılından beri Bakanlıkta özellikle Aile<br>Sağlığı Merkezlerinin fiziki şartlarının düzenlenmesinde<br>önemli görevler üstlenmiş bir bürokrattır.<br>Yeni yapılan ASM’ler ile ilgili çalışmaları yakından takip<br>ettiğimizi , Aile Hekimlerini kamu binalarında daha iyi<br>şartlarda hizmet vermesi ile ilgili yapılan çalışmaların hızları<br>beklenen kadar çabuk olmasa da saha da memnuniyet<br>verici gelişmeler olduğunu ifade ettik (2025’te 300’ün<br>üzerinde yeni ASM yapıldı, 2026 yılında bunun en az iki katı<br>kadar yapılması planlanıyor) .<br>Aile Sağlığı Merkezi çalışmaları sürerken HATAY ilimizde çok<br>ciddi sıkıntıların olduğunu İskendurun ilçesinde sadece 1<br>ASM yapılabildiğini , 2 Ay içinde eski ASM’lerden<br>meslektaşlarımızın bina örneklerinin depreme uygun<br>olmayışı nedeniyle çıkartılıp konteyner ASM’lere<br>taşındığından bahsettik.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #26</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Onlarca Aile Hekiminin boşaltılan ASM’ler nedeniyle</h3>
-        <div class="card-body">
-            <p>konteynerler da görev yapması nedeniyle fiziksel zorluk<br>yaşadığını ,ayrıca son 1 Aydır Şehirde meydana gelen ve<br>sıklığı gittikçe artan elektrik kesintileri nedeniyle aşı<br>dolapları dahil çeşitli zorluklar meydana geldiğini ilettik.<br>Hatay ile ilgili çeşitli fonlardan gelen kaynağın önemli<br>kısmının ayrıldığı 39 Adet ASM için bütçenin hazır olduğu ,<br>27 ASM’nin projelendirme aşamasında olduğu, mevcut<br>ASM’lerin yapılması durumunda birim başına nüfusun 2.500<br>ortalamaya kadar kamu binalarında hizmete hazır olacağı<br>dökümanlarla gösterildi .<br>Mevcut sıkıntının farkında olduklarını bölgeye 2 ay önce<br>tekrar gittiklerini ve yine gitmeyi planladıklarını belirtti.<br>Çalışmalarda sosyal donaltı kısımlarındaki arazilerle ilgili<br>çeşitli yer sıkıntılarının oluştuğunu, çözebilmek için Bakanlık<br>Nezdinde çalışmaların yoğunlaştırıldığını, bu konunun<br>çözümü için görüşmenin ardından yine bütün imkanların<br>bölgeye seferber edileceğini söyledi.<br>Elektrik sıkıntısına çözüm için jenaratörlerin binaların<br>yapımından önce- bir an önce- konteynerlere<br>yerleştirilmesinin sorunun çözümüne bir nebze katkı<br>sunabileceğini belirttik. Bu fikir mevcut ihalelerin paket<br>halinde olduğu, jenaratörlerin mütahitlerce en son satın<br>alınıp proje konulduğu ve bunun önden alımının ve farklı<br>yerde kullanımının maalesef ki sağlanamayacağı açıklaması<br>ile uygun görülmedi.<br>Hatay konusunda Sn. Dr. Muhammed Emin Demirkol’a ve<br>Dr. Murat Ağırtaş’a da konuların tamamı aktarılarak bölgede<br>bulunan arkadaşların gerektiğinde aşıları ilçe sağlığa<br>getirmelerinde kolaylık gösterilmesini, zaten zor durumda<br>olan meslektaşlarımızın koşullarının idari yönden de<br>imkanlar gözetilerek gerekli anlayışın gösterilmesini talep<br>ettik. Talebimize olumlu yaklaşıldı.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #27</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Büyükşehirlerde yaşanana yer sıkıntısı ve parklara ASM</h3>
-        <div class="card-body">
-            <p>yapımı konularını tekrardan gündeme taşıdık .Bu konuda<br>özellikle parklar konusunda Bakanlığımız oldukça istekli<br>durumda illerde müsait yerler varsa hemen yardımcı olmak<br>istediklerini , İl Sağlıklarla konu hakkında hekimlerimizin<br>temasa geçebileceklerini , bulunan yerlerin hızlıca inşasının<br>gerçekleştirileceğini tekrar ifade ettiler. Yoğun şekilde yer<br>bulma çabaları olduğunu gördük ziyaretimiz esnasında.<br>Bazı ASM’lerde kiraların 50.000 TL ‘ye kadar çıktığı<br>örneğinden yola çıkarak sağlıkla Kamu Binalarının yapımının<br>hızlanmasının elzem olduğunu başka türlü verilen cari<br>giderlerle Aile Hekimlerinin bu durumun içinde çıkmasının<br>imkansız olduğunu belirttik.<br>Birinci Basamak Sağlık Kuruluşları Planlama ve<br>Organizasyon Daire Başkanı Tacettin KIZILBOĞA’ya<br>sorunların çözümleri konusunda gösterdikleri uğraş, özveri ,<br>samimiyet ve nezaketi nedeniyle teşekkür ederiz .</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #28</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Kazanımlar ve Anlaşmalar">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #4f46e515; color: #4f46e5; border-color: #4f46e530;">
-                <i class="fa-solid fa-scale-balanced"></i> Kazanımlar ve Anlaşmalar
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">7. Görüşme Geniş Katılımlı Toplantı :</h3>
-        <div class="card-body">
-            <p>Katılımcılar : Halk Sağlığı Genel Müdürlüğü Hukuk ve<br>Mevzuat Daire Başkanı Av. Halil ŞEN<br>Halk Sağlığı Genel Müdürlüğü Aile Hekimliği Uygulama<br>Daire Başkanı Dr. Murat AĞIRTAŞ<br>Halk Sağlığı Genel Müdür Yardımcısı Uzm. Dr. Hamit<br>Harun BAĞCI<br>Halk Sağlığı Genel Müdürü Dr. Muhammed DEMİRKOL<br>Saat 20:40 ‘da başlayan toplantı saat 22:20 Civarına kadar<br>sürmüştür. Samimi ve içten bir şekilde sorunlar ve çözümler<br>konuşulmuş Bakanlığımızın Aile Hekimliği Sistemine<br>iletişime gerekli değeri verdiği , çözüm odaklı bir duruş<br>sergilemek istediği tarafımızca hissedilmiştir.<br>İzne çıkan birimin MHRS sistemindeki randevulu<br>hastalarının vekaleten bakılan birime aktarılamaması ve<br>vekalet olan birimden randevu alınamaması sorunu iletildi.<br>Konu detaylıca anlatılmış konunun çözümü için Halk Sağlığı<br>Genel Müdürümüz gerekli talimatları vermiş, konu üzerine<br>çalışılacağı belirtilmiştir.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #29</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Evlilik öncesi raporların E-Rapor sistemine aktarılarak</h3>
-        <div class="card-body">
-            <p>standart hala getirme durumu iletildi. Çalışmaların sürdüğü<br>konunun çözümleneceği ilgili daire başkanı tarafından da<br>ifade edilmişti , bu toplantıda da tekrar teyit edildi .<br>Antibiyotik , PPİ , Analjezik verilerinin şefafça ortalamasının<br>ve sayılarının gösterilmesi konusu iletildi. Sahada bu konuda<br>tereddütlerin oluştuğu belirtildi. Genel Müdürümüze yakın<br>zamanda tekrar ilettiğimiz konu ile ilgili gelişmeler soruldu.<br>Çalışmaların yakın zamanda tamamlanarak bu verilerin Aile<br>Hekimleri tarafından da görüleceği ile ilgili bilgi verildi.<br>Çalışmanın akıbeti konusunda toplantı esnasında bilgi<br>alınarak , çalışmanın en kısa sürede hazır hale getirilmesi<br>için gerekli talimatlar Genel Müdürümüz tarafından verildi.<br>Bir ilimizde yaşanan sözleşmelerin yenilenmesi ile ilgili<br>yaşanan çok kısa süreli bir tedirginlik durumu dile getirildi.<br>İlgili durum çok kısa sürede çözülse de iş güvencesi<br>konusunun altı çizildi. Sorunun ciddiyeti vurgulandı. Verilen<br>bilgide yönetmelikle çıkan %70 ‘lik performans kriterlerinin<br>2027 Yılı sözleşme imzalanması esnasında artık yürürlüğe<br>koymak istedikleri ifade edilmiştir. ( İlgili Link:<br>https://hsgm.saglik.gov.tr/depo/Mevzuat/Genel_Nitelikl<br>i_Yazi_ve_Gorusler/Aile_Hekimi_ve_Aile_Sagligi_Calisanla<br>rinin_Sozlesmelerinin_Yenilenmesi.pdf ) . Sözleşme<br>kritilerlerinin içinde yer alan maddeleri bilinçli olarak<br>yapmayan kişilerle sözleşme yenilememe kararının 2027<br>Yılında düşünüldüğü netlikle ifade edilmiştir.<br>SB-AHBS ile ilgili ileri dönemde olabilecek ücretlendirme ile<br>ilgili saha da tedirginlik olduğu iletilmiş. Kimi gruplarda çok<br>yüksek rakamlar istenecek gibi söylentilerin ortada dolaştığı<br>toplantıda dile getirilmiştir. Bu konuda netlik istenmiş eğer<br>ücretli olursa tutarın ne olacağı konusu sorulmuştur. SB-<br>AHBS’nin şimdilik ücretsiz olduğu , ileri ki zamanlarda cari<br>giderde ödeme kaleminde bulunması nedeniyle ücret<br>alınabileceği lakin bu ücretin en düşük AHBS fiyatından bile<br>aşağıda olacağı hizmet bedeli ücretinin aile hekimi sayısna</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #30</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">bölünerek kazanç elde etmeden planlanacağı, net bir rakam</h3>
-        <div class="card-body">
-            <p>olmamakla beraber aylık 300-400 TL gibi fiyatlara ancak<br>gelebileceği, ücretli olacağı ileriki dönemde belli olacak<br>yazılımın ücreti konusunda sahanın hiçbir çekincesi olmasın<br>denildi.Fiyatın yüksek tutulması durumunda sahada bu<br>konuda tepki vereceğimizi özellikle belirttik. Bahsedilen 300-<br>400 TL tutarların ileri ki yıllarda yükseltilip fiyatın yüksek<br>yerlere gelip gelmeyeceği tekrar soruldu.<br>Kazanç rlde edilmeyeceği için hiçbir zaman şuandaki yazılım<br>fiyatlarının üzerinde olmayacağı tekrar söylendi bu konuda<br>sahanın endişelenmemesi gerektiği özellikle tekrar<br>vurgulandı .<br>Medulla Sistemi ve Reçete sisteminde özellikle son 1.5 aydır<br>sahada yaşanan ciddi problemler olduğu konusu dile<br>getirildi. Meslektaşlarımızın hastalar karşısında sistem<br>gittiğinde zor durumda kaldığını ve tepki ile karşılaştıklarını<br>belirttik. Konuya SGK tarafının baktığı söylendi ve Daire<br>Başkanımızın konuyu çözmek için ilgili birime gideceği ve<br>iletişim kuracağı söylenerek Genel Müdürümüz tarafından<br>konunun çözümünün sağlanması için talimat verildi .<br>Menenjit Aşısının aşı takvimine eklenmesi konusu<br>konuşuldu. Fransa’nın 2025 yılında aşı takvimine eklediği<br>hatırlatıldı. Şuan bu konuyla ilgili bir çalışmalar devam<br>ediyor<br>HPV aşısının aşı takvimine girmesi konusu konuşuldu. Konu<br>hakkında otör denilebilecek hocaların bir kısmının bu aşıya<br>olumlu baktığı , bir kısmının ise olumsuz bilimsel yayınları<br>derleyip bu yayınlarla ilgili aşının aşı takviminde<br>bulunmasının yanlış olduğunu ifade ettikleri söylendi. Son<br>kararın bilimsel toplantı sonucunda verileceği ve görüşlerin<br>değerlendirileceği ifade edildi. Aşıları alma konusunda<br>maddi bir güçlük bulunmadığı fakat iki bilim grubunun konu<br>hakkında ki farklı fikirlere sahip olması nedeniyle , kararın<br>toplantıdan sonra verileceği belirtildi .</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #31</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Kazanımlar ve Anlaşmalar">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #4f46e515; color: #4f46e5; border-color: #4f46e530;">
-                <i class="fa-solid fa-scale-balanced"></i> Kazanımlar ve Anlaşmalar
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Gruplama elemanlarına kadro konusu soruldu. Kesinlikle</h3>
-        <div class="card-body">
-            <p>böyle bir çalışmanın olmadığı net şekilde ifade edildi.<br>Aşı redlerine SMS onayı getirilmesi istendi , kağıt israfının ve<br>bürokratik işlemlerin saha da maddiyet, zaman kaybına<br>neden olduğu belirtildi. E-Onam sistemi tekrar konuşuldu. E-<br>Onam konusunda çalışmalara başlanacağı ifade edildi.<br>Cimer şikayetleri ile ilgili Milli Eğitim Bakanlığının<br>uygulamaya koyduğu, asılsız ihbar ve şikayetlerde savcılığa<br>başvurma yolunun açılabileceğini belirten yazının benzer bir<br>şekilde Sağlık Bakanlığımızca uygulamaya konulması talebi ,<br>aynı amaca hizmet eden farklı bir şekilde bu konunun ele<br>alındığı ifade edildi .<br>SAHU Asistanlarının bazı üniversitelerde asistanlığın 4<br>seneye düşmesi konusunda hala zorluklar yaşadıkları<br>yeniden işlendi.<br>SAHU haftalık eğitim süreleri mevzuatı konusunda görüşler<br>aktarıldı.<br>SAHU kapsamında uzun rotasyon sürelerinin ay ay<br>değerlendirilmesi ve bölünebilmesine olanak sağlamanın<br>SAHU Asistanlarının maddi kayıplarının önüne geçebileceği<br>konusunda bilgi verildi.<br>Aile Hekimi Uzmanlarının uzmanlık farklarının sadece ilk<br>1000 puanla sınırlı kalmayıp tüm nüfus ve tüm performans<br>ödemelerini kapsaması gerektiği, bu artırımın hem Aile<br>Hekimi Uzmanlarının 2. 3. Basamağa geçmesini<br>engelleyeceği, hem sahada uzmanlık yapma isteğini<br>arttıracağı, hem de özlük hakları açısından uygulanması<br>gereken bir durum olduğu hem ilgili daire başkanlarına hem<br>Halk Sağlığı Genel Müdürüne ifade edilmiştir.<br>3+1 ASÇ ataması ile gelen ASÇ’lerin birimle sözleşme<br>imzalamaması durumunda birime görevlendirme ile<br>bakarken birimin kadrosunu işgal etmesi , bu nedenle<br>buraya başka bir gönüllü ASÇ anlaşmasını birimin<br>gerçekleştirememesi sorunu işlendi.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #32</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Fakat sahadaki bu durumla ilgili Bakanlığın argümanları</h3>
-        <div class="card-body">
-            <p>haklı bulundu , ASÇ’nin görevine devam etmesi ilgili işi<br>yapmaması ve birimi mağdur etmesi durumunda Aile<br>Hekiminin TSM’ye bu durumu bildirerek belki de idari<br>işlemlere başlanması konusunun bir çözüm yolu olabileceği<br>söylendi.<br>1 Yıl gelmeyen hasta sorunu tekrar dile getirildi, anlatıldı<br>uygulamanın sahada yol açtığı problemler ve uygulamanın<br>mantığa aykırı durumları açıklandı. Örneklemeler verildi :<br>Ayın 2 ‘sinde Yeni doğan ve sisteme düşen bebeğin ASM’ye<br>uğramadığı için 1 yıldır gelmeyen hasta statüsüne<br>sokulduğunu ve kat sayı kaybına uğradığını belirttik . Yine<br>lohusalarda aynı problemlerle kat sayı kaybı olduğu<br>belirtildi. Aynı ASM’de 11 Ay uğrayan sonra hekim değiştiren<br>hastanın 1 Yıl gelmeyen olarak sayıldığını ,hatta ASM’ye yeni<br>kayıt aldıran fakat 2 gün sonra kayıdın sisteme düşmesi<br>nedeniyle bu hastanın da 1 yıl gelmeyen olarak kat sayı<br>kaybına uğratıldığını söyledik. bu sistemsel sorunlar<br>hakkında hemen çalışma başlatılması ve düzeltilmesi<br>talimatı Genel Müdürümüz tarafından verildi . Bu konuyu<br>çalışacaklarını özellikle belirttiler.<br>1 yıl gelmeyen ve polis tarafından aranan hastalar sorunu<br>her yönüyle anlatıldı. Akıbeti belli olmayan 30.000 kişi ve 1<br>Yıl konusunda argümanların bir çoğu dile tekrar getirildi.<br>Antalya ‘da Trafik Kazası geçiren ve kazanın ardından<br>ameliyat olmak durumunda kalan meslektaşımızın vekalet<br>bulamadığı için aldığı maaşın 66.000 TL (3084 Nüfus olduğu<br>halde )olduğu ifade edildi ve maaş dekontu Genel<br>Müdürümüze gösterildi . Pozitif perfomans verildiğinin<br>söylendiği fakat aslında taban maaşımızın 66.000 TL<br>olduğunu ve uzun süreli hastalık durumlarında da bu tip<br>maaşların alındığı söylenildi . %65 Performans %35 Sabit<br>kısımlı ödeme sisteminin sabit kısmının artırılması gerektiği<br>vurgulandı.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #33</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Basın ve Eylemler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
-                <i class="fa-solid fa-bullhorn"></i> Basın ve Eylemler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Özlük izin hakları konusuna geçildi , GEBE</h3>
-        <div class="card-body">
-            <p>MESLEKTAŞLARIMIZIN da aynı bu bordroda ki gibi yaklaşık 6<br>ay boyunca yıllık izinlerde hesaba katıldığında bu ücreti yani<br>66.000 TL aldığını belirttik . Ülkemizde ki nüfusun her geçen<br>gün doğurganlık hızının gerilediği ve diğer gelişmiş ülkelerin<br>gebe kadınlara çeşitli teşvikler sunduğu bir dünyada kadın<br>aile hekimlerimizin 2025 Aile Yılında maaşından kesilerek<br>adeta cezalandırıldığını ifade ettik .<br>Bir an önce KADIN AİLE HEKİMLERİMİZİN Gebelik Süresi<br>boyunca ve raporlu hekim arkadaşlarımızın hastalığı<br>süresince maddi açından zarara uğramayacakları bir sistem<br>getirilmesini, maaşlarının %65 ‘ini kaybetmemelerini istedik .<br>Gebe meslektaşlarımızın sayısının zaten sınırlı olduğu, bu<br>konunun yıllardır aile hekimliği sisteminde bir türlü<br>çözülemediğini belirttik. Bu konuda çalışılacağını çözüm<br>olursa , ilk önce çözmeye çalışacakları sorunun Gebelerdeki<br>kesinti konusu olacağı ifade edildi.<br>Yine yakınını annesini , babasını , kardeşini kaybeden Aile<br>Hekimi Meslektaşlarımızın daha acısını yaşayamadan yerine<br>görevlendirme ile arkadaş bulmaya çalıştıklarını ifade ettik.<br>İnsanların en acılı günlerinde ya yerine birini bul ya<br>maaşından keserim anlayışının doğru olmadığını ifade ettik .<br>Aynı izin sorunlarının babalık izni gibi bir çok alanda olduğu<br>ve 657 ‘ye tanınan izin haklarının Aile Hekimliğine de<br>tanınması gerektiğini belirttik . Vekaleten çalışan kişinin 2<br>kişilik çalıştığını bunun karşılığında ücret alamadığı ve bu<br>durumun ciddi ezici iş yüküyle karşı karşıya kalmasına<br>neden olduğu konularını da dile getirdik .<br>Esnek mesailerin ne zaman kaldırılacağı ile ilgili soru tekrar<br>soruldu . Konu hakkında çalışmanın devam ettiği, lakin kısa<br>süre sonra esnek mesailerin kaldırılacağı belirtildi. Talebimiz<br>ve sorumuz üzerine kaldırılacağını öğrendiğimiz esnek<br>mesainin yerine hiçbir koşulda hafta sonu mesaisi veya<br>mesai dışı çalışma istemediğimizi özellikle tekrardan<br>belirttik.<br>zgün yapılabilmesinin imkansız olduğu belirtilmiştir.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #34</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">(Bu konuda bilgi değil ama duyum gruplama kriterleri</h3>
-        <div class="card-body">
-            <p>arasına sigara bırakma polikliniği düşünülüyor) .<br>Ödeme yönetmeliği ile ilgili çalışmanın olup olmadığı<br>soruldu , herhangi bir çalışmanın olmadığı ödeme<br>yönetmeliği ile ilgili kesin olarak ifade edildi . Ödeme<br>yönetmeliği çalışması olması durumunda bu çalışmaya<br>katılmak istediğimizi tekrardan ifade ettik.<br>Uygulama yönetmeliğinin kısa süre içerisinde çıkabileceği<br>beklentisi mevcut. Bu konuda çalışmamızı bakanlığımıza<br>sunmuştuk .<br>21 Gün İzne çıkan Aile Hekiminin döndüğünde 5 Gün içinde<br>1000 ‘e yakın veri girişi talep edildiğini. Vekalet bırakılan<br>birimin mevcut muayene yüküyle vekalet ettiği birimin<br>HYP’lerini düzgün girmesinin imkansıza yakın olduğu, bu<br>durumda kalan 5 Gün içerisinde 800 Veri Girişinin düzgün<br>yapılabilmesinin imkansız olduğu belirtilmiştir.<br>Bu durumda Aile Hekiminin Maddi Kayba uğradığını veya<br>yapılan HYP’lerde “ Uzaktan erişim” methodlarının<br>kullanıldığı ve bu durumun verilerde “çeşitli sapmalara”<br>neden olduğu açıkça belirtilmiştir.<br>*Çözüm önerisi olarak kişinin aynı muayene sayılarında ki<br>gibi Raporlu , İzinli , SAHU’da veya Görevlendirmede olduğu<br>süreçlerde HYP sayısının AKTİF ÇALIŞMA GÜNÜNE GÖRE<br>ORANLANARAK hesaplanmasının adil ve uygulanması daha<br>doğru bir metot olduğu savunulmuştur.<br>Şunu ifade etmeliyiz ki genel olarak ilettiğimiz makul bir çok<br>sorunun çözümü için toplantı esnasında Genel Müdür Sn.<br>Dr. Muhammed Emin Demirkol ve Bürokratlar çözüm için<br>müdahil olmaya çalıştı. Bu kadar içten ve makul taleplere<br>karşı hızlı aksiyon alması bizi iletişim konusunda<br>cesaretlendirdi. Sahadaki sorunların takipçisi olmaya devam<br>edeceğiz umarız ki hepimizin huzurla yapabildiği bir Aile<br>Hekimliği sistemi en yakın zamanda gelir.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #35</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Son olarak iletişim ile muhakakak bir sonuç alınmasını</h3>
-        <div class="card-body">
-            <p>gerektiğini ve önemli olanın niyetten ziyade çözüm iradesi<br>ve sonuç olduğu toplantıda vurgulandı.<br>Toplantıya katılan başta Halk Sağlığı Genel Müdürü Dr.<br>Muhammed DEMİRKOL olmak üzere ,<br>Halk Sağlığı Genel Müdür Yardımcısı Uzm. Dr. Hamit<br>Harun BAĞCI,<br>Halk Sağlığı Genel Müdürlüğü Aile Hekimliği Uygulama<br>Daire Başkanı Dr. Murat AĞIRTAŞ ,<br>gösterdikleri nezaket , içtenlik ve sorunların çözümleri<br>konusunda gösterdikleri uğraş nedeniyle teşekkür<br>ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #36</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 06.01.2026</span>
-        </div>
-        <h3 class="card-title">06.01.2026 tarihinde AHEF Yönetim Kurulu olarak Türkiye Büyük</h3>
-        <div class="card-body">
-            <p>Millet Meclisi’ndeydik.<br>Toplum sağlığını ve hekim haklarını siyasi görüşlerden bağımsız<br>biçimde önceleyen; taleplerimizi dikkatle dinleyen, çözüm iradesi<br>gösteren ve bizleri samimiyetle ağırlayan değerli<br>milletvekillerimiz<br>Dr. Hasan Arslan&#x27;a (Afyonkarahisar)<br>Dr. Murat Emir&#x27;e (Ankara)<br>Dr. Ahmet Eşref Fakıbaba&#x27;ya (Ankara)<br>Dr. Kayıhan Pala&#x27;ya (Bursa) teşekkür ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #37</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 06.01.2026</span>
-        </div>
-        <h3 class="card-title">06.01.2026 tarihinde Genel Sekreterimiz Uzm. Dr.</h3>
-        <div class="card-body">
-            <p>Çiğdem Akaydın, Sağlık ve Aile Bakanlıkları tarafından<br>düzenlenen Koruyucu Aile ve Evlat Edinme Çalıştayına<br>AHEF&#x27;i temsilen katıldı.<br>Çalıştayda koruyucu ailelerin başvurusu sırasında istenen<br>sağlık raporunun ve 2 yılda bir tekrarının aile hekimlerine<br>verilmek istendiğini,genel sekreterimizin; pedofilinin,<br>psikotik hastalıkların ve alkol madde bağımlılığının<br>tanılarının ancak detaylı psikiyatrik muayene ile<br>koyulabileceğini ve madde kullanımını anlamak için gerekli<br>testlerin asm şartlarında bakılamayacağını vurgulamasıyla<br>raporun aile hekimlerine verilmediğini de sizlere bildirmek<br>isteriz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #38</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 13.01.2026</span>
-        </div>
-        <h3 class="card-title">13.01.2026 tarihinde, son 2 aydır, her geçen gün daha çok</h3>
-        <div class="card-body">
-            <p>uygulamada ve artarak devam eden Medulla ve e-reçete<br>sistemi hataları ve giriş sağlayamamız nedeniyle AHEF<br>olarak hazırladığımız metin ile CİMER üzerinden etkinlik<br>başlattık.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #39</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Kazanımlar ve Anlaşmalar">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #4f46e515; color: #4f46e5; border-color: #4f46e530;">
-                <i class="fa-solid fa-scale-balanced"></i> Kazanımlar ve Anlaşmalar
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 14.01.2026</span>
-        </div>
-        <h3 class="card-title">14.01.2026 tarihinde, AHEF olarak İndirimli Elektrik Kampanyası için</h3>
-        <div class="card-body">
-            <p>Enerji Sektörünün önde gelen şirketlerinden AKSA ELEKTRİK ile<br>anlaşmaya varmıştır .<br>Anlaşma kapsamında AHEF&#x27;e özel 15.000 KWh Yıllık Elektrik<br>Tüketimi olan ASM&#x27;lerde ,&quot;PTF + YEKDEM + %9,38 yerine PTF +<br>YEKDEM +%6 Formülasyonuyla&quot; İNDİRİM uygulanacaktır.<br>Çağrı Merkezi : 444 4 610 ( ASM&#x27;miz için AHEF Anlaşmasını istiyoruz<br>diyebilir aile hekimlerimiz ) veya www.aksaelektriksatis.com.tr<br>üzerinden Kamu Özel Sektör sekmesinden &quot;AHEF KAMPANYASI&quot;<br>seçilebilir.<br>Aile Hekimlerimizin ASM&#x27;lerinde ki elektrik yükünü hafifletecek bu<br>anlaşmanın Aile Hekimliği Camiamıza Hayırlı olmasını dileriz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #40</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 21.01.2026</span>
-        </div>
-        <h3 class="card-title">21.01.2026 tarihinde ,AHEF&#x27;i temsilen Yönetim Kurulu</h3>
-        <div class="card-body">
-            <p>Başkanımız Dr. Taner Balbay ve Yönetim Kurulu üyemiz<br>Dr. Sermin Çengel, İZAHED yönetim kurulu üyelerini<br>dernek merkezlerinde ziyaret etmiş ,fikir alışverişinde<br>bulunmuştur. Nazik davetleri ve misafirperverlikleri için<br>teşekkür ediyoruz.<br>AHEF 81 İLDE OCAK AYI<br>26.01.2026 tarihinde, AHEF Yönetim Kurulu Üyemiz Uzm.<br>Dr. Mehmet Samaklı, Kars Başkanımız Dr. Ramazan<br>Altun&#x27;u AHEF&#x27;i temsilen ziyaret etmiştir. Misafirperverlikleri<br>için teşekkür ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #41</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 05.02.2026</span>
-        </div>
-        <h3 class="card-title">05.02.2026 tarihinde Medulla sayfa hatası ile ilgili  Ahef</h3>
-        <div class="card-body">
-            <p>yönetim kurulu üyemiz Uzm. Dr. Mehmet Samaklı‘nın<br>SGK kurumsal yazılımlar dairesi ile görüşmeleri neticesinde ,<br>uzaktan bağlantı yapılarak hata log ları alındı. Süreç takip<br>edildi, sgk medulla  bağlantı sorunu çözüldü.<br>ŞUBAT<br>6 Şubat depreminin üçüncü yılında, asrın felaketinden etkilenen<br>illerdeydik<br>Binlerce insanımızın hayatını kaybettiği ,binlercesinin yaralandığı<br>,binlerce insanın kaybolduğu bu büyük felaketten 11 ilimiz ağır<br>bir şekilde etkilenmiştir .<br>Depremin hemen ardından sağlık çalışanları kayıplarına<br>bakmadan ,acılarını içlerine gömerek halkımızın yaralarını<br>sarmak için koşmuştur.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #42</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">İnsani şartların oluşmadığı ortamlarda ,sağlığa uygun</h3>
-        <div class="card-body">
-            <p>olmayan koşullarda sağlık hizmeti vermeye devam<br>etmişlerdir.Sadece Hatay da 58 ASM bir gecede yıkılmış<br>,ardından 13 ASM daha depreme dayanıksız olduğundan<br>yıkılmış ,buna karşın aradan geçen üç yılda sadece üç ASM<br>yeniden yapılabilmistir.<br>Bugün Hatay da 280aile hekimi konteynerlarda hizmet<br>vermektedir.Yazın 50 derecenin üzerinde kışın da sıfırın<br>altında soğukta ,Aile hekimleri halkımıza hizmet vermeye<br>çalışmaktadır.<br>Üç yıldır sıcak odalarında oturanlar burada çalışanların<br>sorunlarını çözemedikleri gibi bir de aile hekimlerine yer<br>yapmadan konteynerlardan çıkmaları yönünde baskı<br>yapmıştır.<br>Bakanlık aile hekimleri için çıkardığı yönetmeliklere göre<br>,Hatay’ da da depremde kaybolan binlerce kişinin son bir<br>yılda ASM ye gelmemesi dolayısıyla depremzede hekimlerin<br>ücretini kesmektedir.<br>Kayıp çocukların aşılarını ,izlemlerini yapmalarını<br>,yapmazlarsa performans kesintileri ile tehdit etmektedir.<br>Bu vicdanı sızlatan uygulamaları hala ısrarla<br>sürdürmektedirler .<br>Aile hekimleri ,afetlerde sağlığın sessiz ama vazgeçilmez<br>omurgasıdır.<br>Ve bu omurga güçlendirilmeden hiç bir afet planı<br>tamamlanmış sayılmaz.<br>Bugün burada hepimiz görüyoruz ki ,bu omurga<br>güçlendirilmemiş,sadece 3 aile sağlığı merkezi<br>yapılabilmis,bakanın her defasında dile getirdiği 1000 aile<br>sağlığı merkezi sözünü deprem bölgesinden başlayarak çok<br>süratli bir şekilde yerine getirmesini bekliyoruz.<br>AHEF olarak bu işin takipçisiyiz ,Aile hekimlerimizin<br>yanındayız .Verilen sözler yerine getirilip ,yaralar sarılıncaya<br>kadar her platformda en sert şekilde dile getireceğiz.<br>Deprem bölgesindeyiz, buradayız, sorunlar çözülünceye<br>kadar yılmadan mücadeleye devam edeceğiz.<br>AHEF YÖNETİM KURULU</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #43</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 10.02.2026</span>
-        </div>
-        <h3 class="card-title">10.02.2026 tarihinde Örgütlenme Komisyon başkanımız Dr.</h3>
-        <div class="card-body">
-            <p>Haydar Karakoyun ve yönetim kurulu üyemiz Uzm. Dr.<br>Mehmet Samaklı’ nın destekleri ile 79. İl derneğimiz olan<br>Batman aile hekimleri derneği başkanımız Dr. Nimetullah<br>Can ve kurucu hekimlerimize hayırlı olsun dileklerimizi<br>ilettik.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #44</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 17.02.2026</span>
-        </div>
-        <h3 class="card-title">17.02.2026 tarihinde Ankara’da düzenlenen ‘’Küresel</h3>
-        <div class="card-body">
-            <p>Hedeflerden Ulusal Eylemlere Böbrek Sağlığının<br>Güçlendirilmesi  konulu’’ çalıştaya AHEF yönetim kurulu<br>üyemiz Uzm Dr Ayhan Karagül katılmıştır.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #45</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 24.02.2026</span>
-        </div>
-        <h3 class="card-title">24.02.2026 Kahramanmaraş Valisine yaptıkları ziyarette</h3>
-        <div class="card-body">
-            <p>AHEFi temsilen YK üyemiz Dr Zehra Sevinç Cüce, KAHED,<br>Kahramanmaraş Tabip odası ve AHESEN temsilcileri aile<br>hekimleri sorunlarını iletmişlerdir.<br>Özellikle 0 nüfus açmada ki plansızlıklar<br>Düşük nüfus sebepli 1/4ü asç siz birimler<br>Aşı lojistiği problemlerini<br>Sendikal iznin mahkeme kararına rağmen<br>kullandırılmamaya çalışılmasını aktarmışlardır.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #46</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Akademi ve Eğitim">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #05966915; color: #059669; border-color: #05966930;">
-                <i class="fa-solid fa-graduation-cap"></i> Akademi ve Eğitim
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 12.02.2026</span>
-        </div>
-        <h3 class="card-title">12.02.2026 tarihinde AHEF Başkanımız Dr. Taner Balbay</h3>
-        <div class="card-body">
-            <p>,tvDEN KanalıSağlık Vakti programı canlı<br>yayınına katıldı.<br>BASINDA AHEF ŞUBAT AYI</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #47</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Basın ve Eylemler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
-                <i class="fa-solid fa-bullhorn"></i> Basın ve Eylemler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Şubat 2026</span>
-        </div>
-        <h3 class="card-title">14 Şubat 2026 3S</h3>
-        <div class="card-body">
-            <p>haber.net de Başkan<br>yardımcımız Dr Haydar<br>Karakoyun’un demeçi</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #48</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Basın ve Eylemler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
-                <i class="fa-solid fa-bullhorn"></i> Basın ve Eylemler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 22.02.2026</span>
-        </div>
-        <h3 class="card-title">22.02.2026 Aile hekimlerini kriz vurdu - Sözcü</h3>
-        <div class="card-body">
-            <p>22.02.2026 Aile hekimlerini kriz vurdu - Sözcü</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #49</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 5.02.2026</span>
-        </div>
-        <h3 class="card-title">5.02.2026 tarihinde AHEF Yönetim Kurulu olarak,</h3>
-        <div class="card-body">
-            <p>Depremin 3. Yıl dönümünde, deprem bölgesine<br>ziyaretimizin ilk durağı olarak Adana daydık. Adana Dernek<br>Yönetimimizi ziyaret ettik.<br>AHEF 81 İLDE ŞUBAT AYI<br>06.02.2026 tarihinde, deprem bölgesi illerimizden<br>Osmaniye&#x27;de, yıkıcı depremin yıl dönümünde aile<br>hekimlerimizi ziyaret ederek sahada ki aile hekimliği<br>sisteminin son durumu hakkında bilgi aldık.<br>Meslekdaşlarımıza misafirperverlikleri için çok teşekkür<br>ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #50</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 06.02.2026</span>
-        </div>
-        <h3 class="card-title">06.02.2026 tarihinde, deprem bölgesi illerimizden Hatay’da</h3>
-        <div class="card-body">
-            <p>3 yıl geçmesine rağmen hala konteynerlerde hizmet vermek<br>zorunda kalan aile hekimlerimizin sorunlarını dinlemek ve<br>duyurmak için Hatay Aile Hekimleri Dernek Başkanımız<br>Nihat Fahlioğulları ve stk temsilcilerimiz ile basın<br>açıklamasına katıldık.<br>06.02.2026 tarihinde Gaziantep Nurdağında konteyner<br>asmleri ziyaretimiz,Dr Gökhan ERDOĞAN başkanıma,<br>yönetim kurulumuza teşekkür ederiz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #51</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Şubat" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 06.02.2026</span>
-        </div>
-        <h3 class="card-title">06.02.2026 tarihinde, deprem bölgesi illerimizden</h3>
-        <div class="card-body">
-            <p>Kahramanmaraş Aile hekimleri Derneği Yönetim Kurulunu<br>ziyaret ettik.<br>07.02 2026 tarihinde Deprem bölgesinde aile hekimleri<br>ziyaretlerimiz kapsamında Adıyaman Aile Hekimleri derneği<br>başkanımız Dr İsmail Tosun aMisafirperverlikleri için hekim<br>arkadaşlarımızın kıymetli vaktini ayırıp gelmesi için @~Dr.<br>İsmail TOSUN Başkanıma teşekkür ediyoruz.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #52</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Ocak" data-category="Saha ve Deprem Bölgesi">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #ea580c15; color: #ea580c; border-color: #ea580c30;">
-                <i class="fa-solid fa-map-location-dot"></i> Saha ve Deprem Bölgesi
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Ocak 2026</span>
-        </div>
-        <h3 class="card-title">Deprem bölgesi ziyaretimizin son durağı olan</h3>
-        <div class="card-body">
-            <p>Malatya’da Dernek başkanımız Dr Vahap Almasulu ve<br>Malatya aile hekimleriyle bir araya geldik.</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #53</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Basın ve Eylemler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
-                <i class="fa-solid fa-bullhorn"></i> Basın ve Eylemler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Mart 2026</span>
-        </div>
-        <h3 class="card-title">Kronik böbrek hastalığına dikkat çekmek amacıyla, 12 Mart</h3>
-        <div class="card-body">
-            <p>Dünya Böbrek Günü kapsamında Türk Nefroloji Derneği ,Astra<br>Zeneca firması ve AHEF Aile Hekimleri Dernekleri Federasyonu iş<br>birliğiyle bir farkındalık projesi hayata geçirdik. “Sağlıklı Böbrek,<br>Sağlıklı Hayat” adlı video serisi düzenlenen basın toplantısıyla<br>kamuoyuyla paylaşıldı.<br>MART</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #54</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Basın ve Eylemler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
-                <i class="fa-solid fa-bullhorn"></i> Basın ve Eylemler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 13.03.2026</span>
-        </div>
-        <h3 class="card-title">13.03.2026saat 20:00’de X platformunda #ŞiddeteEziyeteSon</h3>
-        <div class="card-body">
-            <p>13.03.2026saat 20:00’de X platformunda #ŞiddeteEziyeteSon</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #55</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Basın ve Eylemler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
-                <i class="fa-solid fa-bullhorn"></i> Basın ve Eylemler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Mart 2026</span>
-        </div>
-        <h3 class="card-title">14 Mart Tıp Bayramı kapsamında Aile Hekimleri Dernekleri</h3>
-        <div class="card-body">
-            <p>Federasyonu (AHEF) olarak 14 Mart Saat 11:00 de Sağlık Bakanlığı<br>önünde bir basın açıklaması gerçekleştirdik.<br>Aile hekimlerinin ve birinci basamak sağlık çalışanlarının artan iş<br>yükü, yetersiz özlük hakları ve güvenliksiz bir ortamda zorlaşan<br>çalışma koşullarına dikkat çekerek çözüm taleplerimizi dile getirdik.<br>14 Mart’ın yalnızca bir kutlama günü değil, hekimlerin yaşadığı<br>sorunların görünür kılındığı bir gün olduğunu bir kez daha<br>vurguladık.<br>AHEF olarak birinci basamak sağlık hizmetlerinin güçlendirilmesi ve<br>meslektaşlarımızın hak ettiği çalışma koşullarının sağlanması için<br>mücadelemizi kararlılıkla sürdüreceğiz.<br>SAĞLIKTA ŞİDDET,AİLE HEKİMLİĞİNDE EZİYET SONA ERENE KADAR<br>HEP BİRLİKTE MÜCADELE EDECEĞİZ….</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #56</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 16.03.2026</span>
-        </div>
-        <h3 class="card-title">16.03.2026 tarihinde Kronik böbrek hastalığının erken tanısında</h3>
-        <div class="card-body">
-            <p>aile hekimlerinin önemi nedir?<br>Böbrek sağlığımız için hayatımıza dahil etmemiz gereken basit ama<br>etkili alışkanlıklar nelerdir?<br>Model Tülin Şahin’in kronik böbrek hastalığı ile ilgili sorularını<br>Başkanımız Dr. Taner Balbay yanıtladı</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #57</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> 27.03.2026</span>
-        </div>
-        <h3 class="card-title">27.03.2026 tarihinde Genel Sekreterimiz Uzm. Dr. Çiğdem Akaydın</h3>
-        <div class="card-body">
-            <p>Santa farma fimasının &#x27;aile hekimliğinde nsaiiler&#x27; toplantısında<br>sunum yapmıştır .</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #58</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Basın ve Eylemler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #dc262615; color: #dc2626; border-color: #dc262630;">
-                <i class="fa-solid fa-bullhorn"></i> Basın ve Eylemler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Mart 2026</span>
-        </div>
-        <h3 class="card-title">SOSYAL MEDYADA AHEF MART AYI</h3>
-        <div class="card-body">
-            <p>SOSYAL MEDYADA AHEF MART AYI</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #59</span>
-        </div>
-    </div>
-    
-    <div class="activity-card" data-month="Mart" data-category="Görüşmeler ve Ziyaretler">
-        <div class="card-header">
-            <span class="badge-cat" style="background-color: #0284c715; color: #0284c7; border-color: #0284c730;">
-                <i class="fa-solid fa-handshake"></i> Görüşmeler ve Ziyaretler
-            </span>
-            <span class="badge-date"><i class="fa-regular fa-calendar"></i> Mart 2026</span>
-        </div>
-        <h3 class="card-title">BASINDA AHEF MART AYI</h3>
-        <div class="card-body">
-            <p>BASINDA AHEF MART AYI</p>
-        </div>
-        <div class="card-footer">
-            <span class="slide-num"><i class="fa-solid fa-file-powerpoint"></i> Rapor Slayt No: #60</span>
-        </div>
-    </div>
-    
-  </div>
-</div>
+    const cardsContainer = document.getElementById('cards-container');
+    const modal = document.getElementById('pdfModal');
+    const pdfFrame = document.getElementById('pdfFrame');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalExternal = document.getElementById('modalExternal');
+    const modalCloseBtn = document.getElementById('modalClose');
 
-<!-- Back to top -->
-<button id="backToTop" aria-label="Yukarı Çık"><i class="fa-solid fa-arrow-up"></i></button>
-
-<script>
-// Theme Toggle
-const themeBtn = document.getElementById("themeToggleBtn");
-const themeIcon = document.getElementById("themeIcon");
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-theme");
-  if (document.body.classList.contains("dark-theme")) {
-    themeIcon.classList.remove("fa-moon");
-    themeIcon.classList.add("fa-sun");
-  } else {
-    themeIcon.classList.remove("fa-sun");
-    themeIcon.classList.add("fa-moon");
-  }
-});
-
-// Back to Top
-const backToTop = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) {
-    backToTop.style.display = "flex";
-  } else {
-    backToTop.style.display = "none";
-  }
-});
-backToTop.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-// Live Filter & Search
-const searchInput = document.getElementById("searchInput");
-const monthChips = document.querySelectorAll("#monthFilter .filter-chip");
-const cards = document.querySelectorAll(".activity-card");
-let activeMonth = "all";
-
-function filterCards() {
-  const query = searchInput.value.toLowerCase().trim();
-  let visible = 0;
-
-  cards.forEach(card => {
-    const month = card.getAttribute("data-month");
-    const text = card.innerText.toLowerCase();
-
-    const matchesMonth = (activeMonth === "all" || month === activeMonth);
-    const matchesSearch = (!query || text.includes(query));
-
-    if (matchesMonth && matchesSearch) {
-      card.style.display = "flex";
-      visible++;
-    } else {
-      card.style.display = "none";
+    function renderCards() {
+      cardsContainer.innerHTML = pdfDocuments.map(doc => `
+        <div class="card" data-id="${doc.id}">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-2v-3h2c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zm5 2h-1.5v-5h1.5c1.1 0 2 .9 2 2v1c0 1.1-.9 2-2 2zm3.5-3.5h-2V9h2V7.5h-3.5v5H18V10z"/></svg>
+          </div>
+          <div class="card-info">
+            <div class="card-title">${doc.title}</div>
+            <div class="card-desc">PDF Dokümanı • İncelemek için dokunun</div>
+          </div>
+          <div class="card-arrow">&#8250;</div>
+        </div>
+      `).join('');
     }
-  });
-}
 
-monthChips.forEach(chip => {
-  chip.addEventListener("click", () => {
-    monthChips.forEach(c => c.classList.remove("active"));
-    chip.classList.add("active");
-    activeMonth = chip.getAttribute("data-filter");
-    filterCards();
-  });
-});
+    function openDocument(doc) {
+      // 1. Flutter Uygulama İçi WebView Kontrolü (Yerel PDFViewerScreen'e ilet):
+      if (window.PdfDownloadChannel && window.PdfDownloadChannel.postMessage) {
+        window.PdfDownloadChannel.postMessage(doc.url);
+        return;
+      }
 
-searchInput.addEventListener("input", filterCards);
-</script>
+      // 2. Normal Tarayıcı Fallback (Google Docs Viewer):
+      modalTitle.textContent = doc.title;
+      modalExternal.href = doc.url;
+      pdfFrame.src = "https://docs.google.com/gview?embedded=true&url=" + encodeURIComponent(doc.url);
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      pdfFrame.src = '';
+      document.body.style.overflow = '';
+    }
+
+    cardsContainer.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      if (!card) return;
+      const targetDoc = pdfDocuments.find(d => d.id === card.dataset.id);
+      if (targetDoc) openDocument(targetDoc);
+    });
+
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    renderCards();
+  </script>
 </body>
 </html>
