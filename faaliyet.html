@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>AHEF Faaliyet Raporları</title>
+  <!-- PDF.js Kütüphanesi (İlk sayfayı kapak görseline dönüştürmek için) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 
   <style>
     :root {
@@ -12,8 +17,9 @@
       --text: #0f172a;
       --text-muted: #64748b;
       --primary: #0284c7;
+      --primary-dark: #0369a1;
       --border: #e2e8f0;
-      --radius: 14px;
+      --radius: 18px;
     }
 
     * {
@@ -24,108 +30,192 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       padding-top: max(16px, env(safe-area-inset-top));
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
       padding-left: max(16px, env(safe-area-inset-left));
       padding-right: max(16px, env(safe-area-inset-right));
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     .container {
-      max-width: 600px;
+      max-width: 580px;
       margin: 0 auto;
     }
 
     .header {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      margin-bottom: 8px;
     }
 
     .header h1 {
-      font-size: 1.35rem;
-      font-weight: 700;
+      font-size: 1.45rem;
+      font-weight: 800;
       color: #0f172a;
       letter-spacing: -0.02em;
     }
 
     .header p {
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       margin-top: 4px;
     }
 
+    /* Büyük Kart Listesi */
     .list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .report-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .report-card:active {
+      transform: scale(0.985);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    }
+
+    /* Kapak Önizleme Alanı */
+    .cover-container {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #0f1e36, #1e3a8a);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .cover-canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    /* Yükleniyor Placeholder */
+    .cover-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      gap: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .cover-placeholder i {
+      font-size: 2.2rem;
+      color: #38bdf8;
+    }
+
+    .cover-placeholder span {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+
+    .badge-pdf {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(220, 38, 38, 0.9);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .badge-period {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      color: #f8fafc;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+
+    /* Kart İçeriği */
+    .card-body {
+      padding: 16px 18px 18px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-      transition: transform 0.15s ease, background-color 0.15s ease;
-      user-select: none;
-    }
-
-    .card:active {
-      transform: scale(0.98);
-      background-color: #f1f5f9;
-    }
-
-    .card-icon {
-      width: 42px;
-      height: 42px;
-      background: #fee2e2;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .card-icon svg {
-      width: 22px;
-      height: 22px;
-      fill: #dc2626;
-    }
-
-    .card-info {
-      flex: 1;
-      min-width: 0;
-    }
-
     .card-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 3px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
       line-height: 1.35;
     }
 
     .card-desc {
-      font-size: 0.75rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.45;
     }
 
-    .card-arrow {
+    .card-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .file-info {
+      font-size: 0.75rem;
       color: #94a3b8;
-      font-size: 1.25rem;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    /* Web Tarayıcısı Modal Fallback */
+    .btn-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    /* Fallback Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -156,28 +246,11 @@
 
     .modal-title {
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       flex: 1;
-    }
-
-    .modal-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
-    .btn-external {
-      font-size: 0.75rem;
-      text-decoration: none;
-      color: var(--primary);
-      background: #eff6ff;
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-weight: 600;
     }
 
     .btn-close {
@@ -191,7 +264,6 @@
       justify-content: center;
       font-size: 1.2rem;
       cursor: pointer;
-      color: var(--text);
     }
 
     .modal-body {
@@ -199,7 +271,6 @@
       width: 100%;
       height: 100%;
       background: #525659;
-      position: relative;
     }
 
     .modal-body iframe {
@@ -214,21 +285,21 @@
 
   <div class="container">
     <header class="header">
+      <div class="header-badge">
+        <i class="fa-solid fa-file-lines"></i> RESMİ RAPORLAR
+      </div>
       <h1>AHEF Faaliyet Raporları</h1>
-      <p>Görüntülemek veya indirmek için rapora tıklayın</p>
+      <p>İncelemek istediğiniz dönemin faaliyet raporuna dokunun</p>
     </header>
 
     <main class="list-container" id="cards-container"></main>
   </div>
 
-  <!-- Standart Tarayıcılar İçin Modal -->
+  <!-- Web Tarayıcıları İçin Modal -->
   <div class="modal-backdrop" id="pdfModal" role="dialog" aria-modal="true">
     <div class="modal-navbar">
       <span class="modal-title" id="modalTitle">Belge Adı</span>
-      <div class="modal-actions">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="btn-external" id="modalExternal">Yeni Sekmede Aç</a>
-        <button class="btn-close" id="modalClose" aria-label="Kapat">&times;</button>
-      </div>
+      <button class="btn-close" id="modalClose" aria-label="Kapat">&times;</button>
     </div>
     <div class="modal-body">
       <iframe id="pdfFrame" src="" title="PDF Dokümanı"></iframe>
@@ -236,23 +307,29 @@
   </div>
 
   <script>
+    // PDF.js Konfigürasyonu
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
     const pdfDocuments = [
       {
         id: "doc-1",
-        title: "2025 EKİM-KASIM-ARALIK FAALİYET RAPORU",
-        fileName: "cdf0a67b-cb13-452c-aa3d-e30dfd0bab00.pdf",
+        title: "2025 EKİM - KASIM - ARALIK FAALİYET RAPORU",
+        period: "4. ÇEYREK 2025",
+        desc: "AHEF Yönetim Kurulu 2025 yılı son çeyrek hukuki kazanımları, basın açıklamaları ve komisyon raporları.",
         url: "https://ahef.org.tr/upload/files/cdf0a67b-cb13-452c-aa3d-e30dfd0bab00.pdf"
       },
       {
         id: "doc-2",
-        title: "2026 NİSAN-MAYIS-HAZİRAN FAALİYET RAPORU",
-        fileName: "9c471ce0-1209-45c1-99c8-8b3a5eb8fc58.pdf",
+        title: "2026 NİSAN - MAYIS - HAZİRAN FAALİYET RAPORU",
+        period: "2. ÇEYREK 2026",
+        desc: "Bakanlık görüşmeleri, AHEF Akademi bilimsel webinarları ve saha faaliyetleri dönemsel özeti.",
         url: "https://ahef.org.tr/upload/files/9c471ce0-1209-45c1-99c8-8b3a5eb8fc58.pdf"
       },
       {
         id: "doc-3",
-        title: "DEPREM BÖLGELERİ FAALİYET RAPORU",
-        fileName: "896cf776-c3c1-41e0-a39a-c0920151069b.pdf",
+        title: "DEPREM BÖLGELERİ FAALİYET VE SAHA RAPORU",
+        period: "ÖZEL SAHA RAPORU",
+        desc: "Hatay, Kahramanmaraş ve Malatya konteyner ASM ziyaretleri, hekim sorunları ve çözüm önerileri.",
         url: "https://ahef.org.tr/upload/files/896cf776-c3c1-41e0-a39a-c0920151069b.pdf"
       }
     ];
@@ -261,34 +338,75 @@
     const modal = document.getElementById('pdfModal');
     const pdfFrame = document.getElementById('pdfFrame');
     const modalTitle = document.getElementById('modalTitle');
-    const modalExternal = document.getElementById('modalExternal');
     const modalCloseBtn = document.getElementById('modalClose');
 
+    // Kartları Render Et
     function renderCards() {
       cardsContainer.innerHTML = pdfDocuments.map(doc => `
-        <div class="card" data-id="${doc.id}">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-2v-3h2c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zm5 2h-1.5v-5h1.5c1.1 0 2 .9 2 2v1c0 1.1-.9 2-2 2zm3.5-3.5h-2V9h2V7.5h-3.5v5H18V10z"/></svg>
+        <article class="report-card" data-id="${doc.id}">
+          <div class="cover-container" id="cover-wrap-${doc.id}">
+            <span class="badge-pdf">PDF RAPORU</span>
+            <span class="badge-period"><i class="fa-regular fa-calendar-check"></i> ${doc.period}</span>
+            <canvas class="cover-canvas" id="canvas-${doc.id}"></canvas>
+            <div class="cover-placeholder" id="loader-${doc.id}">
+              <i class="fa-solid fa-file-pdf"></i>
+              <span>Kapak Hazırlanıyor...</span>
+            </div>
           </div>
-          <div class="card-info">
-            <div class="card-title">${doc.title}</div>
-            <div class="card-desc">PDF Dokümanı • İncelemek için dokunun</div>
+          
+          <div class="card-body">
+            <h2 class="card-title">${doc.title}</h2>
+            <p class="card-desc">${doc.desc}</p>
+            <div class="card-action-row">
+              <span class="file-info"><i class="fa-regular fa-file-lines"></i> Doküman</span>
+              <span class="btn-read">Raporu Aç <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
           </div>
-          <div class="card-arrow">&#8250;</div>
-        </div>
+        </article>
       `).join('');
+
+      // Her PDF için ilk sayfayı kapak olarak çiz
+      pdfDocuments.forEach(doc => loadPdfCover(doc));
     }
 
+    // PDF 1. Sayfasını Canvas'a Çizme Fonksiyonu
+    async function loadPdfCover(doc) {
+      try {
+        const loadingTask = pdfjsLib.getDocument({ url: doc.url, disableAutoFetch: true, disableStream: true });
+        const pdf = await loadingTask.promise;
+        const page = await pdf.getPage(1);
+        
+        const canvas = document.getElementById(`canvas-${doc.id}`);
+        const loader = document.getElementById(`loader-${doc.id}`);
+        if (!canvas) return;
+
+        const viewport = page.getViewport({ scale: 1.5 });
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        await page.render({ canvasContext: context, viewport: viewport }).promise;
+        
+        // Başarılı olduğunda loader'ı gizle, canvas'ı göster
+        if (loader) loader.style.display = 'none';
+        canvas.style.display = 'block';
+      } catch (err) {
+        console.log("Kapak render fallback:", err);
+        const loader = document.getElementById(`loader-${doc.id}`);
+        if (loader) {
+          loader.innerHTML = '<i class="fa-solid fa-book-open"></i><span>AHEF Faaliyet Raporu</span>';
+        }
+      }
+    }
+
+    // Dokümanı Aç (Uygulama İçi veya Tarayıcı)
     function openDocument(doc) {
-      // 1. Flutter Uygulama İçi WebView Kontrolü (Yerel PDFViewerScreen'e ilet):
       if (window.PdfDownloadChannel && window.PdfDownloadChannel.postMessage) {
         window.PdfDownloadChannel.postMessage(doc.url);
         return;
       }
 
-      // 2. Normal Tarayıcı Fallback (Google Docs Viewer):
       modalTitle.textContent = doc.title;
-      modalExternal.href = doc.url;
       pdfFrame.src = "https://docs.google.com/gview?embedded=true&url=" + encodeURIComponent(doc.url);
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -301,19 +419,13 @@
     }
 
     cardsContainer.addEventListener('click', (e) => {
-      const card = e.target.closest('.card');
+      const card = e.target.closest('.report-card');
       if (!card) return;
       const targetDoc = pdfDocuments.find(d => d.id === card.dataset.id);
       if (targetDoc) openDocument(targetDoc);
     });
 
     modalCloseBtn.addEventListener('click', closeModal);
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeModal();
-      }
-    });
 
     renderCards();
   </script>
