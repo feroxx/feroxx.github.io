@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>Aile Hekimliği Rehberi</title>
   
   <style>
@@ -14,12 +14,14 @@
       --text-muted: #94a3b8;
       --primary: #38bdf8;
       --primary-hover: #0ea5e9;
+      --header-height: 56px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -28,33 +30,55 @@
       color: var(--text-main);
       display: flex;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
     }
 
-    /* Sol Panel */
+    /* Sol Menü / Sidebar */
     #sidebar {
-      width: 340px;
+      width: 320px;
       background-color: var(--bg-panel);
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
+      z-index: 50;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .sidebar-header {
-      padding: 1rem;
+      padding: 0.85rem 1rem;
       border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .sidebar-header h1 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+    }
+
+    .close-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
     }
 
     #search {
       width: 100%;
-      padding: 0.5rem 0.75rem;
+      padding: 0.55rem 0.75rem;
       background: #0f172a;
       border: 1px solid var(--border-color);
       border-radius: 6px;
@@ -71,10 +95,11 @@
       flex: 1;
       overflow-y: auto;
       padding: 0.5rem;
+      -webkit-overflow-scrolling: touch;
     }
 
     .menu-item {
-      padding: 0.6rem 0.75rem;
+      padding: 0.65rem 0.75rem;
       margin-bottom: 4px;
       border-radius: 6px;
       cursor: pointer;
@@ -82,12 +107,12 @@
       color: var(--text-muted);
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      transition: all 0.15s ease;
+      gap: 3px;
+      transition: background 0.15s ease;
       background: rgba(255, 255, 255, 0.02);
     }
 
-    .menu-item:hover {
+    .menu-item:hover, .menu-item:active {
       background: #334155;
       color: var(--text-main);
     }
@@ -121,32 +146,81 @@
       text-overflow: ellipsis;
     }
 
-    /* Sağ Panel */
+    /* Karartma Katmanı (Mobil Backdrop) */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(2px);
+      z-index: 40;
+    }
+
+    /* Sağ İçerik Alanı */
     #viewer {
       flex: 1;
       display: flex;
       flex-direction: column;
       height: 100%;
+      position: relative;
+      overflow: hidden;
     }
 
     .toolbar {
-      padding: 0.75rem 1.5rem;
+      height: var(--header-height);
+      padding: 0 1rem;
       background-color: var(--bg-panel);
       border-bottom: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-shrink: 0;
+      gap: 0.5rem;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    #toggle-menu-btn {
+      display: none;
+      background: #334155;
+      border: none;
+      color: var(--text-main);
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #current-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .page-controls {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
     }
 
     .page-controls button {
       background: #334155;
       border: none;
       color: var(--text-main);
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 0.875rem;
-      margin-left: 0.25rem;
+      font-size: 0.85rem;
+      min-height: 36px;
     }
 
     .page-controls button:hover:not(:disabled) {
@@ -155,7 +229,7 @@
     }
 
     .page-controls button:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
     }
 
@@ -165,17 +239,21 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 2rem;
+      padding: 1rem;
       background: #090d16;
+      touch-action: pan-x pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
     #guide-image {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border-radius: 6px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
       background-color: #1e293b;
       transition: opacity 0.2s ease;
+      display: block;
+      user-select: none;
     }
 
     .loading {
@@ -187,39 +265,100 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       text-align: center;
-      max-width: 500px;
+      max-width: 480px;
       line-height: 1.5;
+      padding: 1rem;
+    }
+
+    /* Mobil Breakpoint (< 768px) */
+    @media (max-width: 768px) {
+      #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 85%;
+        max-width: 320px;
+        transform: translateX(-100%);
+        box-shadow: 4px 0 16px rgba(0, 0, 0, 0.5);
+      }
+
+      #sidebar.open {
+        transform: translateX(0);
+      }
+
+      #sidebar-overlay.open {
+        display: block;
+      }
+
+      .close-btn {
+        display: block;
+      }
+
+      #toggle-menu-btn {
+        display: inline-flex;
+      }
+
+      .canvas-container {
+        padding: 0.5rem;
+      }
+
+      #guide-image {
+        width: 100%;
+        border-radius: 4px;
+      }
+
+      .page-controls button {
+        padding: 0.4rem 0.55rem;
+        font-size: 0.8rem;
+      }
+
+      #page-indicator {
+        font-size: 0.8rem;
+        margin: 0 0.35rem !important;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Mobil Menü Karartma -->
+  <div id="sidebar-overlay"></div>
+
+  <!-- Sol Menü Çekmecesi -->
   <aside id="sidebar">
     <div class="sidebar-header">
-      <h1>Rehber İndeksi</h1>
+      <div class="sidebar-header-top">
+        <h1>Rehber İndeksi</h1>
+        <button id="close-sidebar-btn" class="close-btn" aria-label="Menüyü Kapat">&times;</button>
+      </div>
       <input type="text" id="search" placeholder="İçerikte veya sayfada ara..." />
     </div>
     <div id="menu-tree"></div>
   </aside>
 
+  <!-- Sağ Sayfa Alanı -->
   <main id="viewer">
     <div class="toolbar">
-      <span id="current-title" style="font-weight: 500;">Sayfa Yükleniyor...</span>
+      <div class="toolbar-left">
+        <button id="toggle-menu-btn" aria-label="Menüyü Aç">☰ İndeks</button>
+        <span id="current-title">Yükleniyor...</span>
+      </div>
+
       <div class="page-controls">
-        <button id="prev-btn" disabled>← Önceki</button>
-        <span id="page-indicator" style="font-size: 0.875rem; margin: 0 0.5rem;">- / -</span>
-        <button id="next-btn" disabled>Sonraki →</button>
+        <button id="prev-btn" disabled>←</button>
+        <span id="page-indicator" style="font-size: 0.875rem; margin: 0 0.5rem; font-variant-numeric: tabular-nums;">- / -</span>
+        <button id="next-btn" disabled>→</button>
       </div>
     </div>
 
-    <div class="canvas-container">
+    <div class="canvas-container" id="canvas-container">
       <img id="guide-image" style="display: none;" alt="Rehber Sayfası" />
       <div id="status-state" class="status-state">Rehber verisi yükleniyor...</div>
     </div>
   </main>
 
   <script>
-    // ./ kullanımı HTML'in bulunduğu konuma göre bağıl çözülür
     const CONFIG = {
       jsonPath: './ahrehberassets/data/guide.json',
       pagesDir: './ahrehberassets/pages/'
@@ -228,8 +367,14 @@
     let items = [];
     let currentIndex = -1;
 
+    // DOM Elementleri
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const toggleMenuBtn = document.getElementById('toggle-menu-btn');
+    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
     const menuTree = document.getElementById('menu-tree');
     const guideImage = document.getElementById('guide-image');
+    const canvasContainer = document.getElementById('canvas-container');
     const statusState = document.getElementById('status-state');
     const currentTitle = document.getElementById('current-title');
     const pageIndicator = document.getElementById('page-indicator');
@@ -237,11 +382,27 @@
     const nextBtn = document.getElementById('next-btn');
     const searchInput = document.getElementById('search');
 
+    // Menü Aç/Kapat Mantığı
+    function toggleDrawer(open) {
+      if (open) {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('open');
+      } else {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('open');
+      }
+    }
+
+    toggleMenuBtn.addEventListener('click', () => toggleDrawer(true));
+    closeSidebarBtn.addEventListener('click', () => toggleDrawer(false));
+    sidebarOverlay.addEventListener('click', () => toggleDrawer(false));
+
+    // Veri Yükleme
     async function init() {
       try {
         const res = await fetch(CONFIG.jsonPath);
         if (!res.ok) {
-          throw new Error(`HTTP ${res.status}: ${res.statusText} (${CONFIG.jsonPath})`);
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
         const data = await res.json();
 
@@ -260,15 +421,14 @@
         if (items.length > 0) {
           selectItem(0);
         } else {
-          statusState.textContent = 'JSON dosyası geçerli fakat içeriği boş.';
+          statusState.textContent = 'JSON verisi boş.';
         }
       } catch (err) {
         console.error('Yükleme hatası:', err);
         statusState.innerHTML = `
           <strong style="color: #f87171;">Veri Yüklenemedi</strong><br><br>
-          İstek yapılan dosya: <code>${CONFIG.jsonPath}</code><br>
-          Hata detayı: ${err.message}<br><br>
-          <em>Lütfen GitHub reponuzda <code>ahrehberassets/data/guide.json</code> yolunun ve harf büyüklüklerinin tam eşleştiğinden emin olun.</em>
+          İstek: <code>${CONFIG.jsonPath}</code><br>
+          Hata: ${err.message}
         `;
       }
     }
@@ -276,7 +436,7 @@
     function renderMenu(list) {
       menuTree.innerHTML = '';
       if (list.length === 0) {
-        menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem;">Eşleşen sayfa bulunamadı.</div>';
+        menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem;">Eşleşen sonuç bulunamadı.</div>';
         return;
       }
 
@@ -285,8 +445,8 @@
         const originalIndex = items.findIndex(i => i.page === item.page);
         
         el.className = `menu-item ${originalIndex === currentIndex ? 'active' : ''}`;
+        const previewText = item.text ? item.text.substring(0, 55) + '...' : 'Görsel Sayfa';
         
-        const previewText = item.text ? item.text.substring(0, 50) + '...' : 'Görsel Sayfa';
         el.innerHTML = `
           <div class="menu-header">
             <span>Sayfa ${item.page}</span>
@@ -295,7 +455,12 @@
           <div class="menu-snippet">${previewText}</div>
         `;
         
-        el.addEventListener('click', () => selectItem(originalIndex));
+        el.addEventListener('click', () => {
+          selectItem(originalIndex);
+          if (window.innerWidth <= 768) {
+            toggleDrawer(false);
+          }
+        });
         menuTree.appendChild(el);
       });
     }
@@ -311,7 +476,7 @@
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index === items.length - 1;
 
-      // Sidebar aktiflik güncellemesi
+      // Sidebar aktiflik senkronu
       document.querySelectorAll('.menu-item').forEach(el => {
         el.classList.toggle('active', el.textContent.includes(`Sayfa ${target.page}`));
       });
@@ -322,6 +487,9 @@
 
       const fullImgPath = `${CONFIG.pagesDir}${target.file}`;
       guideImage.src = fullImgPath;
+
+      // Sayfa değiştiğinde kaydırma pozisyonunu en üste çek
+      canvasContainer.scrollTop = 0;
 
       guideImage.onload = () => guideImage.classList.remove('loading');
       guideImage.onerror = () => {
@@ -334,12 +502,15 @@
     prevBtn.addEventListener('click', () => selectItem(currentIndex - 1));
     nextBtn.addEventListener('click', () => selectItem(currentIndex + 1));
 
+    // Klavye Kısayolları
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT') return;
       if (e.key === 'ArrowLeft') selectItem(currentIndex - 1);
       if (e.key === 'ArrowRight') selectItem(currentIndex + 1);
+      if (e.key === 'Escape') toggleDrawer(false);
     });
 
+    // Arama
     searchInput.addEventListener('input', (e) => {
       const term = e.target.value.toLocaleLowerCase('tr-TR').trim();
       if (!term) {
@@ -352,6 +523,31 @@
       );
       renderMenu(filtered);
     });
+
+    // Mobil Dokunmatik Sağa/Sola Kaydırma (Swipe Gesture)
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    canvasContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    canvasContainer.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      // Sadece yatay kaydırma dikeyden belirginse ve 50px'den fazlaysa tetikle
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX < 0) {
+          selectItem(currentIndex + 1); // Sola kaydırınca -> Sonraki
+        } else {
+          selectItem(currentIndex - 1); // Sağa kaydırınca -> Önceki
+        }
+      }
+    }, { passive: true });
 
     init();
   </script>
