@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rehber Görüntüleyici</title>
+  <title>Aile Hekimliği Rehberi</title>
   
   <style>
     :root {
@@ -31,9 +31,9 @@
       overflow: hidden;
     }
 
-    /* Sol Panel - Navigasyon */
+    /* Sol Panel */
     #sidebar {
-      width: 320px;
+      width: 340px;
       background-color: var(--bg-panel);
       border-right: 1px solid var(--border-color);
       display: flex;
@@ -75,15 +75,16 @@
 
     .menu-item {
       padding: 0.6rem 0.75rem;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 4px;
       transition: all 0.15s ease;
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .menu-item:hover {
@@ -97,14 +98,30 @@
       font-weight: 600;
     }
 
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
     .page-badge {
       font-size: 0.75rem;
       padding: 2px 6px;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.3);
       border-radius: 4px;
     }
 
-    /* Sağ Panel - İçerik ve Görsel */
+    .menu-snippet {
+      font-size: 0.75rem;
+      color: inherit;
+      opacity: 0.8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Sağ Panel */
     #viewer {
       flex: 1;
       display: flex;
@@ -162,31 +179,32 @@
     }
 
     .loading {
-      opacity: 0.4;
+      opacity: 0.3;
     }
 
-    .empty-state {
+    .status-state {
       margin: auto;
       color: var(--text-muted);
       font-size: 0.95rem;
+      text-align: center;
+      max-width: 500px;
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
 
-  <!-- Sol Menü -->
   <aside id="sidebar">
     <div class="sidebar-header">
-      <h1 id="guide-title">Rehber</h1>
-      <input type="text" id="search" placeholder="Başlıklarda ara..." />
+      <h1>Rehber İndeksi</h1>
+      <input type="text" id="search" placeholder="İçerikte veya sayfada ara..." />
     </div>
     <div id="menu-tree"></div>
   </aside>
 
-  <!-- Sağ Görsel Alanı -->
   <main id="viewer">
     <div class="toolbar">
-      <span id="current-title" style="font-weight: 500;">Bir sayfa seçin</span>
+      <span id="current-title" style="font-weight: 500;">Sayfa Yükleniyor...</span>
       <div class="page-controls">
         <button id="prev-btn" disabled>← Önceki</button>
         <span id="page-indicator" style="font-size: 0.875rem; margin: 0 0.5rem;">- / -</span>
@@ -196,124 +214,123 @@
 
     <div class="canvas-container">
       <img id="guide-image" style="display: none;" alt="Rehber Sayfası" />
-      <div id="empty-state" class="empty-state">İçerik yükleniyor...</div>
+      <div id="status-state" class="status-state">Rehber verisi yükleniyor...</div>
     </div>
   </main>
 
   <script>
-    /**
-     * Beklenen JSON yapısı esnek tutulmuştur:
-     * 1) Array formatı: [{ "title": "Giriş", "page": "page_1.jpg" }, ...]
-     * 2) Obje formatı: { "title": "Rehber Başlığı", "sections": [{ "title": "Bölüm 1", "file": "1.jpg" }] }
-     */
+    // ./ kullanımı HTML'in bulunduğu konuma göre bağıl çözülür
     const CONFIG = {
       jsonPath: './ahrehberassets/data/guide.json',
-      pagesDir: 'ahrehberassets/pages/'
+      pagesDir: './ahrehberassets/pages/'
     };
 
     let items = [];
     let currentIndex = -1;
 
-    // DOM Elementleri
     const menuTree = document.getElementById('menu-tree');
     const guideImage = document.getElementById('guide-image');
-    const emptyState = document.getElementById('empty-state');
+    const statusState = document.getElementById('status-state');
     const currentTitle = document.getElementById('current-title');
     const pageIndicator = document.getElementById('page-indicator');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const searchInput = document.getElementById('search');
 
-    // Veriyi Yükle ve Başlat
     async function init() {
       try {
         const res = await fetch(CONFIG.jsonPath);
-        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText} (${CONFIG.jsonPath})`);
+        }
         const data = await res.json();
 
-        normalizeData(data);
+        items = data.map((d, idx) => {
+          const pageNum = d.page !== undefined ? d.page : idx + 1;
+          const imgPath = d.image ? d.image.replace(/^.*[\\\/]/, '') : `page_${pageNum}.jpg`;
+          return {
+            page: pageNum,
+            file: imgPath,
+            text: d.text || ''
+          };
+        });
+
         renderMenu(items);
 
         if (items.length > 0) {
           selectItem(0);
         } else {
-          emptyState.textContent = 'Rehber verisi boş.';
+          statusState.textContent = 'JSON dosyası geçerli fakat içeriği boş.';
         }
       } catch (err) {
-        console.error('Veri yüklenemedi:', err);
-        emptyState.textContent = 'guide.json yüklenirken hata oluştu. Lütfen yerel bir HTTP sunucusu (Live Server vb.) üzerinden açtığınızdan emin olun.';
+        console.error('Yükleme hatası:', err);
+        statusState.innerHTML = `
+          <strong style="color: #f87171;">Veri Yüklenemedi</strong><br><br>
+          İstek yapılan dosya: <code>${CONFIG.jsonPath}</code><br>
+          Hata detayı: ${err.message}<br><br>
+          <em>Lütfen GitHub reponuzda <code>ahrehberassets/data/guide.json</code> yolunun ve harf büyüklüklerinin tam eşleştiğinden emin olun.</em>
+        `;
       }
     }
 
-    // JSON Verisini Normalize Et
-    function normalizeData(data) {
-      if (Array.isArray(data)) {
-        items = data.map((d, idx) => ({
-          title: d.title || d.name || `Sayfa ${idx + 1}`,
-          file: d.page || d.file || d.fileName || `${idx + 1}.jpg`
-        }));
-      } else if (typeof data === 'object') {
-        if (data.title) document.getElementById('guide-title').textContent = data.title;
-        const list = data.sections || data.pages || data.items || [];
-        items = list.map((d, idx) => ({
-          title: d.title || d.name || `Sayfa ${idx + 1}`,
-          file: d.page || d.file || d.fileName || `${idx + 1}.jpg`
-        }));
-      }
-    }
-
-    // Menü Render
     function renderMenu(list) {
       menuTree.innerHTML = '';
-      list.forEach((item, index) => {
+      if (list.length === 0) {
+        menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem;">Eşleşen sayfa bulunamadı.</div>';
+        return;
+      }
+
+      list.forEach((item) => {
         const el = document.createElement('div');
-        el.className = `menu-item ${index === currentIndex ? 'active' : ''}`;
+        const originalIndex = items.findIndex(i => i.page === item.page);
+        
+        el.className = `menu-item ${originalIndex === currentIndex ? 'active' : ''}`;
+        
+        const previewText = item.text ? item.text.substring(0, 50) + '...' : 'Görsel Sayfa';
         el.innerHTML = `
-          <span>${item.title}</span>
-          <span class="page-badge">${item.file.replace('.jpg', '')}</span>
+          <div class="menu-header">
+            <span>Sayfa ${item.page}</span>
+            <span class="page-badge">#${item.page}</span>
+          </div>
+          <div class="menu-snippet">${previewText}</div>
         `;
-        el.addEventListener('click', () => {
-          const originalIndex = items.findIndex(i => i.file === item.file);
-          selectItem(originalIndex);
-        });
+        
+        el.addEventListener('click', () => selectItem(originalIndex));
         menuTree.appendChild(el);
       });
     }
 
-    // Sayfa Seçimi
     function selectItem(index) {
       if (index < 0 || index >= items.length) return;
 
       currentIndex = index;
       const target = items[index];
 
-      // UI Güncelle
-      currentTitle.textContent = target.title;
+      currentTitle.textContent = `Sayfa ${target.page}`;
       pageIndicator.textContent = `${index + 1} / ${items.length}`;
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index === items.length - 1;
 
-      // Aktif Menü Sınıfını Değiştir
-      document.querySelectorAll('.menu-item').forEach((el, idx) => {
-        el.classList.toggle('active', idx === index);
+      // Sidebar aktiflik güncellemesi
+      document.querySelectorAll('.menu-item').forEach(el => {
+        el.classList.toggle('active', el.textContent.includes(`Sayfa ${target.page}`));
       });
 
-      // Görseli Yükle
-      emptyState.style.display = 'none';
+      statusState.style.display = 'none';
       guideImage.style.display = 'block';
       guideImage.classList.add('loading');
 
-      const fullPath = `${CONFIG.pagesDir}${target.file.replace(/^\//, '')}`;
-      guideImage.src = fullPath;
+      const fullImgPath = `${CONFIG.pagesDir}${target.file}`;
+      guideImage.src = fullImgPath;
+
       guideImage.onload = () => guideImage.classList.remove('loading');
       guideImage.onerror = () => {
         guideImage.style.display = 'none';
-        emptyState.style.display = 'block';
-        emptyState.textContent = `Görsel bulunamadı: ${fullPath}`;
+        statusState.style.display = 'block';
+        statusState.innerHTML = `<strong style="color: #f87171;">Görsel Bulunamadı:</strong><br><code>${fullImgPath}</code>`;
       };
     }
 
-    // Kontroller & Dinleyiciler
     prevBtn.addEventListener('click', () => selectItem(currentIndex - 1));
     nextBtn.addEventListener('click', () => selectItem(currentIndex + 1));
 
@@ -324,8 +341,15 @@
     });
 
     searchInput.addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase().trim();
-      const filtered = items.filter(i => i.title.toLowerCase().includes(term));
+      const term = e.target.value.toLocaleLowerCase('tr-TR').trim();
+      if (!term) {
+        renderMenu(items);
+        return;
+      }
+      const filtered = items.filter(i => 
+        i.page.toString().includes(term) || 
+        i.text.toLocaleLowerCase('tr-TR').includes(term)
+      );
       renderMenu(filtered);
     });
 
