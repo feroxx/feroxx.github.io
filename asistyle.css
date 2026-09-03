@@ -60,23 +60,24 @@
 
         /* --- GÜNCELLENMİŞ FORM SECTION --- */
 .form-section {
-    padding: 1.5rem; /* Mobilde ferah durması için padding'i biraz kıstım */
-    border-bottom: 1px solid var(--border);
-    display: grid;
-    
-    /* MOBILE-FIRST: Ekran küçükken form elemanlarını 2 eşit sütuna (yan yana) böler */
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 1rem;
-    align-items: end;
+    padding: 1.5rem !important;
+    border-bottom: 1px solid var(--border) !important;
+    display: grid !important; 
+    grid-template-columns: repeat(2, 1fr) !important; /* Mobilde zorunlu 2 sütun */
+    gap: 1rem !important;
+    align-items: end !important;
 }
 
-/* TABLET VE MASAÜSTÜ (Geniş ekranlarda 4 elemanı tek satıra yaymak için) */
 @media (min-width: 768px) {
     .form-section {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
+        grid-template-columns: repeat(4, 1fr) !important; /* Masaüstünde 4 sütun */
     }
 }
+
+.toggle-wrapper, #calculateBtn {
+    grid-column: 1 / -1 !important; /* Bunlar alt satırı tamamen kaplasın */
+}
+
 
 /* Toggle switch ve Butonun her zaman en altta ve tam genişlikte kalmasını garantiye alalım */
 .toggle-wrapper, #calculateBtn {
