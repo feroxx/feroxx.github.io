@@ -58,14 +58,31 @@
         .header h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.3rem; }
         .header p { color: #bfdbfe; font-size: 0.95rem; }
 
-        .form-section {
-            padding: 2rem;
-            border-bottom: 1px solid var(--border);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            align-items: end;
-        }
+        /* --- GÜNCELLENMİŞ FORM SECTION --- */
+.form-section {
+    padding: 1.5rem; /* Mobilde ferah durması için padding'i biraz kıstım */
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    
+    /* MOBILE-FIRST: Ekran küçükken form elemanlarını 2 eşit sütuna (yan yana) böler */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1rem;
+    align-items: end;
+}
+
+/* TABLET VE MASAÜSTÜ (Geniş ekranlarda 4 elemanı tek satıra yaymak için) */
+@media (min-width: 768px) {
+    .form-section {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* Toggle switch ve Butonun her zaman en altta ve tam genişlikte kalmasını garantiye alalım */
+.toggle-wrapper, #calculateBtn {
+    grid-column: 1 / -1;
+}
+
 
         .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
         .input-group label { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }
