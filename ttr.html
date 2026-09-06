@@ -474,7 +474,7 @@
       font-weight: 500;
     }
 
-    /* ─── 3D Kitap Sahnesi & Sayfa Çevirme Animasyon Motoru ─── */
+    /* ─── Gerçekçi 3D Kitap Sahnesi & Sayfa Çevirme Motoru ─── */
     .canvas-container {
       flex: 1;
       overflow: auto;
@@ -483,7 +483,7 @@
       align-items: center;
       padding: 1.25rem;
       background: var(--canvas-bg);
-      perspective: 2000px;
+      perspective: 2400px;
       touch-action: pan-x pan-y;
       -webkit-overflow-scrolling: touch;
       position: relative;
@@ -504,7 +504,7 @@
       border-radius: 6px;
       box-shadow: var(--book-shadow);
       background-color: var(--book-bg);
-      overflow: hidden;
+      perspective: 2000px;
       transform-style: preserve-3d;
       user-select: none;
       display: inline-block;
@@ -512,15 +512,15 @@
       transition: background-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .book-wrapper::before {
-      content: "";
+    /* Sol Cilt Dikiş & Gölgelendirme Derinliği */
+    .book-spine-shadow {
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
-      width: 24px;
+      width: 28px;
       background: var(--spine-shadow);
-      z-index: 10;
+      z-index: 25;
       pointer-events: none;
     }
 
@@ -533,9 +533,21 @@
       object-fit: contain;
       user-select: none;
       -webkit-user-drag: none;
+      border-radius: 4px;
     }
 
-    /* 3D Sayfa Çevirme Katmanları (Book Page-Flip) */
+    /* Alt Sayfa Gölge Katmanı */
+    .base-page-shadow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 50%, transparent 100%);
+    }
+
+    /* Dönen 3D Yaprak (Flip Leaf) */
     .flip-overlay {
       position: absolute;
       inset: 0;
@@ -555,8 +567,9 @@
       width: 100%;
       height: 100%;
       transform-style: preserve-3d;
-      backface-visibility: hidden;
+      transform-origin: left center;
       overflow: hidden;
+      border-radius: 4px;
     }
 
     .flip-leaf img {
@@ -564,119 +577,74 @@
       height: 100%;
       object-fit: contain;
       display: block;
+      backface-visibility: hidden;
     }
 
-    .flip-shadow {
+    .flip-lighting-overlay {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      transition: opacity 0.5s ease;
       z-index: 5;
     }
 
-    /* İleri Sayfa Çevirme Animasyonu */
+    /* Gerçekçi İleri Sayfa Çevirme Animasyonu */
     .turn-next-anim {
-      transform-origin: left center;
-      animation: flipBookNext 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: realisticFlipNext 0.46s cubic-bezier(0.33, 1, 0.68, 1) forwards;
     }
 
-    @keyframes flipBookNext {
+    @keyframes realisticFlipNext {
       0% {
-        transform: rotateY(0deg) skewY(0deg);
-        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        transform: rotateY(0deg);
+        filter: brightness(1);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
-      50% {
-        transform: rotateY(-75deg) skewY(-2deg) scale(0.97);
-        box-shadow: -15px 10px 30px rgba(0,0,0,0.3);
+      35% {
+        transform: rotateY(-55deg) scaleY(0.98);
+        filter: brightness(0.94);
+        box-shadow: -15px 5px 25px rgba(0,0,0,0.25);
+      }
+      70% {
+        transform: rotateY(-125deg) scaleY(0.97);
+        filter: brightness(0.86);
+        box-shadow: -25px 10px 35px rgba(0,0,0,0.32);
       }
       100% {
-        transform: rotateY(-110deg) skewY(-3deg) scale(0.92);
+        transform: rotateY(-180deg) scaleY(0.96);
+        filter: brightness(0.8);
         opacity: 0;
-        box-shadow: -30px 15px 40px rgba(0,0,0,0.4);
+        box-shadow: -35px 15px 45px rgba(0,0,0,0.4);
       }
     }
 
-    /* Geri Sayfa Çevirme Animasyonu */
+    /* Gerçekçi Geri Sayfa Çevirme Animasyonu */
     .turn-prev-anim {
-      transform-origin: left center;
-      animation: flipBookPrev 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: realisticFlipPrev 0.46s cubic-bezier(0.33, 1, 0.68, 1) forwards;
     }
 
-    @keyframes flipBookPrev {
+    @keyframes realisticFlipPrev {
       0% {
-        transform: rotateY(-110deg) skewY(-3deg) scale(0.92);
+        transform: rotateY(-180deg) scaleY(0.96);
+        filter: brightness(0.8);
         opacity: 0;
-        box-shadow: -30px 15px 40px rgba(0,0,0,0.4);
+        box-shadow: -35px 15px 45px rgba(0,0,0,0.4);
       }
-      50% {
-        transform: rotateY(-50deg) skewY(-1.5deg) scale(0.97);
-        opacity: 0.85;
-        box-shadow: -15px 10px 30px rgba(0,0,0,0.3);
+      35% {
+        transform: rotateY(-125deg) scaleY(0.97);
+        filter: brightness(0.86);
+        opacity: 1;
+        box-shadow: -25px 10px 35px rgba(0,0,0,0.32);
+      }
+      70% {
+        transform: rotateY(-55deg) scaleY(0.98);
+        filter: brightness(0.94);
+        box-shadow: -15px 5px 25px rgba(0,0,0,0.25);
       }
       100% {
-        transform: rotateY(0deg) skewY(0deg) scale(1);
+        transform: rotateY(0deg) scaleY(1);
+        filter: brightness(1);
         opacity: 1;
-        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
-    }
-
-    /* Welcome / Boş Durum Ekranı */
-    .welcome-card {
-      max-width: 520px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      padding: 2rem;
-      text-align: center;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
-    }
-
-    .welcome-icon {
-      width: 56px;
-      height: 56px;
-      background: rgba(2, 132, 199, 0.12);
-      color: var(--primary);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.25rem;
-    }
-
-    .welcome-card h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.5rem;
-    }
-
-    .welcome-card p {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      background: var(--bg-main);
-      padding: 1rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border-color);
-    }
-
-    .stat-item .n {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    .stat-item .l {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-top: 2px;
     }
 
     /* Durum ve Yükleme Bildirimi */
@@ -857,7 +825,7 @@
           Fihrist
         </button>
         <div class="doc-title-badge">
-          <span id="current-title">Rehberden bir konu seçiniz</span>
+          <span id="current-title">Yükleniyor...</span>
           <span class="category-pill" id="viewer-badge">TTR 2026</span>
         </div>
       </div>
@@ -909,47 +877,24 @@
 
     <div class="canvas-container" id="canvas-container">
       <div class="book-stage" id="book-stage">
-        <!-- Hoşgeldiniz Kartı -->
-        <div class="welcome-card" id="welcome-card">
-          <div class="welcome-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            </svg>
-          </div>
-          <h2>Tanı ve Tedavi Rehberleri 2026</h2>
-          <p>Sol menüden veya arama kutusundan incelemek istediğiniz semptom, hastalık veya koruyucu sağlık algoritmasını seçiniz.</p>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <div class="n" id="stat-total">183</div>
-              <div class="l">Toplam Algoritma</div>
-            </div>
-            <div class="stat-item">
-              <div class="n" id="stat-symptoms">-</div>
-              <div class="l">Semptom</div>
-            </div>
-            <div class="stat-item">
-              <div class="n" id="stat-diseases">-</div>
-              <div class="l">Hastalık</div>
-            </div>
-          </div>
-        </div>
-
         <!-- Kitap Görüntüleyici -->
         <div class="book-wrapper" id="book-wrapper" style="display: none;">
           <img id="page-img" class="page-image" alt="Rehber Sayfası" />
+          <div class="book-spine-shadow"></div>
+          <div class="base-page-shadow" id="base-shadow"></div>
+
           <div class="flip-overlay" id="flip-overlay">
             <div class="flip-leaf" id="flip-leaf">
               <img id="flip-image" alt="" />
-              <div class="flip-shadow" id="flip-shadow"></div>
+              <div class="flip-lighting-overlay" id="flip-light"></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="status-state" class="status-state" style="display: none;">
+      <div id="status-state" class="status-state">
         <div class="loading-spinner"></div>
-        <div>Sayfa hazırlanıyor...</div>
+        <div>Rehber verisi yükleniyor...</div>
       </div>
     </div>
   </main>
@@ -982,13 +927,13 @@
     const searchInput = document.getElementById('search-input');
     const searchClear = document.getElementById('search-clear');
     const searchResults = document.getElementById('search-results');
-    const welcomeCard = document.getElementById('welcome-card');
     const bookWrapper = document.getElementById('book-wrapper');
     const pageImg = document.getElementById('page-img');
     const flipOverlay = document.getElementById('flip-overlay');
     const flipLeaf = document.getElementById('flip-leaf');
     const flipImage = document.getElementById('flip-image');
-    const flipShadow = document.getElementById('flip-shadow');
+    const flipLight = document.getElementById('flip-light');
+    const baseShadow = document.getElementById('base-shadow');
     const canvasContainer = document.getElementById('canvas-container');
     const statusState = document.getElementById('status-state');
     const currentTitle = document.getElementById('current-title');
@@ -1043,28 +988,38 @@
     sidebarOverlay.addEventListener('click', () => toggleDrawer(false));
 
     async function init() {
-      try {
-        const res = await fetch('data/search_index.json');
-        INDEX = await res.json();
-      } catch(e) {
-        welcomeCard.innerHTML = '<strong style="color: #f87171;">data/search_index.json yüklenemedi.</strong>';
-        return;
+      const possibleIndexPaths = ['./data/search_index.json', 'data/search_index.json'];
+      let loaded = false;
+
+      for (const path of possibleIndexPaths) {
+        try {
+          const res = await fetch(path);
+          if (res.ok) {
+            INDEX = await res.json();
+            loaded = true;
+            break;
+          }
+        } catch(e) {}
       }
 
-      const sem = INDEX.filter(s => s.category === 'semptomlar').length;
-      const has = INDEX.filter(s => s.category === 'hastaliklar').length;
-      document.getElementById('stat-total').textContent = INDEX.length;
-      document.getElementById('stat-symptoms').textContent = sem;
-      document.getElementById('stat-diseases').textContent = has;
+      if (!loaded || !INDEX.length) {
+        statusState.innerHTML = '<strong style="color: #f87171;">Rehber arama verisi yüklenemedi.</strong>';
+        return;
+      }
 
       renderSidebar();
       setupCatTabs();
       setupSearch();
 
+      let targetId = INDEX[0].id;
       if (location.hash) {
-        const id = decodeURIComponent(location.hash.slice(1));
-        setTimeout(() => loadSection(id), 100);
+        const hashId = decodeURIComponent(location.hash.slice(1));
+        if (INDEX.some(s => s.id === hashId)) {
+          targetId = hashId;
+        }
       }
+
+      loadSection(targetId);
     }
 
     function renderSidebar(filter) {
@@ -1105,12 +1060,17 @@
       const activeEl = document.querySelector(`.sidebar-item[data-id="${id}"]`);
       if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 
-      let manifest;
-      try {
-        const res = await fetch(`data/pages/${id}/manifest.json`);
-        manifest = await res.json();
-      } catch(e) {
-        manifest = { count: 1, title: '' };
+      let manifest = { count: 1, title: '' };
+      const possibleManifests = [`./data/pages/${id}/manifest.json`, `data/pages/${id}/manifest.json`];
+      
+      for (const mPath of possibleManifests) {
+        try {
+          const res = await fetch(mPath);
+          if (res.ok) {
+            manifest = await res.json();
+            break;
+          }
+        } catch(e) {}
       }
       totalPages = manifest.count || 1;
 
@@ -1118,9 +1078,9 @@
       const catLabel = { semptomlar:'Semptom', hastaliklar:'Hastalık', koruyucu:'Koruyucu' }[info.category] || 'TTR 2026';
 
       viewerBadge.textContent = catLabel;
-      currentTitle.textContent = info.title || id;
+      currentTitle.textContent = `${info.num ? info.num + ' ' : ''}${info.title || id}`;
 
-      welcomeCard.style.display = 'none';
+      statusState.style.display = 'none';
       bookWrapper.style.display = 'inline-block';
 
       showPage(1, false);
@@ -1131,7 +1091,7 @@
       }
     }
 
-    // 3D Kitap Sayfası Çevirme Animasyonu ile Sayfa Gösterimi
+    // Gerçekçi 3D Kitap Sayfası Çevirme Animasyonu ile Sayfa Gösterimi
     function showPage(n, direction = false) {
       if (!activeId) return;
       if (isFlipping && direction) return;
@@ -1150,29 +1110,34 @@
         fsNext.disabled = (currentPage >= totalPages);
       }
 
-      const fullImgPath = `data/pages/${activeId}/p${currentPage}.jpg`;
+      const fullImgPath = `./data/pages/${activeId}/p${currentPage}.jpg`;
 
       if (direction && oldPage !== currentPage) {
         isFlipping = true;
-        const oldImgPath = `data/pages/${activeId}/p${oldPage}.jpg`;
+        const oldImgPath = `./data/pages/${activeId}/p${oldPage}.jpg`;
 
         if (direction === 'next') {
           flipImage.src = oldImgPath;
           flipLeaf.className = 'flip-leaf turn-next-anim';
-          flipShadow.style.background = 'linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)';
+          flipLight.style.background = 'linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4) 100%)';
           flipOverlay.classList.add('active');
+          baseShadow.style.opacity = '1';
 
           pageImg.src = fullImgPath;
+
+          setTimeout(() => {
+            baseShadow.style.opacity = '0';
+          }, 250);
 
           setTimeout(() => {
             flipOverlay.classList.remove('active');
             flipLeaf.className = 'flip-leaf';
             isFlipping = false;
-          }, 520);
+          }, 460);
         } else {
           flipImage.src = fullImgPath;
           flipLeaf.className = 'flip-leaf turn-prev-anim';
-          flipShadow.style.background = 'linear-gradient(to left, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)';
+          flipLight.style.background = 'linear-gradient(to left, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4) 100%)';
           flipOverlay.classList.add('active');
 
           pageImg.src = fullImgPath;
@@ -1181,13 +1146,23 @@
             flipOverlay.classList.remove('active');
             flipLeaf.className = 'flip-leaf';
             isFlipping = false;
-          }, 520);
+          }, 460);
         }
       } else {
         pageImg.src = fullImgPath;
       }
 
       canvasContainer.scrollTop = 0;
+
+      // Önceden yükleme (Preload)
+      if (currentPage + 1 <= totalPages) {
+        const nextImg = new Image();
+        nextImg.src = `./data/pages/${activeId}/p${currentPage + 1}.jpg`;
+      }
+      if (currentPage - 1 >= 1) {
+        const prevImg = new Image();
+        prevImg.src = `./data/pages/${activeId}/p${currentPage - 1}.jpg`;
+      }
     }
 
     function changePage(delta) {

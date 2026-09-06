@@ -360,7 +360,7 @@
       color: var(--text-muted);
     }
 
-    /* ─── 3D Kitap Sahnesi & Sayfa Çevirme Animasyon Motoru ─── */
+    /* ─── Gerçekçi 3D Kitap Sahnesi & Sayfa Çevirme Motoru ─── */
     .canvas-container {
       flex: 1;
       overflow: auto;
@@ -369,7 +369,7 @@
       align-items: center;
       padding: 1.25rem;
       background: var(--canvas-bg);
-      perspective: 2000px;
+      perspective: 2400px;
       touch-action: pan-x pan-y;
       -webkit-overflow-scrolling: touch;
       position: relative;
@@ -390,7 +390,7 @@
       border-radius: 6px;
       box-shadow: var(--book-shadow);
       background-color: var(--book-bg);
-      overflow: hidden;
+      perspective: 2000px;
       transform-style: preserve-3d;
       user-select: none;
       display: inline-block;
@@ -398,15 +398,15 @@
       transition: background-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .book-wrapper::before {
-      content: "";
+    /* Sol Cilt Dikiş & Gölgelendirme Derinliği */
+    .book-spine-shadow {
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
-      width: 24px;
+      width: 28px;
       background: var(--spine-shadow);
-      z-index: 10;
+      z-index: 25;
       pointer-events: none;
     }
 
@@ -419,9 +419,21 @@
       object-fit: contain;
       user-select: none;
       -webkit-user-drag: none;
+      border-radius: 4px;
     }
 
-    /* 3D Sayfa Çevirme Katmanları (Book Page-Flip) */
+    /* Alt Sayfa Gölge Katmanı */
+    .base-page-shadow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 50%, transparent 100%);
+    }
+
+    /* Dönen 3D Yaprak (Flip Leaf) */
     .flip-overlay {
       position: absolute;
       inset: 0;
@@ -441,8 +453,9 @@
       width: 100%;
       height: 100%;
       transform-style: preserve-3d;
-      backface-visibility: hidden;
+      transform-origin: left center;
       overflow: hidden;
+      border-radius: 4px;
     }
 
     .flip-leaf img {
@@ -450,59 +463,73 @@
       height: 100%;
       object-fit: contain;
       display: block;
+      backface-visibility: hidden;
     }
 
-    .flip-shadow {
+    .flip-lighting-overlay {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      transition: opacity 0.5s ease;
       z-index: 5;
     }
 
-    /* İleri Sayfa Çevirme Animasyonu */
+    /* Gerçekçi İleri Sayfa Çevirme Animasyonu */
     .turn-next-anim {
-      transform-origin: left center;
-      animation: flipBookNext 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: realisticFlipNext 0.46s cubic-bezier(0.33, 1, 0.68, 1) forwards;
     }
 
-    @keyframes flipBookNext {
+    @keyframes realisticFlipNext {
       0% {
-        transform: rotateY(0deg) skewY(0deg);
-        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        transform: rotateY(0deg);
+        filter: brightness(1);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
-      50% {
-        transform: rotateY(-75deg) skewY(-2deg) scale(0.97);
-        box-shadow: -15px 10px 30px rgba(0,0,0,0.3);
+      35% {
+        transform: rotateY(-55deg) scaleY(0.98);
+        filter: brightness(0.94);
+        box-shadow: -15px 5px 25px rgba(0,0,0,0.25);
+      }
+      70% {
+        transform: rotateY(-125deg) scaleY(0.97);
+        filter: brightness(0.86);
+        box-shadow: -25px 10px 35px rgba(0,0,0,0.32);
       }
       100% {
-        transform: rotateY(-110deg) skewY(-3deg) scale(0.92);
+        transform: rotateY(-180deg) scaleY(0.96);
+        filter: brightness(0.8);
         opacity: 0;
-        box-shadow: -30px 15px 40px rgba(0,0,0,0.4);
+        box-shadow: -35px 15px 45px rgba(0,0,0,0.4);
       }
     }
 
-    /* Geri Sayfa Çevirme Animasyonu */
+    /* Gerçekçi Geri Sayfa Çevirme Animasyonu */
     .turn-prev-anim {
-      transform-origin: left center;
-      animation: flipBookPrev 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: realisticFlipPrev 0.46s cubic-bezier(0.33, 1, 0.68, 1) forwards;
     }
 
-    @keyframes flipBookPrev {
+    @keyframes realisticFlipPrev {
       0% {
-        transform: rotateY(-110deg) skewY(-3deg) scale(0.92);
+        transform: rotateY(-180deg) scaleY(0.96);
+        filter: brightness(0.8);
         opacity: 0;
-        box-shadow: -30px 15px 40px rgba(0,0,0,0.4);
+        box-shadow: -35px 15px 45px rgba(0,0,0,0.4);
       }
-      50% {
-        transform: rotateY(-50deg) skewY(-1.5deg) scale(0.97);
-        opacity: 0.85;
-        box-shadow: -15px 10px 30px rgba(0,0,0,0.3);
+      35% {
+        transform: rotateY(-125deg) scaleY(0.97);
+        filter: brightness(0.86);
+        opacity: 1;
+        box-shadow: -25px 10px 35px rgba(0,0,0,0.32);
+      }
+      70% {
+        transform: rotateY(-55deg) scaleY(0.98);
+        filter: brightness(0.94);
+        box-shadow: -15px 5px 25px rgba(0,0,0,0.25);
       }
       100% {
-        transform: rotateY(0deg) skewY(0deg) scale(1);
+        transform: rotateY(0deg) scaleY(1);
+        filter: brightness(1);
         opacity: 1;
-        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
       }
     }
 
@@ -778,7 +805,7 @@
           Fihrist
         </button>
         <div class="doc-title-badge">
-          <span id="current-title">Yükleniyor...</span>
+          <span id="current-title">Sayfa 1 — HSGM Mevzuat Kitabı</span>
           <span class="category-pill">HSGM Mevzuat Kitabı</span>
         </div>
       </div>
@@ -803,7 +830,7 @@
           <span class="page-total-label" id="total-pages-txt">/ 627</span>
         </div>
 
-        <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)" disabled>
+        <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
@@ -841,19 +868,22 @@
 
     <div class="canvas-container" id="canvas-container">
       <div class="book-stage" id="book-stage">
-        <div class="book-wrapper" id="book-wrapper" style="display: none;">
-          <img id="page-img" class="page-image" alt="Mevzuat Sayfası" />
+        <div class="book-wrapper" id="book-wrapper">
+          <img id="page-img" class="page-image" src="./mevzuatassets/pages/page_1.jpg" alt="Mevzuat Sayfası" />
+          <div class="book-spine-shadow"></div>
+          <div class="base-page-shadow" id="base-shadow"></div>
+
           <div class="flip-overlay" id="flip-overlay">
             <div class="flip-leaf" id="flip-leaf">
               <img id="flip-image" alt="" />
-              <div class="flip-shadow" id="flip-shadow"></div>
+              <div class="flip-lighting-overlay" id="flip-light"></div>
             </div>
           </div>
         </div>
       </div>
-      <div id="status-state" class="status-state">
+      <div id="status-state" class="status-state" style="display: none;">
         <div class="loading-spinner"></div>
-        <div>Mevzuat verisi hazırlanıyor...</div>
+        <div>Mevzuat sayfası hazırlanıyor...</div>
       </div>
     </div>
   </main>
@@ -991,7 +1021,8 @@
     const flipOverlay = document.getElementById("flip-overlay");
     const flipLeaf = document.getElementById("flip-leaf");
     const flipImage = document.getElementById("flip-image");
-    const flipShadow = document.getElementById("flip-shadow");
+    const flipLight = document.getElementById("flip-light");
+    const baseShadow = document.getElementById("base-shadow");
     const canvasContainer = document.getElementById("canvas-container");
     const statusState = document.getElementById("status-state");
     const currentTitle = document.getElementById("current-title");
@@ -1004,7 +1035,7 @@
     const fsClose = document.getElementById("fs-close");
     const fsCounter = document.getElementById("fs-counter");
 
-    // Tema Yönetimi (Varsayılan Açık Tema)
+    // Tema Yönetimi
     function applyTheme(theme) {
       if (theme === 'dark') {
         document.body.classList.add('dark-theme');
@@ -1041,9 +1072,8 @@
     closeSidebarBtn.addEventListener("click", () => toggleDrawer(false));
     sidebarOverlay.addEventListener("click", () => toggleDrawer(false));
 
-    async function init() {
+    function init() {
       renderTOC();
-      await loadSearchIndex();
 
       const hash = parseInt(window.location.hash.replace("#", ""));
       if (!isNaN(hash) && hash >= 1 && hash <= totalPages) {
@@ -1051,6 +1081,7 @@
       }
 
       loadPage(currentPage, false);
+      loadSearchIndex(); // Arka planda asenkron yükle
     }
 
     function renderTOC(filterTerm = "") {
@@ -1088,8 +1119,8 @@
 
     async function loadSearchIndex() {
       const possiblePaths = [
-        "mevzuatassets/data/mevzuat_index.json",
         "./mevzuatassets/data/mevzuat_index.json",
+        "mevzuatassets/data/mevzuat_index.json",
         "data/mevzuat_index.json"
       ];
 
@@ -1105,7 +1136,6 @@
           }
         } catch (e) {}
       }
-      console.warn("mevzuat_index.json dosyası bulunamadı.");
     }
 
     function findCurrentSectionTitle(pageNo) {
@@ -1122,7 +1152,7 @@
       return currentSection;
     }
 
-    // 3D Kitap Sayfası Çevirme Animasyonlu Sayfa Yükleme
+    // Gerçekçi 3D Kitap Sayfası Çevirme Animasyonlu Sayfa Yükleme
     function loadPage(pageNo, direction = false) {
       if (pageNo < 1) pageNo = 1;
       if (pageNo > totalPages) pageNo = totalPages;
@@ -1150,29 +1180,34 @@
         el.classList.toggle("active", itemPage === currentPage);
       });
 
-      const fullImgPath = `mevzuatassets/pages/page_${currentPage}.jpg`;
+      const fullImgPath = `./mevzuatassets/pages/page_${currentPage}.jpg`;
 
       if (direction && oldPage !== currentPage) {
         isFlipping = true;
-        const oldImgPath = `mevzuatassets/pages/page_${oldPage}.jpg`;
+        const oldImgPath = `./mevzuatassets/pages/page_${oldPage}.jpg`;
 
         if (direction === 'next') {
           flipImage.src = oldImgPath;
           flipLeaf.className = 'flip-leaf turn-next-anim';
-          flipShadow.style.background = 'linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)';
+          flipLight.style.background = 'linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4) 100%)';
           flipOverlay.classList.add('active');
+          baseShadow.style.opacity = '1';
 
           pageImg.src = fullImgPath;
+
+          setTimeout(() => {
+            baseShadow.style.opacity = '0';
+          }, 250);
 
           setTimeout(() => {
             flipOverlay.classList.remove('active');
             flipLeaf.className = 'flip-leaf';
             isFlipping = false;
-          }, 520);
+          }, 460);
         } else {
           flipImage.src = fullImgPath;
           flipLeaf.className = 'flip-leaf turn-prev-anim';
-          flipShadow.style.background = 'linear-gradient(to left, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)';
+          flipLight.style.background = 'linear-gradient(to left, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4) 100%)';
           flipOverlay.classList.add('active');
 
           pageImg.src = fullImgPath;
@@ -1181,7 +1216,7 @@
             flipOverlay.classList.remove('active');
             flipLeaf.className = 'flip-leaf';
             isFlipping = false;
-          }, 520);
+          }, 460);
         }
       } else {
         pageImg.src = fullImgPath;
@@ -1190,6 +1225,16 @@
       statusState.style.display = 'none';
       bookWrapper.style.display = 'inline-block';
       canvasContainer.scrollTop = 0;
+
+      // Önceden yükleme (Preload)
+      if (currentPage + 1 <= totalPages) {
+        const nextImg = new Image();
+        nextImg.src = `./mevzuatassets/pages/page_${currentPage + 1}.jpg`;
+      }
+      if (currentPage - 1 >= 1) {
+        const prevImg = new Image();
+        prevImg.src = `./mevzuatassets/pages/page_${currentPage - 1}.jpg`;
+      }
 
       pageImg.onerror = () => {
         bookWrapper.style.display = 'none';
@@ -1256,7 +1301,7 @@
       }
 
       if (searchIndex.length === 0) {
-        searchResults.innerHTML = '<div style="text-align: center; color: #f87171; margin-top: 30px;">Arama veritabanı bulunamadı.</div>';
+        searchResults.innerHTML = '<div style="text-align: center; color: #f87171; margin-top: 30px;">Arama veritabanı yükleniyor...</div>';
         return;
       }
 
