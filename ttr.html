@@ -1,823 +1,1328 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birinci Basamak Tanı ve Tedavi Rehberi 2026</title>
-<meta name="description" content="T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Tanı ve Tedavi Rehberleri 2026">
-<style>
-:root {
-  --ink:       #0f1923;
-  --ink-soft:  #3d5166;
-  --ink-muted: #7a8fa3;
-  --bg:        #f7f9fc;
-  --bg-card:   #ffffff;
-  --bg-alt:    #edf2f7;
-  --accent:    #005a9e;
-  --accent-lt: #dbeafe;
-  --accent-dk: #003d73;
-  --green:     #0e7c5b;
-  --green-lt:  #d1fae5;
-  --amber:     #b45309;
-  --amber-lt:  #fef3c7;
-  --border:    #dde4ed;
-  --radius:    6px;
-  --shadow-md: 0 4px 12px rgba(0,0,0,.10);
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; }
-body { font-family: var(--font-sans); background: var(--bg); color: var(--ink); line-height: 1.6; min-height: 100vh; }
-a { color: var(--accent); text-decoration: none; }
-button { cursor: pointer; font-family: inherit; }
-
-/* ── Top Bar ── */
-#topbar {
-  background: var(--accent-dk);
-  color: #fff;
-  padding: 0 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  height: 56px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,.2);
-}
-#topbar-logo {
-  display: flex; align-items: center; gap: .6rem;
-  font-size: .85rem; font-weight: 600; color: #fff;
-  white-space: nowrap; flex-shrink: 0;
-}
-#topbar-logo .year {
-  background: rgba(255,255,255,.18); border-radius: 3px;
-  padding: 1px 6px; font-size: .72rem; font-weight: 700; letter-spacing: .05em;
-}
-#search-wrap { flex: 1; max-width: 560px; position: relative; }
-#search-input {
-  width: 100%; padding: .5rem .75rem .5rem 2.2rem;
-  border: none; border-radius: var(--radius);
-  background: rgba(255,255,255,.15); color: #fff;
-  font-size: .875rem; outline: none; transition: background .15s;
-}
-#search-input::placeholder { color: rgba(255,255,255,.55); }
-#search-input:focus { background: rgba(255,255,255,.25); }
-#search-icon { position: absolute; left: .6rem; top: 50%; transform: translateY(-50%); opacity: .7; pointer-events: none; }
-#search-clear {
-  position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
-  background: none; border: none; color: rgba(255,255,255,.6);
-  font-size: 1rem; display: none; padding: 2px 4px;
-}
-#search-clear.visible { display: block; }
-#search-results {
-  display: none; position: absolute; left: 0; right: 0; top: calc(100% + 4px);
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius); box-shadow: var(--shadow-md);
-  max-height: 420px; overflow-y: auto; z-index: 200;
-}
-#search-results.open { display: block; }
-.result-item { padding: .65rem 1rem; cursor: pointer; border-bottom: 1px solid var(--border); transition: background .1s; }
-.result-item:last-child { border-bottom: none; }
-.result-item:hover { background: var(--bg-alt); }
-.result-num { font-size: .68rem; font-weight: 700; color: var(--ink-muted); }
-.result-title { font-size: .875rem; font-weight: 600; color: var(--ink); }
-.result-preview { font-size: .75rem; color: var(--ink-muted); margin-top: 2px; line-height: 1.4; }
-.result-badge { font-size: .65rem; font-weight: 700; text-transform: uppercase; padding: 1px 5px; border-radius: 2px; vertical-align: middle; margin-left: 4px; }
-.result-badge.semptomlar { background: var(--amber-lt); color: var(--amber); }
-.result-badge.hastaliklar { background: var(--accent-lt); color: var(--accent-dk); }
-.result-badge.koruyucu { background: var(--green-lt); color: var(--green); }
-
-/* ── Layout ── */
-#main { display: flex; height: calc(100vh - 56px); overflow: hidden; }
-
-/* ── Sidebar ── */
-#sidebar {
-  width: 300px; flex-shrink: 0;
-  background: var(--bg-card); border-right: 1px solid var(--border);
-  display: flex; flex-direction: column; overflow: hidden;
-}
-#sidebar-header { padding: .875rem 1rem .5rem; border-bottom: 1px solid var(--border); background: var(--bg-card); }
-#cat-tabs { display: flex; gap: 4px; }
-.cat-tab {
-  flex: 1; padding: .35rem .4rem;
-  border: 1.5px solid var(--border); border-radius: var(--radius);
-  background: transparent; color: var(--ink-muted);
-  font-size: .72rem; font-weight: 600; letter-spacing: .02em; text-transform: uppercase;
-  transition: all .15s;
-}
-.cat-tab:hover { border-color: var(--accent); color: var(--accent); }
-.cat-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-#sidebar-count { font-size: .72rem; color: var(--ink-muted); padding: .4rem 1rem .2rem; }
-#sidebar-list { flex: 1; overflow-y: auto; padding: .25rem 0 1rem; }
-.sidebar-item {
-  display: flex; align-items: baseline; gap: .5rem;
-  padding: .45rem 1rem; cursor: pointer; transition: background .1s;
-  border-left: 3px solid transparent; user-select: none;
-}
-.sidebar-item:hover { background: var(--bg-alt); }
-.sidebar-item.active { background: var(--accent-lt); border-left-color: var(--accent); }
-.sidebar-item .item-num { font-size: .68rem; font-weight: 700; color: var(--ink-muted); min-width: 44px; flex-shrink: 0; }
-.sidebar-item .item-title { font-size: .8rem; color: var(--ink); line-height: 1.35; }
-.sidebar-item.depth-1 .item-title { font-weight: 600; }
-.sidebar-item.depth-2 .item-title { font-weight: 500; }
-.sidebar-item.depth-3 .item-title { font-weight: 400; color: var(--ink-soft); }
-.sidebar-item.depth-4 { padding-left: 1.5rem; }
-.sidebar-item.depth-4 .item-title { font-size: .75rem; color: var(--ink-muted); }
-
-/* ── Detail pane ── */
-#detail { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-
-/* Welcome */
-#welcome {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; gap: 1rem; padding: 2rem;
-}
-.emblem {
-  width: 72px; height: 72px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dk) 100%);
-  border-radius: 16px; display: flex; align-items: center; justify-content: center;
-  margin: 0 auto .5rem; box-shadow: 0 8px 24px rgba(0,90,158,.25);
-}
-#welcome h1 { font-size: 1.5rem; font-weight: 700; }
-#welcome p { font-size: .9rem; color: var(--ink-soft); max-width: 360px; }
-.stats { display: flex; gap: 1.5rem; margin-top: .5rem; }
-.stat .n { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
-.stat .l { font-size: .72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; }
-.source-warning {
-  margin-top: 1rem;
-  padding: 0.6rem 1rem;
-  background-color: var(--amber-lt);
-  color: var(--amber);
-  border: 1px solid rgba(180, 83, 9, 0.2);
-  border-radius: var(--radius);
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.4;
-  max-width: 500px;
-}
-/* Section viewer */
-#viewer { flex: 1; display: none; flex-direction: column; overflow: hidden; }
-#viewer.visible { display: flex; }
-
-#viewer-header {
-  padding: .75rem 1.25rem;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: .75rem; flex-shrink: 0;
-}
-#viewer-back {
-  background: none; border: 1px solid var(--border);
-  border-radius: var(--radius); padding: .3rem .65rem;
-  font-size: .78rem; color: var(--ink-soft);
-  display: flex; align-items: center; gap: .3rem;
-  transition: all .15s; flex-shrink: 0;
-}
-#viewer-back:hover { background: var(--bg-alt); }
-.viewer-badge {
-  font-size: .68rem; font-weight: 700; letter-spacing: .06em;
-  text-transform: uppercase; padding: 2px 8px; border-radius: 3px; flex-shrink: 0;
-}
-.viewer-badge.semptomlar { background: var(--amber-lt); color: var(--amber); }
-.viewer-badge.hastaliklar { background: var(--accent-lt); color: var(--accent-dk); }
-.viewer-badge.koruyucu { background: var(--green-lt); color: var(--green); }
-#viewer-title { font-size: .95rem; font-weight: 700; color: var(--ink); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#viewer-pages-info { font-size: .75rem; color: var(--ink-muted); flex-shrink: 0; }
-
-/* Page navigation */
-#page-nav {
-  display: flex; align-items: center; justify-content: center; gap: .5rem;
-  padding: .5rem 1rem; background: var(--bg-card);
-  border-bottom: 1px solid var(--border); flex-shrink: 0;
-}
-.page-btn {
-  width: 32px; height: 32px; border-radius: var(--radius);
-  border: 1px solid var(--border); background: var(--bg-card);
-  color: var(--ink); font-size: .8rem; font-weight: 600;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .1s;
-}
-.page-btn:hover:not(:disabled) { background: var(--accent); color: #fff; border-color: var(--accent); }
-.page-btn:disabled { opacity: .35; cursor: default; }
-.page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-#nav-prev, #nav-next {
-  padding: .3rem .75rem; border-radius: var(--radius);
-  border: 1px solid var(--border); background: var(--bg-card);
-  color: var(--ink-soft); font-size: .8rem;
-  transition: all .1s;
-}
-#nav-prev:hover:not(:disabled), #nav-next:hover:not(:disabled) {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-}
-#nav-prev:disabled, #nav-next:disabled { opacity: .35; cursor: default; }
-#page-dots { display: flex; gap: 4px; align-items: center; }
-
-/* Page image display */
-#page-display {
-  flex: 1; overflow-y: auto; overflow-x: hidden;
-  background: #e8ecf0; display: flex; align-items: flex-start; justify-content: center;
-  padding: 1rem;
-}
-#page-img-wrap {
-  background: white;
-  box-shadow: 0 2px 12px rgba(0,0,0,.15);
-  border-radius: 4px;
-  overflow: hidden;
-  max-width: 100%;
-  width: 100%;
-  max-width: 780px;
-}
-#page-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: opacity .2s;
-}
-#page-img.loading { opacity: 0; }
-.page-loading {
-  display: flex; align-items: center; justify-content: center;
-  height: 400px; color: var(--ink-muted); font-size: .875rem; gap: .5rem;
-}
-.spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ── Fullscreen button ── */
-#fullscreen-btn {
-  background: none; border: 1px solid var(--border);
-  border-radius: var(--radius); padding: .3rem .5rem;
-  color: var(--ink-soft); display: flex; align-items: center;
-  transition: all .15s; flex-shrink: 0;
-}
-#fullscreen-btn:hover { background: var(--bg-alt); color: var(--accent); border-color: var(--accent); }
-
-/* ── Fullscreen overlay mode ── */
-body.fs-mode #topbar,
-body.fs-mode #sidebar,
-body.fs-mode #viewer-header,
-body.fs-mode #page-nav {
-  display: none !important;
-}
-body.fs-mode #main {
-  height: 100vh;
-  position: fixed; inset: 0; z-index: 500;
-}
-body.fs-mode #detail {
-  height: 100vh;
-}
-body.fs-mode #viewer {
-  background: #111;
-}
-body.fs-mode #page-display {
-  background: #111;
-  padding: 0;
-  align-items: center;
-  justify-content: center;
-}
-body.fs-mode #page-img-wrap {
-  max-width: min(100vw, calc(100vh * 0.75));
-  border-radius: 0;
-  box-shadow: none;
-}
-/* ESC / close button in fullscreen */
-#fs-close {
-  display: none;
-  position: fixed; top: 12px; right: 16px; z-index: 600;
-  background: rgba(0,0,0,.55); border: none; border-radius: 50%;
-  width: 40px; height: 40px; color: #fff; font-size: 1.1rem;
-  align-items: center; justify-content: center;
-  backdrop-filter: blur(4px);
-  transition: background .15s;
-}
-#fs-close:hover { background: rgba(0,0,0,.8); }
-body.fs-mode #fs-close { display: flex; }
-
-/* ── Fullscreen page arrows ── */
-#fs-prev, #fs-next {
-  display: none;
-  position: fixed; top: 50%; z-index: 600;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,.2); border: none;
-  color: #fff; font-size: 1.1rem;
-  width: 32px; height: 48px; border-radius: 4px;
-  align-items: center; justify-content: center;
-  backdrop-filter: blur(4px);
-  transition: background .15s, opacity .3s;
-}
-#fs-prev { left: 8px; }
-#fs-next { right: 8px; }
-#fs-prev:hover, #fs-next:hover { background: rgba(0,0,0,.4); }
-#fs-prev:disabled, #fs-next:disabled { opacity: .0 !important; pointer-events: none; }
-body.fs-mode #fs-prev,
-body.fs-mode #fs-next { display: flex; }
-
-/* ── Fullscreen page counter ── */
-#fs-counter {
-  display: none;
-  position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
-  z-index: 600; background: rgba(0,0,0,.5); color: #fff;
-  font-size: .78rem; font-weight: 600; padding: 4px 14px;
-  border-radius: 20px; backdrop-filter: blur(4px); pointer-events: none;
-  letter-spacing: .04em; transition: opacity .3s;
-}
-body.fs-mode #fs-counter { display: block; }
-
-/* Auto-hide: controls fade out when .fs-idle class is on body */
-body.fs-mode.fs-idle #fs-close,
-body.fs-mode.fs-idle #fs-prev,
-body.fs-mode.fs-idle #fs-next,
-body.fs-mode.fs-idle #fs-counter { opacity: 0 !important; pointer-events: none; }
-body.fs-mode #fs-close,
-body.fs-mode #fs-prev,
-body.fs-mode #fs-next,
-body.fs-mode #fs-counter { transition: opacity .4s; }
-
-/* ── Swipe hint (mobile) ── */
-#swipe-hint {
-  display: none;
-  position: fixed; bottom: 48px; left: 50%; transform: translateX(-50%);
-  z-index: 601; background: rgba(0,0,0,.4); color: rgba(255,255,255,.7);
-  font-size: .72rem; padding: 3px 12px; border-radius: 12px;
-  pointer-events: none; animation: fadeHint 2.5s ease forwards;
-}
-@keyframes fadeHint { 0%{opacity:0} 20%{opacity:1} 80%{opacity:1} 100%{opacity:0} }
-body.fs-mode #swipe-hint { display: block; }
-@media (max-width: 768px) {
-  #topbar-logo span:not(.year) { display: none; }
-  #page-display { padding: .5rem; }
-
-  /* 1. LİSTE GÖRÜNÜMÜ (Master - Liste Üstte, Welcome Altta) */
-  body:not(.viewing-section) #main {
-    flex-direction: column; /* DOM sırasını kullanır: Sidebar üstte, Detail altta */
-    height: calc(100vh - 56px);
-  }
-  body:not(.viewing-section) #sidebar {
-    width: 100%;
-    flex: 1; /* Ekranın üstteki %80'ini (kalan kısmı) liste kaplasın */
-    height: auto;
-    border-bottom: 1px solid var(--border); /* Alt kısımla arasına net bir çizgi */
-  }
-  body:not(.viewing-section) #detail {
-    display: flex !important;
-    flex-shrink: 0;
-    height: auto;
-    max-height: 20vh; /* Ekranın max %20'si kuralı */
-    overflow-y: auto; /* Çok küçük ekranlarda taşmayı engelle */
-    background: var(--bg-alt); /* Listeden ayrışması için hafif gri arkaplan */
-  }
-
-  /* Welcome İçeriğini %20'lik alana sığacak şekilde ultra kompakt yapalım */
-  body:not(.viewing-section) #welcome {
-    padding: 0.5rem;
-    gap: 0.25rem;
-    justify-content: center;
-  }
-  body:not(.viewing-section) #welcome .emblem { display: none; } /* Dar alanda logoyu gizle */
-  body:not(.viewing-section) #welcome p { display: none; } /* Alt başlığı gizle */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>Birinci Basamak Tanı ve Tedavi Rehberi 2026</title>
+  <meta name="description" content="T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Tanı ve Tedavi Rehberleri 2026">
   
-  body:not(.viewing-section) #welcome h1 { 
-    font-size: 0.85rem; 
-    margin: 0; 
-  }
-  body:not(.viewing-section) #welcome .stats { 
-    gap: 0.8rem; 
-    margin-top: 0; 
-  }
-  body:not(.viewing-section) #welcome .stat .n { font-size: 0.85rem; }
-  body:not(.viewing-section) #welcome .stat .l { font-size: 0.6rem; }
-  
-  body:not(.viewing-section) #welcome .source-warning { 
-    margin-top: 0.2rem; 
-    padding: 0.3rem; 
-    font-size: 0.6rem; 
-    line-height: 1.1; 
-  }
+  <style>
+    :root {
+      /* Varsayılan Açık Tema */
+      --bg-main: #f1f5f9;
+      --bg-panel: #ffffff;
+      --bg-card: #ffffff;
+      --bg-active: #0284c7;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent-semptom: #d97706;
+      --accent-hastalik: #0284c7;
+      --accent-koruyucu: #059669;
+      --canvas-bg: radial-gradient(circle at center, #e2e8f0 0%, #cbd5e1 100%);
+      --book-bg: #ffffff;
+      --book-shadow: 0 16px 36px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.06);
+      --spine-shadow: linear-gradient(to right, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.03) 60%, transparent 100%);
+      --item-bg: rgba(0, 0, 0, 0.02);
+      --item-hover: rgba(0, 0, 0, 0.05);
+      --badge-bg: rgba(0, 0, 0, 0.08);
+      --badge-color: #334155;
+      --header-height: 56px;
+      --sidebar-width: 330px;
+      --radius: 8px;
+    }
 
-  /* 2. DETAY GÖRÜNÜMÜ (Algoritma okuma ekranı) */
-  body.viewing-section #main {
-    flex-direction: column;
-    height: calc(100vh - 56px);
-  }
-  body.viewing-section #sidebar {
-    display: none !important;
-  }
-  body.viewing-section #detail {
-    width: 100%;
-    height: 100%;
-    max-height: none; /* Detay ekranına geçince %20 limitini kaldır */
-    background: var(--bg); /* Arkaplanı normale döndür */
-    display: flex;
-  }
+    body.dark-theme {
+      /* Koyu Tema */
+      --bg-main: #0b1120;
+      --bg-panel: #131d31;
+      --bg-card: #1e293b;
+      --bg-active: #0284c7;
+      --border-color: #24344d;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --accent-semptom: #f59e0b;
+      --accent-hastalik: #38bdf8;
+      --accent-koruyucu: #10b981;
+      --canvas-bg: radial-gradient(circle at center, #111a2e 0%, #080c16 100%);
+      --book-bg: #1e293b;
+      --book-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      --spine-shadow: linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.08) 60%, transparent 100%);
+      --item-bg: rgba(255, 255, 255, 0.02);
+      --item-hover: rgba(255, 255, 255, 0.06);
+      --badge-bg: rgba(0, 0, 0, 0.35);
+      --badge-color: #e2e8f0;
+    }
 
-  /* Mobilde viewer başlık kısmı (Geri butonu, başlık vs.) */
-  #viewer-header { padding: .5rem .75rem; gap: .4rem; }
-  #viewer-title { font-size: .85rem; }
-  #viewer-back { padding: .3rem .5rem; font-size: .75rem; }
-  .viewer-badge { font-size: .6rem; padding: 2px 4px; }
-}
-</style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      user-select: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Sol Menü / Sidebar */
+    #sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-panel);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 50;
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .sidebar-header {
+      padding: 0.85rem 1rem 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      background: var(--bg-panel);
+    }
+
+    .sidebar-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-header h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .close-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+      border-radius: 4px;
+    }
+
+    .close-btn:hover {
+      color: var(--text-main);
+    }
+
+    .search-box-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 0.6rem 0.75rem 0.6rem 2.2rem;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    #search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
+    }
+
+    .search-icon-svg {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15px;
+      height: 15px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    #search-clear {
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: none;
+      font-size: 0.9rem;
+    }
+
+    #search-clear.visible {
+      display: block;
+    }
+
+    /* Kategori Filtre Butonları */
+    .cat-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      background: var(--bg-main);
+      padding: 3px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+    }
+
+    .cat-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 5px 2px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .cat-tab:hover {
+      color: var(--text-main);
+    }
+
+    .cat-tab.active {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-count-bar {
+      padding: 0.4rem 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.03);
+    }
+
+    #sidebar-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar-item {
+      padding: 0.65rem 0.75rem;
+      margin-bottom: 4px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      background: var(--item-bg);
+      border: 1px solid transparent;
+    }
+
+    .sidebar-item:hover {
+      background: var(--item-hover);
+      color: var(--text-main);
+    }
+
+    .sidebar-item.active {
+      background: var(--bg-active);
+      color: #ffffff !important;
+      font-weight: 600;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    .item-num {
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      background: var(--badge-bg);
+      border-radius: 4px;
+      font-weight: 700;
+      color: var(--badge-color);
+      flex-shrink: 0;
+    }
+
+    .sidebar-item.active .item-num {
+      background: rgba(0, 0, 0, 0.25);
+      color: #ffffff;
+    }
+
+    .item-title {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Arama Sonuç Dropdown */
+    #search-results {
+      display: none;
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      top: 105px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 100;
+      padding: 0.5rem;
+    }
+
+    #search-results.open {
+      display: block;
+    }
+
+    .result-item {
+      padding: 0.65rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 4px;
+      background: var(--item-bg);
+      border: 1px solid transparent;
+      transition: all 0.12s;
+    }
+
+    .result-item:hover {
+      background: var(--item-hover);
+      border-color: var(--primary);
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+
+    .result-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .result-badge.semptomlar { background: rgba(245, 158, 11, 0.15); color: var(--accent-semptom); }
+    .result-badge.hastaliklar { background: rgba(2, 132, 199, 0.15); color: var(--accent-hastalik); }
+    .result-badge.koruyucu   { background: rgba(16, 185, 129, 0.15); color: var(--accent-koruyucu); }
+
+    .result-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .result-preview {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    /* Mobil Çekmece Karartması */
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+      z-index: 40;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    #sidebar-overlay.open {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Sağ Ana İçerik / Viewer */
+    #viewer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--bg-main);
+    }
+
+    /* Üst Araç Çubuğu (Toolbar) */
+    .toolbar {
+      height: var(--header-height);
+      padding: 0 1rem;
+      background-color: var(--bg-panel);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 0.75rem;
+      z-index: 10;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .btn-toolbar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      min-height: 36px;
+    }
+
+    .btn-toolbar:hover:not(:disabled) {
+      background: var(--item-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-toolbar:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .btn-toolbar:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    #toggle-menu-btn {
+      display: none;
+    }
+
+    .doc-title-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    #current-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .category-pill {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      background: rgba(2, 132, 199, 0.12);
+      color: var(--primary);
+      border-radius: 9999px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .page-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    #page-indicator {
+      font-size: 0.875rem;
+      padding: 0 0.5rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ─── 3D Kitap Sahnesi & Sayfa Çevirme Animasyon Motoru ─── */
+    .canvas-container {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.25rem;
+      background: var(--canvas-bg);
+      perspective: 2000px;
+      touch-action: pan-x pan-y;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+
+    .book-stage {
+      position: relative;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-style: preserve-3d;
+    }
+
+    .book-wrapper {
+      position: relative;
+      border-radius: 6px;
+      box-shadow: var(--book-shadow);
+      background-color: var(--book-bg);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      user-select: none;
+      display: inline-block;
+      max-width: 100%;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .book-wrapper::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      background: var(--spine-shadow);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .page-image {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - var(--header-height) - 3rem);
+      height: auto;
+      width: auto;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* 3D Sayfa Çevirme Katmanları (Book Page-Flip) */
+    .flip-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      transform-style: preserve-3d;
+      z-index: 20;
+      display: none;
+    }
+
+    .flip-overlay.active {
+      display: block;
+    }
+
+    .flip-leaf {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      overflow: hidden;
+    }
+
+    .flip-leaf img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .flip-shadow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 5;
+    }
+
+    /* İleri Sayfa Çevirme Animasyonu */
+    .turn-next-anim {
+      transform-origin: left center;
+      animation: flipBookNext 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes flipBookNext {
+      0% {
+        transform: rotateY(0deg) skewY(0deg);
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      }
+      50% {
+        transform: rotateY(-75deg) skewY(-2deg) scale(0.97);
+        box-shadow: -15px 10px 30px rgba(0,0,0,0.3);
+      }
+      100% {
+        transform: rotateY(-110deg) skewY(-3deg) scale(0.92);
+        opacity: 0;
+        box-shadow: -30px 15px 40px rgba(0,0,0,0.4);
+      }
+    }
+
+    /* Geri Sayfa Çevirme Animasyonu */
+    .turn-prev-anim {
+      transform-origin: left center;
+      animation: flipBookPrev 0.52s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes flipBookPrev {
+      0% {
+        transform: rotateY(-110deg) skewY(-3deg) scale(0.92);
+        opacity: 0;
+        box-shadow: -30px 15px 40px rgba(0,0,0,0.4);
+      }
+      50% {
+        transform: rotateY(-50deg) skewY(-1.5deg) scale(0.97);
+        opacity: 0.85;
+        box-shadow: -15px 10px 30px rgba(0,0,0,0.3);
+      }
+      100% {
+        transform: rotateY(0deg) skewY(0deg) scale(1);
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      }
+    }
+
+    /* Welcome / Boş Durum Ekranı */
+    .welcome-card {
+      max-width: 520px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+
+    .welcome-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(2, 132, 199, 0.12);
+      color: var(--primary);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .welcome-card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: var(--bg-main);
+      padding: 1rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-item .n {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-item .l {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Durum ve Yükleme Bildirimi */
+    .status-state {
+      margin: auto;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.6;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(2, 132, 199, 0.2);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 0.75rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Fullscreen Modu */
+    body.fs-mode .toolbar {
+      display: none;
+    }
+
+    body.fs-mode #sidebar {
+      display: none;
+    }
+
+    body.fs-mode .canvas-container {
+      padding: 0;
+      background: #000000;
+    }
+
+    body.fs-mode .book-wrapper {
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    body.fs-mode .page-image {
+      max-height: 100vh;
+      max-width: 100vw;
+    }
+
+    .fs-floating-controls {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+      color: #ffffff;
+    }
+
+    body.fs-mode .fs-floating-controls {
+      display: flex;
+    }
+
+    /* Mobil Duyarlılık (< 768px) */
+    @media (max-width: 768px) {
+      #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 85%;
+        max-width: 320px;
+        transform: translateX(-100%);
+        box-shadow: 6px 0 24px rgba(0, 0, 0, 0.4);
+      }
+
+      #sidebar.open {
+        transform: translateX(0);
+      }
+
+      .close-btn {
+        display: block;
+      }
+
+      #toggle-menu-btn {
+        display: inline-flex;
+      }
+
+      .category-pill {
+        display: none;
+      }
+
+      .canvas-container {
+        padding: 0.5rem;
+      }
+
+      .book-wrapper {
+        border-radius: 4px;
+      }
+
+      .btn-toolbar {
+        padding: 0.4rem 0.55rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Top Bar -->
-<nav id="topbar">
-  <div id="topbar-logo">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-    <span>Birinci Basamak Rehberi</span>
-    <span class="year">2026</span>
-  </div>
-  <div id="search-wrap">
-    <svg id="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input id="search-input" type="search" placeholder="Hastalık veya semptom ara…" autocomplete="off" spellcheck="false">
-    <button id="search-clear" title="Temizle">✕</button>
-    <div id="search-results"></div>
-  </div>
-</nav>
+  <!-- Mobil Menü Karartması -->
+  <div id="sidebar-overlay"></div>
 
-<!-- Main -->
-<div id="main">
-
-  <!-- Sidebar -->
+  <!-- Sol Menü Çekmecesi -->
   <aside id="sidebar">
-    <div id="sidebar-header">
-      <div id="cat-tabs">
+    <div class="sidebar-header">
+      <div class="sidebar-header-top">
+        <h1>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+          Rehber İndeksi 2026
+        </h1>
+        <button id="close-sidebar-btn" class="close-btn" aria-label="Menüyü Kapat">&times;</button>
+      </div>
+
+      <div class="search-box-wrapper">
+        <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="search" id="search-input" placeholder="Hastalık, semptom ara..." autocomplete="off" />
+        <button id="search-clear">✕</button>
+      </div>
+
+      <div class="cat-tabs" id="cat-tabs">
         <button class="cat-tab active" data-cat="all">Tümü</button>
         <button class="cat-tab" data-cat="semptomlar">Semptom</button>
         <button class="cat-tab" data-cat="hastaliklar">Hastalık</button>
         <button class="cat-tab" data-cat="koruyucu">Koruyucu</button>
       </div>
     </div>
-    <div id="sidebar-count"></div>
+
+    <div class="sidebar-count-bar">
+      <span id="sidebar-count">Yükleniyor...</span>
+      <span style="font-size: 0.7rem; opacity: 0.7;">T.C. Sağlık Bakanlığı</span>
+    </div>
+
     <div id="sidebar-list"></div>
+
+    <!-- Anlık Arama Sonuç Paneli -->
+    <div id="search-results"></div>
   </aside>
 
-  <!-- Detail -->
-  <div id="detail">
-
-    <!-- Welcome -->
-    <div id="welcome">
-      <div class="emblem">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-      </div>
-      <h1>Tanı ve Tedavi Rehberi 2026</h1>
-      <p>T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Klinik Rehber</p>
-      <div class="stats">
-        <div class="stat"><div class="n" id="stat-total">—</div><div class="l">Bölüm</div></div>
-        <div class="stat"><div class="n" id="stat-symptoms">—</div><div class="l">Semptom</div></div>
-        <div class="stat"><div class="n" id="stat-diseases">—</div><div class="l">Hastalık</div></div>
-        <div class="stat"><div class="n">1054</div><div class="l">Sayfa</div></div>
-      </div>
-	  <div class="source-warning">
-        <strong>Kaynak:</strong> Birinci Basamağa Yönelik Tanı ve Tedavi Rehberleri 2026, T.C. Sağlık Bakanlığı Halk Sağlığı Genel Müdürlüğü, 1395, Ankara, 2026
-      </div>
-    </div>
-
-    <!-- Page Viewer -->
-    <div id="viewer">
-      <div id="viewer-header">
-        <button id="viewer-back" onclick="showWelcome()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          Geri
+  <!-- Sağ Sayfa Alanı (Viewer) -->
+  <main id="viewer">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button id="toggle-menu-btn" class="btn-toolbar" aria-label="Menüyü Aç">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          Fihrist
         </button>
-        <span id="viewer-badge" class="viewer-badge"></span>
-        <span id="viewer-title"></span>
-        <span id="viewer-pages-info"></span>
-        <button id="fullscreen-btn" onclick="toggleFullscreen()" title="Tam Ekran">
-          <svg id="fs-icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-          <svg id="fs-icon-shrink" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
-        </button>
-      </div>
-
-      <div id="page-nav">
-        <button id="nav-prev" onclick="changePage(-1)">◀ Önceki</button>
-        <div id="page-dots"></div>
-        <button id="nav-next" onclick="changePage(1)">Sonraki ▶</button>
-      </div>
-
-      <div id="page-display">
-        <div id="page-img-wrap">
-          <img id="page-img" src="" alt="Sayfa" draggable="false">
+        <div class="doc-title-badge">
+          <span id="current-title">Rehberden bir konu seçiniz</span>
+          <span class="category-pill" id="viewer-badge">TTR 2026</span>
         </div>
       </div>
+
+      <div class="page-controls">
+        <button id="prev-btn" class="btn-toolbar" title="Önceki Sayfa (Sol Ok)" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <span id="page-indicator">- / -</span>
+
+        <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Tema Değiştirme Butonu (Koyu / Açık) -->
+        <button id="theme-toggle-btn" class="btn-toolbar" title="Temayı Değiştir (Açık/Koyu)">
+          <svg id="theme-icon-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="theme-icon-light" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Tam Ekran Butonu -->
+        <button id="fullscreen-btn" class="btn-toolbar" title="Tam Ekran (F)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+            <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
+            <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
-  </div><!-- #detail -->
-</div><!-- #main -->
+    <div class="canvas-container" id="canvas-container">
+      <div class="book-stage" id="book-stage">
+        <!-- Hoşgeldiniz Kartı -->
+        <div class="welcome-card" id="welcome-card">
+          <div class="welcome-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+          </div>
+          <h2>Tanı ve Tedavi Rehberleri 2026</h2>
+          <p>Sol menüden veya arama kutusundan incelemek istediğiniz semptom, hastalık veya koruyucu sağlık algoritmasını seçiniz.</p>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="n" id="stat-total">183</div>
+              <div class="l">Toplam Algoritma</div>
+            </div>
+            <div class="stat-item">
+              <div class="n" id="stat-symptoms">-</div>
+              <div class="l">Semptom</div>
+            </div>
+            <div class="stat-item">
+              <div class="n" id="stat-diseases">-</div>
+              <div class="l">Hastalık</div>
+            </div>
+          </div>
+        </div>
 
-<!-- Fullscreen overlay controls -->
-<button id="fs-close"  onclick="toggleFullscreen()" title="Tam ekrandan çık (ESC)">✕</button>
-<button id="fs-prev"   onclick="changePage(-1)" title="Önceki sayfa">‹</button>
-<button id="fs-next"   onclick="changePage(1)"  title="Sonraki sayfa">›</button>
-<div    id="fs-counter"></div>
-<div    id="swipe-hint">← Kaydırarak sayfa değiştirin →</div>
-
-<script>
-let INDEX = [];
-let activeCat = 'all';
-let activeId = null;
-let currentPage = 1;
-let totalPages = 1;
-let searchDebounce = null;
-
-// ── Init ──
-async function init() {
-  try {
-    const res = await fetch('data/search_index.json');
-    INDEX = await res.json();
-  } catch(e) {
-    document.getElementById('welcome').innerHTML =
-      '<p style="color:#be3535;padding:2rem">⚠ Yerel test için: <code>python -m http.server 8080</code> veya <code>py -m http.server 8080</code></p>';
-    return;
-  }
-  const sem = INDEX.filter(s => s.category === 'semptomlar').length;
-  const has = INDEX.filter(s => s.category === 'hastaliklar').length;
-  document.getElementById('stat-total').textContent = INDEX.length;
-  document.getElementById('stat-symptoms').textContent = sem;
-  document.getElementById('stat-diseases').textContent = has;
-
-  renderSidebar();
-  setupSearch();
-  setupCatTabs();
-
-  if (location.hash) {
-    const id = decodeURIComponent(location.hash.slice(1));
-    setTimeout(() => loadSection(id), 100);
-  }
-}
-
-// ── Sidebar ──
-function renderSidebar(filter) {
-  const list  = document.getElementById('sidebar-list');
-  const count = document.getElementById('sidebar-count');
-  let items = INDEX;
-  if (activeCat !== 'all') items = items.filter(s => s.category === activeCat);
-  if (filter) {
-    const q = filter.toLowerCase();
-    items = items.filter(s => s.title.toLowerCase().includes(q) || s.num.includes(q));
-  }
-  count.textContent = `${items.length} bölüm`;
-  list.innerHTML = items.map(s => `
-    <div class="sidebar-item depth-${s.depth} ${s.id === activeId ? 'active' : ''}"
-         data-id="${s.id}" onclick="loadSection('${s.id}')">
-      <span class="item-num">${s.num}</span>
-      <span class="item-title">${s.title}</span>
-    </div>`).join('');
-}
-
-function setupCatTabs() {
-  document.querySelectorAll('.cat-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      activeCat = btn.dataset.cat;
-      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderSidebar();
-    });
-  });
-}
-
-// ── Load Section ──
-async function loadSection(id) {
-  document.body.classList.add('viewing-section');
-
-  activeId = id;
-  currentPage = 1;
-
-  document.querySelectorAll('.sidebar-item').forEach(el =>
-    el.classList.toggle('active', el.dataset.id === id));
-  const activeEl = document.querySelector(`.sidebar-item[data-id="${id}"]`);
-  if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-
-  // Fetch manifest
-  let manifest;
-  try {
-    const res = await fetch(`data/pages/${id}/manifest.json`);
-    manifest = await res.json();
-  } catch(e) {
-    manifest = { count: 1, title: '' };
-  }
-  totalPages = manifest.count || 1;
-
-  // Get section info from index
-  const info = INDEX.find(s => s.id === id) || {};
-  const catLabel = { semptomlar:'Semptom', hastaliklar:'Hastalık', koruyucu:'Koruyucu' }[info.category] || '';
-
-  // Update header
-  const badge = document.getElementById('viewer-badge');
-  badge.textContent = catLabel;
-  badge.className = `viewer-badge ${info.category || ''}`;
-  document.getElementById('viewer-title').textContent = info.title || '';
-  document.getElementById('viewer-pages-info').textContent = `${totalPages} sayfa`;
-
-  // Show viewer
-  document.getElementById('welcome').style.display = 'none';
-  document.getElementById('viewer').classList.add('visible');
-
-  buildPageDots();
-  showPage(1);
-  history.replaceState(null, '', `#${encodeURIComponent(id)}`);
-}
-
-// ── Page display ──
-function buildPageDots() {
-  const dots = document.getElementById('page-dots');
-  if (totalPages <= 1) { dots.innerHTML = ''; return; }
-  const MAX = 11;
-  if (totalPages <= MAX) {
-    dots.innerHTML = Array.from({length: totalPages}, (_, i) => `
-      <button class="page-btn ${i+1 === currentPage ? 'active' : ''}"
-              onclick="showPage(${i+1})">${i+1}</button>`).join('');
-  } else {
-    dots.innerHTML = `<span style="font-size:.8rem;color:var(--ink-muted)">${currentPage} / ${totalPages}</span>`;
-  }
-}
-
-function showPage(n) {
-  currentPage = Math.max(1, Math.min(n, totalPages));
-  const img = document.getElementById('page-img');
-  img.classList.add('loading');
-  img.onload = () => img.classList.remove('loading');
-  img.onerror = () => { img.classList.remove('loading'); };
-  img.src = `data/pages/${activeId}/p${currentPage}.jpg`;
-
-  document.getElementById('nav-prev').disabled = currentPage <= 1;
-  document.getElementById('nav-next').disabled = currentPage >= totalPages;
-
-  // Update dots
-  buildPageDots();
-
-  // Scroll to top of page display
-  document.getElementById('page-display').scrollTo({ top: 0, behavior: 'smooth' });
-  if (isFullscreen) updateFsCounter();
-}
-
-function changePage(delta) { showPage(currentPage + delta); }
-
-// ── Welcome ──
-function showWelcome() {
-  document.body.classList.remove('viewing-section');
-
-  activeId = null;
-  document.getElementById('welcome').style.display = '';
-  document.getElementById('viewer').classList.remove('visible');
-  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-  history.replaceState(null, '', location.pathname);
-}
-
-// ── Search ──
-function setupSearch() {
-  const input   = document.getElementById('search-input');
-  const results = document.getElementById('search-results');
-  const clear   = document.getElementById('search-clear');
-
-  input.addEventListener('input', () => {
-    const q = input.value.trim();
-    clear.classList.toggle('visible', q.length > 0);
-    clearTimeout(searchDebounce);
-    if (q.length < 2) { results.classList.remove('open'); return; }
-    searchDebounce = setTimeout(() => doSearch(q), 120);
-  });
-  clear.addEventListener('click', () => {
-    input.value = ''; clear.classList.remove('visible');
-    results.classList.remove('open'); input.focus();
-  });
-  document.addEventListener('click', e => {
-    if (!e.target.closest('#search-wrap')) results.classList.remove('open');
-  });
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { results.classList.remove('open'); input.blur(); }
-  });
-}
-
-function doSearch(q) {
-  const ql   = q.toLowerCase();
-  const hits = INDEX.filter(s =>
-    s.title.toLowerCase().includes(ql) ||
-    s.num.includes(q) ||
-    (s.preview && s.preview.toLowerCase().includes(ql))
-  ).slice(0, 12);
-
-  const results = document.getElementById('search-results');
-  if (!hits.length) {
-    results.innerHTML = '<div class="result-item" style="color:var(--ink-muted);cursor:default">Sonuç bulunamadı</div>';
-    results.classList.add('open'); return;
-  }
-
-  const hl = (str, q) => str.replace(
-    new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
-    '<mark style="background:var(--amber-lt);padding:0 1px">$1</mark>'
-  );
-
-  results.innerHTML = hits.map(s => `
-    <div class="result-item" onclick="selectResult('${s.id}')">
-      <div><span class="result-num">${s.num}</span>
-        <span class="result-badge ${s.category}">${
-          {semptomlar:'Semptom',hastaliklar:'Hastalık',koruyucu:'Koruyucu'}[s.category]||''
-        }</span>
+        <!-- Kitap Görüntüleyici -->
+        <div class="book-wrapper" id="book-wrapper" style="display: none;">
+          <img id="page-img" class="page-image" alt="Rehber Sayfası" />
+          <div class="flip-overlay" id="flip-overlay">
+            <div class="flip-leaf" id="flip-leaf">
+              <img id="flip-image" alt="" />
+              <div class="flip-shadow" id="flip-shadow"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="result-title">${hl(s.title, q)}</div>
-      ${s.preview ? `<div class="result-preview">${hl(s.preview.slice(0,120), q)}…</div>` : ''}
-    </div>`).join('');
-  results.classList.add('open');
-}
 
-function selectResult(id) {
-  document.getElementById('search-results').classList.remove('open');
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-clear').classList.remove('visible');
-  activeCat = 'all';
-  document.querySelectorAll('.cat-tab').forEach(b => b.classList.toggle('active', b.dataset.cat === 'all'));
-  renderSidebar();
-  loadSection(id);
-}
+      <div id="status-state" class="status-state" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div>Sayfa hazırlanıyor...</div>
+      </div>
+    </div>
+  </main>
 
-// ── Fullscreen ──
-let isFullscreen = false;
-let fsIdleTimer = null;
+  <!-- Tam Ekran Yüzen Kontroller -->
+  <div class="fs-floating-controls" id="fs-controls">
+    <button class="btn-toolbar" id="fs-prev" style="padding: 0.3rem 0.6rem; color: #ffffff; background: rgba(255,255,255,0.15);">◀</button>
+    <span id="fs-counter" style="font-size: 0.85rem; font-weight: 600;">1 / 1</span>
+    <button class="btn-toolbar" id="fs-next" style="padding: 0.3rem 0.6rem; color: #ffffff; background: rgba(255,255,255,0.15);">▶</button>
+    <button class="btn-toolbar" id="fs-close" style="padding: 0.3rem 0.6rem; color: #f87171; background: rgba(255,255,255,0.15);">✕ Çık</button>
+  </div>
 
-function fsResetIdle() {
-  document.body.classList.remove('fs-idle');
-  clearTimeout(fsIdleTimer);
-  fsIdleTimer = setTimeout(() => {
-    if (isFullscreen) document.body.classList.add('fs-idle');
-  }, 800);
-}
+  <script>
+    let INDEX = [];
+    let activeCat = 'all';
+    let activeId = null;
+    let currentPage = 1;
+    let totalPages = 1;
+    let isFlipping = false;
+    let isFullscreen = false;
+    let searchDebounce = null;
 
-function toggleFullscreen() {
-  isFullscreen = !isFullscreen;
-  document.body.classList.toggle('fs-mode', isFullscreen);
-  document.getElementById('fs-icon-expand').style.display = isFullscreen ? 'none' : '';
-  document.getElementById('fs-icon-shrink').style.display = isFullscreen ? '' : 'none';
-  updateFsCounter();
+    // DOM Elementleri
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const toggleMenuBtn = document.getElementById('toggle-menu-btn');
+    const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+    const sidebarList = document.getElementById('sidebar-list');
+    const sidebarCount = document.getElementById('sidebar-count');
+    const searchInput = document.getElementById('search-input');
+    const searchClear = document.getElementById('search-clear');
+    const searchResults = document.getElementById('search-results');
+    const welcomeCard = document.getElementById('welcome-card');
+    const bookWrapper = document.getElementById('book-wrapper');
+    const pageImg = document.getElementById('page-img');
+    const flipOverlay = document.getElementById('flip-overlay');
+    const flipLeaf = document.getElementById('flip-leaf');
+    const flipImage = document.getElementById('flip-image');
+    const flipShadow = document.getElementById('flip-shadow');
+    const canvasContainer = document.getElementById('canvas-container');
+    const statusState = document.getElementById('status-state');
+    const currentTitle = document.getElementById('current-title');
+    const viewerBadge = document.getElementById('viewer-badge');
+    const pageIndicator = document.getElementById('page-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIconLight = document.getElementById('theme-icon-light');
+    const themeIconDark = document.getElementById('theme-icon-dark');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const fsPrev = document.getElementById('fs-prev');
+    const fsNext = document.getElementById('fs-next');
+    const fsClose = document.getElementById('fs-close');
+    const fsCounter = document.getElementById('fs-counter');
 
-  if (isFullscreen) {
-    fsResetIdle();
-    // Show swipe hint once on mobile
-    if (window.matchMedia('(pointer:coarse)').matches) {
-      const hint = document.getElementById('swipe-hint');
-      hint.style.animation = 'none';
-      void hint.offsetWidth;
-      hint.style.animation = '';
+    // Tema Yönetimi (Varsayılan Açık Tema)
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+        if (themeIconLight) themeIconLight.style.display = 'block';
+        if (themeIconDark) themeIconDark.style.display = 'none';
+      } else {
+        document.body.classList.remove('dark-theme');
+        if (themeIconLight) themeIconLight.style.display = 'none';
+        if (themeIconDark) themeIconDark.style.display = 'block';
+      }
     }
-  } else {
-    clearTimeout(fsIdleTimer);
-    document.body.classList.remove('fs-idle');
-  }
-}
 
-// Mouse / touch movement wakes up controls in fullscreen
-document.addEventListener('mousemove', () => { if (isFullscreen) fsResetIdle(); });
-document.addEventListener('touchstart', () => { if (isFullscreen) fsResetIdle(); }, { passive: true });
+    const savedTheme = localStorage.getItem('app-theme') || 'light';
+    applyTheme(savedTheme);
 
-function updateFsCounter() {
-  document.getElementById('fs-counter').textContent = `${currentPage} / ${totalPages}`;
-  document.getElementById('fs-prev').disabled = currentPage <= 1;
-  document.getElementById('fs-next').disabled = currentPage >= totalPages;
-}
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.body.classList.contains('dark-theme');
+      const newTheme = isDark ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('app-theme', newTheme);
+    });
 
-// ── Keyboard navigation ──
-document.addEventListener('keydown', e => {
-  if (!activeId) return;
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); changePage(1); }
-  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); changePage(-1); }
-  if (e.key === 'Escape' && isFullscreen) toggleFullscreen();
-  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
-});
-
-// ── Touch / Swipe ──
-(function() {
-  let startX = 0, startY = 0, dragging = false;
-  const display = document.getElementById('page-display');
-
-  display.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    dragging = true;
-  }, { passive: true });
-
-  display.addEventListener('touchend', e => {
-    if (!dragging || !activeId) return;
-    dragging = false;
-    const dx = e.changedTouches[0].clientX - startX;
-    const dy = e.changedTouches[0].clientY - startY;
-    // Only horizontal swipes (dx dominant, at least 50px)
-    if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 50) {
-      if (dx < 0) changePage(1);   // swipe left → next
-      else        changePage(-1);  // swipe right → prev
+    function toggleDrawer(open) {
+      if (open) {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('open');
+      } else {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('open');
+      }
     }
-  }, { passive: true });
 
-  display.addEventListener('touchmove', e => {
-    if (!dragging) return;
-    const dx = e.touches[0].clientX - startX;
-    const dy = e.touches[0].clientY - startY;
-    // If clearly horizontal swipe, prevent vertical scroll
-    if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 10) {
-      e.preventDefault();
+    toggleMenuBtn.addEventListener('click', () => toggleDrawer(true));
+    closeSidebarBtn.addEventListener('click', () => toggleDrawer(false));
+    sidebarOverlay.addEventListener('click', () => toggleDrawer(false));
+
+    async function init() {
+      try {
+        const res = await fetch('data/search_index.json');
+        INDEX = await res.json();
+      } catch(e) {
+        welcomeCard.innerHTML = '<strong style="color: #f87171;">data/search_index.json yüklenemedi.</strong>';
+        return;
+      }
+
+      const sem = INDEX.filter(s => s.category === 'semptomlar').length;
+      const has = INDEX.filter(s => s.category === 'hastaliklar').length;
+      document.getElementById('stat-total').textContent = INDEX.length;
+      document.getElementById('stat-symptoms').textContent = sem;
+      document.getElementById('stat-diseases').textContent = has;
+
+      renderSidebar();
+      setupCatTabs();
+      setupSearch();
+
+      if (location.hash) {
+        const id = decodeURIComponent(location.hash.slice(1));
+        setTimeout(() => loadSection(id), 100);
+      }
     }
-  }, { passive: false });
-})();
 
-init();
-</script>
+    function renderSidebar(filter) {
+      let items = INDEX;
+      if (activeCat !== 'all') items = items.filter(s => s.category === activeCat);
+      if (filter) {
+        const q = filter.toLowerCase();
+        items = items.filter(s => s.title.toLowerCase().includes(q) || s.num.includes(q));
+      }
+      sidebarCount.textContent = `${items.length} bölüm listelendi`;
+      
+      sidebarList.innerHTML = items.map(s => `
+        <div class="sidebar-item ${s.id === activeId ? 'active' : ''}" data-id="${s.id}" onclick="loadSection('${s.id}')">
+          <span class="item-num">${s.num}</span>
+          <span class="item-title">${s.title}</span>
+        </div>
+      `).join('');
+    }
+
+    function setupCatTabs() {
+      document.querySelectorAll('.cat-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeCat = btn.dataset.cat;
+          document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderSidebar(searchInput.value.trim());
+        });
+      });
+    }
+
+    async function loadSection(id) {
+      activeId = id;
+      currentPage = 1;
+
+      document.querySelectorAll('.sidebar-item').forEach(el =>
+        el.classList.toggle('active', el.dataset.id === id));
+      
+      const activeEl = document.querySelector(`.sidebar-item[data-id="${id}"]`);
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+      let manifest;
+      try {
+        const res = await fetch(`data/pages/${id}/manifest.json`);
+        manifest = await res.json();
+      } catch(e) {
+        manifest = { count: 1, title: '' };
+      }
+      totalPages = manifest.count || 1;
+
+      const info = INDEX.find(s => s.id === id) || {};
+      const catLabel = { semptomlar:'Semptom', hastaliklar:'Hastalık', koruyucu:'Koruyucu' }[info.category] || 'TTR 2026';
+
+      viewerBadge.textContent = catLabel;
+      currentTitle.textContent = info.title || id;
+
+      welcomeCard.style.display = 'none';
+      bookWrapper.style.display = 'inline-block';
+
+      showPage(1, false);
+      history.replaceState(null, '', `#${encodeURIComponent(id)}`);
+
+      if (window.innerWidth <= 768) {
+        toggleDrawer(false);
+      }
+    }
+
+    // 3D Kitap Sayfası Çevirme Animasyonu ile Sayfa Gösterimi
+    function showPage(n, direction = false) {
+      if (!activeId) return;
+      if (isFlipping && direction) return;
+
+      const targetPage = Math.max(1, Math.min(n, totalPages));
+      const oldPage = currentPage;
+      currentPage = targetPage;
+
+      pageIndicator.textContent = `${currentPage} / ${totalPages}`;
+      prevBtn.disabled = (currentPage <= 1);
+      nextBtn.disabled = (currentPage >= totalPages);
+
+      if (isFullscreen) {
+        fsCounter.textContent = `${currentPage} / ${totalPages}`;
+        fsPrev.disabled = (currentPage <= 1);
+        fsNext.disabled = (currentPage >= totalPages);
+      }
+
+      const fullImgPath = `data/pages/${activeId}/p${currentPage}.jpg`;
+
+      if (direction && oldPage !== currentPage) {
+        isFlipping = true;
+        const oldImgPath = `data/pages/${activeId}/p${oldPage}.jpg`;
+
+        if (direction === 'next') {
+          flipImage.src = oldImgPath;
+          flipLeaf.className = 'flip-leaf turn-next-anim';
+          flipShadow.style.background = 'linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)';
+          flipOverlay.classList.add('active');
+
+          pageImg.src = fullImgPath;
+
+          setTimeout(() => {
+            flipOverlay.classList.remove('active');
+            flipLeaf.className = 'flip-leaf';
+            isFlipping = false;
+          }, 520);
+        } else {
+          flipImage.src = fullImgPath;
+          flipLeaf.className = 'flip-leaf turn-prev-anim';
+          flipShadow.style.background = 'linear-gradient(to left, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)';
+          flipOverlay.classList.add('active');
+
+          pageImg.src = fullImgPath;
+
+          setTimeout(() => {
+            flipOverlay.classList.remove('active');
+            flipLeaf.className = 'flip-leaf';
+            isFlipping = false;
+          }, 520);
+        }
+      } else {
+        pageImg.src = fullImgPath;
+      }
+
+      canvasContainer.scrollTop = 0;
+    }
+
+    function changePage(delta) {
+      const dir = delta > 0 ? 'next' : 'prev';
+      showPage(currentPage + delta, dir);
+    }
+
+    prevBtn.addEventListener('click', () => changePage(-1));
+    nextBtn.addEventListener('click', () => changePage(1));
+    fsPrev.addEventListener('click', () => changePage(-1));
+    fsNext.addEventListener('click', () => changePage(1));
+
+    // Arama Fonksiyonları
+    function setupSearch() {
+      searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim();
+        searchClear.classList.toggle('visible', q.length > 0);
+        clearTimeout(searchDebounce);
+        if (q.length < 2) {
+          searchResults.classList.remove('open');
+          renderSidebar('');
+          return;
+        }
+        searchDebounce = setTimeout(() => doSearch(q), 120);
+      });
+
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.classList.remove('visible');
+        searchResults.classList.remove('open');
+        renderSidebar('');
+        searchInput.focus();
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#sidebar')) {
+          searchResults.classList.remove('open');
+        }
+      });
+    }
+
+    function doSearch(q) {
+      const ql = q.toLowerCase();
+      const hits = INDEX.filter(s =>
+        s.title.toLowerCase().includes(ql) ||
+        s.num.includes(q) ||
+        (s.preview && s.preview.toLowerCase().includes(ql))
+      ).slice(0, 15);
+
+      if (!hits.length) {
+        searchResults.innerHTML = '<div style="padding: 0.75rem; color: var(--text-muted); font-size: 0.85rem; text-align: center;">Eşleşen sonuç bulunamadı</div>';
+        searchResults.classList.add('open');
+        return;
+      }
+
+      const hl = (str, q) => str.replace(
+        new RegExp(`(${q.replace(/[.*+?^${}()|[\]\]/g, '\$&')})`, 'gi'),
+        '<mark style="background:rgba(2,132,199,0.25);color:var(--primary);padding:0 2px;border-radius:2px;font-weight:700">$1</mark>'
+      );
+
+      searchResults.innerHTML = hits.map(s => `
+        <div class="result-item" onclick="selectSearchResult('${s.id}')">
+          <div class="result-header">
+            <span class="item-num">${s.num}</span>
+            <span class="result-badge ${s.category}">${
+              {semptomlar:'Semptom',hastaliklar:'Hastalık',koruyucu:'Koruyucu'}[s.category]||''
+            }</span>
+          </div>
+          <div class="result-title">${hl(s.title, q)}</div>
+          ${s.preview ? `<div class="result-preview">${hl(s.preview.slice(0,110), q)}…</div>` : ''}
+        </div>
+      `).join('');
+      searchResults.classList.add('open');
+    }
+
+    window.selectSearchResult = function(id) {
+      searchResults.classList.remove('open');
+      searchInput.value = '';
+      searchClear.classList.remove('visible');
+      loadSection(id);
+    };
+
+    // Tam Ekran Fonksiyonu
+    function toggleFullscreen() {
+      isFullscreen = !isFullscreen;
+      document.body.classList.toggle('fs-mode', isFullscreen);
+      if (isFullscreen) {
+        fsCounter.textContent = `${currentPage} / ${totalPages}`;
+        fsPrev.disabled = (currentPage <= 1);
+        fsNext.disabled = (currentPage >= totalPages);
+      }
+    }
+
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fsClose.addEventListener('click', toggleFullscreen);
+
+    // Klavye Kısayolları
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); changePage(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); changePage(1); }
+      if (e.key === 'Escape') {
+        if (isFullscreen) toggleFullscreen();
+        else toggleDrawer(false);
+      }
+      if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      }
+    });
+
+    // Mobil Dokunmatik Sağa/Sola Kaydırma (3D Page-Flip Swipe)
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    canvasContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    canvasContainer.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+        if (diffX < 0) {
+          changePage(1);
+        } else {
+          changePage(-1);
+        }
+      }
+    }, { passive: true });
+
+    init();
+  </script>
 </body>
 </html>
