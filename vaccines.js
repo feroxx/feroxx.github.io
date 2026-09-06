@@ -14,7 +14,7 @@ const routineVaccines = [
         { month: 6, name: "OPA (1. Doz)", desc: "Oral Polio Aşısı.", code: "opa_1", doseInfo: "1. Doz / 2" },
         { month: 9, name: "KKK (Ek Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak ek dozu.", code: "kkk_ek", doseInfo: "Ek Doz / 3" },
         { month: 12, name: "KPA (Rapel)", desc: "Konjuge Pnömokok Pekiştirme.", code: "kpa_rapel", doseInfo: "3. Doz / 3 (Rapel)" },
-        { month: 12, name: "Suçiçeği", desc: "1 Yaş rutin aşısı.", code: "sucicegi_1", doseInfo: "Tek Doz (1/1)" },
+        { month: 12, name: "Suçiçeği (1. Doz)", desc: "1 Yaş rutin aşısı.", code: "sucicegi_1", doseInfo: "1. Doz / 2" },
         { month: 12, name: "KKK (1. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak.", code: "kkk_1", doseInfo: "1. Doz / 2" },
         { month: 18, name: "DaBT-İPA-Hib-HepB (Rapel)", desc: "Karma aşı pekiştirme dozu.", code: "karma_rapel", doseInfo: "4. Doz / 5 (Rapel)" },
         { month: 18, name: "OPA (2. Doz)", desc: "Oral Polio Aşısı pekiştirme.", code: "opa_2", doseInfo: "2. Doz / 2 (Rapel)" },
@@ -22,6 +22,7 @@ const routineVaccines = [
         { month: 24, name: "Hep-A (2. Doz)", desc: "Hepatit A aşısı ikinci dozu.", code: "hepa_2", doseInfo: "2. Doz / 2" },
         { month: 48, name: "DaBT-İPA (Rapel)", desc: "4'lü Karma aşı pekiştirme.", code: "dabt_ipa_rapel", doseInfo: "5. Doz / 5 (Rapel)" },
         { month: 48, name: "KKK (2. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak 2. dozu.", code: "kkk_2", doseInfo: "2. Doz / 2" },
+        { month: 48, name: "Suçiçeği (2. Doz)", desc: "48. Ay (4 Yaş) rutin pekiştirme dozu.", code: "sucicegi_2", doseInfo: "2. Doz / 2" },
         { month: 156, name: "Td (Rapel)", desc: "Erişkin Tetanos Difteri.", code: "td_rapel", doseInfo: "Rapel (1/1)" }
     ];
 
@@ -550,35 +551,55 @@ const routineVaccines = [
             });
         }
 
-        // 6. Suçiçeği
+        // 6. Suçiçeği (12. Ay ve 48. Ay - Toplam 2 Doz)
         if (currentMonth < 12) {
             catchUpList.push({
-                name: "Suçiçeği",
+                name: "Suçiçeği (1. Doz)",
                 month: 12,
                 desc: "1 Yaş rutin aşısı.",
-                dosage: "12. ayda tek doz",
+                dosage: "12. ayda",
                 icon: "fa-shield-virus",
                 dateRange: `Planlanan Tarih: ${addMonths(baseDob, 12)}`,
                 statusType: 'due',
-                doseInfo: "Tek Doz (1/1)"
+                doseInfo: "1. Doz / 2"
             });
-        } else if (currentMonth >= 12 && currentMonth < 156) {
             catchUpList.push({
-                name: "Suçiçeği (Telafi Dozu)",
-                month: currentMonth,
-                desc: "1 yaş sonrası kaçırılan suçiçeği aşısı için tek doz uygulanır.",
-                dosage: "Hemen tek doz",
+                name: "Suçiçeği (2. Doz)",
+                month: 48,
+                desc: "48. Ay rutin 2. dozu.",
+                dosage: "48. ayda",
                 icon: "fa-shield-virus",
-                dateRange: `Uygulama: ${addMonths(baseDob, currentMonth)}`,
-                statusType: 'critical',
-                doseInfo: "Tek Doz (1/1)"
+                dateRange: `2. Doz: ${addMonths(baseDob, 48)}`,
+                statusType: 'due',
+                doseInfo: "2. Doz / 2"
             });
-        } else {
-            // >= 13 yaş
+        } else if (currentMonth >= 12 && currentMonth < 48) {
             catchUpList.push({
                 name: "Suçiçeği (1. Telafi Dozu)",
                 month: currentMonth,
-                desc: "13 yaş üzeri adölesanlarda 2 doz uygulanır.",
+                desc: "1 yaş sonrası kaçırılan 1. doz suçiçeği aşısı hemen uygulanmalıdır.",
+                dosage: "Hemen uygulanmalı",
+                icon: "fa-shield-virus",
+                dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
+                statusType: 'critical',
+                doseInfo: "1. Doz / 2"
+            });
+            catchUpList.push({
+                name: "Suçiçeği (2. Doz)",
+                month: 48,
+                desc: "48. Ay rutin 2. dozu (1. dozdan en az 4 hafta sonra).",
+                dosage: "48. ayda",
+                icon: "fa-shield-virus",
+                dateRange: `2. Doz: ${addMonths(baseDob, 48)}`,
+                statusType: 'due',
+                doseInfo: "2. Doz / 2"
+            });
+        } else {
+            // >= 48 ay
+            catchUpList.push({
+                name: "Suçiçeği (1. Telafi Dozu)",
+                month: currentMonth,
+                desc: "4 yaş ve üzeri çocuklar için 1. doz suçiçeği aşısı.",
                 dosage: "Hemen 1. doz",
                 icon: "fa-shield-virus",
                 dateRange: `1. Doz: ${addMonths(baseDob, currentMonth)}`,
@@ -588,7 +609,7 @@ const routineVaccines = [
             catchUpList.push({
                 name: "Suçiçeği (2. Telafi Dozu)",
                 month: currentMonth + 1,
-                desc: "1. dozdan en az 4-8 hafta sonra 2. doz.",
+                desc: "1. dozdan en az 4 hafta (1 ay) sonra 2. doz.",
                 dosage: "1. dozdan 1 ay sonra",
                 icon: "fa-shield-virus",
                 dateRange: `2. Doz: ${addMonths(baseDob, currentMonth + 1)}`,
