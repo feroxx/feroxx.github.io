@@ -160,103 +160,82 @@
     #toc-container {
       flex: 1;
       overflow-y: auto;
-      padding: 0.5rem;
-      -webkit-overflow-scrolling: touch;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     .toc-category-header {
-      padding: 10px 10px 4px 10px;
       font-size: 0.75rem;
-      font-weight: 800;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: var(--primary);
-      letter-spacing: 0.5px;
+      padding: 0.5rem 0.25rem 0.25rem;
+      margin-top: 0.5rem;
     }
 
     .toc-item {
-      padding: 0.65rem 0.75rem;
-      margin-bottom: 4px;
+      padding: 0.6rem 0.75rem;
       border-radius: var(--radius);
+      background-color: var(--item-bg);
+      border: 1px solid transparent;
       cursor: pointer;
       font-size: 0.85rem;
-      color: var(--text-muted);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       transition: all 0.15s ease;
-      background: var(--item-bg);
-      border: 1px solid transparent;
     }
 
     .toc-item:hover {
-      background: var(--item-hover);
-      color: var(--text-main);
+      background-color: var(--item-hover);
+      border-color: var(--border-color);
     }
 
     .toc-item.active {
-      background: var(--bg-active);
+      background-color: var(--bg-active);
       color: #ffffff !important;
       font-weight: 600;
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    .toc-item.active .page-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff !important;
     }
 
     .page-badge {
       font-size: 0.72rem;
-      padding: 2px 7px;
       background: var(--badge-bg);
-      border-radius: 4px;
-      font-weight: 600;
       color: var(--badge-color);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
       flex-shrink: 0;
     }
 
-    .toc-item.active .page-badge {
-      background: rgba(0, 0, 0, 0.25);
-      color: #ffffff;
-    }
-
-    /* Mobil Çekmece Karartması */
-    #sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(3px);
-      z-index: 40;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    #sidebar-overlay.open {
-      display: block;
-      opacity: 1;
-    }
-
-    /* Sağ Ana İçerik / Viewer */
+    /* Sağ Sayfa Alanı (Viewer) */
     #viewer {
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 100%;
       position: relative;
-      overflow: hidden;
+      min-width: 0;
       background-color: var(--bg-main);
     }
 
-    /* Üst Araç Çubuğu (Toolbar) */
     .toolbar {
       height: var(--header-height);
-      padding: 0 1rem;
       background-color: var(--bg-panel);
       border-bottom: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-shrink: 0;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 30;
       gap: 0.75rem;
-      z-index: 10;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
@@ -339,15 +318,15 @@
       align-items: center;
       gap: 4px;
       background: var(--bg-main);
-      padding: 3px 8px;
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
+      padding: 2px 8px;
     }
 
     .page-input-box {
-      width: 44px;
-      background: transparent;
+      width: 48px;
       border: none;
+      background: transparent;
       color: var(--text-main);
       font-size: 0.875rem;
       font-weight: 600;
@@ -599,44 +578,40 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    .search-result {
+    .search-result-item {
       padding: 0.75rem;
-      margin-bottom: 0.5rem;
-      background: var(--item-bg);
-      border: 1px solid var(--border-color);
       border-radius: var(--radius);
+      background-color: var(--item-bg);
+      border: 1px solid transparent;
+      margin-bottom: 0.5rem;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: all 0.15s ease;
     }
 
-    .search-result:hover {
-      background: var(--item-hover);
+    .search-result-item:hover {
+      background-color: var(--item-hover);
       border-color: var(--primary);
     }
 
-    .result-badge {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
+    .search-result-title {
+      font-size: 0.875rem;
+      font-weight: 600;
       color: var(--primary);
-      background: rgba(2, 132, 199, 0.15);
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-bottom: 4px;
+      margin-bottom: 0.25rem;
     }
 
-    .result-snippet {
-      font-size: 0.85rem;
-      color: var(--text-main);
-      line-height: 1.45;
+    .search-result-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
     }
 
-    .highlight {
+    .search-result-text mark {
       background: rgba(2, 132, 199, 0.25);
       color: var(--primary);
-      font-weight: 700;
       padding: 0 2px;
       border-radius: 2px;
+      font-weight: 600;
     }
 
     /* Durum ve Yükleme Bildirimi */
@@ -1081,7 +1056,7 @@
       }
 
       loadPage(currentPage, false);
-      loadSearchIndex(); // Arka planda asenkron yükle
+      loadSearchIndex();
     }
 
     function renderTOC(filterTerm = "") {
@@ -1120,8 +1095,7 @@
     async function loadSearchIndex() {
       const possiblePaths = [
         "./mevzuatassets/data/mevzuat_index.json",
-        "mevzuatassets/data/mevzuat_index.json",
-        "data/mevzuat_index.json"
+        "mevzuatassets/data/mevzuat_index.json"
       ];
 
       for (const path of possiblePaths) {
@@ -1300,76 +1274,71 @@
         return;
       }
 
-      if (searchIndex.length === 0) {
-        searchResults.innerHTML = '<div style="text-align: center; color: #f87171; margin-top: 30px;">Arama veritabanı yükleniyor...</div>';
+      const results = searchIndex.filter(item => item._norm && item._norm.includes(normQ)).slice(0, 30);
+
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div style="text-align: center; color: var(--text-muted); margin-top: 30px;">Eşleşen sonuç bulunamadı.</div>';
         return;
       }
 
-      const matches = [];
-      for (const item of searchIndex) {
-        const matchIdx = item._norm.indexOf(normQ);
+      let html = "";
+      results.forEach(r => {
+        const rawText = r.text;
+        const normText = r._norm;
+        const idx = normText.indexOf(normQ);
 
-        if (matchIdx !== -1) {
-          const start = Math.max(0, matchIdx - 40);
-          const end = Math.min(item.text.length, matchIdx + q.length + 60);
-          const snippet = item.text.substring(start, end);
-
-          matches.push({
-            page: item.page,
-            snippet: snippet
-          });
+        let snippet = "";
+        if (idx !== -1) {
+          const start = Math.max(0, idx - 50);
+          const end = Math.min(rawText.length, idx + normQ.length + 50);
+          snippet = (start > 0 ? "..." : "") + rawText.substring(start, end) + (end < rawText.length ? "..." : "");
+          const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+          snippet = snippet.replace(re, '<mark>$1</mark>');
+        } else {
+          snippet = rawText.substring(0, 100) + "...";
         }
-      }
 
-      if (matches.length === 0) {
-        searchResults.innerHTML = '<div style="text-align: center; color: var(--text-muted); margin-top: 30px;">Sonuç bulunamadı.</div>';
-        return;
-      }
+        html += `
+          <div class="search-result-item" onclick="goToSearchResult(${r.page})">
+            <div class="search-result-title">Sayfa ${r.page} — ${findCurrentSectionTitle(r.page)}</div>
+            <div class="search-result-text">${snippet}</div>
+          </div>
+        `;
+      });
 
-      searchResults.innerHTML = matches.slice(0, 50).map(m => `
-        <div class="search-result" onclick="selectSearchResult(${m.page})">
-          <div class="result-badge">SAYFA ${m.page}</div>
-          <div class="result-snippet">...${highlightMatch(m.snippet, q)}...</div>
-        </div>
-      `).join("");
+      searchResults.innerHTML = html;
     });
 
-    function highlightMatch(text, query) {
-      const escaped = query.replace(/[.*+?^${}()|[\]\]/g, '\$&');
-      const regex = new RegExp(`(${escaped})`, "gi");
-      return text.replace(regex, '<span class="highlight">$1</span>');
-    }
-
-    window.selectSearchResult = function(pageNo) {
+    window.goToSearchResult = function(pageNo) {
       searchModal.classList.remove("active");
       goToPage(pageNo);
     };
 
-    // Klavye Yön Tuşları
-    window.addEventListener("keydown", (e) => {
-      if (searchModal.classList.contains("active") || e.target.tagName === 'INPUT') return;
+    // Klavye Kısayolları
+    document.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "INPUT") return;
       if (e.key === "ArrowLeft") { e.preventDefault(); loadPage(currentPage - 1, 'prev'); }
       if (e.key === "ArrowRight") { e.preventDefault(); loadPage(currentPage + 1, 'next'); }
       if (e.key === "Escape") {
-        if (isFullscreen) toggleFullscreen();
-        else if (searchModal.classList.contains("active")) searchModal.classList.remove("active");
+        if (searchModal.classList.contains("active")) searchModal.classList.remove("active");
+        else if (isFullscreen) toggleFullscreen();
         else toggleDrawer(false);
       }
-      if (e.key === 'f' || e.key === 'F') {
+      if (e.key === "f" || e.key === "F") {
         toggleFullscreen();
       }
     });
 
-    // Mobil Dokunmatik Sağa/Sola Kaydırma (3D Page-Flip Swipe)
+    // Mobil Dokunmatik Sağa/Sola Kaydırma (Swipe)
     let touchStartX = 0;
     let touchStartY = 0;
 
-    canvasContainer.addEventListener('touchstart', (e) => {
+    canvasContainer.addEventListener("touchstart", (e) => {
       touchStartX = e.changedTouches[0].screenX;
       touchStartY = e.changedTouches[0].screenY;
     }, { passive: true });
 
-    canvasContainer.addEventListener('touchend', (e) => {
+    canvasContainer.addEventListener("touchend", (e) => {
       const touchEndX = e.changedTouches[0].screenX;
       const touchEndY = e.changedTouches[0].screenY;
       const diffX = touchEndX - touchStartX;

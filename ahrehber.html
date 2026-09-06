@@ -158,108 +158,85 @@
     #menu-tree {
       flex: 1;
       overflow-y: auto;
-      padding: 0.5rem;
-      -webkit-overflow-scrolling: touch;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
     }
 
     .menu-item {
       padding: 0.65rem 0.75rem;
-      margin-bottom: 4px;
       border-radius: var(--radius);
-      cursor: pointer;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      transition: all 0.15s ease;
-      background: var(--item-bg);
+      background-color: var(--item-bg);
       border: 1px solid transparent;
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
     }
 
     .menu-item:hover {
-      background: var(--item-hover);
-      color: var(--text-main);
+      background-color: var(--item-hover);
+      border-color: var(--border-color);
     }
 
     .menu-item.active {
-      background: var(--bg-active);
+      background-color: var(--bg-active);
       color: #ffffff !important;
       font-weight: 600;
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    .menu-item.active .menu-snippet,
+    .menu-item.active .page-badge {
+      color: #ffffff !important;
+      opacity: 0.9;
     }
 
     .menu-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2px;
     }
 
     .page-badge {
       font-size: 0.72rem;
-      padding: 2px 7px;
       background: var(--badge-bg);
-      border-radius: 4px;
-      font-weight: 600;
       color: var(--badge-color);
-    }
-
-    .menu-item.active .page-badge {
-      background: rgba(0, 0, 0, 0.25);
-      color: #ffffff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
     }
 
     .menu-snippet {
       font-size: 0.75rem;
-      color: inherit;
-      opacity: 0.85;
+      color: var(--text-muted);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.3;
     }
 
-    /* Mobil Çekmece Karartması */
-    #sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(3px);
-      z-index: 40;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    #sidebar-overlay.open {
-      display: block;
-      opacity: 1;
-    }
-
-    /* Sağ Ana İçerik / Viewer */
+    /* Sağ Sayfa / Viewer Alanı */
     #viewer {
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 100%;
       position: relative;
-      overflow: hidden;
+      min-width: 0;
       background-color: var(--bg-main);
     }
 
-    /* Üst Araç Çubuğu (Toolbar) */
     .toolbar {
       height: var(--header-height);
-      padding: 0 1rem;
       background-color: var(--bg-panel);
       border-bottom: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-shrink: 0;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 30;
       gap: 0.75rem;
-      z-index: 10;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
@@ -634,11 +611,6 @@
         padding: 0.4rem 0.55rem;
         font-size: 0.8rem;
       }
-
-      #page-indicator {
-        font-size: 0.8rem;
-        padding: 0 0.25rem;
-      }
     }
   </style>
 </head>
@@ -665,7 +637,7 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="search" placeholder="İçerikte veya sayfada ara..." autocomplete="off" />
+        <input type="text" id="search" placeholder="Konu veya sayfa ara..." autocomplete="off" />
       </div>
     </div>
     <div id="menu-tree"></div>
@@ -851,7 +823,7 @@
 
         items = data.map((d, idx) => {
           const pageNum = d.page !== undefined ? d.page : idx + 1;
-          const imgPath = d.image ? d.image.replace(/^.*[\\/]/, '') : `page_${pageNum}.jpg`;
+          const imgPath = d.image ? d.image.replace(/^.*[\\\/]/, '') : `page_${pageNum}.jpg`;
           return {
             page: pageNum,
             file: imgPath,
@@ -864,7 +836,7 @@
         if (items.length > 0) {
           selectItem(0, false);
         } else {
-          statusState.innerHTML = '<div style="color: var(--text-muted);">JSON verisi boş.</div>';
+          statusState.textContent = 'JSON verisi boş.';
         }
       } catch (err) {
         console.error('Yükleme hatası:', err);
@@ -879,7 +851,7 @@
     function renderMenu(list) {
       menuTree.innerHTML = '';
       if (list.length === 0) {
-        menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem; text-align: center;">Eşleşen sonuç bulunamadı.</div>';
+        menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem;">Eşleşen sonuç bulunamadı.</div>';
         return;
       }
 
@@ -888,7 +860,7 @@
         const originalIndex = items.findIndex(i => i.page === item.page);
         
         el.className = `menu-item ${originalIndex === currentIndex ? 'active' : ''}`;
-        const previewText = item.text ? item.text.substring(0, 60) + '...' : 'Görsel Sayfa';
+        const previewText = item.text ? item.text.substring(0, 55) + '...' : 'Görsel Sayfa';
         
         el.innerHTML = `
           <div class="menu-header">
@@ -899,7 +871,7 @@
         `;
         
         el.addEventListener('click', () => {
-          selectItem(originalIndex, originalIndex > currentIndex ? 'next' : (originalIndex < currentIndex ? 'prev' : false));
+          selectItem(originalIndex, originalIndex > currentIndex ? 'next' : 'prev');
           if (window.innerWidth <= 768) {
             toggleDrawer(false);
           }
@@ -908,7 +880,7 @@
       });
     }
 
-    // Gerçekçi 3D Kitap Sayfası Çevirme Animasyonlu Seçim
+    // Gerçekçi 3D Kitap Sayfa Çevirme Animasyonlu Seçim
     function selectItem(index, direction = false) {
       if (index < 0 || index >= items.length) return;
       if (isFlipping && direction) return;
@@ -928,16 +900,17 @@
         fsNext.disabled = index === items.length - 1;
       }
 
-      // Sidebar aktiflik senkronizasyonu
+      // Sidebar aktiflik senkronu
       document.querySelectorAll('.menu-item').forEach(el => {
         el.classList.toggle('active', el.textContent.includes(`Sayfa ${target.page}`));
       });
 
       const fullImgPath = `${CONFIG.pagesDir}${target.file}`;
 
-      if (direction && oldIndex >= 0 && items[oldIndex]) {
+      if (direction && oldIndex !== -1 && oldIndex !== index) {
         isFlipping = true;
-        const oldImgPath = `${CONFIG.pagesDir}${items[oldIndex].file}`;
+        const oldTarget = items[oldIndex];
+        const oldImgPath = `${CONFIG.pagesDir}${oldTarget.file}`;
 
         if (direction === 'next') {
           flipImage.src = oldImgPath;
@@ -979,7 +952,7 @@
       bookWrapper.style.display = 'inline-block';
       canvasContainer.scrollTop = 0;
 
-      // Gelecek ve önceki sayfayı arka planda önceden yükle (Preload)
+      // Komşu sayfaları önceden belleğe al (Preload)
       if (index + 1 < items.length) {
         const nextImg = new Image();
         nextImg.src = `${CONFIG.pagesDir}${items[index + 1].file}`;
@@ -996,10 +969,25 @@
       };
     }
 
+    // Gezinme Butonları
     prevBtn.addEventListener('click', () => selectItem(currentIndex - 1, 'prev'));
     nextBtn.addEventListener('click', () => selectItem(currentIndex + 1, 'next'));
     fsPrev.addEventListener('click', () => selectItem(currentIndex - 1, 'prev'));
     fsNext.addEventListener('click', () => selectItem(currentIndex + 1, 'next'));
+
+    // Arama Filtresi
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) {
+        renderMenu(items);
+        return;
+      }
+      const filtered = items.filter(i => 
+        i.page.toString().includes(term) || 
+        i.text.toLowerCase().includes(term)
+      );
+      renderMenu(filtered);
+    });
 
     // Tam Ekran Fonksiyonu
     function toggleFullscreen() {
@@ -1029,21 +1017,7 @@
       }
     });
 
-    // Arama
-    searchInput.addEventListener('input', (e) => {
-      const term = e.target.value.toLocaleLowerCase('tr-TR').trim();
-      if (!term) {
-        renderMenu(items);
-        return;
-      }
-      const filtered = items.filter(i => 
-        i.page.toString().includes(term) || 
-        i.text.toLocaleLowerCase('tr-TR').includes(term)
-      );
-      renderMenu(filtered);
-    });
-
-    // Mobil Dokunmatik Sağa/Sola Kaydırma (3D Page-Flip Swipe)
+    // Mobil Dokunmatik Sağa/Sola Kaydırma (Swipe)
     let touchStartX = 0;
     let touchStartY = 0;
 

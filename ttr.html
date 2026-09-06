@@ -87,6 +87,7 @@
       flex-shrink: 0;
       z-index: 50;
       transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
+      position: relative;
     }
 
     .sidebar-header {
@@ -164,137 +165,127 @@
 
     #search-clear {
       position: absolute;
-      right: 0.6rem;
+      right: 0.5rem;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
       color: var(--text-muted);
+      font-size: 1rem;
       cursor: pointer;
       display: none;
-      font-size: 0.9rem;
+      padding: 2px 4px;
     }
 
     #search-clear.visible {
       display: block;
     }
 
-    /* Kategori Filtre Butonları */
     .cat-tabs {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      display: flex;
       gap: 4px;
-      background: var(--bg-main);
-      padding: 3px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border-color);
+      padding: 0.25rem 0;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .cat-tabs::-webkit-scrollbar { display: none; }
 
     .cat-tab {
-      background: transparent;
-      border: none;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
       color: var(--text-muted);
-      padding: 5px 2px;
       font-size: 0.75rem;
       font-weight: 600;
-      border-radius: 5px;
+      padding: 0.35rem 0.65rem;
+      border-radius: 20px;
       cursor: pointer;
-      text-align: center;
+      white-space: nowrap;
       transition: all 0.15s ease;
     }
 
-    .cat-tab:hover {
-      color: var(--text-main);
-    }
-
     .cat-tab.active {
-      background: var(--bg-card);
-      color: var(--primary);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
     }
 
     .sidebar-count-bar {
-      padding: 0.4rem 1rem;
       font-size: 0.75rem;
       color: var(--text-muted);
-      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+      padding: 0.4rem 1rem 0.2rem;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.03);
     }
 
     #sidebar-list {
       flex: 1;
       overflow-y: auto;
-      padding: 0.5rem;
-      -webkit-overflow-scrolling: touch;
+      padding: 0.5rem 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
     }
 
     .sidebar-item {
       padding: 0.65rem 0.75rem;
-      margin-bottom: 4px;
       border-radius: var(--radius);
+      background-color: var(--item-bg);
+      border: 1px solid transparent;
       cursor: pointer;
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.15s ease;
-      background: var(--item-bg);
-      border: 1px solid transparent;
+      gap: 0.6rem;
     }
 
     .sidebar-item:hover {
-      background: var(--item-hover);
-      color: var(--text-main);
+      background-color: var(--item-hover);
+      border-color: var(--border-color);
     }
 
     .sidebar-item.active {
-      background: var(--bg-active);
+      background-color: var(--bg-active);
       color: #ffffff !important;
       font-weight: 600;
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    .sidebar-item.active .item-num,
+    .sidebar-item.active .item-title {
+      color: #ffffff !important;
     }
 
     .item-num {
-      font-size: 0.72rem;
-      padding: 2px 6px;
-      background: var(--badge-bg);
-      border-radius: 4px;
+      font-size: 0.75rem;
       font-weight: 700;
-      color: var(--badge-color);
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
       flex-shrink: 0;
     }
 
-    .sidebar-item.active .item-num {
-      background: rgba(0, 0, 0, 0.25);
-      color: #ffffff;
-    }
-
     .item-title {
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.35;
     }
 
-    /* Arama Sonuç Dropdown */
+    .sidebar-item.depth-2 { margin-left: 0.8rem; font-size: 0.82rem; }
+    .sidebar-item.depth-3 { margin-left: 1.4rem; font-size: 0.8rem; }
+
+    /* Canlı Arama Sonuç Paneli */
     #search-results {
-      display: none;
       position: absolute;
-      left: 1rem;
-      right: 1rem;
-      top: 105px;
+      left: 0.75rem;
+      right: 0.75rem;
+      top: 100px;
+      bottom: 10px;
       background: var(--bg-panel);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.3);
-      max-height: 400px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       overflow-y: auto;
-      z-index: 100;
+      display: none;
+      z-index: 60;
       padding: 0.5rem;
     }
 
@@ -306,15 +297,16 @@
       padding: 0.65rem 0.75rem;
       border-radius: 6px;
       cursor: pointer;
-      margin-bottom: 4px;
-      background: var(--item-bg);
-      border: 1px solid transparent;
-      transition: all 0.12s;
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.1s;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
     }
 
     .result-item:hover {
       background: var(--item-hover);
-      border-color: var(--primary);
     }
 
     .result-header {
@@ -325,16 +317,16 @@
     }
 
     .result-badge {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 700;
+      text-transform: uppercase;
       padding: 1px 6px;
       border-radius: 3px;
-      text-transform: uppercase;
     }
 
-    .result-badge.semptomlar { background: rgba(245, 158, 11, 0.15); color: var(--accent-semptom); }
+    .result-badge.semptomlar { background: rgba(217, 119, 6, 0.15); color: var(--accent-semptom); }
     .result-badge.hastaliklar { background: rgba(2, 132, 199, 0.15); color: var(--accent-hastalik); }
-    .result-badge.koruyucu   { background: rgba(16, 185, 129, 0.15); color: var(--accent-koruyucu); }
+    .result-badge.koruyucu { background: rgba(5, 150, 105, 0.15); color: var(--accent-koruyucu); }
 
     .result-title {
       font-size: 0.85rem;
@@ -345,50 +337,30 @@
     .result-preview {
       font-size: 0.75rem;
       color: var(--text-muted);
-      line-height: 1.4;
       margin-top: 2px;
+      line-height: 1.35;
     }
 
-    /* Mobil Çekmece Karartması */
-    #sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(3px);
-      z-index: 40;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    #sidebar-overlay.open {
-      display: block;
-      opacity: 1;
-    }
-
-    /* Sağ Ana İçerik / Viewer */
+    /* Sağ Sayfa Alanı (Viewer) */
     #viewer {
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 100%;
       position: relative;
-      overflow: hidden;
+      min-width: 0;
       background-color: var(--bg-main);
     }
 
-    /* Üst Araç Çubuğu (Toolbar) */
     .toolbar {
       height: var(--header-height);
-      padding: 0 1rem;
       background-color: var(--bg-panel);
       border-bottom: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-shrink: 0;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 30;
       gap: 0.75rem;
-      z-index: 10;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
@@ -1219,7 +1191,7 @@
       }
 
       const hl = (str, q) => str.replace(
-        new RegExp(`(${q.replace(/[.*+?^${}()|[\]\]/g, '\$&')})`, 'gi'),
+        new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'),
         '<mark style="background:rgba(2,132,199,0.25);color:var(--primary);padding:0 2px;border-radius:2px;font-weight:700">$1</mark>'
       );
 
