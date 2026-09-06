@@ -339,20 +339,20 @@
       color: var(--text-muted);
     }
 
-    /* ─── Gerçekçi 3D Kitap Sahnesi & Sayfa Çevirme Motoru ─── */
+    /* ─── Gerçekçi 3D Kitap Sahnesi & Sayfa Çevirme & Zoom Motoru ─── */
     .canvas-container {
       flex: 1;
-      overflow: auto;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1.25rem;
+      padding: 1rem;
       background: var(--canvas-bg);
       perspective: 2400px;
-      touch-action: pan-x pan-y;
-      -webkit-overflow-scrolling: touch;
+      touch-action: none;
       position: relative;
       transition: background 0.2s ease;
+      user-select: none;
     }
 
     .book-stage {
@@ -362,6 +362,8 @@
       justify-content: center;
       align-items: center;
       transform-style: preserve-3d;
+      transform-origin: center center;
+      will-change: transform;
     }
 
     .book-wrapper {
@@ -399,6 +401,7 @@
       user-select: none;
       -webkit-user-drag: none;
       border-radius: 4px;
+      pointer-events: none;
     }
 
     /* Alt Sayfa Gölge Katmanı */
@@ -976,6 +979,20 @@
     let isFlipping = false;
     let isFullscreen = false;
 
+    // ─── Mobil Pinch to Zoom & Pan Değişkenleri ───
+    let zoomScale = 1;
+    let zoomPosX = 0;
+    let zoomPosY = 0;
+    let initialPinchDist = 0;
+    let initialPinchScale = 1;
+    let isPinching = false;
+    let isPanning = false;
+    let panStartX = 0;
+    let panStartY = 0;
+    let lastTapTime = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
     // DOM Elementleri
     const pageImg = document.getElementById("page-img");
     const pageInput = document.getElementById("page-input");
@@ -992,6 +1009,7 @@
     const searchResults = document.getElementById("search-results");
     const openSearchBtn = document.getElementById("open-search-btn");
     const closeSearchBtn = document.getElementById("close-search-btn");
+    const bookStage = document.getElementById("book-stage");
     const bookWrapper = document.getElementById("book-wrapper");
     const flipOverlay = document.getElementById("flip-overlay");
     const flipLeaf = document.getElementById("flip-leaf");
@@ -1046,6 +1064,45 @@
     toggleMenuBtn.addEventListener("click", () => toggleDrawer(true));
     closeSidebarBtn.addEventListener("click", () => toggleDrawer(false));
     sidebarOverlay.addEventListener("click", () => toggleDrawer(false));
+
+    // ─── Zoom & Pan Fonksiyonları ───
+    function applyZoomTransform(animate = false) {
+      if (animate) {
+        bookStage.style.transition = 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+      } else {
+        bookStage.style.transition = 'none';
+      }
+      bookStage.style.transform = `translate3d(${zoomPosX}px, ${zoomPosY}px, 0) scale(${zoomScale})`;
+    }
+
+    function resetZoom(animate = true) {
+      zoomScale = 1;
+      zoomPosX = 0;
+      zoomPosY = 0;
+      applyZoomTransform(animate);
+    }
+
+    function getDistance(t1, t2) {
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function clampPan() {
+      if (zoomScale <= 1) {
+        zoomPosX = 0;
+        zoomPosY = 0;
+        return;
+      }
+      const rect = bookWrapper.getBoundingClientRect();
+      const containerRect = canvasContainer.getBoundingClientRect();
+      
+      const maxPanX = Math.max(0, (rect.width - containerRect.width) / 2 + 60);
+      const maxPanY = Math.max(0, (rect.height - containerRect.height) / 2 + 60);
+
+      zoomPosX = Math.max(-maxPanX, Math.min(maxPanX, zoomPosX));
+      zoomPosY = Math.max(-maxPanY, Math.min(maxPanY, zoomPosY));
+    }
 
     function init() {
       renderTOC();
@@ -1132,6 +1189,8 @@
       if (pageNo > totalPages) pageNo = totalPages;
       if (isFlipping && direction) return;
 
+      resetZoom(false);
+
       const oldPage = currentPage;
       currentPage = pageNo;
       window.location.hash = currentPage;
@@ -1198,7 +1257,6 @@
 
       statusState.style.display = 'none';
       bookWrapper.style.display = 'inline-block';
-      canvasContainer.scrollTop = 0;
 
       // Önceden yükleme (Preload)
       if (currentPage + 1 <= totalPages) {
@@ -1329,29 +1387,118 @@
       }
     });
 
-    // Mobil Dokunmatik Sağa/Sola Kaydırma (Swipe)
-    let touchStartX = 0;
-    let touchStartY = 0;
+    // ─── Mobil Pinch to Zoom, Pan & Swipe Event Dinleyicileri ───
+    canvasContainer.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        // İki parmak: Pinch-to-zoom başlat
+        isPinching = true;
+        isPanning = false;
+        initialPinchDist = getDistance(e.touches[0], e.touches[1]);
+        initialPinchScale = zoomScale;
+      } else if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
 
-    canvasContainer.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    canvasContainer.addEventListener("touchend", (e) => {
-      const touchEndX = e.changedTouches[0].screenX;
-      const touchEndY = e.changedTouches[0].screenY;
-      const diffX = touchEndX - touchStartX;
-      const diffY = touchEndY - touchStartY;
-
-      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
-        if (diffX < 0) {
-          loadPage(currentPage + 1, 'next');
+        if (zoomScale > 1.05) {
+          isPanning = true;
+          panStartX = touch.clientX - zoomPosX;
+          panStartY = touch.clientY - zoomPosY;
         } else {
-          loadPage(currentPage - 1, 'prev');
+          isPanning = false;
+        }
+
+        // Çift Dokunma (Double Tap) ile Yakınlaştırma
+        const now = Date.now();
+        if (now - lastTapTime < 300) {
+          if (zoomScale > 1.2) {
+            resetZoom(true);
+          } else {
+            zoomScale = 2.5;
+            const containerRect = canvasContainer.getBoundingClientRect();
+            const tapX = touch.clientX - containerRect.left - containerRect.width / 2;
+            const tapY = touch.clientY - containerRect.top - containerRect.height / 2;
+            zoomPosX = -tapX * 1.2;
+            zoomPosY = -tapY * 1.2;
+            clampPan();
+            applyZoomTransform(true);
+          }
+          lastTapTime = 0;
+          return;
+        }
+        lastTapTime = now;
+      }
+    }, { passive: false });
+
+    canvasContainer.addEventListener('touchmove', (e) => {
+      if (isPinching && e.touches.length === 2) {
+        e.preventDefault();
+        const dist = getDistance(e.touches[0], e.touches[1]);
+        if (initialPinchDist > 0) {
+          const rawScale = initialPinchScale * (dist / initialPinchDist);
+          zoomScale = Math.min(Math.max(rawScale, 1), 4.5);
+          clampPan();
+          applyZoomTransform(false);
+        }
+      } else if (isPanning && e.touches.length === 1 && zoomScale > 1.05) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        zoomPosX = touch.clientX - panStartX;
+        zoomPosY = touch.clientY - panStartY;
+        clampPan();
+        applyZoomTransform(false);
+      }
+    }, { passive: false });
+
+    canvasContainer.addEventListener('touchend', (e) => {
+      if (isPinching && e.touches.length < 2) {
+        isPinching = false;
+        if (zoomScale < 1.05) {
+          resetZoom(true);
+        } else {
+          clampPan();
+          applyZoomTransform(true);
+        }
+      } else if (e.touches.length === 0) {
+        if (isPanning) {
+          isPanning = false;
+          clampPan();
+          applyZoomTransform(true);
+        } else if (zoomScale <= 1.05) {
+          // Sayfa Çevirme (Swipe)
+          const touchEndX = e.changedTouches[0].clientX;
+          const touchEndY = e.changedTouches[0].clientY;
+          const diffX = touchEndX - touchStartX;
+          const diffY = touchEndY - touchStartY;
+
+          if (Math.abs(diffX) > Math.abs(diffY) * 1.4 && Math.abs(diffX) > 45) {
+            if (diffX < 0) {
+              loadPage(currentPage + 1, 'next');
+            } else {
+              loadPage(currentPage - 1, 'prev');
+            }
+          }
         }
       }
     }, { passive: true });
+
+    // Masaüstü Touchpad / Mouse Wheel Zoom
+    canvasContainer.addEventListener('wheel', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const zoomDelta = e.deltaY * -0.01;
+        const newScale = Math.min(Math.max(zoomScale + zoomDelta, 1), 4.5);
+        if (newScale !== zoomScale) {
+          zoomScale = newScale;
+          if (zoomScale <= 1.02) {
+            resetZoom(true);
+          } else {
+            clampPan();
+            applyZoomTransform(false);
+          }
+        }
+      }
+    }, { passive: false });
 
     init();
   </script>
