@@ -29,7 +29,7 @@
       --item-hover: rgba(0, 0, 0, 0.05);
       --badge-bg: rgba(0, 0, 0, 0.08);
       --badge-color: #334155;
-      --header-height: 56px;
+      --header-height: 52px;
       --sidebar-width: 330px;
       --radius: 8px;
     }
@@ -351,6 +351,7 @@
       background-color: var(--bg-main);
     }
 
+    /* 1. Satır: Kontrol Butonları & Araç Çubuğu */
     .toolbar {
       height: var(--header-height);
       background-color: var(--bg-panel);
@@ -368,7 +369,12 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      min-width: 0;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .btn-toolbar {
@@ -405,32 +411,6 @@
       display: none;
     }
 
-    .doc-title-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    #current-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .category-pill {
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      background: rgba(2, 132, 199, 0.12);
-      color: var(--primary);
-      border-radius: 9999px;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-
     .page-controls {
       display: flex;
       align-items: center;
@@ -444,6 +424,30 @@
       font-variant-numeric: tabular-nums;
       color: var(--text-muted);
       font-weight: 500;
+    }
+
+    /* 2. Satır: Sadece Aktif Başlık Satırı */
+    .title-bar {
+      min-height: 38px;
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 1rem;
+      z-index: 25;
+      text-align: center;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .title-content {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     /* ─── Gerçekçi 3D Kitap Sahnesi & Sayfa Çevirme & Zoom Motoru ─── */
@@ -501,7 +505,7 @@
     .page-image {
       display: block;
       max-width: 100%;
-      max-height: calc(100vh - var(--header-height) - 3rem);
+      max-height: calc(100vh - var(--header-height) - 4rem);
       height: auto;
       width: auto;
       object-fit: contain;
@@ -653,7 +657,8 @@
     }
 
     /* Fullscreen Modu */
-    body.fs-mode .toolbar {
+    body.fs-mode .toolbar,
+    body.fs-mode .title-bar {
       display: none;
     }
 
@@ -722,10 +727,6 @@
         display: inline-flex;
       }
 
-      .category-pill {
-        display: none;
-      }
-
       .canvas-container {
         padding: 0.5rem;
       }
@@ -789,6 +790,8 @@
 
   <!-- Sağ Sayfa Alanı (Viewer) -->
   <main id="viewer">
+    
+    <!-- 1. Satır: Kontrol Butonları & Araç Çubuğu -->
     <div class="toolbar">
       <div class="toolbar-left">
         <button id="toggle-menu-btn" class="btn-toolbar" aria-label="Menüyü Aç">
@@ -799,27 +802,25 @@
           </svg>
           Fihrist
         </button>
-        <div class="doc-title-badge">
-          <span id="current-title">Yükleniyor...</span>
-          <span class="category-pill" id="viewer-badge">TTR 2026</span>
+
+        <div class="page-controls">
+          <button id="prev-btn" class="btn-toolbar" title="Önceki Sayfa (Sol Ok)" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <span id="page-indicator">- / -</span>
+
+          <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
 
-      <div class="page-controls">
-        <button id="prev-btn" class="btn-toolbar" title="Önceki Sayfa (Sol Ok)" disabled>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-
-        <span id="page-indicator">- / -</span>
-
-        <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)" disabled>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-
+      <div class="toolbar-right">
         <!-- Tema Değiştirme Butonu (Koyu / Açık) -->
         <button id="theme-toggle-btn" class="btn-toolbar" title="Temayı Değiştir (Açık/Koyu)">
           <svg id="theme-icon-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -848,6 +849,11 @@
           </svg>
         </button>
       </div>
+    </div>
+
+    <!-- 2. Satır: Sadece Aktif Başlık Satırı -->
+    <div class="title-bar">
+      <div class="title-content" id="current-title">Yükleniyor...</div>
     </div>
 
     <div class="canvas-container" id="canvas-container">
@@ -927,7 +933,6 @@
     const canvasContainer = document.getElementById('canvas-container');
     const statusState = document.getElementById('status-state');
     const currentTitle = document.getElementById('current-title');
-    const viewerBadge = document.getElementById('viewer-badge');
     const pageIndicator = document.getElementById('page-indicator');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
@@ -1106,10 +1111,8 @@
       totalPages = manifest.count || 1;
 
       const info = INDEX.find(s => s.id === id) || {};
-      const catLabel = { semptomlar:'Semptom', hastaliklar:'Hastalık', koruyucu:'Koruyucu' }[info.category] || 'TTR 2026';
 
-      viewerBadge.textContent = catLabel;
-      currentTitle.textContent = `${info.num ? info.num + ' ' : ''}${info.title || id}`;
+      currentTitle.textContent = `${info.num ? info.num + ' — ' : ''}${info.title || id}`;
 
       statusState.style.display = 'none';
       bookWrapper.style.display = 'inline-block';

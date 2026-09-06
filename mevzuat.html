@@ -26,7 +26,7 @@
       --badge-bg: rgba(0, 0, 0, 0.08);
       --badge-color: #334155;
       --modal-backdrop: rgba(15, 23, 42, 0.6);
-      --header-height: 56px;
+      --header-height: 52px;
       --sidebar-width: 320px;
       --radius: 8px;
     }
@@ -226,6 +226,7 @@
       background-color: var(--bg-main);
     }
 
+    /* 1. Satır: Kontrol Butonları & Araç Çubuğu */
     .toolbar {
       height: var(--header-height);
       background-color: var(--bg-panel);
@@ -243,7 +244,12 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      min-width: 0;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .btn-toolbar {
@@ -280,32 +286,6 @@
       display: none;
     }
 
-    .doc-title-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    #current-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .category-pill {
-      font-size: 0.72rem;
-      padding: 2px 8px;
-      background: rgba(2, 132, 199, 0.12);
-      color: var(--primary);
-      border-radius: 9999px;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-
     .page-controls {
       display: flex;
       align-items: center;
@@ -337,6 +317,30 @@
     .page-total-label {
       font-size: 0.85rem;
       color: var(--text-muted);
+    }
+
+    /* 2. Satır: Sadece Aktif Başlık Satırı */
+    .title-bar {
+      min-height: 38px;
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 1rem;
+      z-index: 25;
+      text-align: center;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .title-content {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     /* ─── Gerçekçi 3D Kitap Sahnesi & Sayfa Çevirme & Zoom Motoru ─── */
@@ -394,7 +398,7 @@
     .page-image {
       display: block;
       max-width: 100%;
-      max-height: calc(100vh - var(--header-height) - 3rem);
+      max-height: calc(100vh - var(--header-height) - 4rem);
       height: auto;
       width: auto;
       object-fit: contain;
@@ -515,108 +519,6 @@
       }
     }
 
-    /* Arama Modal Penceresi */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: var(--modal-backdrop);
-      backdrop-filter: blur(4px);
-      z-index: 100;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 5vh;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-box {
-      width: 90%;
-      max-width: 600px;
-      max-height: 80vh;
-      background: var(--bg-panel);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      animation: modalSlide 0.2s ease-out;
-    }
-
-    @keyframes modalSlide {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .modal-header {
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .modal-search-input {
-      flex: 1;
-      background: var(--bg-main);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius);
-      color: var(--text-main);
-      padding: 0.6rem 0.85rem;
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .modal-search-input:focus {
-      border-color: var(--primary);
-    }
-
-    .modal-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0.75rem;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .search-result-item {
-      padding: 0.75rem;
-      border-radius: var(--radius);
-      background-color: var(--item-bg);
-      border: 1px solid transparent;
-      margin-bottom: 0.5rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .search-result-item:hover {
-      background-color: var(--item-hover);
-      border-color: var(--primary);
-    }
-
-    .search-result-title {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 0.25rem;
-    }
-
-    .search-result-text {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    .search-result-text mark {
-      background: rgba(2, 132, 199, 0.25);
-      color: var(--primary);
-      padding: 0 2px;
-      border-radius: 2px;
-      font-weight: 600;
-    }
-
     /* Durum ve Yükleme Bildirimi */
     .status-state {
       margin: auto;
@@ -648,7 +550,8 @@
     }
 
     /* Fullscreen Modu */
-    body.fs-mode .toolbar {
+    body.fs-mode .toolbar,
+    body.fs-mode .title-bar {
       display: none;
     }
 
@@ -717,10 +620,6 @@
         display: inline-flex;
       }
 
-      .category-pill {
-        display: none;
-      }
-
       .canvas-container {
         padding: 0.5rem;
       }
@@ -732,11 +631,6 @@
       .btn-toolbar {
         padding: 0.4rem 0.55rem;
         font-size: 0.8rem;
-      }
-
-      .modal-box {
-        width: 95%;
-        max-height: 90vh;
       }
     }
   </style>
@@ -772,6 +666,8 @@
 
   <!-- Sağ Sayfa Alanı (Viewer) -->
   <main id="viewer">
+    
+    <!-- 1. Satır: Kontrol Butonları & Araç Çubuğu -->
     <div class="toolbar">
       <div class="toolbar-left">
         <button id="toggle-menu-btn" class="btn-toolbar" aria-label="Menüyü Aç">
@@ -782,38 +678,28 @@
           </svg>
           Fihrist
         </button>
-        <div class="doc-title-badge">
-          <span id="current-title">Sayfa 1 — HSGM Mevzuat Kitabı</span>
-          <span class="category-pill">HSGM Mevzuat Kitabı</span>
+
+        <div class="page-controls">
+          <button id="prev-btn" class="btn-toolbar" title="Önceki Sayfa (Sol Ok)" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <div class="page-input-wrapper">
+            <input type="number" id="page-input" class="page-input-box" min="1" max="627" value="1" />
+            <span class="page-total-label" id="total-pages-txt">/ 627</span>
+          </div>
+
+          <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
 
-      <div class="page-controls">
-        <button id="open-search-btn" class="btn-toolbar" title="Mevzuat İçinde Ara">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <span>Ara</span>
-        </button>
-
-        <button id="prev-btn" class="btn-toolbar" title="Önceki Sayfa (Sol Ok)" disabled>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-
-        <div class="page-input-wrapper">
-          <input type="number" id="page-input" class="page-input-box" min="1" max="627" value="1" />
-          <span class="page-total-label" id="total-pages-txt">/ 627</span>
-        </div>
-
-        <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-
+      <div class="toolbar-right">
         <!-- Tema Değiştirme Butonu (Koyu / Açık) -->
         <button id="theme-toggle-btn" class="btn-toolbar" title="Temayı Değiştir (Açık/Koyu)">
           <svg id="theme-icon-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -844,6 +730,11 @@
       </div>
     </div>
 
+    <!-- 2. Satır: Sadece Aktif Başlık Satırı -->
+    <div class="title-bar">
+      <div class="title-content" id="current-title">Yükleniyor...</div>
+    </div>
+
     <div class="canvas-container" id="canvas-container">
       <div class="book-stage" id="book-stage">
         <div class="book-wrapper" id="book-wrapper">
@@ -872,23 +763,6 @@
     <span id="fs-counter" style="font-size: 0.85rem; font-weight: 600;">1 / 627</span>
     <button class="btn-toolbar" id="fs-next" style="padding: 0.3rem 0.6rem; color: #ffffff; background: rgba(255,255,255,0.15);">▶</button>
     <button class="btn-toolbar" id="fs-close" style="padding: 0.3rem 0.6rem; color: #f87171; background: rgba(255,255,255,0.15);">✕ Çık</button>
-  </div>
-
-  <!-- Arama Modal Penceresi -->
-  <div class="modal-overlay" id="search-modal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="search-box" class="modal-search-input" placeholder="Mevzuat metinlerinde arayın (örn: nöbet, şua, izin)..." autocomplete="off" />
-        <button id="close-search-btn" class="close-btn" style="display: block;">&times;</button>
-      </div>
-      <div class="modal-body" id="search-results">
-        <div style="text-align: center; color: var(--text-muted); margin-top: 30px;">Aramak istediğiniz terimi yazın.</div>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -1004,11 +878,6 @@
     const closeSidebarBtn = document.getElementById("close-sidebar-btn");
     const tocContainer = document.getElementById("toc-container");
     const sidebarFilter = document.getElementById("sidebar-filter");
-    const searchModal = document.getElementById("search-modal");
-    const searchBox = document.getElementById("search-box");
-    const searchResults = document.getElementById("search-results");
-    const openSearchBtn = document.getElementById("open-search-btn");
-    const closeSearchBtn = document.getElementById("close-search-btn");
     const bookStage = document.getElementById("book-stage");
     const bookWrapper = document.getElementById("book-wrapper");
     const flipOverlay = document.getElementById("flip-overlay");
@@ -1195,7 +1064,7 @@
       currentPage = pageNo;
       window.location.hash = currentPage;
 
-      currentTitle.textContent = `Sayfa ${currentPage} — ${findCurrentSectionTitle(currentPage)}`;
+      currentTitle.textContent = `${findCurrentSectionTitle(currentPage)} (Sayfa ${currentPage})`;
       pageInput.value = currentPage;
 
       prevBtn.disabled = (currentPage <= 1);
@@ -1309,77 +1178,13 @@
     fullscreenBtn.addEventListener('click', toggleFullscreen);
     fsClose.addEventListener('click', toggleFullscreen);
 
-    // Arama İşlevleri
-    openSearchBtn.addEventListener("click", () => {
-      searchModal.classList.add("active");
-      searchBox.focus();
-    });
-
-    closeSearchBtn.addEventListener("click", () => {
-      searchModal.classList.remove("active");
-    });
-
-    searchModal.addEventListener("click", (e) => {
-      if (e.target === searchModal) searchModal.classList.remove("active");
-    });
-
-    searchBox.addEventListener("input", (e) => {
-      const q = e.target.value.trim();
-      const normQ = normalizeTr(q);
-
-      if (normQ.length < 2) {
-        searchResults.innerHTML = '<div style="text-align: center; color: var(--text-muted); margin-top: 30px;">En az 2 harf girin.</div>';
-        return;
-      }
-
-      const results = searchIndex.filter(item => item._norm && item._norm.includes(normQ)).slice(0, 30);
-
-      if (results.length === 0) {
-        searchResults.innerHTML = '<div style="text-align: center; color: var(--text-muted); margin-top: 30px;">Eşleşen sonuç bulunamadı.</div>';
-        return;
-      }
-
-      let html = "";
-      results.forEach(r => {
-        const rawText = r.text;
-        const normText = r._norm;
-        const idx = normText.indexOf(normQ);
-
-        let snippet = "";
-        if (idx !== -1) {
-          const start = Math.max(0, idx - 50);
-          const end = Math.min(rawText.length, idx + normQ.length + 50);
-          snippet = (start > 0 ? "..." : "") + rawText.substring(start, end) + (end < rawText.length ? "..." : "");
-          const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-          snippet = snippet.replace(re, '<mark>$1</mark>');
-        } else {
-          snippet = rawText.substring(0, 100) + "...";
-        }
-
-        html += `
-          <div class="search-result-item" onclick="goToSearchResult(${r.page})">
-            <div class="search-result-title">Sayfa ${r.page} — ${findCurrentSectionTitle(r.page)}</div>
-            <div class="search-result-text">${snippet}</div>
-          </div>
-        `;
-      });
-
-      searchResults.innerHTML = html;
-    });
-
-    window.goToSearchResult = function(pageNo) {
-      searchModal.classList.remove("active");
-      goToPage(pageNo);
-    };
-
     // Klavye Kısayolları
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT") return;
       if (e.key === "ArrowLeft") { e.preventDefault(); loadPage(currentPage - 1, 'prev'); }
       if (e.key === "ArrowRight") { e.preventDefault(); loadPage(currentPage + 1, 'next'); }
       if (e.key === "Escape") {
-        if (searchModal.classList.contains("active")) searchModal.classList.remove("active");
-        else if (isFullscreen) toggleFullscreen();
+        if (isFullscreen) toggleFullscreen();
         else toggleDrawer(false);
       }
       if (e.key === "f" || e.key === "F") {
