@@ -740,9 +740,127 @@
         font-size: 0.8rem;
       }
     }
+
+    /* ==========================================================================
+       GEÇİCİ PASİF MODU ("Çok Yakında")
+       Tekrar aktif etmek için:
+       1) Aşağıdaki #sidebar, #viewer, #sidebar-overlay kuralını kaldırın veya yorum satırı yapın.
+       2) body içerisindeki #coming-soon-overlay div'ini kaldırın.
+       ========================================================================== */
+    #sidebar, #viewer, #sidebar-overlay, #fs-floating-controls {
+      display: none !important;
+    }
+
+    #coming-soon-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-main);
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .cs-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      max-width: 440px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .cs-icon-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(2, 132, 199, 0.1);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cs-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      background: rgba(2, 132, 199, 0.1);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .cs-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .cs-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .cs-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      margin-top: 0.5rem;
+    }
+
+    .cs-btn:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 <body>
+
+  <!-- GEÇİCİ PASİF / ÇOK YAKINDA EKRANI -->
+  <div id="coming-soon-overlay">
+    <div class="cs-card">
+      <div class="cs-icon-box">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </div>
+      <span class="cs-badge">Geliştirme Aşamasında</span>
+      <h1 class="cs-title">Çok Yakında</h1>
+      <p class="cs-desc">Bu içerik güncellenmekte olup çok yakında yeniden erişime açılacaktır.</p>
+      <a href="index.html" class="cs-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Ana Sayfaya Dön
+      </a>
+    </div>
+  </div>
 
   <!-- Mobil Menü Karartması -->
   <div id="sidebar-overlay"></div>
