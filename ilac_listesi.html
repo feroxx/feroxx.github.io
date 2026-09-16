@@ -93,11 +93,25 @@
             font-size: 13px;
         }
 
+        /* Yeni Eklenen Flex Kapsayıcılar */
+        .arama-filtre-alani {
+            display: flex;
+            flex-wrap: wrap; /* Alana sığmazsa alt satıra temizce inmesine izin ver */
+            gap: 12px;       /* Input ve buton grubu arasındaki boşluk */
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .buton-grubu {
+            display: flex;
+            gap: 8px;          /* Butonların kendi aralarındaki boşluk */
+            flex-wrap: nowrap; /* Butonların asla birbirinden ayrılmamasını sağlar */
+        }
+
         #aramaKutusu {
             width: 100%;
             max-width: 300px;
             padding: 10px 12px;
-            margin-bottom: 15px;
             border: 1px solid #d1d5db;
             border-radius: 6px;
             box-sizing: border-box;
@@ -111,7 +125,6 @@
 
         .filter-btn {
             padding: 8px 14px;
-            margin: 0 6px 16px 0;
             border: 1px solid #d1d5db;
             border-radius: 6px;
             background-color: #ffffff;
@@ -119,6 +132,7 @@
             cursor: pointer;
             font-weight: 500;
             transition: all 0.2s ease;
+			white-space: nowrap;
         }
 
         .filter-btn:hover {
@@ -169,7 +183,7 @@
         </div>
         <div class="meta-item">
             <span>Güncellenme Tarihi:</span>
-            <strong>01.09.2026</strong>
+            <strong>15.09.2026</strong>
         </div>
     </div>
 
@@ -184,11 +198,16 @@
 </div>
 
 <h2>İlaç Listesi</h2>
-<div>
+<!-- Arama ve Filtreleme Alanını Flex Container İçine Alıyoruz -->
+<div class="arama-filtre-alani">
     <input type="text" id="aramaKutusu" onkeyup="filtrele()" placeholder="İlaç ara...">
-    <button class="filter-btn" onclick="filtreleATC(['J01','P01AB'])">AB</button>
-    <button class="filter-btn" onclick="filtreleATC('M01A')">NSAİ</button>
-    <button class="filter-btn" onclick="filtreleATC('A02BC')">PPİ</button>
+    
+    <!-- Butonları birbirinden kopmamaları için grupluyoruz -->
+    <div class="buton-grubu">
+        <button class="filter-btn" onclick="filtreleATC(['J01','P01AB'])">AB</button>
+        <button class="filter-btn" onclick="filtreleATC('M01A')">NSAİ</button>
+        <button class="filter-btn" onclick="filtreleATC('A02BC')">PPİ</button>
+    </div>
 </div>
 
 <table class="dataframe ilac-tablosu" id="ilacTablosu">
@@ -200,28 +219,32 @@
   </thead>
   <tbody>
     <tr>
-      <td>LORIXAM 8 MG FILM KAPLI TABLET (10 ADET</td>
-      <td>M01AC05</td>
+      <td>DEXFULL SR 75 MG 20 FILM TABLET</td>
+      <td>M01AE17</td>
+    </tr>
+    <tr>
+      <td>SEFSIDAL 200 MG FILM TABLET (14 TABLET)</td>
+      <td>J01DD13</td>
+    </tr>
+    <tr>
+      <td>INCEPTUM 500 MG 10 FILM TABLET</td>
+      <td>J01DC02</td>
     </tr>
     <tr>
       <td>DOLELAC 500 MG FILM KAPLI TABLET (14 TABLET)</td>
       <td>M01AB08</td>
     </tr>
     <tr>
-      <td>KLAMOKS FORT 312,5 MG ORAL SUSPANSIYON HAZIRLAMAK ICIN KURU TOZ 100 ML</td>
-      <td>J01CR02</td>
+      <td>IBUCOLD 200 MG/30 MG FILM KAPLI TABLET (30 TB)</td>
+      <td>M01AE51</td>
     </tr>
     <tr>
-      <td>LARGOPEN 500 MG KAPSUL (16 KAPSUL)</td>
-      <td>J01CA04</td>
+      <td>ENCEF 600 MG FILM KAPLI TABLET (7 ADET)</td>
+      <td>J01DD15</td>
     </tr>
     <tr>
-      <td>SEFBAKTAM 1G/1G IM/IV ENJEKSIYONLUK COZELTI ICIN TOZ ICEREN FLAKON (1 ADET FLAKON+COZUCU)</td>
-      <td>J01DD62</td>
-    </tr>
-    <tr>
-      <td>TEICOJECT 400 MG IM/IV ENJEKSIYONLUK COZELTI HAZIRLAMAK ICIN TOZ VE COZUCU</td>
-      <td>J01XA02</td>
+      <td>LORIXAM 8 MG FILM KAPLI TABLET (10 ADET</td>
+      <td>M01AC05</td>
     </tr>
     <tr>
       <td>TILAC 400 MG 14 FILM KAPLI TABLET</td>
@@ -3393,7 +3416,7 @@ function filtreleATC(atcKodu) {
 
     for (i = 1; i < tr.length; i++) {
         tr[i].style.display = "none";
-        td = tr[i].getElementsByTagName("td")[1];
+        td = tr[i].getElementsByTagName("td")[1]; // ATC Kodu sütunu
         if (td) {
             txtDeger = td.textContent || td.innerText;
             if (codes.some(code => txtDeger.startsWith(code))) {
@@ -3401,6 +3424,7 @@ function filtreleATC(atcKodu) {
             }
         }
     }
+    // Arama kutusunu sıfırla
     document.getElementById("aramaKutusu").value = "";
 }
 </script>
