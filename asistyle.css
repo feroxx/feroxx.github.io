@@ -58,7 +58,7 @@
         .header h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.3rem; }
         .header p { color: #bfdbfe; font-size: 0.95rem; }
 
-        /* --- GÜNCELLENMİŞ FORM SECTION --- */
+/* --- GÜNCELLENMİŞ FORM SECTION --- */
 .form-section {
     padding: 1.5rem !important;
     border-bottom: 1px solid var(--border) !important;
@@ -78,12 +78,113 @@
     grid-column: 1 / -1 !important; /* Bunlar alt satırı tamamen kaplasın */
 }
 
-
-/* Toggle switch ve Butonun her zaman en altta ve tam genişlikte kalmasını garantiye alalım */
-.toggle-wrapper, #calculateBtn {
-    grid-column: 1 / -1;
+/* Yenidoğan / Bebek Bilgileri Kartı */
+.baby-info-card {
+    grid-column: 1 / -1 !important;
+    background-color: #fffdf5;
+    border: 1px solid #fde68a;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-top: 0.25rem;
+    box-sizing: border-box;
+    width: 100%;
 }
 
+.baby-info-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #92400e;
+    margin-bottom: 0.85rem;
+}
+
+.baby-info-header i {
+    color: #d97706;
+    font-size: 1.05rem;
+}
+
+.baby-info-body {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1.25rem;
+    align-items: start;
+}
+
+@media (max-width: 640px) {
+    .baby-info-body {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+}
+
+.weight-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.weight-input-wrapper input {
+    max-width: 140px;
+    background: #ffffff;
+    font-weight: 600;
+}
+
+.weight-unit {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.weight-warning {
+    color: #b45309;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.weight-warning i {
+    color: #d97706;
+}
+
+.radio-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 46px;
+}
+
+.radio-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-main);
+    user-select: none;
+}
+
+.radio-label input[type="radio"] {
+    accent-color: var(--primary);
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
+.required {
+    color: #ef4444;
+    font-weight: 700;
+}
 
         .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
         .input-group label { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }

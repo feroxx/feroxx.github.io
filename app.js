@@ -43,8 +43,35 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('dobModal').classList.remove('active');
         });
 
+        const weightInput = document.getElementById('birthWeight');
+        const weightWarning = document.getElementById('weightWarning');
+        const updateWeightWarning = () => {
+            const val = parseInt(weightInput?.value) || 0;
+            if (val > 0 && val < 2000) {
+                weightWarning?.classList.remove('hidden');
+            } else {
+                weightWarning?.classList.add('hidden');
+            }
+        };
+
+        if (weightInput) {
+            weightInput.addEventListener('input', () => {
+                updateWeightWarning();
+                calculateVaccines();
+            });
+            weightInput.addEventListener('change', () => {
+                updateWeightWarning();
+                calculateVaccines();
+            });
+        }
+
+        document.querySelectorAll('input[name="maternalHbsag"]').forEach(r => {
+            r.addEventListener('change', calculateVaccines);
+        });
+
         document.getElementById('calculateBtn').addEventListener('click', calculateVaccines);
         document.getElementById('vaccineStatus').addEventListener('change', calculateVaccines);
+        updateWeightWarning();
         calculateVaccines();
     });
 
@@ -53,6 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const gender = document.getElementById('gender').value;
         const vaccineStatus = document.getElementById('vaccineStatus').value; // 'tam', 'eksik', 'hic'
         const includeSpecial = document.getElementById('includeSpecial').checked;
+        const birthWeight = parseInt(document.getElementById('birthWeight')?.value) || 3000;
+        const maternalHbsag = document.querySelector('input[name="maternalHbsag"]:checked')?.value || 'negatif';
         
         let totalMonths = 0;
         let badgeTextPrefix = "";
@@ -81,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (vaccineStatus === 'eksik' || vaccineStatus === 'hic') {
             // Catch-up / Yakalama Takvimi Algoritması
-            processedVaccines = calculateCatchUpVaccines(totalMonths, baseDob, vaccineStatus, includeSpecial);
+            processedVaccines = calculateCatchUpVaccines(totalMonths, baseDob, vaccineStatus, includeSpecial, birthWeight, maternalHbsag);
         } else {
             // Tam Aşılı Takvim (1 Aylık Pencere ve Geçmiş vs Gelecek Ayrımı)
             const addMonths = (date, m) => {
@@ -90,7 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return d.toLocaleDateString('tr-TR');
             };
 
-            routineVaccines.forEach(v => {
+            const currentRoutineVaccines = getRoutineVaccines(birthWeight, maternalHbsag);
+
+            currentRoutineVaccines.forEach(v => {
                 const targetDate = new Date(baseDob);
                 targetDate.setMonth(targetDate.getMonth() + v.month);
                 
@@ -117,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ...v,
                     isSpecial: false,
                     statusType: statusType,
-                    dateRange: `Planlanan Tarih: ${targetDate.toLocaleDateString('tr-TR')}`
+                    dateRange: v.month === 0 ? `Planlanan Tarih: Doğumda (İlk Saatler)` : `Planlanan Tarih: ${targetDate.toLocaleDateString('tr-TR')}`
                 });
             });
 
@@ -146,10 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         
-        renderResults(processedVaccines, totalMonths, gender, vaccineStatus, badgeTextPrefix);
+        renderResults(processedVaccines, totalMonths, gender, vaccineStatus, badgeTextPrefix, birthWeight, maternalHbsag);
     };
 
-    const renderResults = (vaccines, totalMonths, gender, vaccineStatus, badgeTextPrefix) => {
+    const renderResults = (vaccines, totalMonths, gender, vaccineStatus, badgeTextPrefix, birthWeight = 3000, maternalHbsag = 'negatif') => {
         const container = document.getElementById('resultsContainer');
         
         if (vaccines.length === 0) {
@@ -183,19 +214,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const dateStr = new Date().toLocaleDateString('tr-TR');
         let statusLabel = 'Tam Aşılı';
         if (vaccineStatus === 'eksik') statusLabel = 'Eksik Aşılı (Yakalama Takvimi)';
-        if (vaccineStatus === 'hic') statusLabel = 'Hiç Aşılanmamış (Hızlandırılmış Takvim)';
+        let hbsagText = 'HBsAg (-)';
+        if (maternalHbsag === 'pozitif') hbsagText = 'HBsAg (+) Pozitif';
+        if (maternalHbsag === 'bilinmiyor') hbsagText = 'HBsAg (?) Bilinmiyor';
+
+        const weightText = `${birthWeight}g`;
 
         container.innerHTML = `
             <div class="results-header">
                 <div class="summary-badge">
                     <i class="fa-solid fa-clipboard-user"></i>
-                    ${badgeTextPrefix} - ${genderText} Çocuğu (${statusLabel})
+                    ${badgeTextPrefix} - ${genderText} Çocuğu (${statusLabel}) | ${weightText} | Anne: ${hbsagText}
                 </div>
                 <button onclick="downloadPDF()" class="btn-pdf"><i class="fa-solid fa-file-pdf"></i> PDF Olarak İndir</button>
             </div>
             
             <div id="pdfExportArea">
-                <h2 class="pdf-title">Çocukluk Çağı Aşı Takvimi Raporu <br><span style="font-size:0.9rem; color:#64748b;">Oluşturulma: ${dateStr} | Durum: ${statusLabel} | Hasta: ${badgeTextPrefix} ${genderText}</span></h2>
+                <h2 class="pdf-title">Çocukluk Çağı Aşı Takvimi Raporu <br><span style="font-size:0.9rem; color:#64748b;">Oluşturulma: ${dateStr} | Durum: ${statusLabel} | Hasta: ${badgeTextPrefix} ${genderText} (Doğum Kilosu: ${weightText}, Anne ${hbsagText})</span></h2>
                 <div class="vaccine-grid" id="vaccineGrid"></div>
             </div>
         `;

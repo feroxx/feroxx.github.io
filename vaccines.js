@@ -2,29 +2,250 @@
  * AHEF Aşı Asistanı - Aşı Verileri ve Algoritma Motoru
  */
 
-const routineVaccines = [
-        { month: 0, name: "Hep-B (1. Doz)", desc: "Doğumda uygulanır.", code: "hepb_1", doseInfo: "1. Doz / 3" },
-        { month: 2, name: "Hep-B (2. Doz)", desc: "2. Ay sonu rutin aşısı.", code: "hepb_2", doseInfo: "2. Doz / 3" },
-        { month: 2, name: "BCG", desc: "Verem aşısı. 2. Ay sonu.", code: "bcg", doseInfo: "Tek Doz (1/1)" },
-        { month: 2, name: "KPA (1. Doz)", desc: "Konjuge Pnömokok Aşısı.", code: "kpa_1", doseInfo: "1. Doz / 3" },
-        { month: 2, name: "DaBT-İPA-Hib-HepB (1. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_1", doseInfo: "1. Doz / 5" },
-        { month: 4, name: "KPA (2. Doz)", desc: "Konjuge Pnömokok Aşısı.", code: "kpa_2", doseInfo: "2. Doz / 3" },
-        { month: 4, name: "DaBT-İPA-Hib-HepB (2. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_2", doseInfo: "2. Doz / 5" },
-        { month: 6, name: "DaBT-İPA-Hib-HepB (3. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_3", doseInfo: "3. Doz / 5" },
-        { month: 6, name: "OPA (1. Doz)", desc: "Oral Polio Aşısı.", code: "opa_1", doseInfo: "1. Doz / 2" },
-        { month: 9, name: "KKK (Ek Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak ek dozu.", code: "kkk_ek", doseInfo: "Ek Doz / 3" },
-        { month: 12, name: "KPA (Rapel)", desc: "Konjuge Pnömokok Pekiştirme.", code: "kpa_rapel", doseInfo: "3. Doz / 3 (Rapel)" },
-        { month: 12, name: "Suçiçeği (1. Doz)", desc: "1 Yaş rutin aşısı.", code: "sucicegi_1", doseInfo: "1. Doz / 2" },
-        { month: 12, name: "KKK (1. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak.", code: "kkk_1", doseInfo: "1. Doz / 2" },
-        { month: 18, name: "DaBT-İPA-Hib-HepB (Rapel)", desc: "Karma aşı pekiştirme dozu.", code: "karma_rapel", doseInfo: "4. Doz / 5 (Rapel)" },
-        { month: 18, name: "OPA (2. Doz)", desc: "Oral Polio Aşısı pekiştirme.", code: "opa_2", doseInfo: "2. Doz / 2 (Rapel)" },
-        { month: 18, name: "Hep-A (1. Doz)", desc: "Hepatit A aşısı başlangıcı.", code: "hepa_1", doseInfo: "1. Doz / 2" },
-        { month: 24, name: "Hep-A (2. Doz)", desc: "Hepatit A aşısı ikinci dozu.", code: "hepa_2", doseInfo: "2. Doz / 2" },
-        { month: 48, name: "DaBT-İPA (Rapel)", desc: "4'lü Karma aşı pekiştirme.", code: "dabt_ipa_rapel", doseInfo: "5. Doz / 5 (Rapel)" },
-        { month: 48, name: "KKK (2. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak 2. dozu.", code: "kkk_2", doseInfo: "2. Doz / 2" },
-        { month: 48, name: "Suçiçeği (2. Doz)", desc: "48. Ay (4 Yaş) rutin pekiştirme dozu.", code: "sucicegi_2", doseInfo: "2. Doz / 2" },
-        { month: 156, name: "Td (Rapel)", desc: "Erişkin Tetanos Difteri.", code: "td_rapel", doseInfo: "Rapel (1/1)" }
-    ];
+const otherRoutineVaccines = [
+    { month: 2, name: "BCG", desc: "Verem aşısı. 2. Ay sonu.", code: "bcg", doseInfo: "Tek Doz (1/1)" },
+    { month: 2, name: "KPA (1. Doz)", desc: "Konjuge Pnömokok Aşısı.", code: "kpa_1", doseInfo: "1. Doz / 3" },
+    { month: 2, name: "DaBT-İPA-Hib-HepB (1. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_1", doseInfo: "1. Doz / 5" },
+    { month: 4, name: "KPA (2. Doz)", desc: "Konjuge Pnömokok Aşısı.", code: "kpa_2", doseInfo: "2. Doz / 3" },
+    { month: 4, name: "DaBT-İPA-Hib-HepB (2. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_2", doseInfo: "2. Doz / 5" },
+    { month: 6, name: "DaBT-İPA-Hib-HepB (3. Doz)", desc: "5'li/6'lı Karma aşı.", code: "karma_3", doseInfo: "3. Doz / 5" },
+    { month: 6, name: "OPA (1. Doz)", desc: "Oral Polio Aşısı.", code: "opa_1", doseInfo: "1. Doz / 2" },
+    { month: 9, name: "KKK (Ek Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak ek dozu.", code: "kkk_ek", doseInfo: "Ek Doz / 3" },
+    { month: 12, name: "KPA (Rapel)", desc: "Konjuge Pnömokok Pekiştirme.", code: "kpa_rapel", doseInfo: "3. Doz / 3 (Rapel)" },
+    { month: 12, name: "Suçiçeği (1. Doz)", desc: "1 Yaş rutin aşısı.", code: "sucicegi_1", doseInfo: "1. Doz / 2" },
+    { month: 12, name: "KKK (1. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak.", code: "kkk_1", doseInfo: "1. Doz / 2" },
+    { month: 18, name: "DaBT-İPA-Hib-HepB (Rapel)", desc: "Karma aşı pekiştirme dozu.", code: "karma_rapel", doseInfo: "4. Doz / 5 (Rapel)" },
+    { month: 18, name: "OPA (2. Doz)", desc: "Oral Polio Aşısı pekiştirme.", code: "opa_2", doseInfo: "2. Doz / 2 (Rapel)" },
+    { month: 18, name: "Hep-A (1. Doz)", desc: "Hepatit A aşısı başlangıcı.", code: "hepa_1", doseInfo: "1. Doz / 2" },
+    { month: 24, name: "Hep-A (2. Doz)", desc: "Hepatit A aşısı ikinci dozu.", code: "hepa_2", doseInfo: "2. Doz / 2" },
+    { month: 48, name: "DaBT-İPA (Rapel)", desc: "4'lü Karma aşı pekiştirme.", code: "dabt_ipa_rapel", doseInfo: "5. Doz / 5 (Rapel)" },
+    { month: 48, name: "KKK (2. Doz)", desc: "Kızamık, Kızamıkçık, Kabakulak 2. dozu.", code: "kkk_2", doseInfo: "2. Doz / 2" },
+    { month: 48, name: "Suçiçeği (2. Doz)", desc: "48. Ay (4 Yaş) rutin pekiştirme dozu.", code: "sucicegi_2", doseInfo: "2. Doz / 2" },
+    { month: 156, name: "Td (Rapel)", desc: "Erişkin Tetanos Difteri.", code: "td_rapel", doseInfo: "Rapel (1/1)" }
+];
+
+/**
+ * Sağlık Bakanlığı ve Pediatri Kılavuzlarına Göre Doğum Ağırlığı & Anne HBsAg Hepatit B Protokolü:
+ * - Hep B aşısı doğumdan sonra en geç 72 saat içinde (tercihen ilk 24 saat) uygulanır.
+ * - Doğum ağırlığı >= 2000g bebeklere rutin uygulanır.
+ * - Anne HBsAg (+) ise: İlk 12 saat içinde aşı + en geç 7 gün içinde HBIG (Hepatit B İmmünglobulini) uygulanır.
+ * - Anne HBsAg (+) ve < 2000g ise: İlk 12 saatte aşı + HBIG yapılır. Bu ilk doz seriye sayılmaz; 1, 2 ve 6. aylarda 3 doz daha uygulanarak toplam 4 doz aşı tamamlanır.
+ * - Anne HBsAg (-) ve < 2000g ise: Doğumda aşı ertelenir. Bebek 2000g'a ulaştığında veya 1. ayın sonunda 1. doz yapılır, 2. ve 6. ayda devam edilir.
+ * - Anne HBsAg bilinmiyor ise: >=2000g ilk 12 saatte aşı; <2000g ilk 12 saatte aşı + HBIG ve 4 doz protokolü uygulanır.
+ */
+const getHepatitisBVaccines = (birthWeight = 3000, maternalHbsag = 'negatif') => {
+    const isLowWeight = birthWeight < 2000;
+    const list = [];
+
+    if (maternalHbsag === 'pozitif') {
+        if (isLowWeight) {
+            // Anne HBsAg (+) ve < 2000g: 4 Doz Protokolü (0, 1, 2, 6. aylar) + HBIG
+            list.push({
+                month: 0,
+                name: "Hep-B (Doğum Dozu) + HBIG (İmmünglobulin)",
+                desc: "<span class='warning-text'>Anne HBsAg (+) & &lt;2000g:</span> İlk 12 saat içinde 1. doz aşı ve en geç 7 gün içinde farklı ekstremiteye HBIG uygulanmalıdır. Düşük doğum ağırlığı nedeniyle bu ilk doz rutin seriye SAYILMAZ.",
+                dosage: "İlk 12 saat içinde",
+                code: "hepb_birth_preterm",
+                doseInfo: "Doğum Dozu (0/4) + HBIG",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 1,
+                name: "Hep-B (1. Doz - Seri Başlangıcı)",
+                desc: "Doğum dozundan 1 ay sonra 3 dozluk tam seri başlatılır (1. Doz).",
+                dosage: "1. ay sonunda (1. Doz)",
+                code: "hepb_1_preterm",
+                doseInfo: "1. Doz / 4",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 2,
+                name: "Hep-B (2. Doz)",
+                desc: "1. aydaki dozdan en az 1 ay sonra 2. doz uygulanır (3. ayda Anti-HBs kontrolü).",
+                dosage: "2. ay sonunda (2. Doz)",
+                code: "hepb_2_preterm",
+                doseInfo: "2. Doz / 4",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 6,
+                name: "Hep-B (3. Doz - Son Doz)",
+                desc: "Serinin son dozu tamamlanır (Toplam 4 doz aşı). 9-12. aylarda Anti-HBs serolojik kontrolü önerilir.",
+                dosage: "6. ay sonunda (3. Doz)",
+                code: "hepb_3_preterm",
+                doseInfo: "3. Doz / 4 (Son Doz)",
+                isHbsagProtocol: true
+            });
+        } else {
+            // Anne HBsAg (+) ve >= 2000g: 3 Doz (0, 2, 6. aylar) + HBIG
+            list.push({
+                month: 0,
+                name: "Hep-B (1. Doz) + HBIG (İmmünglobulin)",
+                desc: "<span class='warning-text'>Anne HBsAg (+):</span> Doğumdan sonraki ilk 12 saat içinde Hep-B aşısı ve en geç 7 gün içinde farklı ekstremiteye HBIG uygulanmalıdır. 9-12. aylarda Anti-HBs ve HBsAg kontrolü yapılır.",
+                dosage: "İlk 12 saat içinde",
+                code: "hepb_1_pos",
+                doseInfo: "1. Doz / 3 + HBIG",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 2,
+                name: "Hep-B (2. Doz)",
+                desc: "2. Ay sonu rutin dozu (1. dozdan en az 1 ay sonra).",
+                dosage: "2. ay sonunda",
+                code: "hepb_2_pos",
+                doseInfo: "2. Doz / 3",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 6,
+                name: "Hep-B (3. Doz)",
+                desc: "6. Ay sonu rutin pekiştirmesi (Karma aşı içinde). 9-12. aylarda Anti-HBs ve HBsAg kontrolü önerilir.",
+                dosage: "6. ay sonunda",
+                code: "hepb_3_pos",
+                doseInfo: "3. Doz / 3",
+                isHbsagProtocol: true
+            });
+        }
+    } else if (maternalHbsag === 'bilinmiyor') {
+        if (isLowWeight) {
+            // Anne HBsAg Bilinmiyor ve < 2000g:
+            list.push({
+                month: 0,
+                name: "Hep-B (Doğum Dozu) + HBIG [Anne Bilinmiyor / <2000g]",
+                desc: "<span class='warning-text'>Anne Durumu Bilinmiyor & &lt;2000g:</span> İlk 12 saatte aşı yapılır. Anne test sonucu 12 saatte çıkmazsa HBIG uygulanır. Doğum dozu seriye sayılmaz; 1, 2 ve 6. aylarda 3 doz daha yapılır.",
+                dosage: "İlk 12 saat içinde",
+                code: "hepb_birth_unk_preterm",
+                doseInfo: "Doğum Dozu (0/4) + HBIG",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 1,
+                name: "Hep-B (1. Doz)",
+                desc: "Doğum dozundan 1 ay sonra başlatılan 3 dozluk serinin 1. dozu.",
+                dosage: "1. ay sonunda",
+                code: "hepb_1_unk_preterm",
+                doseInfo: "1. Doz / 4",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 2,
+                name: "Hep-B (2. Doz)",
+                desc: "2. Ay sonu aşısı.",
+                dosage: "2. ay sonunda",
+                code: "hepb_2_unk_preterm",
+                doseInfo: "2. Doz / 4",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 6,
+                name: "Hep-B (3. Doz)",
+                desc: "6. Ay sonu aşısı (Serinin son dozu).",
+                dosage: "6. ay sonunda",
+                code: "hepb_3_unk_preterm",
+                doseInfo: "3. Doz / 4 (Son Doz)",
+                isHbsagProtocol: true
+            });
+        } else {
+            // Anne HBsAg Bilinmiyor ve >= 2000g:
+            list.push({
+                month: 0,
+                name: "Hep-B (1. Doz) [Anne Durumu Bilinmiyor]",
+                desc: "<span class='warning-text'>Anne HBsAg Bilinmiyor:</span> İlk 12 saat içinde 1. doz aşı uygulanır. Anneden acil HBsAg testi istenir; pozitif çıkarsa en geç 7 gün içinde HBIG yapılır.",
+                dosage: "İlk 12 saat içinde",
+                code: "hepb_1_unk",
+                doseInfo: "1. Doz / 3",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 2,
+                name: "Hep-B (2. Doz)",
+                desc: "2. Ay sonu rutin aşısı.",
+                dosage: "2. ay sonunda",
+                code: "hepb_2_unk",
+                doseInfo: "2. Doz / 3",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 6,
+                name: "Hep-B (3. Doz)",
+                desc: "6. Ay sonu rutin aşısı (Karma şema).",
+                dosage: "6. ay sonunda",
+                code: "hepb_3_unk",
+                doseInfo: "3. Doz / 3",
+                isHbsagProtocol: true
+            });
+        }
+    } else {
+        // maternalHbsag === 'negatif'
+        if (isLowWeight) {
+            // Anne HBsAg (-) ve < 2000g: Doğumda aşı ertelenir, 2000g'a ulaştığında veya 1. ay sonunda başlar
+            list.push({
+                month: 1,
+                name: "Hep-B (1. Doz - 2000g / 1. Ay Sonu)",
+                desc: "Anne HBsAg (-) ve doğum ağırlığı &lt;2000g: Doğumda aşı uygulanmaz. Bebek 2000 gr'a ulaştığında veya 1. ayın sonunda 1. doz Hep-B uygulanır.",
+                dosage: "2000g olunca veya 1. ay sonunda",
+                code: "hepb_1_neg_preterm",
+                doseInfo: "1. Doz / 3",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 2,
+                name: "Hep-B (2. Doz)",
+                desc: "2. Ay sonu rutin aşısı (1. dozdan en az 1 ay sonra).",
+                dosage: "2. ay sonunda",
+                code: "hepb_2_neg_preterm",
+                doseInfo: "2. Doz / 3",
+                isHbsagProtocol: true
+            });
+            list.push({
+                month: 6,
+                name: "Hep-B (3. Doz)",
+                desc: "6. Ay sonu rutin aşısı (Karma şema).",
+                dosage: "6. ay sonunda",
+                code: "hepb_3_neg_preterm",
+                doseInfo: "3. Doz / 3",
+                isHbsagProtocol: true
+            });
+        } else {
+            // Anne HBsAg (-) ve >= 2000g: Standart Rutin
+            list.push({
+                month: 0,
+                name: "Hep-B (1. Doz)",
+                desc: "Doğumdan sonra tercihen ilk 24 saatte, en geç 72 saat içinde uygulanmalıdır.",
+                dosage: "İlk 24-72 saat içinde",
+                code: "hepb_1",
+                doseInfo: "1. Doz / 3"
+            });
+            list.push({
+                month: 2,
+                name: "Hep-B (2. Doz)",
+                desc: "2. Ay sonu rutin aşısı.",
+                dosage: "2. ay sonunda",
+                code: "hepb_2",
+                doseInfo: "2. Doz / 3"
+            });
+            list.push({
+                month: 6,
+                name: "Hep-B (3. Doz)",
+                desc: "6. Ay sonu rutin aşısı (Karma şema).",
+                dosage: "6. ay sonunda",
+                code: "hepb_3",
+                doseInfo: "3. Doz / 3"
+            });
+        }
+    }
+
+    return list;
+};
+
+const getRoutineVaccines = (birthWeight = 3000, maternalHbsag = 'negatif') => {
+    const hepB = getHepatitisBVaccines(birthWeight, maternalHbsag);
+    const combined = [...hepB, ...otherRoutineVaccines];
+    combined.sort((a, b) => a.month - b.month);
+    return combined;
+};
+
+const routineVaccines = getRoutineVaccines(3000, 'negatif');
 
     const getSpecialVaccines = (monthAge, baseDob) => {
         const specials = [];
@@ -178,7 +399,7 @@ const routineVaccines = [
      * Sağlık Bakanlığı GBP Kılavuzlarına göre
      * Eksik Aşılı veya Hiç Aşılanmamış Çocuklar için Hızlandırılmış Yakalama (Catch-up) Takvimi
      */
-    const calculateCatchUpVaccines = (currentMonth, baseDob, status, includeSpecial) => {
+    const calculateCatchUpVaccines = (currentMonth, baseDob, status, includeSpecial, birthWeight = 3000, maternalHbsag = 'negatif') => {
         const catchUpList = [];
         const addMonths = (date, m) => {
             const d = new Date(date);
@@ -312,8 +533,17 @@ const routineVaccines = [
             });
         }
 
-        // 3. Hep-B (Hepatit B) - Eğer karma aşı içinde verilmiyorsa veya bağımsız Hep-B şeması
-        if (currentMonth >= 60) {
+        // 3. Hep-B (Hepatit B) - Eğer karma aşı içinde verilmiyorsa veya doğumda özel protokol
+        if (currentMonth === 0) {
+            const hepBVaccines = getHepatitisBVaccines(birthWeight, maternalHbsag);
+            hepBVaccines.forEach(hb => {
+                catchUpList.push({
+                    ...hb,
+                    dateRange: hb.month === 0 ? `Uygulama: Doğumda (İlk Saatler)` : `Planlanan Tarih: ${addMonths(baseDob, hb.month)}`,
+                    statusType: hb.month === 0 ? 'critical' : 'due'
+                });
+            });
+        } else if (currentMonth >= 60) {
             catchUpList.push({
                 name: "Hep-B (1. Telafi Dozu)",
                 month: currentMonth,

@@ -66,6 +66,43 @@
             </div>
         </div>
 
+        <!-- Yenidoğan / Bebek Bilgileri (Doğum Kilosu & Anne HBsAg Durumu) -->
+        <div class="baby-info-card">
+            <div class="baby-info-header">
+                <i class="fa-solid fa-circle-info"></i> Yenidoğan / Bebek Bilgileri
+            </div>
+            <div class="baby-info-body">
+                <div class="input-group">
+                    <label for="birthWeight">Doğum Kilosu <span class="required">*</span></label>
+                    <div class="weight-input-wrapper">
+                        <input type="number" id="birthWeight" value="3000" min="500" max="10000" step="50" placeholder="3000">
+                        <span class="weight-unit">gram</span>
+                    </div>
+                    <div id="weightWarning" class="weight-warning hidden">
+                        <i class="fa-solid fa-triangle-exclamation"></i> &lt;2000g — Özel Hepatit B protokolü uygulanacaktır
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Anne HBsAg Durumu <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="maternalHbsag" value="negatif" checked>
+                            <span>Negatif</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="maternalHbsag" value="pozitif">
+                            <span>Pozitif</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="maternalHbsag" value="bilinmiyor">
+                            <span>Bilinmiyor</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="toggle-wrapper">
             <label class="switch">
                 <input type="checkbox" id="includeSpecial" checked>
