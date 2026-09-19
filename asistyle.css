@@ -81,13 +81,16 @@
 /* Yenidoğan / Bebek Bilgileri Kartı */
 .baby-info-card {
     grid-column: 1 / -1 !important;
-    background-color: #fffdf5;
-    border: 1px solid #fde68a;
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    margin-top: 0.25rem;
-    box-sizing: border-box;
-    width: 100%;
+    background-color: #fffbeb !important;
+    border: 1.5px solid #fde68a !important;
+    border-radius: 12px !important;
+    padding: 1.25rem 1.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.25rem !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    display: block !important;
+    box-shadow: 0 1px 3px rgba(245, 158, 11, 0.08) !important;
 }
 
 .baby-info-header {

@@ -69,7 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
             r.addEventListener('change', calculateVaccines);
         });
 
-        document.getElementById('calculateBtn').addEventListener('click', calculateVaccines);
+        document.getElementById('calculateBtn').addEventListener('click', () => {
+            calculateVaccines();
+            const resultsContainer = document.getElementById('resultsContainer');
+            if (resultsContainer) {
+                resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
         document.getElementById('vaccineStatus').addEventListener('change', calculateVaccines);
         updateWeightWarning();
         calculateVaccines();
