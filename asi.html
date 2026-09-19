@@ -9,13 +9,13 @@
     <!-- html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="asistyle.css">
+    <link rel="stylesheet" href="asistyle.css?v=9">
 </head>
 <body>
 
 <div class="dashboard-container">
     <div class="header">
-        <img src="https://ahef.org.tr/upload/files/8424122c-a4bd-41bb-badd-ecafbc8dd05d.png" alt="AHEF Logosu">
+        <img src="ahef-logo.png" alt="AHEF Logosu">
         <div class="header-text">
             <h1>AHEF Çocukluk Çağı Aşı Asistanı</h1>
             <p>Ulusal aşı takvimi, yakalama (catch-up) ve detaylı özel aşı algoritmaları</p>
@@ -137,8 +137,16 @@
     </div>
 </div>
 
+<!-- PDF Yükleniyor Bildirim Katmanı -->
+<div id="pdfLoadingOverlay">
+    <div class="pdf-loading-box">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <span id="pdfLoadingText">PDF Hazırlanıyor, lütfen bekleyiniz...</span>
+    </div>
+</div>
+
 <!-- Aşı Mantığı ve Uygulama Betikleri -->
-<script src="vaccines.js"></script>
-<script src="app.js"></script>
+<script src="vaccines.js?v=9"></script>
+<script src="app.js?v=9"></script>
 </body>
 </html>
