@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nasıl Kullanılır? - Sıkça Sorulan Sorular</title>
+  <style>
+    :root {
+      --primary: #29385C;
+      --primary-light: #3d5180;
+      --primary-subtle: #edf2f9;
+      --accent: #1E88E5;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --bg: #F5F7FA;
+      --card-bg: #FFFFFF;
+      --border: #E5E7EB;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    .header-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 20px 16px;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .header-box h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .header-box p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* Arama Çubuğu */
+    .search-container {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      outline: none;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+    }
+
+    /* Kategori Filtreleri - 2 Satır */
+    .filter-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .filter-chip {
+      padding: 8px 4px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .filter-chip.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 4px rgba(41, 56, 92, 0.25);
+    }
+
+    /* Akordiyon Listesi */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .faq-item.active {
+      border-color: #cbd5e1;
+    }
+
+    .faq-question {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--primary);
+      user-select: none;
+    }
+
+    .faq-question .icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+      color: var(--text-muted);
+    }
+
+    .faq-item.active .faq-question .icon {
+      transform: rotate(180deg);
+      color: var(--primary);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      background-color: #fafbfc;
+      font-size: 13.5px;
+      color: #374151;
+      padding: 0 16px;
+      border-top: 1px solid transparent;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 700px;
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-answer p {
+      margin-bottom: 8px;
+    }
+
+    .faq-answer p:last-child {
+      margin-bottom: 0;
+    }
+
+    .faq-answer ul, .faq-answer ol {
+      margin-left: 20px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
+    .faq-answer li {
+      margin-bottom: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-box">
+    <h1>Kullanım Rehberi & S.S.S.</h1>
+    <p>Uygulama modülleri, veri çekme ve hesaplamalar hakkında sıkça sorulan sorular</p>
+  </div>
+
+  <!-- Arama -->
+  <div class="search-container">
+    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    </svg>
+    <input type="text" id="searchInput" class="search-input" placeholder="Soru veya konu ara...">
+  </div>
+
+  <!-- Kategori Filtresi (2 Satır) -->
+  <div class="filter-container">
+    <button class="filter-chip active" data-cat="all">Tümü</button>
+    <button class="filter-chip" data-cat="nedir">Nedir?</button>
+    <button class="filter-chip" data-cat="sina">SİNA & HYP</button>
+    <button class="filter-chip" data-cat="maas">Maaş & Teşvik</button>
+    <button class="filter-chip" data-cat="ekip">EKİP & SBOS</button>
+    <button class="filter-chip" data-cat="guvenlik">Güvenlik</button>
+  </div>
+
+  <!-- Sorular Listesi -->
+  <div class="faq-list" id="faqList">
+
+    <!-- NEDİR? -->
+    <div class="faq-item" data-cat="nedir">
+      <div class="faq-question">
+        <span>Aile Hekimi Asistanı nedir ve ne işe yarar?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">Nedir?</span>
+        <p><strong>Aile Hekimi Asistanı</strong>, aile hekimleri ve aile sağlığı çalışanlarının günlük mesleki takiplerini tek bir mobil platformdan hızlı ve pratik şekilde yapabilmeleri için geliştirilmiş yardımcı bir uygulamadır.</p>
+        <ul>
+          <li><strong>SİNA ve HYP:</strong> Kronik hastalık ve kanser tarama hedeflerini ve takiplerini takip eder ve hesaplamaları yapar.</li>
+          <li><strong>Maaş & Teşvik:</strong> Aile hekimi ve ASE maaş/teşvik hakedişlerini anlık hesaplar.</li>
+          <li><strong>SBOS:</strong> Düzenlenen raporların ödeme durumunu ve hekim payını listeler.</li>
+          <li><strong>EKİP:</strong> Bordro işlemlerini tek ekranda toplar.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="nedir">
+      <div class="faq-question">
+        <span>Hastalık Yönetim Platformu (HYP) nedir?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">Nedir?</span>
+        <p>Hastalık Yönetim Platformu (HYP), Sağlık Bakanlığı tarafından kronik hastalıkların (Diyabet, Hipertansiyon, Obezite, KBH, KAH, İnme, Astım, KOAH) ve kanser taramalarının aile hekimliği birimlerinde düzenli taranması ve takip edilmesi amacıyla kurulan sistemdir. Bu izlemler hekim ve ASE teşvik ödemelerine doğrudan etki eder.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="nedir">
+      <div class="faq-question">
+        <span>SBOS (Sağlık Bakanlığı Ödeme Sistemi) nedir?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">Nedir?</span>
+        <p>SBOS, Sağlık Bakanlığı birimlerinde düzenlenen tek hekim ve sürücü sağlık raporları gibi ücretli hizmetlerin vatandaşlar tarafından ödenmesini ve bu ödemelerden hekim paylarının hesaplanmasını sağlayan resmi sistemdir.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="nedir">
+      <div class="faq-question">
+        <span>EKİP Portalı nedir?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">Nedir?</span>
+        <p>EKİP (Entegre Kurumsal İşlem Platformu), Sağlık Bakanlığı personelinin bordro işlemlerini takip ettiği resmi platformdur.</p>
+      </div>
+    </div>
+
+    <!-- SİNA & HYP -->
+    <div class="faq-item" data-cat="sina">
+      <div class="faq-question">
+        <span>SİNA verileri uygulamaya nasıl aktarılır?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">SİNA Entegrasyonu</span>
+        <p>SİNA verilerinizi almak için:</p>
+        <ol>
+          <li>Ana menüden <strong>SİNA</strong> sekmesine dokunun.</li>
+          <li>Açılan web ekranında e-Devlet veya Sağlık Bakanlığı kullanıcı bilgileriniz ile oturum açın.</li>
+          <li>Giriş tamamlandıktan sonra alttaki <strong>"HYP Verileri"</strong> butonuna basın.</li>
+          <li>Verileriniz otomatik olarak uygulamaya aktarılır ve HYP katsayınız hesaplanır.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="sina">
+      <div class="faq-question">
+        <span>HYP tarama ve izlem hedefleri nasıl hesaplanıyor?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">HYP Hesaplama</span>
+        <p>Hastalık Yönetim Platformu (HYP) kapsamında:</p>
+        <ul>
+          <li>Hipertansiyon, Diyabet, Obezite, KBH, KAH, İnme, Astım, KOAH, Yaşlı İzlemi ve Kanser Taramaları için Bakanlığın belirlediği güncel hedef katsayıları kullanılır.</li>
+          <li>Yapılan izlem sayısı ve hedef nüfus oranına göre gerçekleşme yüzdeleri ve teşvik puanları hesaplanır.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Maaş & Teşvik -->
+    <div class="faq-item" data-cat="maas">
+      <div class="faq-question">
+        <span>Maaş ve teşvik hesaplaması nasıl yapılır?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">Maaş Modülü</span>
+        <p>Maaş ve teşvik ödemelerinizi hesaplamak için:</p>
+        <ol>
+          <li><strong>Maaş</strong> sekmesine girin.</li>
+          <li>Kayıtlı nüfus, sosyoekonomik gelişmişlik (SEGE) grubu, gezici hizmet, kıdem ve HYP başarı oranlarınızı girin.</li>
+          <li>Taban ek ödeme, tavan ek ödeme, teşvik ödemesi ve net ele geçen yaklaşık tutar anında hesaplanır.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="maas">
+      <div class="faq-question">
+        <span>Aile Sağlığı Elemanı (ASE) maaş hesabı var mı?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">ASE Maaş</span>
+        <p>Evet, uygulamamızda Aile Sağlığı Elemanı (Hemşire / Ebe / Sağlık Memuru) meslektaşlarımız için özel olarak hazırlanmış <strong>ASE Maaş ve Teşvik Hesaplama</strong> modülü bulunmaktadır.</p>
+      </div>
+    </div>
+
+    <!-- EKİP & SBOS -->
+    <div class="faq-item" data-cat="ekip">
+      <div class="faq-question">
+        <span>SBOS rapor ve ödeme takibi nedir, nasıl kullanılır?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">SBOS</span>
+        <p>Sağlık Bakanlığı Ödeme Sİstemi (SBOS) sistemi üzerinden düzenlenen ücretli tek hekim ve sürücü raporlarının ödeme durumunu kontrol edebilirsiniz:</p>
+        <ul>
+          <li>SBOS ekranına giriş yaptıktan sonra hedef ayı ve yılı seçip sorgulama yapabilirsiniz.</li>
+          <li>Ödemesi tamamlanmış raporların sayısı ve hekim payına düşen yaklaşık hakediş tutarı otomatik listelenir.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="ekip">
+      <div class="faq-question">
+        <span>EKİP portalı entegrasyonu ne işe yarar?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">EKİP</span>
+        <p>EKİP modülü sayesinde Sağlık Bakanlığı Entegre Kurumsal İşlem Platformu'na hızlıca erişebilir; Bordrolarınızı uygulama içerisinden kolayca görüntüleyebilirsiniz.</p>
+      </div>
+    </div>
+
+    <!-- Güvenlik & Giriş -->
+    <div class="faq-item" data-cat="guvenlik">
+      <div class="faq-question">
+        <span>Şifrelerim ve kişisel verilerim güvende mi?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">Güvenlik & Gizlilik</span>
+        <p><strong>Kesinlikle evet.</strong> Uygulama hiçbir şekilde kullanıcı şifrelerini, e-Devlet kimlik bilgilerini veya hasta verilerini üçüncü taraf bir sunucuya göndermez ve kaydetmez.</p>
+        <p>Tüm oturum işlemleri doğrudan Sağlık Bakanlığı'nın resmi sunucularıyla güvenli (HTTPS) bağlantı üzerinden gerçekleşir.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="guvenlik">
+      <div class="faq-question">
+        <span>SİNA veya SBOS ekranında "Oturum Hatası" alıyorum, ne yapmalıyım?</span>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </div>
+      <div class="faq-answer">
+        <span class="badge">Sorun Giderme</span>
+        <p>Bakanlık sistemlerinde oturum süreleri belirli aralıklarla sonlanmaktadır. Bu durumda:</p>
+        <ol>
+          <li>İlgili modülün sağ üstündeki <strong>Yenile</strong> butonuna dokunun.</li>
+          <li>Tekrar e-Devlet ile giriş yapın.</li>
+          <li>Giriş başarılı olduktan sonra verilerinizi yeniden çekin.</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="emptyState" class="empty-state">
+    Aradığınız kriterlere uygun soru bulunamadı.
+  </div>
+
+  <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+    const searchInput = document.getElementById('searchInput');
+    const filterChips = document.querySelectorAll('.filter-chip');
+    const emptyState = document.getElementById('emptyState');
+
+    let currentCategory = 'all';
+
+    // Akordiyon Tıklama
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        if (isActive) {
+          item.classList.remove('active');
+        } else {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Kategori Filtresi
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentCategory = chip.getAttribute('data-cat');
+        filterFaq();
+      });
+    });
+
+    // Arama Filtresi
+    searchInput.addEventListener('input', () => {
+      filterFaq();
+    });
+
+    function filterFaq() {
+      const query = searchInput.value.toLowerCase().trim();
+      let visibleCount = 0;
+
+      faqItems.forEach(item => {
+        const itemCat = item.getAttribute('data-cat');
+        const text = item.innerText.toLowerCase();
+
+        const matchesCat = (currentCategory === 'all' || itemCat === currentCategory);
+        const matchesQuery = (query === '' || text.includes(query));
+
+        if (matchesCat && matchesQuery) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyState.style.display = 'block';
+      } else {
+        emptyState.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
