@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>AHES - Aile Hekimliği Hukuk ve Eğitim Sendikası</title>
+  <meta name="description" content="Emeğin gücüyle, hukuki ve sosyal haklarımızı birlikte koruyoruz. Modern ve şeffaf yönetim anlayışıyla yanınızdayız.">
+  
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --gold: #DFB963;
+      --gold-dark: #C9A24D;
+      --gold-light: #F3D285;
+      --navy-bg: #0A1128;
+      --navy-card: #131B33;
+      --navy-card-hover: #1A2445;
+      --navy-border: rgba(255, 255, 255, 0.08);
+      --purple: #6366F1;
+    }
+
+    * {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 9999px;
+    }
+
+    .glass-nav {
+      background: rgba(10, 17, 40, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    html:not(.dark) .glass-nav {
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFE79A 0%, #DFB963 50%, #B88E33 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .purple-btn {
+      background: linear-gradient(135deg, #7C3AED 0%, #6366F1 100%);
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .purple-btn:hover {
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .gold-btn {
+      background: linear-gradient(135deg, #F3D285 0%, #DFB963 50%, #C9A24D 100%);
+      color: #0A1128;
+      box-shadow: 0 4px 15px rgba(223, 185, 99, 0.35);
+    }
+    .gold-btn:hover {
+      box-shadow: 0 6px 22px rgba(223, 185, 99, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .feature-card {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-[#0A1128] text-slate-100 antialiased selection:bg-[#DFB963] selection:text-slate-950 min-h-screen flex flex-col">
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="javascript:navigateTo('home')" class="flex items-center gap-3.5 group">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#DFB963] via-[#B88E33] to-[#8C6B1F] p-0.5 shadow-lg shadow-[#DFB963]/20 flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
+          <div class="w-full h-full bg-[#0A1128] rounded-[14px] flex items-center justify-center font-black text-xl text-[#DFB963]">
+            A
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-1.5">
+            <span class="text-2xl font-black tracking-tight text-white group-hover:text-[#DFB963] transition-colors">AHES</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#DFB963]/15 text-[#DFB963] border border-[#DFB963]/30">SENDİKA</span>
+          </div>
+          <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase">Aile Hekimliği Hukuk ve Eğitim Sendikası</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav class="hidden lg:flex items-center gap-1.5">
+        <button onclick="navigateTo('home')" id="nav-home" class="nav-link px-3.5 py-2 rounded-xl text-sm font-bold text-white bg-white/10 shadow-inner">
+          ANASAYFA
+        </button>
+
+        <!-- Hakkımızda Dropdown -->
+        <div class="relative group">
+          <button class="nav-link px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-1.5 transition-colors">
+            HAKKIMIZDA
+            <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180 text-slate-400"></i>
+          </button>
+          <div class="absolute top-full left-0 mt-2 w-56 bg-[#131B33] border border-white/10 rounded-2xl shadow-2xl p-2 hidden group-hover:block">
+            <button onclick="navigateTo('about')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+              <i class="fa-solid fa-shield-heart text-[#DFB963] w-4"></i> Biz Kimiz?
+            </button>
+            <button onclick="navigateTo('kurullar')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+              <i class="fa-solid fa-users text-blue-400 w-4"></i> Kurullar & Kadro
+            </button>
+            <button onclick="navigateTo('tuzuk')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+              <i class="fa-solid fa-book-bookmark text-emerald-400 w-4"></i> Sendika Tüzüğü
+            </button>
+          </div>
+        </div>
+
+        <button onclick="navigateTo('contents')" id="nav-contents" class="nav-link px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          GÜNDEM & HABERLER
+        </button>
+
+        <button onclick="navigateTo('faq')" id="nav-faq" class="nav-link px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          SIKÇA SORULAN SORULAR
+        </button>
+
+        <button onclick="navigateTo('contact')" id="nav-contact" class="nav-link px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          İLETİŞİM
+        </button>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5">
+        <!-- Theme Toggle -->
+        <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-colors" title="Tema Değiştir">
+          <i id="theme-icon" class="fa-solid fa-sun text-sm text-[#DFB963]"></i>
+        </button>
+
+        <!-- Üye Ol -->
+        <button onclick="openRegisterModal()" class="purple-btn text-white text-xs sm:text-sm font-extrabold px-4 sm:px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-user-plus text-xs"></i>
+          <span>ÜYE OL</span>
+        </button>
+
+        <!-- AHES Portal Girişi -->
+        <button onclick="openLoginModal()" class="gold-btn text-xs sm:text-sm font-extrabold px-4 sm:px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+          <span>AHES PORTAL</span>
+        </button>
+
+        <!-- Mobil Menü Butonu -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== MOBİL MENÜ ==================== -->
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="toggleMobileMenu()"></div>
+  <div id="mobile-menu" class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#131B33] border-l border-white/10 z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col p-6">
+    <div class="flex items-center justify-between pb-6 border-b border-white/10">
+      <div class="flex items-center gap-2">
+        <span class="text-xl font-black text-[#DFB963]">AHES</span>
+        <span class="text-xs text-slate-400 font-semibold">Mobil Menü</span>
+      </div>
+      <button onclick="toggleMobileMenu()" class="w-9 h-9 rounded-lg bg-white/5 text-slate-300 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <nav class="flex-1 py-6 space-y-2 overflow-y-auto">
+      <button onclick="navigateTo('home'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-bold text-sm bg-white/10 text-white">Anasayfa</button>
+      <button onclick="navigateTo('about'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Biz Kimiz?</button>
+      <button onclick="navigateTo('kurullar'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Yönetim Kurulları</button>
+      <button onclick="navigateTo('tuzuk'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Sendika Tüzüğü</button>
+      <button onclick="navigateTo('contents'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Gündem & Haberler</button>
+      <button onclick="navigateTo('faq'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Sıkça Sorulan Sorular</button>
+      <button onclick="navigateTo('contact'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">İletişim</button>
+    </nav>
+
+    <div class="pt-4 border-t border-white/10 space-y-3">
+      <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full gold-btn py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        AHES Portal Giriş
+      </button>
+      <button onclick="openRegisterModal(); toggleMobileMenu();" class="w-full purple-btn py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 text-white">
+        <i class="fa-solid fa-user-plus"></i>
+        Sendikaya Üye Ol
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== ANA İÇERİK KONTEYNERİ (DİNAMİK GÖRÜNÜM) ==================== -->
+  <main id="main-content" class="flex-1">
+    <!-- Sayfa görünümleri JS tarafından buraya basılır -->
+  </main>
+
+  <!-- ==================== HUKUKİ YARDIM ÇAĞRISI BANDI ==================== -->
+  <section class="py-12 bg-gradient-to-r from-blue-900 via-indigo-900 to-[#131B33] border-y border-white/10 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl text-[#DFB963] flex-shrink-0">
+          <i class="fa-solid fa-scale-unbalanced"></i>
+        </div>
+        <div>
+          <h3 class="text-xl sm:text-2xl font-black">Hukuki Bir Haksızlıkla mı Karşılaştınız?</h3>
+          <p class="text-xs sm:text-sm text-slate-300">AHES Hukuk Komisyonu, sendika üyelerine ücretsiz dava ve uzman danışmanlık sağlar.</p>
+        </div>
+      </div>
+      <a href="https://api.whatsapp.com/send?phone=905303112437" target="_blank" class="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2 shadow-lg transition-all whitespace-nowrap">
+        <i class="fa-brands fa-whatsapp text-base"></i>
+        <span>Hukuk Masasına Yazın</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-[#070D1E] text-slate-300 pt-16 pb-8 border-t border-white/10 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#DFB963] flex items-center justify-center font-black text-slate-950 text-xl">A</div>
+            <span class="text-2xl font-black text-white">AHES</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Geleceği birlikte inşa ediyor, emeğin değerini koruyoruz. Türkiye'nin aile hekimliği alanındaki bağımsız, güçlü ve kurumsal sendikası.
+          </p>
+          <div class="flex flex-wrap items-center gap-2.5 pt-2">
+            <a href="https://www.facebook.com/ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://x.com/ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://www.instagram.com/ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://api.whatsapp.com/send?phone=905303112437" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            
+            <!-- Mobil Uygulama İndirme Butonları (Sadece İkon) -->
+            <a href="https://apps.apple.com/us/app/ahes/id6760265097" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="Apple App Store"><i class="fa-brands fa-apple text-base"></i></a>
+            <a href="https://play.google.com/store/apps/details?id=com.ferox.ahes" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-emerald-400 hover:text-emerald-300 transition-colors" title="Google Play Store"><i class="fa-brands fa-google-play text-xs"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Kurumsal</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button onclick="navigateTo('about')" class="text-slate-400 hover:text-[#DFB963] transition-colors">Biz Kimiz?</button></li>
+            <li><button onclick="navigateTo('kurullar')" class="text-slate-400 hover:text-[#DFB963] transition-colors">Yönetim Kurulları</button></li>
+            <li><button onclick="navigateTo('tuzuk')" class="text-slate-400 hover:text-[#DFB963] transition-colors">Sendika Tüzüğü</button></li>
+            <li><button onclick="navigateTo('faq')" class="text-slate-400 hover:text-[#DFB963] transition-colors">Sıkça Sorulan Sorular</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Hizmetlerimiz</h4>
+          <ul class="space-y-2 text-xs">
+            <li><button onclick="navigateTo('contents')" class="text-slate-400 hover:text-[#DFB963] transition-colors">Kazanılan Davalar</button></li>
+            <li><button onclick="navigateTo('contents')" class="text-slate-400 hover:text-[#DFB963] transition-colors">Duyurular & Haberler</button></li>
+            <li><button onclick="navigateTo('home')" class="text-slate-400 hover:text-[#DFB963] transition-colors">Nöbet Hesaplama Robotu</button></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">İletişim</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-[#DFB963] mt-1"></i> <span>Gaziantep, Türkiye (GENTAŞ TOWER)</span></li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-[#DFB963]"></i> +90 (530) 311 24 37</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-[#DFB963]"></i> info@ahes.org.tr</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div>© 2026 AHES (Aile Hekimliği Hukuk ve Eğitim Sendikası). Tüm hakları saklıdır.</div>
+        <div class="flex items-center gap-4">
+          <a href="#gizlilik" class="hover:text-slate-400">Gizlilik Politikası</a>
+          <span>•</span>
+          <a href="#kvkk" class="hover:text-slate-400">KVKK Metni</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== GİRİŞ & PORTAL MODALI ==================== -->
+  <div id="login-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div id="login-modal-box" class="bg-[#131B33] border border-white/10 rounded-3xl w-full max-w-md shadow-2xl p-6 md:p-8 transform scale-95 transition-all duration-300 relative">
+      <button onclick="closeLoginModal()" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-white/5 text-slate-400 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#DFB963] to-[#B88E33] text-slate-950 font-black text-2xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-[#DFB963]/20">
+          A
+        </div>
+        <h3 class="text-xl font-black text-white">AHES Portal Girişi</h3>
+        <p class="text-xs text-slate-400 mt-1">Yönetim Paneli & Üye İşlemleri</p>
+      </div>
+
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">E-Posta / Kullanıcı Adı</label>
+          <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+            <input type="text" id="login-user" value="frhatfrat@gmail.com" required class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-white outline-none focus:border-[#DFB963]">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Şifre</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+            <input type="password" id="login-pass" value="750880Df." required class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl pl-9 pr-10 py-2.5 text-white outline-none focus:border-[#DFB963]">
+            <button type="button" onclick="togglePassVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-white">
+              <i id="pass-eye" class="fa-regular fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="login-btn-submit" class="w-full gold-btn py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg">
+          Yönetici Portalı'na Gir
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== HABER DETAY MODALI ==================== -->
+  <div id="news-modal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div id="news-modal-box" class="bg-[#131B33] border border-white/10 rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 md:p-8 transform scale-95 transition-all duration-300 relative">
+      <button onclick="closeNewsModal()" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-white/10 text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div id="news-modal-content">
+        <!-- İçerik JS ile doldurulur -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ÜYE OL BAŞVURU MODALI ==================== -->
+  <div id="register-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div class="bg-[#131B33] border border-white/10 rounded-3xl w-full max-w-lg shadow-2xl p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeRegisterModal()" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-white/5 text-slate-400 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-xl bg-purple-600 text-white font-black text-xl flex items-center justify-center mx-auto mb-2">
+          <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <h3 class="text-xl font-black text-white">AHES Üyelik Başvurusu</h3>
+        <p class="text-xs text-slate-400">Aile hekimliği hak mücadelesinde yerinizi alın.</p>
+      </div>
+
+      <form onsubmit="handleRegister(event)" class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <input type="text" required placeholder="Adınız" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-2.5 text-white outline-none">
+          <input type="text" required placeholder="Soyadınız" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-2.5 text-white outline-none">
+        </div>
+        <input type="text" required maxlength="11" placeholder="T.C. Kimlik No" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-2.5 text-white outline-none">
+        <input type="email" required placeholder="E-Posta Adresi" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-2.5 text-white outline-none">
+        <input type="tel" required placeholder="Cep Telefonu" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-2.5 text-white outline-none">
+        <div class="grid grid-cols-2 gap-3">
+          <input type="text" required placeholder="İl / İlçe" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-2.5 text-white outline-none">
+          <input type="text" required placeholder="Görev Yapılan ASM" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-2.5 text-white outline-none">
+        </div>
+        <button type="submit" class="w-full purple-btn py-3 rounded-xl font-bold text-xs uppercase text-white shadow-lg mt-2">
+          Başvuruyu Tamamla
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== GENEL BAŞKANDAN MESAJ MODALI ==================== -->
+  <div id="president-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div id="president-modal-box" class="bg-[#131B33] border border-[#DFB963]/40 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8 transform scale-95 transition-all duration-300 relative">
+      <button onclick="closePresidentModal()" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 pb-6 border-b border-white/10">
+        <div class="relative flex-shrink-0">
+          <img src="images/mustafa_isikli.jpg" alt="Dr. Mustafa IŞIKLI" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-[#DFB963] shadow-xl">
+          <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-[#131B33] rounded-full flex items-center justify-center text-[9px] text-white font-bold"><i class="fa-solid fa-check"></i></span>
+        </div>
+        <div class="text-center sm:text-left">
+          <span class="text-xs font-bold px-3 py-1 rounded bg-[#DFB963]/15 text-[#DFB963] uppercase border border-[#DFB963]/30 inline-block mb-2 tracking-wider">Genel Başkandan Mesaj</span>
+          <h2 class="text-2xl font-black text-white">Dr. Mustafa IŞIKLI</h2>
+          <div class="text-xs font-bold text-slate-400">Aile Hekimliği Hukuk ve Eğitim Sendikası (AHES) Genel Başkanı</div>
+        </div>
+      </div>
+
+      <div class="py-6 space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+        <p class="text-sm sm:text-base font-semibold text-white italic border-l-4 border-[#DFB963] pl-4 py-1 bg-white/5 rounded-r-xl">
+          "Bizler, hak mücadelesinde yeni bir soluk, hukuki bir kalkan ve bilimsel bir akademi olmak üzere yola çıktık."
+        </p>
+        <p>
+          <b class="text-white">Değerli Meslektaşlarım, Kıymetli Aile Sağlığı Çalışanları;</b>
+        </p>
+        <p>
+          Sağlık sistemimizin omurgası olan birinci basamak sağlık hizmetlerinde görev yapan hekim ve aile sağlığı çalışanları, son yıllarda artan iş yükü, haksız kesintiler, angarya görevler ve özlük hakkı kayıplarıyla karşı karşıya bırakılmıştır. Yıllarca süregelen hak arayışlarının bürokrasi koridorlarında kaybolduğu bir dönemde; bağımsız, şeffaf ve doğrudan sahaya dokunan bir sendikal duruş artık ertelenemez bir ihtiyaç haline gelmiştir.
+        </p>
+        <p>
+          <b class="text-white">AHES Sendikası</b>; hiçbir siyasi partinin vesayetinde olmadan, hiçbir sermaye ya da çıkar odağına boyun eğmeden, sadece ve sadece sahada alın teri döken hekimlerimizin ve aile sağlığı elemanlarımızın hakkını savunmak gayesiyle kuruldu.
+        </p>
+        <p>
+          Gücümüzü üyelerimizin birlikteliğinden, meşruiyetimizi ise hukukun evrensel ilkelerinden alıyoruz. Kazandığımız grup düşürme iptal davaları, geri aldığımız nöbet ve izin hak edişleri yalnızca bir başlangıçtır. AHES çatısı altında hiçbir meslektaşımız yalnız kalmayacaktır.
+        </p>
+        <p class="font-bold text-white pt-2">
+          Gelin; emeğimizi, onurumuzu ve mesleğimizin geleceğini hep birlikte savunalım. Birlik oldukça güçlüyüz, haklı oldukça kazanacağız!
+        </p>
+      </div>
+
+      <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-center sm:text-left">
+          <div class="text-xs font-bold text-white">Dr. Mustafa IŞIKLI</div>
+          <div class="text-[11px] text-[#DFB963]">AHES Genel Başkanı</div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="closePresidentModal(); openRegisterModal();" class="gold-btn px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-2">
+            <i class="fa-solid fa-signature"></i> Bize Katılın
+          </button>
+          <button onclick="closePresidentModal(); navigateTo('about');" class="bg-white/10 hover:bg-white/15 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all">
+            Kurumsal Bilgiler
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SSS SORU EKLE / DÜZENLE MODALI ==================== -->
+  <div id="faq-modal" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div id="faq-modal-box" class="bg-[#131B33] border border-[#DFB963]/30 rounded-3xl w-full max-w-xl shadow-2xl p-6 sm:p-8 transform scale-95 transition-all duration-300 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeFaqModal()" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-white/5 text-slate-400 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-6">
+        <div id="faq-modal-icon" class="w-12 h-12 rounded-2xl bg-[#DFB963]/15 text-[#DFB963] flex items-center justify-center text-xl flex-shrink-0">
+          <i class="fa-solid fa-circle-question"></i>
+        </div>
+        <div>
+          <h3 id="faq-modal-title" class="text-xl font-black text-white">Yeni Soru & Cevap Ekle</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Sıkça Sorulan Sorular bilgi bankasını güncelleyin</p>
+        </div>
+      </div>
+
+      <form onsubmit="handleFaqFormSubmit(event)" class="space-y-4">
+        <input type="hidden" id="faq-form-id" value="">
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Kategori</label>
+          <select id="faq-form-category" required class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-3 text-white outline-none focus:border-[#DFB963]">
+            <option value="uyelik">Üyelik & Haklar</option>
+            <option value="hukuk">Hukuk & Davalar</option>
+            <option value="nobet">Nöbet & İzinler</option>
+            <option value="mali">Mali & Muhasebe</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Soru Metni</label>
+          <input type="text" id="faq-form-question" required placeholder="Örn: Sendika üyeliğinden nasıl istifa edilir?" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-3 text-white outline-none focus:border-[#DFB963]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Cevap / Açıklama Metni</label>
+          <textarea id="faq-form-answer" rows="5" required placeholder="Sorunun ayrıntılı ve mevzuata uygun açıklamasını yazın..." class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-3 text-white outline-none focus:border-[#DFB963] resize-none leading-relaxed"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-3">
+          <button type="button" onclick="closeFaqModal()" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition-colors">
+            Vazgeç
+          </button>
+          <button type="submit" id="faq-modal-submit-btn" class="gold-btn px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg">
+            Kaydet
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== BİLDİRİM TOAST KUTUSU ==================== -->
+  <div id="toast-box" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border bg-[#131B33] text-white text-xs font-bold">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toast-text">İşlem başarıyla tamamlandı.</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ÇALIŞMA MOTORU ==================== -->
+  <script>
+    // Gerçek Siteden Alınan İçerikler (Mock Veritabanı)
+    let ahesData = {
+      contents: [
+        {
+          id: "1",
+          title: "Grup Düşürme İşlemi Dava Kazanımı",
+          type: "Dava Kazanımı",
+          category: "Hukuk & Mevzuat",
+          date: "28 Eylül 2026",
+          summary: "Temizlik Personelinin Denetim Anında Görev Başında Olmadığı Tespitiyle Yapılan Grup Düşürme İşlemi İptal Edildi.",
+          body: "Aile sağlığı merkezlerinde görev yapan hekimlerimizin grup sınıflandırmasına ilişkin denetimlerde, personelin geçici ayrılışları gerekçe gösterilerek yapılan grup düşürme işlemi AHES Hukuk Komisyonu tarafından açılan dava sonucunda hukuka aykırı bulunarak yürütmesi durdurulmuş ve işlem iptal edilmiştir. Bu karar tüm Türkiye'deki ASM'ler için güçlü bir emsal niteliğindedir.",
+          image: "https://api.ahes.org.tr/images/ai_web_9d63117f.jpg",
+          isFeatured: true
+        },
+        {
+          id: "2",
+          title: "Bilimsel Eğitim ve Araştırma Destek Programı",
+          type: "Duyuru",
+          category: "Eğitim & Bilim",
+          date: "21 Eylül 2026",
+          summary: "AHES bünyesinde birinci basamak sağlık hizmetlerine yönelik akademik araştırma ve yayın destekleri başlamıştır.",
+          body: "Aile hekimliği disiplininin bilimsel gelişimine katkı sağlamak, ulusal ve uluslararası kongrelerde sunulacak çalışmaları desteklemek amacıyla AHES Bilimsel Eğitim ve Araştırma Destek Fonu kurulmuştur. Başvurular üye portalı üzerinden kabul edilmektedir.",
+          image: "https://api.ahes.org.tr/images/ai_web_589ef790.jpg",
+          isFeatured: false
+        },
+        {
+          id: "3",
+          title: "Aile Hekimliği Uzmanlarının Görevlendirmesi",
+          type: "Haber",
+          category: "Özlük Hakları",
+          date: "05 Eylül 2026",
+          summary: "Aile hekimliği uzmanlarının mevzuata aykırı re'sen görevlendirilmelerine ilişkin AHES'in hukuki girişimi.",
+          body: "Hastanelerin acil servis veya polikliniklerine uzman aile hekimlerinin rızaları hilafına yapılan re'sen görevlendirmeleri kabul edilemez. Danıştay içtihatları doğrultusunda birinci basamak hekiminin asli görev yerinden koparılmasına karşı hukuki süreç başlatılmıştır.",
+          image: "https://api.ahes.org.tr/images/ai_web_c12374d8.jpg",
+          isFeatured: false
+        },
+        {
+          id: "4",
+          title: "Aile Sağlığı Merkezlerinde Kamera Kayıtlarının Talep Edilmesi ve Denetim Amaçlı Kullanımının Hukuki Sınırları",
+          type: "Duyuru",
+          category: "Hukuk & Mevzuat",
+          date: "03 Eylül 2026",
+          summary: "ASM güvenlik kameralarının mesai takibi veya denetim amacıyla izlenemeyeceğine dair KVKK ve Anayasa değerlendirmesi.",
+          body: "Güvenlik amacıyla kurulan kamera sistemlerinin çalışanları gözetleme, mesai takibi veya delil üretme amacıyla kullanılması KVKK'ya ve Anayasa'nın özel hayatın gizliliği ilkesine aykırıdır. İdarelerin kamera kayıtlarını talep etme yetkisi sınırlandırılmıştır.",
+          image: "https://api.ahes.org.tr/images/ai_web_139339da.jpg",
+          isFeatured: false
+        },
+        {
+          id: "5",
+          title: "30 Ağustos Zafer Bayramı",
+          type: "Haber",
+          category: "Genel",
+          date: "30 Ağustos 2026",
+          summary: "Bağımsızlığımızın ve milli irademizin sembolü 30 Ağustos Zafer Bayramımız kutlu olsun.",
+          body: "Gazi Mustafa Kemal Atatürk ve silah arkadaşları başta olmak üzere, vatanımız uğruna canlarını feda eden tüm şehitlerimizi saygı ve rahmetle anıyoruz. AHES olarak cumhuriyetimizin değerlerine ve bağımsızlık ruhuna daima sahip çıkacağız.",
+          image: "https://api.ahes.org.tr/images/custom_web_bc04496a.jpg",
+          isFeatured: false
+        },
+        {
+          id: "6",
+          title: "Okula Uyum Haftasında İdari İzin Hakkı",
+          type: "Duyuru",
+          category: "Özlük Hakları",
+          date: "28 Ağustos 2026",
+          summary: "7–11 Eylül Okula Uyum Haftasında çalışan anne-baba aile hekimliği personelinin idari izin hakkı hakkında açıklama.",
+          body: "Okula yeni başlayan çocukları olan sağlık çalışanlarının uyum haftasında idari izinli sayılmasına ilişkin genelge gereği ASM çalışanlarımızın bu haktan eksiksiz yararlanması gerekmektedir.",
+          image: "https://api.ahes.org.tr/images/ai_web_3f8a394c.jpg",
+          isFeatured: false
+        },
+        {
+          id: "7",
+          title: "SBAHBS Zorunluluğu ve Yaptırım Tehdidi Hakkında Hukuki Değerlendirme",
+          type: "Haber",
+          category: "Mevzuat & Hukuk",
+          date: "25 Ağustos 2026",
+          summary: "Bakanlık bilgi sistemlerinin zorunlu tutulması ve hekimlere uygulanan ceza puanı tehditlerine karşı hukuki raporumuz.",
+          body: "SBAHBS sistemine geçişte yaşanan teknik altyapı yetersizliklerinin faturası hekimlere çıkarılamaz. AHES olarak hekimlerimizin sistemsel hatalar sebebiyle mağdur edilmesine müsaade etmeyeceğiz.",
+          image: "https://api.ahes.org.tr/images/ai_web_479b5892.jpg",
+          isFeatured: false
+        },
+        {
+          id: "8",
+          title: "Teşvik Değil, Kanunla Güvence Altında Tek Kalem Ücret",
+          type: "Haber",
+          category: "Sendikal Faaliyetler",
+          date: "01 Ağustos 2026",
+          summary: "Birinci basamakta performans ve teşvike bağlı kesintileri kaldıran, emekliliğe yansıyan tek kalem maaş talebimiz.",
+          body: "ASM çalışanları teşvik ve performans oyunlarıyla her ay ne maaş alacağını bilemez hale getirilmiştir. İzinlerde ücreti kesilmeyen, insanca yaşamaya yetecek, emekliliğe yansıyan tek kalem maaş kanunlaşmalıdır.",
+          image: "https://api.ahes.org.tr/images/ai_web_b16193b3.jpg",
+          isFeatured: false
+        },
+        {
+          id: "9",
+          title: "İzin Hakkında Ücret Kesintisi İptal Edildi!",
+          type: "Dava Kazanımı",
+          category: "Hukuk & Mevzuat",
+          date: "17 Temmuz 2026",
+          summary: "Yıllık izin ve babalık izni gibi anayasal haklar nedeniyle yapılan ücret kesintileri yargı kararıyla iptal ettirildi.",
+          body: "AHES Hukuk Komisyonu'nun açtığı davada, hekimlerin yasal yıllık izinlerini ve mazeret izinlerini kullandıkları günlerde hak edişlerinden kesinti yapılamayacağı hükme bağlanmıştır.",
+          image: "https://api.ahes.org.tr/images/ai_web_feb29df3.jpg",
+          isFeatured: false
+        }
+      ],
+      board: [
+        { name: "Dr. Mustafa IŞIKLI", role: "Genel Başkan", desc: "AHES Genel Başkanı", image: "images/mustafa_isikli.jpg" },
+        { name: "Dr. İrfan Gazi YILMAZ", role: "Genel Sekreter", desc: "Yönetim Kurulu Üyesi" },
+        { name: "Dr. Nihat Taylan TİMUR", role: "Genel Başkan Yardımcısı", desc: "Mali İşlerden Sorumlu" },
+        { name: "Dr. Murat Mustafa GÖNÜL", role: "Genel Başkan Yardımcısı", desc: "Teşkilatlanmadan Sorumlu" },
+        { name: "Dr. Abdulkerim COŞKUN", role: "Genel Başkan Yardımcısı", desc: "Hukuk, Mevzuat ve Toplu Sözleşmeden Sorumlu" },
+        { name: "Dr. Cenk BOZKURT", role: "Genel Başkan Yardımcısı", desc: "Eğitim, Basın Yayın ve Bilişimden Sorumlu" },
+        { name: "Dr. Ahmet SARIKAYA", role: "Genel Başkan Yardımcısı", desc: "Sosyal İşler ve Dış İlişkilerden Sorumlu" }
+      ],
+      faqs: [
+        {
+          id: 1,
+          category: "uyelik",
+          categoryName: "Üyelik & Haklar",
+          question: "AHES'e kimler üye olabilir?",
+          answer: "Türkiye genelinde görev yapan tüm aile hekimleri, aile sağlığı elemanları (ebe, hemşire, acil tıp teknisyeni ve sağlık memurları) ile birinci basamak sağlık hizmeti sunan tüm kamu görevlileri sendikamıza üye olabilir."
+        },
+        {
+          id: 2,
+          category: "uyelik",
+          categoryName: "Üyelik & Haklar",
+          question: "Başka bir sendikaya üyeliğim varken AHES'e nasıl geçiş yapabilirim?",
+          answer: "e-Devlet üzerinden önceki sendikanızdan birkaç saniye içinde istifa edebilir ve hemen ardından web sitemizdeki 'Üye Ol' formunu doldurarak AHES'e geçebilirsiniz. e-Devlet üzerinden yapılan üyelik işlemleri resmi olarak derhal yürürlüğe girer."
+        },
+        {
+          id: 3,
+          category: "hukuk",
+          categoryName: "Hukuk & Davalar",
+          question: "Hukuki sorun veya soruşturma yaşadığımda sendika avukat desteği sağlıyor mu?",
+          answer: "Evet. AHES üyelerine disiplin soruşturmaları, haksız ceza puanı uygulamaları, re'sen görevlendirmeler ve idari baskılara karşı ücretsiz hukuki danışmanlık, savunma dilekçesi hazırlama ve alanında uzman avukatlarımız aracılığıyla dava takip desteği sunulmaktadır."
+        },
+        {
+          id: 4,
+          category: "hukuk",
+          categoryName: "Hukuk & Davalar",
+          question: "ASM'lerde güvenlik kameralarının mesai denetimi amacıyla kullanılması yasal mıdır?",
+          answer: "Hayır. Güvenlik kameraları yalnızca fiziksel güvenlik amacıyla konulabilir; çalışanları gözetleme, mesai veya performans denetimi amacıyla kayıtların izlenmesi ve talep edilmesi KVKK'ya ve Anayasa'nın özel hayatın gizliliği ilkesine aykırıdır."
+        },
+        {
+          id: 5,
+          category: "hukuk",
+          categoryName: "Hukuk & Davalar",
+          question: "Grup düşürme işlemi ile karşılaşırsam ne yapmalıyım?",
+          answer: "Personelin geçici izin veya mazeret halleri gerekçe gösterilerek yapılan grup düşürme işlemlerine karşı süresi içinde itiraz edilmelidir. AHES Hukuk Komisyonu'nun bu konuda Danıştay nezdinde kazandığı kesinleşmiş emsal iptal kararları bulunmaktadır; vakit kaybetmeden hukuk masamıza başvurabilirsiniz."
+        },
+        {
+          id: 6,
+          category: "nobet",
+          categoryName: "Nöbet & İzinler",
+          question: "Yıllık izin veya mazeret izni kullandığımda hak edişimden kesinti yapılır mı?",
+          answer: "Hayır. AHES Hukuk Komisyonu'nun açtığı ve emsal nitelik kazanan davalar sonucunda; yıllık izin, babalık ve evlilik gibi yasal izin sürelerinde aile hekimliği çalışanlarının ücretlerinden kesinti yapılması hukuka aykırı bulunmuş ve iptal ettirilmiştir."
+        },
+        {
+          id: 7,
+          category: "nobet",
+          categoryName: "Nöbet & İzinler",
+          question: "Hafta sonu ve adli nöbet ücretleri nasıl hesaplanır?",
+          answer: "Nöbet ücretleri, ilgili dönemin memur maaş katsayısı, gösterge rakamları ve unvanınıza (Hekim/ASE) göre saatlik bazda hesaplanır. Web sitemizdeki 'Nöbet Ücreti Hesaplayıcı' robotunu kullanarak tahmini net hak edişinizi anında görebilirsiniz."
+        },
+        {
+          id: 8,
+          category: "mali",
+          categoryName: "Mali & Muhasebe",
+          question: "AHES Muhasebe Projesi nedir ve nasıl yararlanabilirim?",
+          answer: "ASM'lerin cari gider harcamaları, stopaj, fatura takibi ve vergi süreçlerinde hekimlerimize profesyonel rehberlik ve standart şablonlar sunan bir destek projesidir. Portal üzerinden kılavuzlara ve hesaplama tablolarına erişebilirsiniz."
+        }
+      ]
+    };
+
+    // ==================== ROUTER / SAYFA YÖNETİMİ ====================
+    let currentPage = 'home';
+
+    function navigateTo(page) {
+      currentPage = page;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Menü aktiflik durumları
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('bg-white/10', 'text-white', 'font-bold'));
+      const activeEl = document.getElementById(`nav-${page}`);
+      if (activeEl) {
+        activeEl.classList.add('bg-white/10', 'text-white', 'font-bold');
+      }
+
+      const main = document.getElementById('main-content');
+
+      if (page === 'home') renderHomePage(main);
+      else if (page === 'about') renderAboutPage(main);
+      else if (page === 'kurullar') renderKurullarPage(main);
+      else if (page === 'tuzuk') renderTuzukPage(main);
+      else if (page === 'contents') renderContentsPage(main);
+      else if (page === 'faq') renderFaqPage(main);
+      else if (page === 'contact') renderContactPage(main);
+    }
+
+    // ==================== 1. ANASAYFA GÖRÜNÜMÜ ====================
+    function renderHomePage(container) {
+      container.innerHTML = `
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden pt-6 pb-20 md:pt-10 md:pb-24">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative rounded-3xl overflow-hidden border border-white/10 bg-[#131B33]/80 backdrop-blur-xl shadow-2xl">
+              <div class="relative min-h-[480px] md:min-h-[540px] flex items-center">
+                <div class="absolute inset-0 -z-10">
+                  <img src="https://api.ahes.org.tr/images/ahes_1_31_9.jpg" alt="AHES Emeğin Gücü" class="w-full h-full object-cover brightness-[0.35]">
+                  <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0A1128] via-[#0A1128]/85 to-transparent"></div>
+                </div>
+
+                <div class="p-6 sm:p-10 md:p-16 max-w-2xl z-10">
+                  <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DFB963]/15 border border-[#DFB963]/30 text-[#DFB963] text-xs font-black uppercase tracking-wider mb-6">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Bağımsız & Şeffaf Sendikacılık</span>
+                  </div>
+
+                  <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15] mb-6">
+                    Emeğin Gücü,<br>
+                    <span class="gold-gradient-text">Geleceğin Güvencesi.</span>
+                  </h1>
+
+                  <p class="text-base sm:text-lg text-slate-300 font-normal leading-relaxed mb-8">
+                    AHES Sendikası, modern ve şeffaf yönetim anlayışıyla tüm üyelerinin haklarını en üst perdeden savunur.
+                  </p>
+
+                  <div class="flex flex-wrap items-center gap-4">
+                    <button onclick="navigateTo('about')" class="gold-btn text-sm font-extrabold px-7 py-3.5 rounded-2xl flex items-center gap-2.5 shadow-xl transition-all">
+                      <i class="fa-regular fa-compass"></i>
+                      <span>Bizi Tanıyın</span>
+                    </button>
+                    <button onclick="openPresidentModal()" class="bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-bold px-7 py-3.5 rounded-2xl flex items-center gap-2.5 transition-all">
+                      <i class="fa-regular fa-message text-[#DFB963]"></i>
+                      <span>Genel Başkanın Mesajı</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 Hızlı Kart -->
+        <section class="relative -mt-10 md:-mt-16 z-20 pb-16">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div onclick="openPresidentModal()" class="feature-card bg-[#131B33] border border-[#DFB963]/30 hover:border-[#DFB963] rounded-2xl p-5 cursor-pointer relative overflow-hidden group transition-all shadow-lg hover:shadow-[#DFB963]/10">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="relative flex-shrink-0">
+                    <img src="images/mustafa_isikli.jpg" alt="Dr. Mustafa IŞIKLI" class="w-12 h-12 rounded-xl object-cover border-2 border-[#DFB963] shadow-md group-hover:scale-105 transition-transform">
+                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#131B33] rounded-full"></span>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold text-[#DFB963] uppercase tracking-wider block">AHES Genel Başkanı</span>
+                    <span class="text-xs font-black text-white">Dr. Mustafa IŞIKLI</span>
+                  </div>
+                </div>
+                <h3 class="text-sm font-bold text-white group-hover:text-[#DFB963] transition-colors mb-1 flex items-center justify-between">
+                  <span>Genel Başkandan Mesaj Var</span>
+                  <i class="fa-solid fa-chevron-right text-xs text-[#DFB963] group-hover:translate-x-1 transition-transform"></i>
+                </h3>
+                <p class="text-xs text-slate-400">Sendikal vizyonumuz, hedeflerimiz ve birlik çağrımız.</p>
+              </div>
+
+              <div onclick="navigateTo('contents')" class="feature-card bg-[#131B33] border border-rose-500/30 rounded-2xl p-5 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h3 class="text-sm font-bold text-white mb-1">Muhasebe Projesi</h3>
+                <p class="text-xs text-slate-400">Üyelere yönelik muhasebe destek ve proje bilgileri.</p>
+              </div>
+
+              <div onclick="navigateTo('contents')" class="feature-card bg-[#131B33] border border-emerald-500/30 rounded-2xl p-5 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <h3 class="text-sm font-bold text-white mb-1">İstatistik Projesi</h3>
+                <p class="text-xs text-slate-400">Bilimsel araştırma ve istatistik destek programı.</p>
+              </div>
+
+              <div onclick="navigateTo('contents')" class="feature-card bg-[#131B33] border border-purple-500/30 rounded-2xl p-5 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-lg mb-3">
+                  <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <h3 class="text-sm font-bold text-white mb-1">Kazanılan Davalar</h3>
+                <p class="text-xs text-slate-400">AHES'in kazandığı davalar ve hukuki başarılar.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sayaçlar -->
+        <section class="py-10 border-y border-white/5 bg-[#131B33]/40">
+          <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div><div class="text-3xl lg:text-4xl font-black text-[#DFB963]">15.000+</div><div class="text-xs text-slate-400 font-semibold mt-1">Aktif Üye</div></div>
+            <div><div class="text-3xl lg:text-4xl font-black text-emerald-400">%98.4</div><div class="text-xs text-slate-400 font-semibold mt-1">Dava Kazanma Oranı</div></div>
+            <div><div class="text-3xl lg:text-4xl font-black text-blue-400">81 İl</div><div class="text-xs text-slate-400 font-semibold mt-1">Teşkilat & Temsilcilik</div></div>
+            <div><div class="text-3xl lg:text-4xl font-black text-purple-400">7/24</div><div class="text-xs text-slate-400 font-semibold mt-1">Hukuki Kalkan</div></div>
+          </div>
+        </section>
+
+        <!-- Gündem Merkezi (Haberler) -->
+        <section class="py-16">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-8">
+              <div>
+                <h2 class="text-2xl sm:text-3xl font-black text-white">Gündem Merkezi</h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">AHES ile ilgili en son haberler, duyurular ve gelişmeler.</p>
+              </div>
+              <button onclick="navigateTo('contents')" class="text-xs font-bold text-[#DFB963] hover:underline flex items-center gap-1">
+                Tüm Haberleri Gör <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              ${ahesData.contents.slice(0, 3).map(c => `
+                <div onclick="openNewsDetail('${c.id}')" class="bg-[#131B33] border border-white/10 rounded-2xl overflow-hidden hover:border-[#DFB963]/40 cursor-pointer transition-all flex flex-col justify-between">
+                  <div class="aspect-video w-full overflow-hidden relative">
+                    <img src="${c.image}" alt="${c.title}" class="w-full h-full object-cover">
+                    <span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold bg-[#DFB963] text-slate-950">${c.type}</span>
+                  </div>
+                  <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div class="text-[11px] text-slate-400 mb-1">${c.date}</div>
+                      <h3 class="text-sm font-bold text-white line-clamp-2 leading-snug mb-2">${c.title}</h3>
+                      <p class="text-xs text-slate-400 line-clamp-2">${c.summary}</p>
+                    </div>
+                    <div class="text-xs font-bold text-[#DFB963] pt-4 mt-2 border-t border-white/5 flex items-center justify-between">
+                      <span>Devamını Oku</span>
+                      <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </section>
+
+        <!-- Nöbet Hesaplayıcı Robot -->
+        <section class="py-12 bg-[#131B33]/60 border-t border-white/5">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl border border-white/10 bg-[#131B33] p-8 md:p-10 shadow-xl">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6 space-y-3">
+                  <span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[11px] font-bold border border-emerald-500/20">
+                    <i class="fa-solid fa-calculator mr-1"></i> AHES Akıllı ASM Araçları
+                  </span>
+                  <h3 class="text-2xl font-black text-white">Nöbet Ücreti Hesaplayıcı</h3>
+                  <p class="text-xs text-slate-300">Aile sağlığı merkezlerinde tutulan hafta sonu ve adli nöbet hak edişlerinizi hesaplayın.</p>
+                </div>
+                <div class="lg:col-span-6 bg-[#0A1128] p-5 rounded-2xl border border-white/10 space-y-3">
+                  <div class="grid grid-cols-2 gap-3">
+                    <select id="home-calc-title" onchange="runHomeCalc()" class="text-xs bg-[#131B33] border border-white/10 rounded-xl p-2.5 text-white">
+                      <option value="hekim">Aile Hekimi</option>
+                      <option value="ase">Aile Sağlığı Elemanı</option>
+                    </select>
+                    <select id="home-calc-type" onchange="runHomeCalc()" class="text-xs bg-[#131B33] border border-white/10 rounded-xl p-2.5 text-white">
+                      <option value="haftasonu">Hafta Sonu (8 Saat)</option>
+                      <option value="bayram">Resmi Tatil / Bayram</option>
+                    </select>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-xs text-slate-400 mb-1">
+                      <span>Nöbet Saati</span>
+                      <span id="home-hours-val" class="font-bold text-[#DFB963]">16 Saat</span>
+                    </div>
+                    <input type="range" id="home-calc-range" min="8" max="64" step="8" value="16" oninput="runHomeCalc()" class="w-full accent-[#DFB963]">
+                  </div>
+                  <div class="p-3 bg-emerald-950/30 border border-emerald-500/30 rounded-xl flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-300">Tahmini Net Ücret:</span>
+                    <span id="home-calc-total" class="text-xl font-black text-emerald-400">3.840 ₺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+      runHomeCalc();
+    }
+
+    function runHomeCalc() {
+      const title = document.getElementById('home-calc-title')?.value || 'hekim';
+      const type = document.getElementById('home-calc-type')?.value || 'haftasonu';
+      const hours = parseInt(document.getElementById('home-calc-range')?.value || 16);
+      if (document.getElementById('home-hours-val')) document.getElementById('home-hours-val').innerText = `${hours} Saat`;
+      let rate = title === 'hekim' ? 240 : 160;
+      if (type === 'bayram') rate *= 1.5;
+      const total = Math.round(hours * rate);
+      if (document.getElementById('home-calc-total')) document.getElementById('home-calc-total').innerText = total.toLocaleString('tr-TR') + ' ₺';
+    }
+
+    // ==================== 2. HAKKIMIZDA GÖRÜNÜMÜ ====================
+    function renderAboutPage(container) {
+      container.innerHTML = `
+        <div class="py-12 md:py-16 max-w-5xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-12">
+            <span class="text-xs font-bold px-3 py-1 rounded bg-[#DFB963]/15 text-[#DFB963] uppercase border border-[#DFB963]/30">Kurumsal</span>
+            <h1 class="text-3xl sm:text-4xl font-black text-white mt-3">Biz Kimiz?</h1>
+            <p class="text-sm text-slate-400 mt-2 max-w-xl mx-auto">Aile hekimliği çalışanlarının bağımsız, demokratik ve bilimsel kalkanı.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-[#131B33] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4">
+              <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-bullseye text-[#DFB963]"></i> Kuruluş & Amacımız
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                AHES (Aile Hekimliği Hukuk ve Eğitim Sendikası), 2026 yılında Gaziantep merkezli olarak kurulmuştur. Amacımız; aile hekimleri ve tüm sağlık çalışanlarının ekonomik, sosyal, mesleki ve akademik haklarını korumak ve geliştirmektir.
+              </p>
+              <div class="pt-2 border-t border-white/10 text-xs text-slate-400 space-y-1">
+                <div><b>Kuruluş Yılı:</b> 2026</div>
+                <div><b>Genel Merkez:</b> Gaziantep (Gentaş Tower)</div>
+              </div>
+            </div>
+
+            <div class="bg-[#131B33] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4">
+              <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-scale-balanced text-emerald-400"></i> Tam Bağımsızlık İlkesi
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Sendikamız hiçbir siyasi parti, sermaye grubu veya çıkar odağının etkisi altında kalmadan, tam bağımsızlık ilkesiyle hareket eder. Şeffaflık, liyakat ve katılımcılık yönetim anlayışımızın temel taşıdır.
+              </p>
+              <div class="p-3 bg-white/5 rounded-xl text-xs text-[#DFB963] font-semibold italic">
+                "Bizler, hak mücadelesinde yeni bir soluk, hukuki bir kalkan ve bilimsel bir akademi olmak üzere yola çıktık."
+              </div>
+            </div>
+          </div>
+
+          <!-- Kurucu Yönetim -->
+          <div class="bg-[#131B33] border border-white/10 rounded-3xl p-6 sm:p-8">
+            <h3 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-users text-blue-400"></i> Kurucu Yönetim Kadromuz
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              ${ahesData.board.map(m => `
+                <div class="p-4 bg-[#0A1128] border border-white/5 rounded-2xl flex items-center gap-3.5">
+                  ${m.image ? `
+                    <div class="relative flex-shrink-0 cursor-pointer" onclick="openPresidentModal()" title="Mesajını Gör">
+                      <img src="${m.image}" alt="${m.name}" class="w-12 h-12 rounded-xl object-cover border border-[#DFB963] shadow-md hover:scale-105 transition-transform">
+                      <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#0A1128] rounded-full"></span>
+                    </div>
+                  ` : `
+                    <div class="w-12 h-12 rounded-xl bg-white/5 text-[#DFB963] flex items-center justify-center flex-shrink-0 text-base">
+                      <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                  `}
+                  <div class="min-w-0">
+                    <div class="text-[11px] text-[#DFB963] font-bold uppercase truncate">${m.role}</div>
+                    <div class="text-sm font-black text-white mt-0.5 truncate">${m.name}</div>
+                    <div class="text-[11px] text-slate-400 truncate">${m.desc}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== 3. KURULLAR GÖRÜNÜMÜ ====================
+    function renderKurullarPage(container) {
+      container.innerHTML = `
+        <div class="py-12 md:py-16 max-w-5xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-10">
+            <span class="text-xs font-bold px-3 py-1 rounded bg-[#DFB963]/15 text-[#DFB963] uppercase border border-[#DFB963]/30">Teşkilat</span>
+            <h1 class="text-3xl sm:text-4xl font-black text-white mt-3">Yönetim Kurulları</h1>
+            <p class="text-sm text-slate-400 mt-2">AHES'i geleceğe taşıyan kurullarımız ve görev dağılımı.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+            ${ahesData.board.map(b => `
+              <div class="bg-[#131B33] border border-white/10 rounded-2xl p-6 text-center hover:border-[#DFB963]/40 transition-colors flex flex-col justify-between">
+                <div>
+                  ${b.image ? `
+                    <div class="relative w-20 h-20 mx-auto mb-4 cursor-pointer group" onclick="openPresidentModal()">
+                      <img src="${b.image}" alt="${b.name}" class="w-20 h-20 rounded-full object-cover border-2 border-[#DFB963] shadow-lg group-hover:scale-105 transition-transform">
+                      <span class="absolute bottom-0 right-0 w-5 h-5 bg-emerald-500 border-2 border-[#131B33] rounded-full flex items-center justify-center text-[9px] text-white font-bold"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                  ` : `
+                    <div class="w-16 h-16 rounded-full bg-[#DFB963]/10 border border-[#DFB963]/30 text-[#DFB963] flex items-center justify-center text-2xl mx-auto mb-4 font-black">
+                      <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                  `}
+                  <h3 class="text-base font-black text-white">${b.name}</h3>
+                  <div class="text-xs font-bold text-[#DFB963] mt-1">${b.role}</div>
+                  <div class="text-[11px] text-slate-400 mt-2">${b.desc}</div>
+                </div>
+
+                ${b.image ? `
+                  <button onclick="openPresidentModal()" class="mt-4 w-full py-2 rounded-xl bg-[#DFB963]/15 hover:bg-[#DFB963]/25 text-[#DFB963] text-xs font-bold inline-flex items-center justify-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-message"></i> Mesajını Görüntüle
+                  </button>
+                ` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== 4. SENDİKA TÜZÜĞÜ ====================
+    function renderTuzukPage(container) {
+      container.innerHTML = `
+        <div class="py-12 md:py-16 max-w-4xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-10">
+            <span class="text-xs font-bold px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 uppercase border border-emerald-500/20">Mevzuat</span>
+            <h1 class="text-3xl sm:text-4xl font-black text-white mt-3">Sendika Tüzüğü</h1>
+            <p class="text-sm text-slate-400 mt-2">AHES Ana Tüzüğü ve Yasal Çerçevesi.</p>
+          </div>
+
+          <div class="bg-[#131B33] border border-white/10 rounded-3xl p-6 sm:p-10 space-y-6 text-slate-300 text-xs sm:text-sm leading-relaxed">
+            <div>
+              <h3 class="text-base font-black text-white mb-2">Madde 1 - Sendikanın Adı ve Merkezi</h3>
+              <p>Sendikanın Adı: Aile Hekimliği Hukuk ve Eğitim Sendikası (Kısa adı: AHES). Sendikanın Genel Merkezi Gaziantep'tir.</p>
+            </div>
+            <hr class="border-white/10">
+            <div>
+              <h3 class="text-base font-black text-white mb-2">Madde 2 - Sendikanın Amacı</h3>
+              <p>Türkiye Cumhuriyeti Anayasası ve ilgili mevzuat çerçevesinde; başta aile hekimleri ve aile sağlığı çalışanları olmak üzere üyelerinin ekonomik, sosyal, mesleki, hukuki ve özlük haklarını korumak, çalışma barışını ve refahını temin etmektir.</p>
+            </div>
+            <hr class="border-white/10">
+            <div>
+              <h3 class="text-base font-black text-white mb-2">Madde 3 - Çalışma İlkeleri</h3>
+              <p>AHES, hiçbir siyasi partiye, ideolojik gruba veya sermaye odağına bağlı değildir. Sendika içi kararlar demokratik ve şeffaf biçimde alınır.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== 5. GÜNDEM & HABERLER ====================
+    function renderContentsPage(container) {
+      container.innerHTML = `
+        <div class="py-12 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div>
+              <h1 class="text-3xl font-black text-white">Gündem & Haberler</h1>
+              <p class="text-xs sm:text-sm text-slate-400 mt-1">Haber, duyuru ve hukuki kazanımlar arşivi.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="text" id="contents-search" oninput="filterContentsList()" placeholder="Haberlerde ara..." class="text-xs bg-[#131B33] border border-white/10 rounded-xl px-3.5 py-2.5 text-white outline-none w-64">
+            </div>
+          </div>
+
+          <div id="contents-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- JS ile basılır -->
+          </div>
+        </div>
+      `;
+      renderContentsGrid(ahesData.contents);
+    }
+
+    function renderContentsGrid(items) {
+      const grid = document.getElementById('contents-grid');
+      if (!grid) return;
+      if (items.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-sm">Kayıt bulunamadı.</div>`;
+        return;
+      }
+      grid.innerHTML = items.map(c => `
+        <div onclick="openNewsDetail('${c.id}')" class="bg-[#131B33] border border-white/10 rounded-2xl overflow-hidden hover:border-[#DFB963]/40 cursor-pointer transition-all flex flex-col justify-between">
+          <div class="aspect-video w-full overflow-hidden relative">
+            <img src="${c.image}" alt="${c.title}" class="w-full h-full object-cover">
+            <span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold bg-[#DFB963] text-slate-950">${c.type}</span>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-[11px] text-slate-400 mb-1">${c.date}</div>
+              <h3 class="text-sm font-bold text-white line-clamp-2 leading-snug mb-2">${c.title}</h3>
+              <p class="text-xs text-slate-400 line-clamp-2">${c.summary}</p>
+            </div>
+            <div class="text-xs font-bold text-[#DFB963] pt-4 mt-2 border-t border-white/5 flex items-center justify-between">
+              <span>Haber Detayı</span>
+              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterContentsList() {
+      const q = document.getElementById('contents-search').value.toLowerCase().trim();
+      const filtered = ahesData.contents.filter(x => x.title.toLowerCase().includes(q) || x.summary.toLowerCase().includes(q));
+      renderContentsGrid(filtered);
+    }
+
+    // ==================== 6. İLETİŞİM GÖRÜNÜMÜ ====================
+    function renderContactPage(container) {
+      container.innerHTML = `
+        <div class="py-12 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <span class="text-xs font-bold px-3 py-1 rounded bg-[#DFB963]/15 text-[#DFB963] uppercase border border-[#DFB963]/30">İletişim</span>
+            <h1 class="text-3xl sm:text-4xl font-black text-white mt-3">Bize Doğrudan Ulaşın</h1>
+            <p class="text-sm text-slate-400 mt-2">Hukuki destek, üye işlemleri ve genel sorularınız için buradayız.</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+            <!-- İletişim Bilgileri -->
+            <div class="lg:col-span-5 bg-[#131B33] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
+              <h3 class="text-lg font-black text-white">Genel Merkez</h3>
+              
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400 font-bold uppercase">Telefon Desteği</div>
+                  <div class="text-sm font-black text-white">+90 (530) 311 AHES</div>
+                  <div class="text-xs text-slate-400">(0530 311 24 37)</div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-[#DFB963]/10 text-[#DFB963] flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400 font-bold uppercase">Kurumsal E-Posta</div>
+                  <div class="text-sm font-black text-white">info@ahes.org.tr</div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400 font-bold uppercase">Açık Adres</div>
+                  <div class="text-xs sm:text-sm font-medium text-white leading-relaxed mt-1">
+                    Kayaönü Mahallesi Turgut Özal Bulvarı No:12/A GENTAŞ TOWER Kat: 10 No: 1006 Şehitkamil / GAZİANTEP
+                  </div>
+                </div>
+              </div>
+
+              <a href="https://wa.me/905303112437" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp ile Hızlı Yazın
+              </a>
+            </div>
+
+            <!-- Dijital İletişim Formu -->
+            <div class="lg:col-span-7 bg-[#131B33] border border-white/10 rounded-3xl p-6 sm:p-8">
+              <h3 class="text-lg font-black text-white mb-4">Dijital İletişim Formu</h3>
+              <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Adınız Soyadınız</label>
+                    <input type="text" required class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-3 text-white outline-none focus:border-[#DFB963]">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">E-Posta Adresiniz</label>
+                    <input type="email" required class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-3 text-white outline-none focus:border-[#DFB963]">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-400 mb-1">Konu</label>
+                  <input type="text" required class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-3 text-white outline-none focus:border-[#DFB963]">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-400 mb-1">Mesajınız</label>
+                  <textarea rows="4" required class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl p-3 text-white outline-none focus:border-[#DFB963] resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full gold-btn py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg">
+                  Mesajı Gönder
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Google Maps Iframe -->
+          <div class="rounded-3xl overflow-hidden border border-white/10 h-72">
+            <iframe class="w-full h-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3182.677292675401!2d37.35402487643533!3d37.08899217216615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1531e371a27a3f0d%3A0xb6df8280b9f9dcdf!2sGENTA%C5%9E%20TOWER!5e0!3m2!1str!2str!4v1789202566796!5m2!1str!2str" loading="lazy"></iframe>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==================== 7. SIKÇA SORULAN SORULAR GÖRÜNÜMÜ & CRUD YÖNETİMİ ====================
+    let activeFaqCategory = 'all';
+
+    // Başlangıç varsayılan soruları
+    const DEFAULT_FAQS = [
+      {
+        id: 1,
+        category: "uyelik",
+        categoryName: "Üyelik & Haklar",
+        question: "AHES'e kimler üye olabilir?",
+        answer: "Türkiye genelinde görev yapan tüm aile hekimleri, aile sağlığı elemanları (ebe, hemşire, acil tıp teknisyeni ve sağlık memurları) ile birinci basamak sağlık hizmeti sunan tüm kamu görevlileri sendikamıza üye olabilir."
+      },
+      {
+        id: 2,
+        category: "uyelik",
+        categoryName: "Üyelik & Haklar",
+        question: "Başka bir sendikaya üyeliğim varken AHES'e nasıl geçiş yapabilirim?",
+        answer: "e-Devlet üzerinden önceki sendikanızdan birkaç saniye içinde istifa edebilir ve hemen ardından web sitemizdeki 'Üye Ol' formunu doldurarak AHES'e geçebilirsiniz. e-Devlet üzerinden yapılan üyelik işlemleri resmi olarak derhal yürürlüğe girer."
+      },
+      {
+        id: 3,
+        category: "hukuk",
+        categoryName: "Hukuk & Davalar",
+        question: "Hukuki sorun veya soruşturma yaşadığımda sendika avukat desteği sağlıyor mu?",
+        answer: "Evet. AHES üyelerine disiplin soruşturmaları, haksız ceza puanı uygulamaları, re'sen görevlendirmeler ve idari baskılara karşı ücretsiz hukuki danışmanlık, savunma dilekçesi hazırlama ve alanında uzman avukatlarımız aracılığıyla dava takip desteği sunulmaktadır."
+      },
+      {
+        id: 4,
+        category: "hukuk",
+        categoryName: "Hukuk & Davalar",
+        question: "ASM'lerde güvenlik kameralarının mesai denetimi amacıyla kullanılması yasal mıdır?",
+        answer: "Hayır. Güvenlik kameraları yalnızca fiziksel güvenlik amacıyla konulabilir; çalışanları gözetleme, mesai veya performans denetimi amacıyla kayıtların izlenmesi ve talep edilmesi KVKK'ya ve Anayasa'nın özel hayatın gizliliği ilkesine aykırıdır."
+      },
+      {
+        id: 5,
+        category: "hukuk",
+        categoryName: "Hukuk & Davalar",
+        question: "Grup düşürme işlemi ile karşılaşırsam ne yapmalıyım?",
+        answer: "Personelin geçici izin veya mazeret halleri gerekçe gösterilerek yapılan grup düşürme işlemlerine karşı süresi içinde itiraz edilmelidir. AHES Hukuk Komisyonu'nun bu konuda Danıştay nezdinde kazandığı kesinleşmiş emsal iptal kararları bulunmaktadır; vakit kaybetmeden hukuk masamıza başvurabilirsiniz."
+      },
+      {
+        id: 6,
+        category: "nobet",
+        categoryName: "Nöbet & İzinler",
+        question: "Yıllık izin veya mazeret izni kullandığımda hak edişimden kesinti yapılır mı?",
+        answer: "Hayır. AHES Hukuk Komisyonu'nun açtığı ve emsal nitelik kazanan davalar sonucunda; yıllık izin, babalık ve evlilik gibi yasal izin sürelerinde aile hekimliği çalışanlarının ücretlerinden kesinti yapılması hukuka aykırı bulunmuş ve iptal ettirilmiştir."
+      },
+      {
+        id: 7,
+        category: "nobet",
+        categoryName: "Nöbet & İzinler",
+        question: "Hafta sonu ve adli nöbet ücretleri nasıl hesaplanır?",
+        answer: "Nöbet ücretleri, ilgili dönemin memur maaş katsayısı, gösterge rakamları ve unvanınıza (Hekim/ASE) göre saatlik bazda hesaplanır. Web sitemizdeki 'Nöbet Ücreti Hesaplayıcı' robotunu kullanarak tahmini net hak edişinizi anında görebilirsiniz."
+      },
+      {
+        id: 8,
+        category: "mali",
+        categoryName: "Mali & Muhasebe",
+        question: "AHES Muhasebe Projesi nedir ve nasıl yararlanabilirim?",
+        answer: "ASM'lerin cari gider harcamaları, stopaj, fatura takibi ve vergi süreçlerinde hekimlerimize profesyonel rehberlik ve standart şablonlar sunan bir destek projesidir. Portal üzerinden kılavuzlara ve hesaplama tablolarına erişebilirsiniz."
+      }
+    ];
+
+    // LocalStorage senkronizasyonu
+    function getStoredFaqs() {
+      try {
+        const saved = localStorage.getItem('ahes_faqs');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {
+        console.warn('LocalStorage faqs read error', e);
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_FAQS));
+    }
+
+    function saveFaqsData() {
+      try {
+        localStorage.setItem('ahes_faqs', JSON.stringify(ahesData.faqs));
+      } catch (e) {
+        console.warn('LocalStorage faqs save error', e);
+      }
+    }
+
+    // İlk açılışta verileri yükle
+    if (!ahesData.faqs || ahesData.faqs.length === 0) {
+      ahesData.faqs = getStoredFaqs();
+    } else {
+      const saved = localStorage.getItem('ahes_faqs');
+      if (saved) {
+        try { ahesData.faqs = JSON.parse(saved); } catch (e) {}
+      }
+    }
+
+    const FAQ_CATEGORIES = {
+      'uyelik': 'Üyelik & Haklar',
+      'hukuk': 'Hukuk & Davalar',
+      'nobet': 'Nöbet & İzinler',
+      'mali': 'Mali & Muhasebe'
+    };
+
+    function renderFaqPage(container) {
+      container.innerHTML = `
+        <div class="py-12 md:py-16 max-w-5xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-8">
+            <span class="text-xs font-bold px-3 py-1 rounded bg-[#DFB963]/15 text-[#DFB963] uppercase border border-[#DFB963]/30 tracking-wider">Rehber & Bilgi Bankası</span>
+            <h1 class="text-3xl sm:text-4xl font-black text-white mt-3">Sıkça Sorulan Sorular</h1>
+            <p class="text-sm text-slate-400 mt-2 max-w-xl mx-auto">Aile Hekimliği mevzuatı, sendikal haklar, nöbet hak edişleri ve hukuki süreçlerle ilgili merak edilen soruların yanıtları.</p>
+          </div>
+
+          <!-- Üst Eylem ve Arama Çubuğu -->
+          <div class="mb-8 space-y-4">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div class="relative flex-1">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="faq-search" oninput="filterFaqList()" placeholder="Soru veya anahtar kelime ara (ör: nöbet, istifa, dava)..." class="w-full text-xs sm:text-sm bg-[#131B33] border border-white/10 rounded-2xl pl-11 pr-4 py-3.5 text-white placeholder-slate-500 outline-none focus:border-[#DFB963] transition-colors shadow-inner">
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button onclick="openAddFaqModal()" class="gold-btn px-5 py-3.5 rounded-2xl text-xs font-black flex items-center justify-center gap-2 shadow-lg whitespace-nowrap transition-transform active:scale-95">
+                  <i class="fa-solid fa-plus text-xs"></i>
+                  <span>Yeni Soru & Cevap Ekle</span>
+                </button>
+                <button onclick="resetFaqsToDefault()" class="px-3.5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 text-xs transition-colors" title="Varsayılan Sorulara Sıfırla">
+                  <i class="fa-solid fa-arrow-rotate-left"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Kategori Butonları -->
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1" id="faq-category-pills">
+              <!-- JS ile dinamik çizilir -->
+            </div>
+          </div>
+
+          <!-- SSS Accordion Listesi -->
+          <div id="faq-accordion-list" class="space-y-3 mb-12">
+            <!-- JS ile doldurulur -->
+          </div>
+
+          <!-- Cevap Bulunamadı CTA Kutusu -->
+          <div class="bg-gradient-to-r from-[#131B33] to-[#0A1128] border border-[#DFB963]/30 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div class="space-y-1 text-center md:text-left">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#DFB963] uppercase tracking-wider">
+                <i class="fa-solid fa-scale-balanced"></i> Hukuk ve Danışma Masası
+              </span>
+              <h3 class="text-lg font-black text-white">Sorunuzun Yanıtını Bulamadınız mı?</h3>
+              <p class="text-xs text-slate-300">Hukuk Komisyonumuza ve sendika temsilcilerimize doğrudan danışabilirsiniz.</p>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-3 w-full md:w-auto">
+              <a href="https://wa.me/905303112437" target="_blank" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-md">
+                <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Danışma
+              </a>
+              <button onclick="navigateTo('contact')" class="px-5 py-2.5 bg-white/10 hover:bg-white/15 text-white border border-white/20 rounded-xl text-xs font-bold flex items-center gap-2 transition-all">
+                <i class="fa-regular fa-envelope"></i> İletişime Geçin
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      activeFaqCategory = 'all';
+      updateFaqCategoryPills();
+      filterFaqList();
+    }
+
+    function updateFaqCategoryPills() {
+      const pillsContainer = document.getElementById('faq-category-pills');
+      if (!pillsContainer) return;
+
+      const total = (ahesData.faqs || []).length;
+      const uyelikCount = (ahesData.faqs || []).filter(f => f.category === 'uyelik').length;
+      const hukukCount = (ahesData.faqs || []).filter(f => f.category === 'hukuk').length;
+      const nobetCount = (ahesData.faqs || []).filter(f => f.category === 'nobet').length;
+      const maliCount = (ahesData.faqs || []).filter(f => f.category === 'mali').length;
+
+      pillsContainer.innerHTML = `
+        <button onclick="setFaqCategory('all')" id="faq-cat-all" class="faq-cat-btn px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeFaqCategory === 'all' ? 'bg-[#DFB963] text-slate-950 shadow-md' : 'bg-white/5 hover:bg-white/10 text-slate-300'}">
+          Tümü (${total})
+        </button>
+        <button onclick="setFaqCategory('uyelik')" id="faq-cat-uyelik" class="faq-cat-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeFaqCategory === 'uyelik' ? 'bg-[#DFB963] text-slate-950 shadow-md' : 'bg-white/5 hover:bg-white/10 text-slate-300'}">
+          Üyelik & Haklar (${uyelikCount})
+        </button>
+        <button onclick="setFaqCategory('hukuk')" id="faq-cat-hukuk" class="faq-cat-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeFaqCategory === 'hukuk' ? 'bg-[#DFB963] text-slate-950 shadow-md' : 'bg-white/5 hover:bg-white/10 text-slate-300'}">
+          Hukuk & Davalar (${hukukCount})
+        </button>
+        <button onclick="setFaqCategory('nobet')" id="faq-cat-nobet" class="faq-cat-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeFaqCategory === 'nobet' ? 'bg-[#DFB963] text-slate-950 shadow-md' : 'bg-white/5 hover:bg-white/10 text-slate-300'}">
+          Nöbet & İzinler (${nobetCount})
+        </button>
+        <button onclick="setFaqCategory('mali')" id="faq-cat-mali" class="faq-cat-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all ${activeFaqCategory === 'mali' ? 'bg-[#DFB963] text-slate-950 shadow-md' : 'bg-white/5 hover:bg-white/10 text-slate-300'}">
+          Mali & Muhasebe (${maliCount})
+        </button>
+      `;
+    }
+
+    function renderFaqItems(items) {
+      const listEl = document.getElementById('faq-accordion-list');
+      if (!listEl) return;
+
+      if (!items || items.length === 0) {
+        listEl.innerHTML = `
+          <div class="bg-[#131B33] border border-white/10 rounded-2xl p-10 text-center text-slate-400 space-y-3">
+            <i class="fa-solid fa-circle-question text-4xl text-slate-500 mb-1"></i>
+            <div class="text-base font-bold text-white">Aramanızla eşleşen soru bulunamadı.</div>
+            <div class="text-xs text-slate-400 max-w-sm mx-auto">Lütfen farklı bir anahtar kelime deneyin veya sağ üstteki "+ Yeni Soru & Cevap Ekle" butonuyla yeni bir soru ekleyin.</div>
+            <button onclick="openAddFaqModal()" class="mt-2 inline-flex items-center gap-2 px-4 py-2 bg-[#DFB963]/15 text-[#DFB963] border border-[#DFB963]/30 rounded-xl text-xs font-bold hover:bg-[#DFB963]/25 transition-colors">
+              <i class="fa-solid fa-plus"></i> Bu Konuda Soru Ekle
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = items.map((f) => `
+        <div class="faq-item border border-white/10 bg-[#131B33] hover:border-white/20 rounded-2xl overflow-hidden transition-all duration-200" id="faq-item-${f.id}">
+          <div class="p-4 sm:p-5 flex items-center justify-between gap-3 select-none">
+            <!-- Soru Metni ve Tıklama Alanı -->
+            <div onclick="toggleFaq(${f.id})" class="flex items-start sm:items-center gap-3 flex-1 cursor-pointer group">
+              <span class="w-7 h-7 rounded-lg bg-[#DFB963]/15 text-[#DFB963] text-xs font-black flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-0 group-hover:bg-[#DFB963] group-hover:text-slate-950 transition-colors">
+                ${f.id}
+              </span>
+              <div>
+                <span class="text-[10px] font-bold text-[#DFB963] uppercase tracking-wider block mb-0.5 sm:hidden">${f.categoryName || ''}</span>
+                <span class="text-xs sm:text-sm font-bold text-white group-hover:text-[#DFB963] transition-colors leading-snug">${f.question}</span>
+              </div>
+            </div>
+
+            <!-- Eylem Butonları (Düzenle / Sil) ve Chevron -->
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <span class="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded bg-white/5 text-slate-300 border border-white/10">${f.categoryName || ''}</span>
+              
+              <div class="flex items-center gap-1.5 ml-1">
+                <button onclick="openEditFaqModal(${f.id})" class="px-2.5 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/25 text-blue-400 hover:text-blue-300 text-xs font-bold flex items-center gap-1 transition-colors" title="Soruyu ve Cevabı Düzenle">
+                  <i class="fa-solid fa-pen-to-square text-xs"></i>
+                  <span class="hidden md:inline">Düzenle</span>
+                </button>
+                <button onclick="deleteFaqItem(${f.id})" class="px-2.5 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/25 text-rose-400 hover:text-rose-300 text-xs font-bold flex items-center gap-1 transition-colors" title="Soruyu Sil">
+                  <i class="fa-solid fa-trash-can text-xs"></i>
+                  <span class="hidden md:inline">Sil</span>
+                </button>
+              </div>
+
+              <button onclick="toggleFaq(${f.id})" id="faq-chevron-${f.id}" class="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 transition-all duration-300 ml-1">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cevap Alanı -->
+          <div id="faq-ans-${f.id}" class="hidden px-5 pb-5 pt-2 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-white/5">
+            <div class="whitespace-pre-line">${f.answer}</div>
+            
+            <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+              <span class="text-[11px] font-semibold text-slate-400">
+                <i class="fa-solid fa-tag text-[#DFB963] mr-1"></i> ${f.categoryName || ''}
+              </span>
+              <div class="flex items-center gap-3">
+                <button onclick="openEditFaqModal(${f.id})" class="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1">
+                  <i class="fa-solid fa-pen-to-square"></i> Bu Soru ve Cevabı Düzenle
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleFaq(id) {
+      const ansEl = document.getElementById(`faq-ans-${id}`);
+      const chevronEl = document.getElementById(`faq-chevron-${id}`);
+      const itemEl = document.getElementById(`faq-item-${id}`);
+      if (!ansEl || !chevronEl) return;
+
+      const isHidden = ansEl.classList.contains('hidden');
+      if (isHidden) {
+        ansEl.classList.remove('hidden');
+        chevronEl.classList.add('rotate-180', 'text-[#DFB963]', 'bg-[#DFB963]/15');
+        itemEl.classList.add('border-[#DFB963]/40');
+      } else {
+        ansEl.classList.add('hidden');
+        chevronEl.classList.remove('rotate-180', 'text-[#DFB963]', 'bg-[#DFB963]/15');
+        itemEl.classList.remove('border-[#DFB963]/40');
+      }
+    }
+
+    function setFaqCategory(cat) {
+      activeFaqCategory = cat;
+      updateFaqCategoryPills();
+      filterFaqList();
+    }
+
+    function filterFaqList() {
+      const q = (document.getElementById('faq-search')?.value || '').toLowerCase().trim();
+      let filtered = ahesData.faqs || [];
+
+      if (activeFaqCategory !== 'all') {
+        filtered = filtered.filter(f => f.category === activeFaqCategory);
+      }
+
+      if (q) {
+        filtered = filtered.filter(f => 
+          f.question.toLowerCase().includes(q) || 
+          f.answer.toLowerCase().includes(q) ||
+          (f.categoryName && f.categoryName.toLowerCase().includes(q))
+        );
+      }
+
+      renderFaqItems(filtered);
+    }
+
+    // ==================== SSS MODAL & CRUD İŞLEMLERİ ====================
+    function openAddFaqModal() {
+      document.getElementById('faq-form-id').value = '';
+      document.getElementById('faq-modal-title').innerText = 'Yeni Soru & Cevap Ekle';
+      document.getElementById('faq-modal-submit-btn').innerText = 'Soruyu Kaydet';
+      document.getElementById('faq-form-category').value = activeFaqCategory !== 'all' ? activeFaqCategory : 'uyelik';
+      document.getElementById('faq-form-question').value = '';
+      document.getElementById('faq-form-answer').value = '';
+
+      const modal = document.getElementById('faq-modal');
+      const box = document.getElementById('faq-modal-box');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function openEditFaqModal(id) {
+      const item = (ahesData.faqs || []).find(f => f.id === id);
+      if (!item) return;
+
+      document.getElementById('faq-form-id').value = item.id;
+      document.getElementById('faq-modal-title').innerText = `Soruyu Düzenle (#${item.id})`;
+      document.getElementById('faq-modal-submit-btn').innerText = 'Güncellemeyi Kaydet';
+      document.getElementById('faq-form-category').value = item.category || 'uyelik';
+      document.getElementById('faq-form-question').value = item.question || '';
+      document.getElementById('faq-form-answer').value = item.answer || '';
+
+      const modal = document.getElementById('faq-modal');
+      const box = document.getElementById('faq-modal-box');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeFaqModal() {
+      const modal = document.getElementById('faq-modal');
+      const box = document.getElementById('faq-modal-box');
+      box.classList.add('scale-95');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function handleFaqFormSubmit(e) {
+      e.preventDefault();
+      const idVal = document.getElementById('faq-form-id').value;
+      const category = document.getElementById('faq-form-category').value;
+      const question = document.getElementById('faq-form-question').value.trim();
+      const answer = document.getElementById('faq-form-answer').value.trim();
+      const categoryName = FAQ_CATEGORIES[category] || 'Genel';
+
+      if (!question || !answer) {
+        showToast('Lütfen soru ve cevap alanlarını doldurun.', 'error');
+        return;
+      }
+
+      if (idVal) {
+        // Düzenleme
+        const id = parseInt(idVal);
+        const idx = ahesData.faqs.findIndex(f => f.id === id);
+        if (idx !== -1) {
+          ahesData.faqs[idx] = {
+            ...ahesData.faqs[idx],
+            category,
+            categoryName,
+            question,
+            answer
+          };
+          showToast('Soru ve cevap başarıyla güncellendi!', 'success');
+        }
+      } else {
+        // Yeni Ekleme
+        const newId = (ahesData.faqs || []).reduce((max, f) => Math.max(max, Number(f.id) || 0), 0) + 1;
+        ahesData.faqs.unshift({
+          id: newId,
+          category,
+          categoryName,
+          question,
+          answer
+        });
+        showToast('Yeni soru ve cevap başarıyla eklendi!', 'success');
+      }
+
+      saveFaqsData();
+      closeFaqModal();
+      updateFaqCategoryPills();
+      filterFaqList();
+    }
+
+    function deleteFaqItem(id) {
+      const item = (ahesData.faqs || []).find(f => f.id === id);
+      const title = item ? item.question : 'Bu soruyu';
+      if (!confirm(`"${title.substring(0, 40)}..." sorusunu silmek istediğinize emin misiniz?`)) {
+        return;
+      }
+
+      ahesData.faqs = ahesData.faqs.filter(f => f.id !== id);
+      saveFaqsData();
+      showToast('Soru başarıyla silindi.', 'info');
+      updateFaqCategoryPills();
+      filterFaqList();
+    }
+
+    function resetFaqsToDefault() {
+      if (!confirm('Tüm soruları başlangıç varsayılanlarına sıfırlamak istiyor musunuz? Özel eklediğiniz sorular silinecektir.')) {
+        return;
+      }
+      ahesData.faqs = JSON.parse(JSON.stringify(DEFAULT_FAQS));
+      saveFaqsData();
+      showToast('Sorular varsayılan listeye sıfırlandı.', 'info');
+      updateFaqCategoryPills();
+      filterFaqList();
+    }
+
+    // ==================== GENEL BAŞKAN MESAJ MODALI ====================
+    function openPresidentModal() {
+      const modal = document.getElementById('president-modal');
+      const box = document.getElementById('president-modal-box');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closePresidentModal() {
+      const modal = document.getElementById('president-modal');
+      const box = document.getElementById('president-modal-box');
+      box.classList.add('scale-95');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    // ==================== TOAST BİLDİRİM MOTORU ====================
+    function showToast(message, type = 'success') {
+      const box = document.getElementById('toast-box');
+      const icon = document.getElementById('toast-icon');
+      const text = document.getElementById('toast-text');
+      if (!box || !icon || !text) return;
+
+      text.innerText = message;
+      if (type === 'success') {
+        box.className = "fixed bottom-6 right-6 z-50 transform translate-y-0 opacity-100 pointer-events-auto transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 bg-[#131B33] text-white text-xs font-bold";
+        icon.className = "fa-solid fa-circle-check text-emerald-400 text-base";
+      } else if (type === 'error') {
+        box.className = "fixed bottom-6 right-6 z-50 transform translate-y-0 opacity-100 pointer-events-auto transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border border-rose-500/40 bg-[#131B33] text-white text-xs font-bold";
+        icon.className = "fa-solid fa-circle-exclamation text-rose-400 text-base";
+      } else {
+        box.className = "fixed bottom-6 right-6 z-50 transform translate-y-0 opacity-100 pointer-events-auto transition-all duration-300 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border border-[#DFB963]/40 bg-[#131B33] text-white text-xs font-bold";
+        icon.className = "fa-solid fa-circle-info text-[#DFB963] text-base";
+      }
+
+      clearTimeout(window.__toastTimeout);
+      window.__toastTimeout = setTimeout(() => {
+        box.classList.add('translate-y-20', 'opacity-0');
+        box.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    // ==================== HABER DETAYI MODALI ====================
+    function openNewsDetail(id) {
+      const item = ahesData.contents.find(x => x.id === id);
+      if (!item) return;
+
+      const modal = document.getElementById('news-modal');
+      const box = document.getElementById('news-modal-box');
+      const content = document.getElementById('news-modal-content');
+
+      content.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-[#DFB963] text-slate-950">${item.type}</span>
+            <span class="text-xs text-slate-400">${item.date}</span>
+          </div>
+          <h2 class="text-2xl font-black text-white leading-snug">${item.title}</h2>
+          <div class="rounded-2xl overflow-hidden aspect-video max-h-72 w-full bg-slate-900">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+          </div>
+          <div class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-3 pt-2">
+            <p class="font-semibold text-white">${item.summary}</p>
+            <p>${item.body}</p>
+          </div>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs text-slate-400">Paylaş:</span>
+            <div class="flex gap-2">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://ahes.org.tr" target="_blank" class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs"><i class="fa-brands fa-facebook"></i></a>
+              <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(item.title)}" target="_blank" class="w-8 h-8 rounded-lg bg-slate-800 text-white flex items-center justify-center text-xs"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(item.title)}" target="_blank" class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeNewsModal() {
+      const modal = document.getElementById('news-modal');
+      const box = document.getElementById('news-modal-box');
+      box.classList.add('scale-95');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    // ==================== MODALLAR VE FORM İŞLEMLERİ ====================
+    function openLoginModal() {
+      const modal = document.getElementById('login-modal');
+      const box = document.getElementById('login-modal-box');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById('login-modal');
+      const box = document.getElementById('login-modal-box');
+      box.classList.add('scale-95');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function togglePassVisibility() {
+      const input = document.getElementById('login-pass');
+      const eye = document.getElementById('pass-eye');
+      if (input.type === 'password') {
+        input.type = 'text';
+        eye.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        eye.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-user').value;
+      const btn = document.getElementById('login-btn-submit');
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Giriş Yapılıyor...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        closeLoginModal();
+        btn.innerHTML = 'Yönetici Portalı\'na Gir';
+        btn.disabled = false;
+        alert(`Hoş Geldiniz: ${user}\nAHES İçerik Yönetim Modülü Açılıyor...`);
+        window.location.href = "ahes_content_manager_mock.html";
+      }, 700);
+    }
+
+    function openRegisterModal() {
+      document.getElementById('register-modal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('register-modal').classList.remove('opacity-0'), 10);
+    }
+
+    function closeRegisterModal() {
+      document.getElementById('register-modal').classList.add('opacity-0');
+      setTimeout(() => document.getElementById('register-modal').classList.add('hidden'), 300);
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      alert("Üyelik başvurunuz başarıyla alındı! Genel Merkez teşkilatlanma sekreterimiz sizinle iletişime geçecektir.");
+      closeRegisterModal();
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      alert("Mesajınız AHES Genel Merkezi'ne iletildi. En kısa sürede dönüş sağlanacaktır.");
+      e.target.reset();
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        icon.classList.replace('fa-sun', 'fa-moon');
+        document.body.classList.replace('bg-[#0A1128]', 'bg-slate-50');
+        document.body.classList.replace('text-slate-100', 'text-slate-900');
+      } else {
+        html.classList.add('dark');
+        icon.classList.replace('fa-moon', 'fa-sun');
+        document.body.classList.replace('bg-slate-50', 'bg-[#0A1128]');
+        document.body.classList.replace('text-slate-900', 'text-slate-100');
+      }
+    }
+
+    function toggleMobileMenu() {
+      const m = document.getElementById('mobile-menu');
+      const o = document.getElementById('mobile-menu-overlay');
+      if (m.classList.contains('translate-x-full')) {
+        o.classList.remove('hidden');
+        setTimeout(() => { o.classList.remove('opacity-0'); m.classList.remove('translate-x-full'); }, 10);
+      } else {
+        m.classList.add('translate-x-full');
+        o.classList.add('opacity-0');
+        setTimeout(() => o.classList.add('hidden'), 300);
+      }
+    }
+
+    // İlk açılış
+    navigateTo('home');
+  </script>
+</body>
+</html>

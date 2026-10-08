@@ -1,0 +1,199 @@
+{
+  "site": {
+    "name": "AHES - Aile Hekimliği Hukuk ve Eğitim Sendikası",
+    "shortName": "AHES",
+    "slogan": "Emeğin Gücü, Geleceğin Güvencesi.",
+    "foundedYear": 2026,
+    "headquarters": "Gaziantep",
+    "website": "https://www.ahes.org.tr",
+    "phone": "+90 530 311 24 37",
+    "phoneDisplay": "+90 (530) 311 AHES",
+    "email": "info@ahes.org.tr",
+    "address": "Kayaönü Mahallesi Turgut Özal Bulvarı No:12/A GENTAŞ TOWER Kat: 10 No: 1006 Şehitkamil / GAZİANTEP",
+    "mapsUrl": "https://www.google.com/maps/dir/?api=1&destination=Kaya%C3%B6n%C3%BC%20Mahallesi%20Turgut%20%C3%96zal%20Bulvar%C4%B1%20No%3A12%2FA%20GENTA%C5%9E%20TOWER%20Kat%3A%2010%20No%3A%201006%20%C5%9Eehitkamil%20%2F%20GAZ%C4%B0ANTEP",
+    "whatsapp": "https://wa.me/905303112437",
+    "social": {
+      "facebook": "https://www.facebook.com/ahesorgtr",
+      "twitter": "https://x.com/ahesorgtr",
+      "instagram": "https://www.instagram.com/ahesorgtr",
+      "youtube": "https://www.youtube.com/@ahesorgtr"
+    },
+    "mobileApps": {
+      "ios": "https://apps.apple.com/us/app/ahes/id6760265097",
+      "android": "https://play.google.com/store/apps/details?id=com.ferox.ahes",
+      "packageName": "com.ferox.ahes"
+    }
+  },
+  "about": {
+    "manifesto": "Bizler, aile hekimliği ve sağlık çalışanlarının hak mücadelesinde yeni bir soluk, hukuki bir kalkan ve bilimsel bir akademi olmak üzere yola çıktık.",
+    "vision": "AHES, demokratik, laik ve sosyal hukuk devleti ilkesine bağlı, Atatürk ilke ve inkılaplarını esas alan bir vizyona sahiptir. Temel amacımız; başta aile hekimleri ve hekimler olmak üzere tüm üyelerimizin ekonomik, sosyal, mesleki ve akademik haklarını korumak, çalışma standartlarını en üst düzeye çıkarmak ve geleceğe güvenle bakmalarını sağlamaktır.",
+    "independence": "Sendikamız; hiçbir siyasi parti, sermaye grubu, cemaat veya çıkar odağının etkisi altında kalmadan, tam bağımsızlık ilkesiyle hareket eder. Şeffaflık, liyakat ve katılımcılık yönetim anlayışımızın temel taşıdır.",
+    "emblemMeaning": "Amblemimizdeki güneş, örgütlü yapımızın ülke geneline yayılan yön göstericiliğini; metalik mavi ve altın tonları ise kurumsallık, güven ve istikrarı simgelemektedir."
+  },
+  "board": [
+    {
+      "name": "Dr. Mustafa IŞIKLI",
+      "role": "Genel Başkan",
+      "order": 1
+    },
+    {
+      "name": "Dr. İrfan Gazi YILMAZ",
+      "role": "Genel Sekreter",
+      "order": 2
+    },
+    {
+      "name": "Dr. Nihat Taylan TİMUR",
+      "role": "Genel Başkan Yardımcısı (Mali İşlerden Sorumlu)",
+      "order": 3
+    },
+    {
+      "name": "Dr. Murat Mustafa GÖNÜL",
+      "role": "Genel Başkan Yardımcısı (Teşkilatlanmadan Sorumlu)",
+      "order": 4
+    },
+    {
+      "name": "Dr. Abdulkerim COŞKUN",
+      "role": "Genel Başkan Yardımcısı (Hukuk, Mevzuat ve Toplu Sözleşmeden Sorumlu)",
+      "order": 5
+    },
+    {
+      "name": "Dr. Cenk BOZKURT",
+      "role": "Genel Başkan Yardımcısı (Eğitim, Basın Yayın ve Bilişim İşlerinden Sorumlu)",
+      "order": 6
+    },
+    {
+      "name": "Dr. Ahmet SARIKAYA",
+      "role": "Genel Başkan Yardımcısı (Sosyal İşler ve Uluslararası İlişkilerden Sorumlu)",
+      "order": 7
+    },
+    {
+      "name": "Dr. Bestami GÜNDÜZ",
+      "role": "Kurucu Yönetim (Teşkilatlanma)",
+      "order": 8
+    },
+    {
+      "name": "Uzm. Dr. Seval SAKARYA",
+      "role": "Kurucu Yönetim (Eğitim ve Bilim)",
+      "order": 9
+    }
+  ],
+  "contents": [
+    {
+      "id": "1",
+      "title": "Grup Düşürme İşlemi Dava Kazanımı",
+      "type": "Dava Kazanımı",
+      "category": "Hukuk & Mevzuat",
+      "date": "28 Eylül 2026",
+      "summary": "Temizlik Personelinin Denetim Anında Görev Başında Olmadığı Tespitiyle Yapılan Grup Düşürme İşlemi İptal Edildi.",
+      "body": "Aile sağlığı merkezlerinde görev yapan hekimlerimizin grup sınıflandırmasına ilişkin denetimlerde, personelin geçici ayrılışları gerekçe gösterilerek yapılan grup düşürme işlemi AHES Hukuk Komisyonu tarafından açılan dava sonucunda hukuka aykırı bulunarak yürütmesi durdurulmuş ve işlem iptal edilmiştir. Bu karar tüm Türkiye'deki ASM'ler için güçlü bir emsal niteliğindedir.",
+      "image": "https://api.ahes.org.tr/images/ai_web_9d63117f.jpg",
+      "slug": "grup-dusurme-slemi-dava-kazanimi",
+      "isFeatured": true,
+      "isPublished": true
+    },
+    {
+      "id": "2",
+      "title": "Bilimsel Eğitim ve Araştırma Destek Programı",
+      "type": "Duyuru",
+      "category": "Eğitim & Bilim",
+      "date": "21 Eylül 2026",
+      "summary": "AHES bünyesinde birinci basamak sağlık hizmetlerine yönelik akademik araştırma ve yayın destekleri başlamıştır.",
+      "body": "Aile hekimliği disiplininin bilimsel gelişimine katkı sağlamak, ulusal ve uluslararası kongrelerde sunulacak çalışmaları desteklemek amacıyla AHES Bilimsel Eğitim ve Araştırma Destek Fonu kurulmuştur. Başvurular üye portalı üzerinden kabul edilmektedir.",
+      "image": "https://api.ahes.org.tr/images/ai_web_589ef790.jpg",
+      "slug": "bilimsel-egitim-ve-arastirma-destek-programi",
+      "isFeatured": false,
+      "isPublished": true
+    },
+    {
+      "id": "3",
+      "title": "Aile Hekimliği Uzmanlarının Görevlendirmesi",
+      "type": "Haber",
+      "category": "Özlük Hakları",
+      "date": "05 Eylül 2026",
+      "summary": "Aile hekimliği uzmanlarının mevzuata aykırı re'sen görevlendirilmelerine ilişkin AHES'in hukuki girişimi.",
+      "body": "Hastanelerin acil servis veya polikliniklerine uzman aile hekimlerinin rızaları hilafına yapılan re'sen görevlendirmeleri kabul edilemez. Danıştay içtihatları doğrultusunda birinci basamak hekiminin asli görev yerinden koparılmasına karşı hukuki süreç başlatılmıştır.",
+      "image": "https://api.ahes.org.tr/images/ai_web_c12374d8.jpg",
+      "slug": "aile-hekimligi-uzmanlarinin-gorevlendirmesi",
+      "isFeatured": false,
+      "isPublished": true
+    },
+    {
+      "id": "4",
+      "title": "Aile Sağlığı Merkezlerinde Kamera Kayıtlarının Talep Edilmesi ve Denetim Amaçlı Kullanımının Hukuki Sınırları",
+      "type": "Duyuru",
+      "category": "Hukuk & Mevzuat",
+      "date": "03 Eylül 2026",
+      "summary": "ASM güvenlik kameralarının çalışma disiplini ve mesai denetimi amacıyla izlenemeyeceğine dair KVKK ve Anayasa değerlendirmesi.",
+      "body": "Güvenlik amacıyla kurulan kamera sistemlerinin çalışanları gözetleme, mesai takibi veya delil üretme amacıyla kullanılması KVKK'ya ve Anayasa'nın özel hayatın gizliliği ilkesine aykırıdır. İdarelerin kamera kayıtlarını talep etme yetkisi sınırlandırılmıştır.",
+      "image": "https://api.ahes.org.tr/images/ai_web_139339da.jpg",
+      "slug": "aile-sagligi-merkezlerinde-kamera-kayitlari",
+      "isFeatured": false,
+      "isPublished": true
+    },
+    {
+      "id": "5",
+      "title": "30 Ağustos Zafer Bayramı",
+      "type": "Haber",
+      "category": "Genel",
+      "date": "30 Ağustos 2026",
+      "summary": "Bağımsızlığımızın ve milli irademizin sembolü 30 Ağustos Zafer Bayramımız kutlu olsun.",
+      "body": "Gazi Mustafa Kemal Atatürk ve silah arkadaşları başta olmak üzere, vatanımız uğruna canlarını feda eden tüm şehitlerimizi saygı ve rahmetle anıyoruz. AHES olarak cumhuriyetimizin değerlerine ve bağımsızlık ruhuna daima sahip çıkacağız.",
+      "image": "https://api.ahes.org.tr/images/custom_web_bc04496a.jpg",
+      "slug": "0-agustos-zafer-bayrami",
+      "isFeatured": false,
+      "isPublished": true
+    },
+    {
+      "id": "6",
+      "title": "Okula Uyum Haftasında İdari İzin Hakkı",
+      "type": "Duyuru",
+      "category": "Özlük Hakları",
+      "date": "28 Ağustos 2026",
+      "summary": "7–11 Eylül Okula Uyum Haftasında çalışan anne-baba aile hekimliği personelinin idari izin hakkı hakkında açıklama.",
+      "body": "Okula yeni başlayan çocukları olan sağlık çalışanlarının uyum haftasında idari izinli sayılmasına ilişkin genelge gereği ASM çalışanlarımızın bu haktan eksiksiz yararlanması gerekmektedir.",
+      "image": "https://api.ahes.org.tr/images/ai_web_3f8a394c.jpg",
+      "slug": "okula-uyum-haftasi",
+      "isFeatured": false,
+      "isPublished": true
+    },
+    {
+      "id": "7",
+      "title": "SBAHBS Zorunluluğu ve Yaptırım Tehdidi Hakkında Hukuki Değerlendirme",
+      "type": "Haber",
+      "category": "Mevzuat & Hukuk",
+      "date": "25 Ağustos 2026",
+      "summary": "Bakanlık bilgi sistemlerinin zorunlu tutulması ve hekimlere uygulanan ceza puanı tehditlerine karşı hukuki raporumuz.",
+      "body": "SBAHBS sistemine geçişte yaşanan teknik altyapı yetersizliklerinin faturası hekimlere çıkarılamaz. AHES olarak hekimlerimizin sistemsel hatalar sebebiyle mağdur edilmesine müsaade etmeyeceğiz.",
+      "image": "https://api.ahes.org.tr/images/ai_web_479b5892.jpg",
+      "slug": "sb-ahbs",
+      "isFeatured": false,
+      "isPublished": true
+    },
+    {
+      "id": "8",
+      "title": "Teşvik Değil, Kanunla Güvence Altında Tek Kalem Ücret",
+      "type": "Haber",
+      "category": "Sendikal Faaliyetler",
+      "date": "01 Ağustos 2026",
+      "summary": "Birinci basamakta performans ve teşvike bağlı kesintileri kaldıran, emekliliğe yansıyan tek kalem maaş talebimiz.",
+      "body": "ASM çalışanları teşvik ve performans oyunlarıyla her ay ne maaş alacağını bilemez hale getirilmiştir. İzinlerde ücreti kesilmeyen, insanca yaşamaya yetecek, emekliliğe yansıyan tek kalem maaş kanunlaşmalıdır.",
+      "image": "https://api.ahes.org.tr/images/ai_web_b16193b3.jpg",
+      "slug": "tesvik-degil-kanunla-guvence-altinda-tek-kalem-ucret",
+      "isFeatured": false,
+      "isPublished": true
+    },
+    {
+      "id": "9",
+      "title": "İzin Hakkında Ücret Kesintisi İptal Edildi!",
+      "type": "Dava Kazanımı",
+      "category": "Hukuk & Mevzuat",
+      "date": "17 Temmuz 2026",
+      "summary": "Yıllık izin ve babalık izni gibi anayasal haklar nedeniyle yapılan ücret kesintileri yargı kararıyla iptal ettirildi.",
+      "body": "AHES Hukuk Komisyonu'nun açtığı davada, hekimlerin yasal yıllık izinlerini ve mazeret izinlerini kullandıkları günlerde hak edişlerinden kesinti yapılamayacağı hükme bağlanmıştır.",
+      "image": "https://api.ahes.org.tr/images/ai_web_feb29df3.jpg",
+      "slug": "zn-hakkinda-ucret-kesnts-ptal-edld",
+      "isFeatured": false,
+      "isPublished": true
+    }
+  ]
+}

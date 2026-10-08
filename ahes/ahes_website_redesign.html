@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>AHES - Aile Hekimliği Çalışanları Sendikası | Emeğin Gücü, Geleceğin Güvencesi</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <!-- Font Awesome Pro/Free Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --gold: #DFB963;
+      --gold-dark: #C9A24D;
+      --gold-light: #F3D285;
+      --navy-bg: #0A1128;
+      --navy-card: #131B33;
+      --navy-card-hover: #1A2445;
+      --navy-border: rgba(255, 255, 255, 0.08);
+      --purple-accent: #6366F1;
+    }
+
+    * {
+      font-family: var(--font-main);
+    }
+
+    /* Akıcı Geçişler */
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Özel Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+
+    /* Glow ve Cam Efektleri */
+    .glass-nav {
+      background: rgba(10, 17, 40, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    html:not(.dark) .glass-nav {
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFE79A 0%, #DFB963 50%, #B88E33 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .purple-gradient-btn {
+      background: linear-gradient(135deg, #7C3AED 0%, #6366F1 100%);
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .purple-gradient-btn:hover {
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .gold-gradient-btn {
+      background: linear-gradient(135deg, #F3D285 0%, #DFB963 50%, #C9A24D 100%);
+      color: #0A1128;
+      box-shadow: 0 4px 15px rgba(223, 185, 99, 0.35);
+    }
+    .gold-gradient-btn:hover {
+      box-shadow: 0 6px 22px rgba(223, 185, 99, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .feature-card {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Carousel Geçiş Animasyonları */
+    .slide-fade {
+      transition: opacity 0.7s ease-in-out, transform 0.7s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-[#0A1128] text-slate-100 antialiased selection:bg-[#DFB963] selection:text-slate-950 overflow-x-hidden min-h-screen flex flex-col">
+
+  <!-- ==================== TOP TICKER (ANLIK DUYURU BANDI) ==================== -->
+  <div class="bg-gradient-to-r from-blue-900 via-indigo-950 to-slate-900 text-xs py-2 px-4 border-b border-white/5 relative z-40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2 overflow-hidden">
+        <span class="bg-[#DFB963] text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider flex-shrink-0 animate-pulse">
+          SON DAKİKA
+        </span>
+        <div class="truncate text-slate-300 font-medium text-xs">
+          ⚖️ Danıştay Emsal Kararı: ASM çalışanlarının grup düşürme işlemine ilişkin iptal davası kazanıldı!
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-5 text-[11px] text-slate-400 flex-shrink-0">
+        <a href="tel:05303112437" class="hover:text-[#DFB963] transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-[#DFB963]"></i> 0530 311 24 37
+        </a>
+        <span>•</span>
+        <a href="mailto:info@ahes.org.tr" class="hover:text-[#DFB963] transition-colors flex items-center gap-1.5">
+          <i class="fa-solid fa-envelope text-[#DFB963]"></i> info@ahes.org.tr
+        </a>
+        <span>•</span>
+        <div class="flex items-center gap-2 text-slate-300">
+          <a href="https://www.facebook.com/ahesorgtr" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-facebook"></i></a>
+          <a href="https://x.com/ahesorgtr" target="_blank" class="hover:text-white"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/ahesorgtr" target="_blank" class="hover:text-pink-400"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://api.whatsapp.com/send?phone=905303112437" target="_blank" class="hover:text-emerald-400"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3.5 group">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#DFB963] via-[#B88E33] to-[#8C6B1F] p-0.5 shadow-lg shadow-[#DFB963]/20 flex items-center justify-center transform group-hover:scale-105 transition-transform duration-300">
+          <div class="w-full h-full bg-[#0A1128] rounded-[14px] flex items-center justify-center font-black text-xl text-[#DFB963]">
+            A
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-1.5">
+            <span class="text-2xl font-black tracking-tight text-white group-hover:text-[#DFB963] transition-colors">AHES</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#DFB963]/15 text-[#DFB963] border border-[#DFB963]/30">SENDİKA</span>
+          </div>
+          <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase">Aile Hekimliği Çalışanları</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigasyon Menüsü -->
+      <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+        <a href="/" class="px-3.5 py-2 rounded-xl text-sm font-bold text-white bg-white/10 shadow-inner transition-colors">
+          ANASAYFA
+        </a>
+
+        <!-- Hakkımızda Dropdown -->
+        <div class="relative group">
+          <button class="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 flex items-center gap-1.5 transition-colors">
+            HAKKIMIZDA
+            <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200 group-hover:rotate-180 text-slate-400"></i>
+          </button>
+          <div class="absolute top-full left-0 mt-2 w-56 bg-[#131B33] border border-white/10 rounded-2xl shadow-2xl p-2 hidden group-hover:block animate-in fade-in slide-in-from-top-2 duration-200">
+            <a href="#about" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+              <i class="fa-solid fa-shield-heart text-[#DFB963] w-4"></i> Biz Kimiz?
+            </a>
+            <a href="#kurullar" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+              <i class="fa-solid fa-users text-blue-400 w-4"></i> Yönetim & Kurullar
+            </a>
+            <a href="#tuzuk" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+              <i class="fa-solid fa-book-bookmark text-emerald-400 w-4"></i> Sendika Tüzüğü
+            </a>
+          </div>
+        </div>
+
+        <a href="#gundem" class="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          HABERLER & DUYURULAR
+        </a>
+
+        <a href="#davalar" class="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          HUKUK & DAVALAR
+        </a>
+
+        <a href="#hesaplayici" class="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          NÖBET HESAPLA
+        </a>
+
+        <a href="#iletisim" class="px-3.5 py-2 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-colors">
+          İLETİŞİM
+        </a>
+      </nav>
+
+      <!-- Sağ Aksiyon Butonları -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- Tema Değiştirici -->
+        <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white flex items-center justify-center transition-colors" title="Tema Değiştir">
+          <i id="theme-icon" class="fa-solid fa-sun text-sm text-[#DFB963]"></i>
+        </button>
+
+        <!-- Üye Ol Butonu (Mor Gradient) -->
+        <a href="#uye-ol" class="purple-gradient-btn text-white text-xs sm:text-sm font-extrabold px-4 sm:px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-user-plus text-xs"></i>
+          <span>ÜYE OL</span>
+        </a>
+
+        <!-- AHES Yönetim / Giriş Butonu (Gold Gradient) -->
+        <button onclick="openLoginModal()" class="gold-gradient-btn text-xs sm:text-sm font-extrabold px-4 sm:px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all">
+          <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+          <span>AHES PORTAL</span>
+        </button>
+
+        <!-- Mobil Menü Aç Butonu -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MOBİL YAN MENÜ (DRAWER) ==================== -->
+  <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="toggleMobileMenu()"></div>
+  <div id="mobile-menu" class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#131B33] border-l border-white/10 z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col p-6">
+    <div class="flex items-center justify-between pb-6 border-b border-white/10">
+      <div class="flex items-center gap-2">
+        <span class="text-xl font-black text-[#DFB963]">AHES</span>
+        <span class="text-xs text-slate-400 font-semibold">Mobil Menü</span>
+      </div>
+      <button onclick="toggleMobileMenu()" class="w-9 h-9 rounded-lg bg-white/5 text-slate-300 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <nav class="flex-1 py-6 space-y-2 overflow-y-auto">
+      <a href="/" onclick="toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-bold text-sm bg-white/10 text-white">Anasayfa</a>
+      <a href="#about" onclick="toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Biz Kimiz?</a>
+      <a href="#gundem" onclick="toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Haberler & Gündem</a>
+      <a href="#davalar" onclick="toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Kazanılan Davalar</a>
+      <a href="#hesaplayici" onclick="toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">Nöbet Hesaplayıcı</a>
+      <a href="#iletisim" onclick="toggleMobileMenu()" class="block px-4 py-3 rounded-xl font-semibold text-sm text-slate-300 hover:bg-white/5">İletişim</a>
+    </nav>
+
+    <div class="pt-4 border-t border-white/10 space-y-3">
+      <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full gold-gradient-btn py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        AHES Portal Giriş
+      </button>
+      <a href="#uye-ol" onclick="toggleMobileMenu()" class="w-full purple-gradient-btn py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 text-white">
+        <i class="fa-solid fa-user-plus"></i>
+        Sendikaya Üye Ol
+      </a>
+    </div>
+  </div>
+
+  <!-- ==================== HERO SECTION (MODERN DİNAMİK MANŞET) ==================== -->
+  <section class="relative overflow-hidden pt-6 pb-20 md:pt-12 md:pb-28">
+    
+    <!-- Arka Plan Işık Efektleri -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-blue-600/20 via-[#DFB963]/15 to-purple-600/20 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="relative rounded-3xl overflow-hidden border border-white/10 bg-[#131B33]/80 backdrop-blur-xl shadow-2xl">
+        
+        <!-- Slider Görsel Alanı -->
+        <div class="relative min-h-[480px] md:min-h-[560px] flex items-center">
+          
+          <!-- Arka Plan Görseli -->
+          <div class="absolute inset-0 -z-10">
+            <img id="hero-bg-img" src="https://api.ahes.org.tr/images/ahes_1_31_9.jpg" alt="AHES Emeğin Gücü" class="w-full h-full object-cover brightness-[0.38] scale-105 transition-all duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0A1128] via-[#0A1128]/80 to-transparent"></div>
+          </div>
+
+          <!-- Hero İçerik Kutusu -->
+          <div class="p-6 sm:p-10 md:p-16 max-w-2xl z-10">
+            
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DFB963]/15 border border-[#DFB963]/30 text-[#DFB963] text-xs font-black uppercase tracking-wider mb-6">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Modern, Bağımsız & Şeffaf Sendikacılık</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15] mb-6">
+              Emeğin Gücü,<br>
+              <span class="gold-gradient-text">Geleceğin Güvencesi.</span>
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-300 font-normal leading-relaxed mb-8">
+              AHES, Türkiye genelinde aile hekimliği çalışanlarının tüm mesleki, hukuki ve sosyal haklarını koruyan, 81 ilde teşkilatlanmış en güçlü meslek örgütüdür.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#uye-ol" class="gold-gradient-btn text-sm font-extrabold px-7 py-4 rounded-2xl flex items-center gap-2.5 shadow-xl transition-all">
+                <i class="fa-solid fa-signature text-base"></i>
+                <span>Hemen Üye Ol</span>
+              </a>
+
+              <a href="#about" class="bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-bold px-7 py-4 rounded-2xl flex items-center gap-2.5 transition-all backdrop-blur-md">
+                <i class="fa-regular fa-compass text-base text-[#DFB963]"></i>
+                <span>Bizi Tanıyın</span>
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Sağ Taraf: Hızlı Özet Rozeti (Masaüstü) -->
+          <div class="hidden lg:flex absolute right-12 bottom-12 bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-4 items-center gap-4 max-w-sm">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl font-bold">
+              <i class="fa-solid fa-gavel"></i>
+            </div>
+            <div>
+              <div class="text-xs text-slate-400 font-medium">Son Hukuki Zafer</div>
+              <div class="text-sm font-bold text-white line-clamp-1">Grup Düşürme İşlemi İptali</div>
+              <div class="text-[11px] text-emerald-400 font-semibold">Tüm ASM'ler İçin Emsal Teşkil Eder</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== HIZLI ERİŞİM KARTLARI (FEATURE CARDS) ==================== -->
+  <section class="relative -mt-10 md:-mt-16 z-20 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        
+        <!-- Kart 1: Üye Ol -->
+        <a href="#uye-ol" class="feature-card bg-gradient-to-br from-[#1C2541] to-[#131B33] border border-[#DFB963]/30 rounded-2xl p-5 flex flex-col justify-between group">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-[#DFB963]/15 text-[#DFB963] flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-user-check"></i>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-[#DFB963] transition-colors"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-[#DFB963] transition-colors mb-1">Üye Ol</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">AHES ailesine katılın, hak mücadelenizde güçlü kalın.</p>
+          </div>
+        </a>
+
+        <!-- Kart 2: Mustafa Işıklı Burada -->
+        <a href="#baskan" class="feature-card bg-gradient-to-br from-[#1C2541] to-[#131B33] border border-blue-500/30 rounded-2xl p-5 flex flex-col justify-between group">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-blue-400 transition-colors"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-blue-400 transition-colors mb-1">Genel Başkan Mesajı</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Mustafa Işıklı ve AHES vizyonu ile hedeflerimiz.</p>
+          </div>
+        </a>
+
+        <!-- Kart 3: Muhasebe Projesi -->
+        <a href="#muhasebe" class="feature-card bg-gradient-to-br from-[#1C2541] to-[#131B33] border border-rose-500/30 rounded-2xl p-5 flex flex-col justify-between group">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-rose-400 transition-colors"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-rose-400 transition-colors mb-1">Muhasebe Projesi</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">ASM gider ve cari hesaplama destek sistemi.</p>
+          </div>
+        </a>
+
+        <!-- Kart 4: İstatistik Projesi -->
+        <a href="#istatistik" class="feature-card bg-gradient-to-br from-[#1C2541] to-[#131B33] border border-emerald-500/30 rounded-2xl p-5 flex flex-col justify-between group">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-emerald-400 transition-colors mb-1">İstatistik & Ar-Ge</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Birinci basamak sağlık verileri ve bilimsel analizler.</p>
+          </div>
+        </a>
+
+        <!-- Kart 5: Kazanılan Davalar -->
+        <a href="#davalar" class="feature-card bg-gradient-to-br from-[#1C2541] to-[#131B33] border border-purple-500/30 rounded-2xl p-5 flex flex-col justify-between group">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-scale-balanced"></i>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-purple-400 transition-colors"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white group-hover:text-purple-400 transition-colors mb-1">Kazanılan Davalar</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">AHES Hukuk Komisyonu'nun emsal kararları.</p>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== SENDİKAL İSTATİSTİKLER (SAYAÇ BÖLÜMÜ) ==================== -->
+  <section class="py-12 border-y border-white/5 bg-[#131B33]/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#DFB963] mb-1">15.000+</div>
+          <div class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Aktif Sendika Üyesi</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-emerald-400 mb-1">%98.4</div>
+          <div class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Hukuki Dava Başarısı</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-blue-400 mb-1">81 İl</div>
+          <div class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Teşkilat & Temsilcilik</div>
+        </div>
+        <div>
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-black text-purple-400 mb-1">7/24</div>
+          <div class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Hukuki & Mesleki Destek</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GÜNDEM MERKEZİ (HABERLER & DUYURULAR) ==================== -->
+  <section id="gundem" class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Başlık ve Filtre Sekmeleri -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-[#DFB963] uppercase tracking-wider mb-2">
+            <i class="fa-regular fa-newspaper"></i>
+            <span>Güncel Gelişmeler</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
+            Gündem Merkezi
+          </h2>
+          <p class="text-sm text-slate-400 mt-1">
+            AHES ile ilgili en son haberler, hukuki kazanımlar ve resmi duyurular.
+          </p>
+        </div>
+
+        <!-- Filtre Butonları -->
+        <div class="flex items-center gap-2 bg-[#131B33] p-1.5 rounded-2xl border border-white/10 overflow-x-auto">
+          <button onclick="filterNews('all')" id="btn-tab-all" class="px-4 py-2 rounded-xl text-xs font-bold bg-[#DFB963] text-slate-950 shadow transition-all">Tümü</button>
+          <button onclick="filterNews('duyuru')" id="btn-tab-duyuru" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white transition-all">Duyurular</button>
+          <button onclick="filterNews('haber')" id="btn-tab-haber" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white transition-all">Haberler</button>
+          <button onclick="filterNews('dava')" id="btn-tab-dava" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white transition-all">Dava Kazanımları</button>
+        </div>
+      </div>
+
+      <!-- Haber Izgarası (Asimetrik Premium Grid) -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        
+        <!-- BÜYÜK KART: Öne Çıkan Ana Haber (7 Kolon) -->
+        <article class="news-item md:col-span-7 bg-[#131B33] border border-white/10 rounded-3xl overflow-hidden group hover:border-[#DFB963]/40 transition-all flex flex-col justify-between" data-category="dava">
+          <div class="relative aspect-video w-full overflow-hidden">
+            <img src="https://api.ahes.org.tr/images/ai_web_9d63117f.jpg" alt="Grup Düşürme İşlemi Dava Kazanımı" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#131B33] via-[#131B33]/30 to-transparent"></div>
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-xl text-xs font-black bg-[#DFB963] text-slate-950 shadow-lg">
+              ★ ÖNE ÇIKAN KAZANIM
+            </span>
+            <span class="absolute bottom-4 left-4 text-xs font-semibold text-slate-300 flex items-center gap-1.5 bg-black/50 px-2.5 py-1 rounded-lg backdrop-blur-md">
+              <i class="fa-regular fa-calendar"></i> 28 Eylül 2026
+            </span>
+          </div>
+
+          <div class="p-6 md:p-8">
+            <h3 class="text-xl sm:text-2xl font-black text-white group-hover:text-[#DFB963] transition-colors leading-snug mb-3">
+              Grup Düşürme İşlemi Dava Kazanımı
+            </h3>
+            <p class="text-sm text-slate-300 leading-relaxed line-clamp-3 mb-6">
+              Temizlik personelinin denetim anında görev başında olmadığı tespitiyle idare tarafından yapılan grup düşürme işlemi, AHES Hukuk Komisyonu tarafından açılan dava sonucunda hukuka aykırı bulunarak iptal edildi.
+            </p>
+            <div class="flex items-center justify-between pt-4 border-t border-white/10">
+              <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check"></i> Kesinleşmiş Karar
+              </span>
+              <button class="text-xs font-bold text-[#DFB963] hover:underline flex items-center gap-1">
+                Detaylı İncele <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- SAĞ SÜTUN: 3 Adet Kompakt Kart (5 Kolon) -->
+        <div class="md:col-span-5 flex flex-col gap-4">
+          
+          <!-- Küçük Kart 1 -->
+          <article class="news-item bg-[#131B33] border border-white/10 rounded-2xl p-4 flex gap-4 items-center group hover:border-red-500/40 transition-all" data-category="duyuru">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 relative">
+              <img src="https://api.ahes.org.tr/images/ai_web_589ef790.jpg" alt="Bilimsel Destek" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+              <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded text-[10px] font-black bg-red-600 text-white">DUYURU</span>
+            </div>
+            <div class="flex-1">
+              <div class="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
+                <i class="fa-regular fa-clock"></i> 21 Eylül 2026
+              </div>
+              <h4 class="text-sm font-bold text-white group-hover:text-red-400 transition-colors line-clamp-2 leading-snug">
+                Bilimsel Eğitim ve Araştırma Destek Programı Başvuruları
+              </h4>
+            </div>
+          </article>
+
+          <!-- Küçük Kart 2 -->
+          <article class="news-item bg-[#131B33] border border-white/10 rounded-2xl p-4 flex gap-4 items-center group hover:border-blue-500/40 transition-all" data-category="haber">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 relative">
+              <img src="https://api.ahes.org.tr/images/ai_web_c12374d8.jpg" alt="Uzman Görevlendirme" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+              <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded text-[10px] font-black bg-blue-600 text-white">HABER</span>
+            </div>
+            <div class="flex-1">
+              <div class="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
+                <i class="fa-regular fa-clock"></i> 05 Eylül 2026
+              </div>
+              <h4 class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                Aile Hekimliği Uzmanlarının Görevlendirmesi Hakkında
+              </h4>
+            </div>
+          </article>
+
+          <!-- Küçük Kart 3 -->
+          <article class="news-item bg-[#131B33] border border-white/10 rounded-2xl p-4 flex gap-4 items-center group hover:border-red-500/40 transition-all" data-category="duyuru">
+            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 relative">
+              <img src="https://api.ahes.org.tr/images/ai_web_139339da.jpg" alt="Kamera Kayıtları" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+              <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded text-[10px] font-black bg-red-600 text-white">DUYURU</span>
+            </div>
+            <div class="flex-1">
+              <div class="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
+                <i class="fa-regular fa-clock"></i> 03 Eylül 2026
+              </div>
+              <h4 class="text-sm font-bold text-white group-hover:text-red-400 transition-colors line-clamp-2 leading-snug">
+                ASM'lerde Kamera Kayıtlarının Talep Edilmesinin Hukuki Sınırları
+              </h4>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== İNTERAKTİF HESAPLAMA ROBOTU (YENİ ÖZELLİK) ==================== -->
+  <section id="hesaplayici" class="py-16 bg-gradient-to-b from-[#131B33]/60 via-[#0A1128] to-[#0A1128] border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="rounded-3xl border border-white/10 bg-[#131B33] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+        
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-6 space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">
+              <i class="fa-solid fa-calculator"></i> AHES Akıllı ASM Araçları
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-white">
+              Hafta Sonu / Adli Nöbet Ücreti Hesaplayıcı
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              Aile sağlığı merkezi çalışanları için güncel katsayılar ve mevzuata göre tahmini nöbet hak edişinizi hemen hesaplayın.
+            </p>
+            <div class="text-xs text-slate-400 flex items-center gap-2">
+              <i class="fa-solid fa-circle-info text-[#DFB963]"></i>
+              <span>Hesaplamalar güncel gösterge katsayısı ve vergi dilimi baz alınarak simüle edilir.</span>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 bg-[#0A1128] p-6 rounded-2xl border border-white/10 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1">Unvan</label>
+                <select id="calc-title" onchange="calculateShiftPay()" class="w-full text-xs bg-[#131B33] border border-white/10 rounded-xl p-3 text-white outline-none">
+                  <option value="hekim">Aile Hekimi</option>
+                  <option value="ase">Aile Sağlığı Elemanı (ASE)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-400 mb-1">Nöbet Türü</label>
+                <select id="calc-type" onchange="calculateShiftPay()" class="w-full text-xs bg-[#131B33] border border-white/10 rounded-xl p-3 text-white outline-none">
+                  <option value="haftasonu">Hafta Sonu Nöbeti (8 Saat)</option>
+                  <option value="adli">Adli Tabiplik / Defin Nöbeti</option>
+                  <option value="bayram">Resmi Tatil / Bayram</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-400 mb-1">Aylık Toplam Nöbet Saati</label>
+              <input type="range" id="calc-hours" min="8" max="64" step="8" value="16" oninput="calculateShiftPay()" class="w-full accent-[#DFB963]">
+              <div class="flex justify-between text-xs text-slate-400 font-bold mt-1">
+                <span>8 Saat</span>
+                <span id="hours-display" class="text-[#DFB963]">16 Saat</span>
+                <span>64 Saat</span>
+              </div>
+            </div>
+
+            <!-- Sonuç Kutusu -->
+            <div class="p-4 rounded-xl bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/30 flex items-center justify-between">
+              <div>
+                <div class="text-[11px] font-bold text-slate-400 uppercase">Tahmini Net Hak Ediş</div>
+                <div id="calc-result" class="text-2xl font-black text-emerald-400">3.840 ₺</div>
+              </div>
+              <button onclick="calculateShiftPay()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-colors">
+                Yenile
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== HUKUKİ YARDIM ÇAĞRISI (CTA BANDI) ==================== -->
+  <section class="py-12 bg-gradient-to-r from-blue-900 via-indigo-900 to-[#131B33] border-y border-white/10 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl text-[#DFB963] flex-shrink-0">
+          <i class="fa-solid fa-scale-unbalanced"></i>
+        </div>
+        <div>
+          <h3 class="text-xl sm:text-2xl font-black">Hukuki Bir Haksızlıkla mı Karşılaştınız?</h3>
+          <p class="text-xs sm:text-sm text-slate-300">AHES Hukuk Masası, sendika üyelerine ücretsiz dava ve danışmanlık hizmeti sunar.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="https://api.whatsapp.com/send?phone=905303112437" target="_blank" class="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2 shadow-lg transition-all">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span>Hukuk Masasına Yazın</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER (KURUMSAL ALT ALAN) ==================== -->
+  <footer class="bg-[#070D1E] text-slate-300 pt-16 pb-8 border-t border-white/10 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        
+        <!-- Logo & Açıklama -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#DFB963] flex items-center justify-center font-black text-slate-950 text-xl">A</div>
+            <span class="text-2xl font-black text-white">AHES</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Geleceği birlikte inşa ediyor, emeğin değerini koruyoruz. Türkiye'nin aile hekimliği alanındaki bağımsız, güçlü ve kurumsal sendikası.
+          </p>
+          <div class="flex items-center gap-3 pt-2">
+            <a href="https://www.facebook.com/ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://x.com/ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://www.instagram.com/ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@ahesorgtr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://api.whatsapp.com/send?phone=905303112437" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <!-- Hızlı Menü -->
+        <div>
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Kurumsal</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#about" class="text-slate-400 hover:text-[#DFB963] transition-colors">Biz Kimiz?</a></li>
+            <li><a href="#kurullar" class="text-slate-400 hover:text-[#DFB963] transition-colors">Yönetim Kurulları</a></li>
+            <li><a href="#tuzuk" class="text-slate-400 hover:text-[#DFB963] transition-colors">Sendika Tüzüğü</a></li>
+            <li><a href="#komisyonlar" class="text-slate-400 hover:text-[#DFB963] transition-colors">Komisyonlarımız</a></li>
+          </ul>
+        </div>
+
+        <!-- Hizmetler & Projeler -->
+        <div>
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">Hizmetlerimiz</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#davalar" class="text-slate-400 hover:text-[#DFB963] transition-colors">Kazanılan Davalar</a></li>
+            <li><a href="#muhasebe" class="text-slate-400 hover:text-[#DFB963] transition-colors">Muhasebe Destek</a></li>
+            <li><a href="#istatistik" class="text-slate-400 hover:text-[#DFB963] transition-colors">İstatistik Projesi</a></li>
+            <li><a href="#hesaplayici" class="text-slate-400 hover:text-[#DFB963] transition-colors">Nöbet Robotu</a></li>
+          </ul>
+        </div>
+
+        <!-- İletişim -->
+        <div>
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">İletişim</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-[#DFB963]"></i> Ankara, Türkiye</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-[#DFB963]"></i> 0530 311 24 37</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-[#DFB963]"></i> info@ahes.org.tr</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div>© 2026 AHES (Aile Hekimliği Çalışanları Sendikası). Tüm hakları saklıdır.</div>
+        <div class="flex items-center gap-4">
+          <a href="#gizlilik" class="hover:text-slate-400">Gizlilik Politikası</a>
+          <span>•</span>
+          <a href="#kvkk" class="hover:text-slate-400">KVKK Aydınlatma Metni</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== AHES PORTAL GİRİŞ MODAL (ACCOUNT / LOGIN) ==================== -->
+  <div id="login-modal-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+    <div id="login-modal-box" class="bg-[#131B33] border border-white/10 rounded-3xl w-full max-w-md shadow-2xl p-6 md:p-8 transform scale-95 transition-all duration-300 relative">
+      
+      <button onclick="closeLoginModal()" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-white/5 text-slate-400 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#DFB963] to-[#B88E33] text-slate-950 font-black text-2xl flex items-center justify-center mx-auto mb-3 shadow-lg shadow-[#DFB963]/20">
+          A
+        </div>
+        <h3 class="text-xl font-black text-white">AHES Portal Girişi</h3>
+        <p class="text-xs text-slate-400 mt-1">Üye İşlemleri ve Yönetim Paneli</p>
+      </div>
+
+      <!-- Giriş Formu -->
+      <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">E-Posta / TC Kimlik No</label>
+          <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+            <input type="text" id="login-email" value="frhatfrat@gmail.com" required placeholder="ornek@ahes.org.tr" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-white outline-none focus:border-[#DFB963]">
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-xs font-bold text-slate-300 uppercase">Şifre</label>
+            <a href="#sifre-unuttum" class="text-[11px] text-[#DFB963] hover:underline">Şifremi Unuttum?</a>
+          </div>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+            <input type="password" id="login-password" value="••••••••" required placeholder="••••••••" class="w-full text-xs bg-[#0A1128] border border-white/10 rounded-xl pl-9 pr-10 py-2.5 text-white outline-none focus:border-[#DFB963]">
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-white">
+              <i id="password-toggle-icon" class="fa-regular fa-eye text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-1">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" checked class="w-3.5 h-3.5 rounded text-[#DFB963] accent-[#DFB963]">
+            <span class="text-xs text-slate-300">Beni Hatırla</span>
+          </label>
+        </div>
+
+        <button type="submit" id="login-btn" class="w-full gold-gradient-btn py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg">
+          Güvenli Giriş Yap
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-white/10 text-center text-xs text-slate-400">
+        Henüz sendika üyesi değil misiniz? 
+        <a href="#uye-ol" onclick="closeLoginModal()" class="text-[#DFB963] font-bold hover:underline">Üye Başvurusu Yap</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ETKİLEŞİM VE MANTIK ==================== -->
+  <script>
+    // Tema Geçişi (Açık / Koyu)
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById("theme-icon");
+      if (html.classList.contains("dark")) {
+        html.classList.remove("dark");
+        themeIcon.classList.remove("fa-sun", "text-[#DFB963]");
+        themeIcon.classList.add("fa-moon", "text-slate-700");
+        document.body.classList.remove("bg-[#0A1128]", "text-slate-100");
+        document.body.classList.add("bg-slate-50", "text-slate-900");
+      } else {
+        html.classList.add("dark");
+        themeIcon.classList.remove("fa-moon", "text-slate-700");
+        themeIcon.classList.add("fa-sun", "text-[#DFB963]");
+        document.body.classList.remove("bg-slate-50", "text-slate-900");
+        document.body.classList.add("bg-[#0A1128]", "text-slate-100");
+      }
+    }
+
+    // Mobil Menü Aç/Kapat
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobile-menu");
+      const overlay = document.getElementById("mobile-menu-overlay");
+      if (menu.classList.contains("translate-x-full")) {
+        overlay.classList.remove("hidden");
+        setTimeout(() => {
+          overlay.classList.remove("opacity-0");
+          menu.classList.remove("translate-x-full");
+        }, 10);
+      } else {
+        menu.classList.add("translate-x-full");
+        overlay.classList.add("opacity-0");
+        setTimeout(() => overlay.classList.add("hidden"), 300);
+      }
+    }
+
+    // Giriş Modalı Aç/Kapat
+    function openLoginModal() {
+      const modal = document.getElementById("login-modal-backdrop");
+      const box = document.getElementById("login-modal-box");
+      modal.classList.remove("hidden");
+      setTimeout(() => {
+        modal.classList.remove("opacity-0");
+        box.classList.remove("scale-95");
+      }, 10);
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById("login-modal-backdrop");
+      const box = document.getElementById("login-modal-box");
+      box.classList.add("scale-95");
+      modal.classList.add("opacity-0");
+      setTimeout(() => modal.classList.add("hidden"), 300);
+    }
+
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById("login-password");
+      const icon = document.getElementById("password-toggle-icon");
+      if (pwd.type === "password") {
+        pwd.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        pwd.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById("login-btn");
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Doğrulanıyor...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.innerHTML = 'Giriş Başarılı ✓';
+        btn.className = 'w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg';
+        setTimeout(() => {
+          alert("AHES Yönetim Portalı Girişi Başarılı!\nHoş Geldiniz: frhatfrat@gmail.com");
+          closeLoginModal();
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          btn.className = 'w-full gold-gradient-btn py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg';
+        }, 600);
+      }, 900);
+    }
+
+    // Haberleri Filtreleme
+    function filterNews(cat) {
+      const items = document.querySelectorAll(".news-item");
+      const buttons = ["all", "duyuru", "haber", "dava"];
+
+      buttons.forEach(b => {
+        const btn = document.getElementById(`btn-tab-${b}`);
+        if (b === cat) {
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-[#DFB963] text-slate-950 shadow transition-all";
+        } else {
+          btn.className = "px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white transition-all";
+        }
+      });
+
+      items.forEach(item => {
+        if (cat === "all" || item.getAttribute("data-category") === cat) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    }
+
+    // Nöbet Hesaplayıcı
+    function calculateShiftPay() {
+      const title = document.getElementById("calc-title").value;
+      const type = document.getElementById("calc-type").value;
+      const hours = parseInt(document.getElementById("calc-hours").value);
+      document.getElementById("hours-display").innerText = `${hours} Saat`;
+
+      let hourlyRate = title === "hekim" ? 240 : 160;
+      if (type === "bayram") hourlyRate *= 1.5;
+      if (type === "adli") hourlyRate *= 1.25;
+
+      const total = Math.round(hours * hourlyRate);
+      document.getElementById("calc-result").innerText = total.toLocaleString('tr-TR') + " ₺";
+    }
+
+    // İlk hesaplamayı çalıştır
+    calculateShiftPay();
+  </script>
+</body>
+</html>

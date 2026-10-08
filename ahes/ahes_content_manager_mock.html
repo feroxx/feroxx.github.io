@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHES - İçerik Yönetimi Test Mock Arayüzü</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #1976d2;
+      --primary-hover: #1565c0;
+      --secondary: #e91e63;
+      --success: #2e7d32;
+      --warning: #ed6c02;
+      --error: #d32f2f;
+      --info: #0288d1;
+      --card-bg: var(--card, #ffffff);
+      --page-bg: var(--background, #f8fafc);
+      --border-color: var(--border, #e2e8f0);
+      --text-main: var(--foreground, #1e293b);
+      --text-muted: var(--muted-foreground, #64748b);
+    }
+
+    body {
+      background-color: var(--page-bg);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .drawer-overlay {
+      transition: opacity 0.3s ease;
+    }
+    .drawer-content {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased flex flex-col">
+
+  <!-- Üst Bilgi Barı -->
+  <header class="bg-[var(--card)] border-b border-[var(--border)] px-6 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/20">
+        A
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-black tracking-tight text-lg text-[var(--foreground)]">AHES Admin Paneli</span>
+          <span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-xs font-bold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">Test Mock v1.0</span>
+        </div>
+        <p class="text-xs text-[var(--muted-foreground)]">Aile Hekimleri Dernekleri Federasyonu İçerik Yönetimi</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        API & Mock Servisleri Aktif
+      </div>
+      <div class="text-xs text-[var(--muted-foreground)] border-l border-[var(--border)] pl-3">
+        Kullanıcı: <b class="text-[var(--foreground)]">Yönetici</b>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ana İçerik Alanı -->
+  <main class="flex-1 p-4 md:p-8 max-w-7xl w-full mx-auto">
+    <!-- Sayfa Başlığı ve Sayaç -->
+    <div class="flex flex-wrap items-center justify-between mb-6 gap-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-black tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          İçerik Yönetimi
+        </h1>
+        <p class="text-sm text-[var(--muted-foreground)] font-medium mt-1">
+          Haber, Duyuru, Makale ve Etkinlik Kayıtları
+        </p>
+      </div>
+      <div class="flex items-center gap-2 px-4 py-2 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-sm text-sm font-semibold">
+        <i class="fa-solid fa-newspaper text-blue-500"></i>
+        <span>Toplam <span id="total-count-badge" class="font-bold text-blue-600">0</span> Kayıt</span>
+      </div>
+    </div>
+
+    <!-- Panel ve Tablo Kapsayıcısı -->
+    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-sm overflow-hidden flex flex-col">
+      
+      <!-- Filtreler ve Buton Çubuğu -->
+      <div class="p-4 border-b border-[var(--border)] flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-[var(--card)]">
+        <!-- Yeni İçerik Butonu -->
+        <button onclick="openDrawerForNew()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all">
+          <i class="fa-solid fa-plus text-xs"></i>
+          YENİ İÇERİK EKLE
+        </button>
+
+        <!-- Filtre ve Arama Grubu -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+          <!-- İçerik Tipi Filtresi -->
+          <select id="filter-type" onchange="applyFilters()" class="text-sm bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] rounded-xl px-3 py-2 outline-none focus:border-blue-500 transition-colors">
+            <option value="">Tüm İçerik Tipleri</option>
+            <option value="Haber">Haber</option>
+            <option value="Duyuru">Duyuru</option>
+            <option value="Makale">Makale</option>
+            <option value="Etkinlik">Etkinlik</option>
+            <option value="SSS">SSS</option>
+          </select>
+
+          <!-- Kategori Filtresi -->
+          <select id="filter-category" onchange="applyFilters()" class="text-sm bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] rounded-xl px-3 py-2 outline-none focus:border-blue-500 transition-colors">
+            <option value="">Tüm Kategoriler</option>
+            <option value="Mevzuat & Hukuk">Mevzuat & Hukuk</option>
+            <option value="Sendikal Faaliyetler">Sendikal Faaliyetler</option>
+            <option value="Özlük Hakları">Özlük Hakları</option>
+            <option value="Basın Açıklamaları">Basın Açıklamaları</option>
+          </select>
+
+          <!-- Arama Kutusu -->
+          <div class="relative">
+            <i class="fa-solid fa-search absolute left-3.5 top-3 text-[var(--muted-foreground)] text-xs"></i>
+            <input type="text" id="search-input" onkeyup="applyFilters()" placeholder="Başlıkta ara..." class="w-full sm:w-64 text-sm bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] rounded-xl pl-9 pr-3 py-2 outline-none focus:border-blue-500 transition-colors">
+          </div>
+        </div>
+      </div>
+
+      <!-- Tablo (MudDataGrid Görünümü) -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-[var(--border)] bg-slate-500/5 text-[var(--muted-foreground)] text-xs font-bold uppercase tracking-wider">
+              <th class="py-3.5 px-4 sticky left-0 bg-[var(--card)] z-10 shadow-[2px_0_5px_rgba(0,0,0,0.03)]">Başlık</th>
+              <th class="py-3.5 px-4">İçerik Tipi</th>
+              <th class="py-3.5 px-4">Kategori</th>
+              <th class="py-3.5 px-4 text-center">Görüntülenme</th>
+              <th class="py-3.5 px-4 text-center">Durum</th>
+              <th class="py-3.5 px-4 text-right">İşlemler</th>
+            </tr>
+          </thead>
+          <tbody id="content-table-body" class="divide-y divide-[var(--border)] font-medium">
+            <!-- Dinamik Satırlar -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Sayfalama (Pagination Bar) -->
+      <div class="p-3.5 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between text-xs text-[var(--muted-foreground)] gap-3 bg-[var(--card)]">
+        <div id="pagination-info">0 kayıt gösteriliyor</div>
+        <div class="flex items-center gap-2">
+          <span>Kayıt:</span>
+          <select class="bg-transparent border border-[var(--border)] rounded px-1.5 py-0.5 outline-none">
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SAĞ PANEL (MUDDRAWER - ÇOKLU SEKME EKRANI) -->
+  <div id="drawer-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden opacity-0 drawer-overlay" onclick="closeDrawer()"></div>
+
+  <div id="drawer" class="fixed top-0 right-0 h-full w-full max-w-[820px] bg-[var(--card)] border-l border-[var(--border)] z-50 shadow-2xl flex flex-col transform translate-x-full drawer-content">
+    
+    <!-- Çekmece Başlığı (Dark Header) -->
+    <div class="bg-slate-900 text-white p-5 flex items-center justify-between relative shadow-md">
+      <div class="flex items-center gap-4">
+        <div id="drawer-icon-box" class="w-12 h-12 rounded-xl bg-blue-600/30 border border-blue-400/30 flex items-center justify-center text-blue-400 text-2xl font-bold">
+          <i class="fa-solid fa-file-pen"></i>
+        </div>
+        <div>
+          <h2 id="drawer-title" class="text-lg font-black tracking-tight uppercase">İÇERİK DETAYI</h2>
+          <div class="flex items-center gap-2 text-xs text-slate-400 mt-1 font-medium">
+            <span>Durum: <b id="drawer-status-badge" class="text-emerald-400">Yayında</b></span>
+            <span>•</span>
+            <span id="drawer-type-label"><i class="fa-regular fa-folder mr-1"></i>Haber</span>
+          </div>
+        </div>
+      </div>
+      <button onclick="closeDrawer()" class="w-9 h-9 rounded-lg hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Sosyal Medya Paylaşım Başarılı Alert Banner -->
+    <div id="share-success-alert" class="p-4 bg-emerald-600 text-white text-sm hidden flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-inner">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-xl"></i>
+        <div>
+          <div class="font-bold">İçerik Başarıyla Facebook Sayfasında Yayınlandı!</div>
+          <div class="text-xs text-emerald-100">Gruplarda paylaşmak için butona tıklayıp Facebook'taki orijinal Paylaş menüsünü kullanın.</div>
+        </div>
+      </div>
+      <a id="shared-post-link" href="#" target="_blank" class="px-3 py-1.5 bg-white text-blue-700 font-bold text-xs rounded-lg hover:bg-slate-100 flex items-center gap-1.5 shadow whitespace-nowrap">
+        <i class="fa-brands fa-facebook"></i>
+        Gönderiye Git & Gruplarda Paylaş
+      </a>
+    </div>
+
+    <!-- Sekme Başlıkları -->
+    <div class="flex border-b border-[var(--border)] bg-slate-500/5 text-xs font-bold overflow-x-auto">
+      <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn px-4 py-3.5 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-file-lines"></i> 1. İÇERİK METNİ
+      </button>
+      <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn px-4 py-3.5 border-b-2 border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)] flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-image"></i> 2. GÖRSEL & MEDYA
+      </button>
+      <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn px-4 py-3.5 border-b-2 border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)] flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-images"></i> 3. İÇERİK GALERİSİ
+      </button>
+      <button onclick="switchTab(4)" id="tab-btn-4" class="tab-btn px-4 py-3.5 border-b-2 border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)] flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-bullhorn"></i> 4. YAYINLA & DUYUR
+      </button>
+      <button onclick="switchTab(5)" id="tab-btn-5" class="tab-btn px-4 py-3.5 border-b-2 border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)] flex items-center gap-2 whitespace-nowrap transition-all">
+        <i class="fa-solid fa-magnifying-glass"></i> 5. SEO AYARLARI
+      </button>
+    </div>
+
+    <!-- Sekme İçerikleri (Form) -->
+    <div class="flex-1 overflow-y-auto p-5 md:p-6 space-y-5">
+      
+      <!-- SEKME 1: İÇERİK METNİ -->
+      <div id="tab-pane-1" class="tab-pane space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Başlık *</label>
+          <input type="text" id="form-title" oninput="autoUpdateSlug()" placeholder="İçerik başlığı giriniz..." class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl px-3.5 py-2.5 outline-none focus:border-blue-500 font-semibold transition-colors">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">İçerik Tipi</label>
+            <select id="form-type" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl px-3 py-2.5 outline-none focus:border-blue-500">
+              <option value="Haber">Haber</option>
+              <option value="Duyuru">Duyuru</option>
+              <option value="Makale">Makale</option>
+              <option value="Etkinlik">Etkinlik</option>
+              <option value="SSS">SSS</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Ana Kategori</label>
+            <select id="form-main-cat" onchange="updateSubCategories()" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl px-3 py-2.5 outline-none focus:border-blue-500">
+              <option value="Mevzuat & Hukuk">Mevzuat & Hukuk</option>
+              <option value="Sendikal Faaliyetler">Sendikal Faaliyetler</option>
+              <option value="Özlük Hakları">Özlük Hakları</option>
+              <option value="Basın Açıklamaları">Basın Açıklamaları</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Alt Kategori</label>
+            <select id="form-sub-cat" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl px-3 py-2.5 outline-none focus:border-blue-500">
+              <option value="Genel">Genel</option>
+              <option value="Yönetmelikler">Yönetmelikler</option>
+              <option value="Dava Süreçleri">Dava Süreçleri</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Kısa Özet</label>
+          <textarea id="form-summary" rows="2" placeholder="Listelerde ve sosyal medya paylaşımlarında görünecek özet..." class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 outline-none focus:border-blue-500 resize-none transition-colors"></textarea>
+        </div>
+
+        <!-- Rich Text Editor Mock -->
+        <div>
+          <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">İçerik Metni (Zengin Metin Editörü)</label>
+          <div class="border border-[var(--border)] rounded-xl overflow-hidden bg-[var(--card)]">
+            <div class="p-2 border-b border-[var(--border)] bg-slate-500/5 flex flex-wrap gap-1 text-xs">
+              <button type="button" class="w-7 h-7 rounded hover:bg-slate-200 dark:hover:bg-slate-700 font-bold">B</button>
+              <button type="button" class="w-7 h-7 rounded hover:bg-slate-200 dark:hover:bg-slate-700 italic">I</button>
+              <button type="button" class="w-7 h-7 rounded hover:bg-slate-200 dark:hover:bg-slate-700 underline">U</button>
+              <span class="w-[1px] h-6 bg-[var(--border)] mx-1"></span>
+              <button type="button" class="w-7 h-7 rounded hover:bg-slate-200 dark:hover:bg-slate-700"><i class="fa-solid fa-list-ul"></i></button>
+              <button type="button" class="w-7 h-7 rounded hover:bg-slate-200 dark:hover:bg-slate-700"><i class="fa-solid fa-list-ol"></i></button>
+              <button type="button" class="w-7 h-7 rounded hover:bg-slate-200 dark:hover:bg-slate-700"><i class="fa-solid fa-link"></i></button>
+              <button type="button" class="w-7 h-7 rounded hover:bg-slate-200 dark:hover:bg-slate-700"><i class="fa-solid fa-image"></i></button>
+            </div>
+            <textarea id="form-body" rows="8" placeholder="Haber veya makale detaylarını buraya yazabilirsiniz..." class="w-full p-4 text-sm bg-transparent outline-none resize-y"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEKME 2: GÖRSEL & MEDYA -->
+      <div id="tab-pane-2" class="tab-pane hidden space-y-5">
+        <div class="flex flex-wrap items-center gap-3 p-4 bg-slate-500/5 border border-[var(--border)] rounded-2xl">
+          <button type="button" onclick="simulateAiGeneration()" id="ai-generate-btn" class="px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-sm transition-all">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Yapay Zeka Görsellerini Üret</span>
+          </button>
+          <span class="text-xs text-[var(--muted-foreground)] font-bold">veya</span>
+          <label class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl flex items-center gap-2 cursor-pointer shadow-sm transition-all">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Kendi Görselimi Seç</span>
+            <input type="file" accept="image/*" class="hidden" onchange="previewUploadedImage(event)">
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- 16:9 Web Manşet Önizleme -->
+          <div class="p-4 border border-[var(--border)] rounded-2xl bg-[var(--card)]">
+            <div class="flex items-center gap-2 text-xs font-bold text-emerald-600 mb-3">
+              <i class="fa-solid fa-globe"></i> Web Manşeti (16:9)
+            </div>
+            <div class="aspect-video w-full rounded-xl bg-slate-100 dark:bg-slate-800 border border-[var(--border)] overflow-hidden flex items-center justify-center">
+              <img id="preview-16-9" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=60" alt="Manşet" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <!-- 9:16 Story Önizleme -->
+          <div class="p-4 border border-[var(--border)] rounded-2xl bg-[var(--card)]">
+            <div class="flex items-center gap-2 text-xs font-bold text-pink-600 mb-3">
+              <i class="fa-solid fa-mobile-screen-button"></i> Story / WhatsApp (9:16)
+            </div>
+            <div class="h-44 w-28 mx-auto rounded-xl bg-slate-100 dark:bg-slate-800 border border-[var(--border)] overflow-hidden flex items-center justify-center">
+              <img id="preview-9-16" src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=60" alt="Story" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 border border-[var(--border)] rounded-2xl space-y-3 bg-[var(--card)]">
+          <div class="text-xs font-bold text-[var(--muted-foreground)] uppercase">Medya Bağlantıları & SEO</div>
+          <div>
+            <label class="block text-xs font-semibold text-[var(--muted-foreground)] mb-1">Web Sayfası Resmi Linki (16:9)</label>
+            <input type="text" id="form-img-path" class="w-full text-xs bg-transparent border border-[var(--border)] rounded-lg p-2 font-mono">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[var(--muted-foreground)] mb-1">Resim Alt Metni (SEO Alt Text)</label>
+            <input type="text" id="form-img-alt" placeholder="Görseli tarif eden açıklama..." class="w-full text-xs bg-transparent border border-[var(--border)] rounded-lg p-2">
+          </div>
+        </div>
+      </div>
+
+      <!-- SEKME 3: İÇERİK GALERİSİ -->
+      <div id="tab-pane-3" class="tab-pane hidden space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-[var(--foreground)] uppercase">Etkinlik ve İçerik Galerisi</h3>
+            <p class="text-xs text-[var(--muted-foreground)]">Bu içeriğe ait ek fotoğrafları buraya yükleyebilirsiniz.</p>
+          </div>
+          <label class="px-3 py-2 border-2 border-dashed border-blue-500 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950 font-bold text-xs rounded-xl flex items-center gap-2 cursor-pointer transition-all">
+            <i class="fa-solid fa-plus"></i> Galeriye Resim Ekle (Maks. 10)
+            <input type="file" multiple accept="image/*" class="hidden" onchange="addMockGalleryImages()">
+          </label>
+        </div>
+
+        <div id="gallery-container" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+          <!-- Galeri Görselleri -->
+        </div>
+      </div>
+
+      <!-- SEKME 4: YAYINLA & DUYUR -->
+      <div id="tab-pane-4" class="tab-pane hidden space-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Yayın Tarihi</label>
+            <input type="datetime-local" id="form-publish-date" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Bitiş Tarihi (Opsiyonel)</label>
+            <input type="datetime-local" id="form-expire-date" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Öncelik Sırası (Priority)</label>
+            <input type="number" id="form-priority" value="0" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Tahmini Okuma Süresi (Dk)</label>
+            <input type="number" id="form-reading-time" value="3" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 outline-none">
+          </div>
+        </div>
+
+        <!-- Yayın Seçenekleri -->
+        <div class="p-4 border border-[var(--border)] rounded-2xl space-y-3 bg-[var(--card)]">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="form-is-published" class="w-4 h-4 rounded text-blue-600 focus:ring-0">
+            <span class="text-sm font-bold text-[var(--foreground)]">Yayında (Web Sitesinde Canlı Göster)</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="form-is-featured" class="w-4 h-4 rounded text-blue-600 focus:ring-0">
+            <span class="text-sm font-semibold text-[var(--foreground)]">Öne Çıkan (Ana Sayfa Manşet / Slider'da Göster)</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="form-is-comment-open" checked class="w-4 h-4 rounded text-blue-600 focus:ring-0">
+            <span class="text-sm font-semibold text-[var(--foreground)]">Yorumlara Açık</span>
+          </label>
+        </div>
+
+        <!-- Sosyal Medya Otomasyonu -->
+        <div class="p-4 border border-blue-500/20 bg-blue-500/5 rounded-2xl space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase flex items-center gap-2">
+              <i class="fa-solid fa-share-nodes"></i> Anlık Sosyal Medya Paylaşımı
+            </div>
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-500/10 text-blue-600">Meta Graph API</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <label class="flex items-center gap-2.5 p-2.5 bg-[var(--card)] border border-[var(--border)] rounded-xl cursor-pointer">
+              <input type="checkbox" id="share-facebook" class="w-4 h-4 rounded text-blue-600">
+              <i class="fa-brands fa-facebook text-blue-600 text-lg"></i>
+              <span class="text-xs font-bold">Facebook Sayfasında Paylaş</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 bg-[var(--card)] border border-[var(--border)] rounded-xl cursor-pointer">
+              <input type="checkbox" id="share-x" class="w-4 h-4 rounded text-slate-800">
+              <i class="fa-brands fa-x-twitter text-slate-800 dark:text-white text-lg"></i>
+              <span class="text-xs font-bold">X (Twitter)'da Paylaş</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 bg-[var(--card)] border border-[var(--border)] rounded-xl cursor-pointer">
+              <input type="checkbox" id="share-instagram" class="w-4 h-4 rounded text-pink-600">
+              <i class="fa-brands fa-instagram text-pink-600 text-lg"></i>
+              <span class="text-xs font-bold">Instagram Story'de Paylaş</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2.5 bg-[var(--card)] border border-[var(--border)] rounded-xl cursor-pointer">
+              <input type="checkbox" id="share-whatsapp" class="w-4 h-4 rounded text-emerald-600">
+              <i class="fa-brands fa-whatsapp text-emerald-600 text-lg"></i>
+              <span class="text-xs font-bold">WhatsApp Kanalına Gönder</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Hangfire Üye Bildirim -->
+        <div class="p-4 border border-[var(--border)] rounded-2xl bg-[var(--card)] flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-[var(--foreground)]">Toplu E-Posta Bildirimi (Hangfire)</div>
+            <div class="text-xs text-[var(--muted-foreground)]">Tüm aktif sendika üyelerine otomatik bilgilendirme e-postası gönderir.</div>
+          </div>
+          <input type="checkbox" id="form-send-email" class="w-5 h-5 rounded text-blue-600">
+        </div>
+      </div>
+
+      <!-- SEKME 5: SEO AYARLARI -->
+      <div id="tab-pane-5" class="tab-pane hidden space-y-4">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-xs font-bold text-[var(--muted-foreground)] uppercase">URL Slug (Kalıcı Bağlantı)</label>
+            <button type="button" onclick="autoUpdateSlug(true)" class="text-xs text-blue-600 font-bold hover:underline">Başlıktan Üret</button>
+          </div>
+          <input type="text" id="form-slug" placeholder="ornek-haber-basligi" class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 font-mono">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Meta Başlık (Title Tag)</label>
+          <input type="text" id="form-meta-title" placeholder="Arama motorlarında görünecek başlık..." class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Meta Açıklaması (Meta Description)</label>
+          <textarea id="form-meta-desc" rows="2" placeholder="Google arama sonuçlarındaki özet metin..." class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 resize-none"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-[var(--muted-foreground)] uppercase mb-1">Anahtar Kelimeler (Meta Keywords)</label>
+          <input type="text" id="form-meta-keywords" placeholder="ahes, aile hekimleri, nöbet, sendika..." class="w-full text-sm bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Çekmece Alt Butonları (Footer) -->
+    <div class="p-4 border-t border-[var(--border)] bg-[var(--card)] flex flex-wrap items-center justify-between gap-3">
+      <button type="button" id="btn-delete" onclick="deleteCurrentRecord()" class="px-4 py-2 border border-red-500/40 text-red-600 hover:bg-red-500/10 font-bold text-xs rounded-xl transition-all">
+        <i class="fa-solid fa-trash mr-1"></i> SİL
+      </button>
+
+      <div class="flex items-center gap-2 ml-auto">
+        <button type="button" id="btn-publish-direct" onclick="publishDirectly()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-sm transition-all">
+          <i class="fa-solid fa-bullhorn"></i> Yayınla ve Duyur
+        </button>
+
+        <button type="button" onclick="saveRecord()" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">
+          <span id="btn-save-label">GÜNCELLE</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript Mantık ve Mock Verileri -->
+  <script>
+    // Mock Veritabanı (Başlangıç Verileri)
+    let mockContents = [
+      {
+        id: "1",
+        title: "AHES Olağan Genel Kurul Çağrısı ve Gündem Maddeleri",
+        type: "Duyuru",
+        category: "Sendikal Faaliyetler",
+        subCategory: "Genel",
+        summary: "Federasyonumuzun 2026 yılı Olağan Genel Kurul Toplantısı belirlenen tarihte Ankara'da gerçekleştirilecektir.",
+        body: "<p>Değerli meslektaşlarımız, AHES Olağan Genel Kurul toplantımız tüzüğümüz gereğince toplanacaktır...</p>",
+        viewCount: 1420,
+        isPublished: true,
+        isFeatured: true,
+        publishDate: "2026-10-01T10:00",
+        imagePath: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=60",
+        slug: "ahes-olagan-genel-kurul-cagrisi",
+        sharedPlatforms: ["Facebook", "X"],
+        facebookPostId: "997126383479787_105294829183"
+      },
+      {
+        id: "2",
+        title: "Aile Hekimleri Nöbet Ücretleri ve Hak Kayıplarına İlişkin Dava",
+        type: "Haber",
+        category: "Mevzuat & Hukuk",
+        subCategory: "Dava Süreçleri",
+        summary: "Hukuk komisyonumuz tarafından Danıştay nezdinde açılan yürütmeyi durdurma davasında ilk karar çıktı.",
+        body: "<p>Aile sağlığı merkezlerinde tutulan nöbetlere yönelik hak ediş kesintilerine karşı açtığımız dava sonuçlandı...</p>",
+        viewCount: 3890,
+        isPublished: true,
+        isFeatured: false,
+        publishDate: "2026-09-28T14:30",
+        imagePath: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&auto=format&fit=crop&q=60",
+        slug: "aile-hekimleri-nobet-ucretleri-dava",
+        sharedPlatforms: ["Facebook"],
+        facebookPostId: "997126383479787_8839210492"
+      },
+      {
+        id: "3",
+        title: "Grip Sezonunda ASM Başvuruları ve Koruyucu Önlemler Rehberi",
+        type: "Makale",
+        category: "Basın Açıklamaları",
+        subCategory: "Genel",
+        summary: "Sonbahar ve kış aylarında ASM'lere yapılan başvurularda dikkat edilmesi gereken klinik ilkeler.",
+        body: "<p>Mevsimsel influenza vakalarının artış gösterdiği bu dönemde birinci basamak sağlık hizmetlerinin yükü...</p>",
+        viewCount: 840,
+        isPublished: false,
+        isFeatured: false,
+        publishDate: "2026-10-04T09:00",
+        imagePath: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&auto=format&fit=crop&q=60",
+        slug: "grip-sezonu-asm-basvurulari-rehber",
+        sharedPlatforms: []
+      },
+      {
+        id: "4",
+        title: "ASM Çalışanlarının Mesleki Sorumluluk Sigortası Hakkında Bilgilendirme",
+        type: "SSS",
+        category: "Özlük Hakları",
+        subCategory: "Yönetmelikler",
+        summary: "Zorunlu mesleki sorumluluk sigortası yenileme döneminde sıkça sorulan sorular ve dikkat edilecek hususlar.",
+        body: "<p>Hekimlerimizden gelen sorular doğrultusunda hazırlanan rehber soru-cevap formatında sunulmuştur...</p>",
+        viewCount: 2150,
+        isPublished: true,
+        isFeatured: false,
+        publishDate: "2026-09-20T12:00",
+        imagePath: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop&q=60",
+        slug: "asm-mesleki-sorumluluk-sigortasi-sss",
+        sharedPlatforms: ["Facebook", "WhatsApp"]
+      }
+    ];
+
+    let currentEditingId = null;
+    let mockGallery = [
+      { id: 1, url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&auto=format&fit=crop&q=60", sort: 1 },
+      { id: 2, url: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&auto=format&fit=crop&q=60", sort: 2 }
+    ];
+
+    // Renk Yardımcısı
+    function getTypeBadgeClass(type) {
+      switch(type) {
+        case 'Duyuru': return 'bg-red-500/10 text-red-600 border border-red-500/20';
+        case 'Haber': return 'bg-blue-500/10 text-blue-600 border border-blue-500/20';
+        case 'Makale': return 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20';
+        case 'Etkinlik': return 'bg-amber-500/10 text-amber-600 border border-amber-500/20';
+        case 'SSS': return 'bg-cyan-500/10 text-cyan-600 border border-cyan-500/20';
+        default: return 'bg-slate-500/10 text-slate-600 border border-slate-500/20';
+      }
+    }
+
+    // Tabloyu Ekrana Basma
+    function renderTable(data = mockContents) {
+      const tbody = document.getElementById("content-table-body");
+      tbody.innerHTML = "";
+
+      document.getElementById("total-count-badge").innerText = data.length;
+      document.getElementById("pagination-info").innerText = `${data.length} kayıt listelendi`;
+
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400">Aradığınız kriterlere uygun içerik bulunamadı.</td></tr>`;
+        return;
+      }
+
+      data.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-slate-500/5 cursor-pointer transition-colors";
+        tr.onclick = (e) => {
+          if (!e.target.closest('button')) openDrawerForEdit(item.id);
+        };
+
+        tr.innerHTML = `
+          <td class="py-3 px-4 font-bold text-[var(--foreground)] sticky left-0 bg-[var(--card)] shadow-[2px_0_5px_rgba(0,0,0,0.02)]">
+            <div class="line-clamp-1 max-w-md">${item.title}</div>
+            <div class="text-[11px] text-[var(--muted-foreground)] font-normal">${item.slug || ''}</div>
+          </td>
+          <td class="py-3 px-4">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${getTypeBadgeClass(item.type)}">${item.type}</span>
+          </td>
+          <td class="py-3 px-4 text-xs font-semibold text-[var(--muted-foreground)]">${item.category}</td>
+          <td class="py-3 px-4 text-center font-bold text-xs text-[var(--muted-foreground)]">
+            <i class="fa-regular fa-eye mr-1 text-[11px]"></i>${item.viewCount}
+          </td>
+          <td class="py-3 px-4 text-center">
+            ${item.isPublished 
+              ? '<span class="px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Yayında</span>'
+              : '<span class="px-2.5 py-1 rounded-lg text-xs font-black bg-amber-500/10 text-amber-600 border border-amber-500/20">Taslak</span>'}
+          </td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="openDrawerForEdit('${item.id}')" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-blue-600 mr-1" title="Düzenle">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button onclick="quickDelete('${item.id}')" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-red-500" title="Sil">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Filtreleme ve Arama
+    function applyFilters() {
+      const typeFilter = document.getElementById("filter-type").value;
+      const catFilter = document.getElementById("filter-category").value;
+      const search = document.getElementById("search-input").value.toLowerCase().trim();
+
+      const filtered = mockContents.filter(item => {
+        const matchesType = !typeFilter || item.type === typeFilter;
+        const matchesCat = !catFilter || item.category === catFilter;
+        const matchesSearch = !search || item.title.toLowerCase().includes(search) || item.summary.toLowerCase().includes(search);
+        return matchesType && matchesCat && matchesSearch;
+      });
+
+      renderTable(filtered);
+    }
+
+    // Sekme Değiştirme
+    function switchTab(tabIndex) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('border-blue-600', 'text-blue-600');
+        btn.classList.add('border-transparent', 'text-[var(--muted-foreground)]');
+      });
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
+
+      document.getElementById(`tab-btn-${tabIndex}`).classList.remove('border-transparent', 'text-[var(--muted-foreground)]');
+      document.getElementById(`tab-btn-${tabIndex}`).classList.add('border-blue-600', 'text-blue-600');
+      document.getElementById(`tab-pane-${tabIndex}`).classList.remove('hidden');
+    }
+
+    // Çekmeceyi Açma (Yeni Kayıt)
+    function openDrawerForNew() {
+      currentEditingId = null;
+      document.getElementById("drawer-title").innerText = "YENİ İÇERİK";
+      document.getElementById("drawer-status-badge").innerText = "Taslak";
+      document.getElementById("drawer-status-badge").className = "text-amber-400";
+      document.getElementById("drawer-type-label").innerText = "Yeni Kayıt";
+      document.getElementById("btn-save-label").innerText = "KAYDET";
+      document.getElementById("btn-delete").style.display = "none";
+      document.getElementById("btn-publish-direct").style.display = "none";
+      document.getElementById("share-success-alert").classList.add("hidden");
+
+      // Form alanlarını sıfırla
+      document.getElementById("form-title").value = "";
+      document.getElementById("form-type").value = "Haber";
+      document.getElementById("form-main-cat").value = "Mevzuat & Hukuk";
+      document.getElementById("form-sub-cat").value = "Genel";
+      document.getElementById("form-summary").value = "";
+      document.getElementById("form-body").value = "";
+      document.getElementById("form-img-path").value = "";
+      document.getElementById("form-img-alt").value = "";
+      document.getElementById("form-slug").value = "";
+      document.getElementById("form-meta-title").value = "";
+      document.getElementById("form-meta-desc").value = "";
+      document.getElementById("form-meta-keywords").value = "";
+      document.getElementById("form-is-published").checked = false;
+      document.getElementById("form-is-featured").checked = false;
+      document.getElementById("share-facebook").checked = false;
+      document.getElementById("share-x").checked = false;
+
+      mockGallery = [];
+      renderGallery();
+      switchTab(1);
+      showDrawerUI();
+    }
+
+    // Çekmeceyi Açma (Düzenleme)
+    function openDrawerForEdit(id) {
+      currentEditingId = id;
+      const item = mockContents.find(x => x.id === id);
+      if (!item) return;
+
+      document.getElementById("drawer-title").innerText = "İÇERİK DETAYI";
+      document.getElementById("drawer-status-badge").innerText = item.isPublished ? "Yayında" : "Taslak";
+      document.getElementById("drawer-status-badge").className = item.isPublished ? "text-emerald-400" : "text-amber-400";
+      document.getElementById("drawer-type-label").innerText = item.type;
+      document.getElementById("btn-save-label").innerText = "GÜNCELLE";
+      document.getElementById("btn-delete").style.display = "inline-flex";
+      document.getElementById("btn-publish-direct").style.display = item.isPublished ? "none" : "inline-flex";
+
+      // Form doldur
+      document.getElementById("form-title").value = item.title;
+      document.getElementById("form-type").value = item.type;
+      document.getElementById("form-main-cat").value = item.category;
+      document.getElementById("form-summary").value = item.summary;
+      document.getElementById("form-body").value = item.body.replace(/<[^>]*>?/gm, '');
+      document.getElementById("form-img-path").value = item.imagePath;
+      document.getElementById("form-slug").value = item.slug;
+      document.getElementById("form-meta-title").value = item.title;
+      document.getElementById("form-meta-desc").value = item.summary;
+      document.getElementById("form-is-published").checked = item.isPublished;
+      document.getElementById("form-is-featured").checked = item.isFeatured;
+      document.getElementById("preview-16-9").src = item.imagePath;
+
+      // Facebook alert
+      if (item.sharedPlatforms && item.sharedPlatforms.includes("Facebook") && item.facebookPostId) {
+        const parts = item.facebookPostId.split('_');
+        const actId = parts.length > 1 ? parts[1] : item.facebookPostId;
+        document.getElementById("shared-post-link").href = `https://www.facebook.com/permalink.php?story_fbid=${actId}&id=997126383479787`;
+        document.getElementById("share-success-alert").classList.remove("hidden");
+      } else {
+        document.getElementById("share-success-alert").classList.add("hidden");
+      }
+
+      renderGallery();
+      switchTab(1);
+      showDrawerUI();
+    }
+
+    function showDrawerUI() {
+      const backdrop = document.getElementById("drawer-backdrop");
+      const drawer = document.getElementById("drawer");
+      backdrop.classList.remove("hidden");
+      setTimeout(() => {
+        backdrop.classList.remove("opacity-0");
+        drawer.classList.remove("translate-x-full");
+      }, 10);
+    }
+
+    function closeDrawer() {
+      const backdrop = document.getElementById("drawer-backdrop");
+      const drawer = document.getElementById("drawer");
+      backdrop.classList.add("opacity-0");
+      drawer.classList.add("translate-x-full");
+      setTimeout(() => backdrop.classList.add("hidden"), 300);
+    }
+
+    // Slug Üretici
+    function autoUpdateSlug(force = false) {
+      const title = document.getElementById("form-title").value;
+      const slugInput = document.getElementById("form-slug");
+      if (force || !slugInput.value) {
+        slugInput.value = title.toLowerCase()
+          .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
+          .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+          .replace(/[^a-z0-9\s-]/g, '')
+          .replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+      }
+    }
+
+    // Kaydet / Güncelle
+    function saveRecord() {
+      const title = document.getElementById("form-title").value.trim();
+      if (!title) {
+        alert("Lütfen başlık alanını doldurunuz!");
+        return;
+      }
+
+      if (currentEditingId) {
+        // Güncelle
+        const index = mockContents.findIndex(x => x.id === currentEditingId);
+        if (index !== -1) {
+          mockContents[index].title = title;
+          mockContents[index].type = document.getElementById("form-type").value;
+          mockContents[index].category = document.getElementById("form-main-cat").value;
+          mockContents[index].summary = document.getElementById("form-summary").value;
+          mockContents[index].isPublished = document.getElementById("form-is-published").checked;
+          mockContents[index].isFeatured = document.getElementById("form-is-featured").checked;
+          mockContents[index].slug = document.getElementById("form-slug").value;
+        }
+      } else {
+        // Yeni Kayıt
+        const newRecord = {
+          id: String(Date.now()),
+          title: title,
+          type: document.getElementById("form-type").value,
+          category: document.getElementById("form-main-cat").value,
+          summary: document.getElementById("form-summary").value,
+          body: document.getElementById("form-body").value,
+          viewCount: 0,
+          isPublished: document.getElementById("form-is-published").checked,
+          isFeatured: document.getElementById("form-is-featured").checked,
+          slug: document.getElementById("form-slug").value || "yeni-icerik",
+          imagePath: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop&q=60",
+          sharedPlatforms: []
+        };
+        mockContents.unshift(newRecord);
+      }
+
+      closeDrawer();
+      renderTable();
+    }
+
+    // Doğrudan Yayınla ve Facebook Paylaşımı Simülasyonu
+    function publishDirectly() {
+      if (!currentEditingId) return;
+      const index = mockContents.findIndex(x => x.id === currentEditingId);
+      if (index !== -1) {
+        mockContents[index].isPublished = true;
+        mockContents[index].sharedPlatforms = ["Facebook"];
+        mockContents[index].facebookPostId = "997126383479787_" + Math.floor(100000000 + Math.random() * 900000000);
+        
+        document.getElementById("form-is-published").checked = true;
+        document.getElementById("drawer-status-badge").innerText = "Yayında";
+        document.getElementById("drawer-status-badge").className = "text-emerald-400";
+        document.getElementById("btn-publish-direct").style.display = "none";
+
+        // Bildirim bannerını aç
+        const actId = mockContents[index].facebookPostId.split('_')[1];
+        document.getElementById("shared-post-link").href = `https://www.facebook.com/permalink.php?story_fbid=${actId}&id=997126383479787`;
+        document.getElementById("share-success-alert").classList.remove("hidden");
+
+        renderTable();
+      }
+    }
+
+    // Silme
+    function deleteCurrentRecord() {
+      if (!currentEditingId) return;
+      if (confirm("Bu içeriği silmek istediğinize emin misiniz?")) {
+        mockContents = mockContents.filter(x => x.id !== currentEditingId);
+        closeDrawer();
+        renderTable();
+      }
+    }
+
+    function quickDelete(id) {
+      if (confirm("Bu kaydı silmek istiyor musunuz?")) {
+        mockContents = mockContents.filter(x => x.id !== id);
+        renderTable();
+      }
+    }
+
+    // AI Görsel Üretme Simülasyonu
+    function simulateAiGeneration() {
+      const btn = document.getElementById("ai-generate-btn");
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Yapay Zeka Üretiyor...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById("preview-16-9").src = "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&auto=format&fit=crop&q=60";
+        document.getElementById("preview-9-16").src = "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=60";
+        document.getElementById("form-img-path").value = "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800";
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert("Yapay zeka 16:9 manşet ve 9:16 story görsellerini başarıyla oluşturdu!");
+      }, 1200);
+    }
+
+    // Galeri Fonksiyonları
+    function renderGallery() {
+      const container = document.getElementById("gallery-container");
+      container.innerHTML = "";
+      if (mockGallery.length === 0) {
+        container.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-slate-400">Henüz galeriye görsel eklenmedi.</div>`;
+        return;
+      }
+      mockGallery.forEach((img, idx) => {
+        const item = document.createElement("div");
+        item.className = "relative rounded-xl overflow-hidden aspect-video border border-[var(--border)] group";
+        item.innerHTML = `
+          <img src="${img.url}" class="w-full h-full object-cover">
+          <span class="absolute top-1.5 left-1.5 bg-black/60 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">Sıra: ${img.sort}</span>
+          <button onclick="removeGalleryImg(${img.id})" class="absolute top-1.5 right-1.5 bg-red-600 text-white w-6 h-6 rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <i class="fa-solid fa-trash text-[10px]"></i>
+          </button>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function addMockGalleryImages() {
+      mockGallery.push({
+        id: Date.now(),
+        url: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=400&auto=format&fit=crop&q=60",
+        sort: mockGallery.length + 1
+      });
+      renderGallery();
+    }
+
+    function removeGalleryImg(id) {
+      mockGallery = mockGallery.filter(x => x.id !== id);
+      mockGallery.forEach((img, idx) => img.sort = idx + 1);
+      renderGallery();
+    }
+
+    // İlk Yükleme
+    renderTable();
+  </script>
+</body>
+</html>
