@@ -209,15 +209,13 @@
       display: block;
     }
 
-    /* Kısım Filtre Hapları */
+    /* Kısım Filtre Hapları (2 Satır x 3 Sütun) */
     .cat-tabs {
-      display: flex;
-      gap: 4px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
       padding: 0.15rem 0;
-      overflow-x: auto;
-      scrollbar-width: none;
     }
-    .cat-tabs::-webkit-scrollbar { display: none; }
 
     .cat-tab {
       background: var(--bg-main);
@@ -225,10 +223,13 @@
       color: var(--text-muted);
       font-size: 0.72rem;
       font-weight: 600;
-      padding: 0.3rem 0.6rem;
+      padding: 0.35rem 0.4rem;
       border-radius: 20px;
       cursor: pointer;
       white-space: nowrap;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
       transition: all 0.15s ease;
     }
 
@@ -1292,7 +1293,7 @@
       tabPages.classList.toggle('active', tabName === 'pages');
       tabFront.classList.toggle('active', tabName === 'front');
 
-      catTabs.style.display = tabName === 'front' ? 'none' : 'flex';
+      catTabs.style.display = tabName === 'front' ? 'none' : 'grid';
       renderSidebar();
 
       if (autoSelect) {
