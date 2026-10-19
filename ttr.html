@@ -1041,11 +1041,23 @@
         return;
       }
 
+      if (!INDEX.some(s => s.id === 'kapak')) {
+        INDEX.unshift({
+          id: 'kapak',
+          num: 'Kapak',
+          title: 'BİRİNCİ BASAMAĞA YÖNELİK TANI VE TEDAVİ REHBERLERİ 2026',
+          slug: 'kapak',
+          category: 'kapak',
+          depth: 1,
+          preview: 'T.C. Sağlık Bakanlığı — Birinci Basamağa Yönelik Tanı ve Tedavi Rehberleri 2026'
+        });
+      }
+
       renderSidebar();
       setupCatTabs();
       setupSearch();
 
-      let targetId = INDEX[0].id;
+      let targetId = 'kapak';
       if (location.hash) {
         const hashId = decodeURIComponent(location.hash.slice(1));
         if (INDEX.some(s => s.id === hashId)) {
@@ -1061,7 +1073,7 @@
       if (activeCat !== 'all') items = items.filter(s => s.category === activeCat);
       if (filter) {
         const q = filter.toLowerCase();
-        items = items.filter(s => s.title.toLowerCase().includes(q) || s.num.includes(q));
+        items = items.filter(s => s.title.toLowerCase().includes(q) || s.num.toLowerCase().includes(q));
       }
       sidebarCount.textContent = `${items.length} bölüm listelendi`;
       
@@ -1084,9 +1096,10 @@
       });
     }
 
-    async function loadSection(id) {
+    async function loadSection(id, initialPage = 1, flipDir = false) {
       resetZoom(false);
 
+      const oldImgSrc = pageImg.getAttribute('src');
       activeId = id;
       currentPage = 1;
 
@@ -1097,16 +1110,17 @@
       if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 
       let manifest = { count: 1, title: '' };
-      const possibleManifests = [`./data/pages/${id}/manifest.json`, `data/pages/${id}/manifest.json`];
-      
-      for (const mPath of possibleManifests) {
-        try {
-          const res = await fetch(mPath);
-          if (res.ok) {
-            manifest = await res.json();
-            break;
-          }
-        } catch(e) {}
+      if (id !== 'kapak') {
+        const possibleManifests = [`./data/pages/${id}/manifest.json`, `data/pages/${id}/manifest.json`];
+        for (const mPath of possibleManifests) {
+          try {
+            const res = await fetch(mPath);
+            if (res.ok) {
+              manifest = await res.json();
+              break;
+            }
+          } catch(e) {}
+        }
       }
       totalPages = manifest.count || 1;
 
@@ -1117,7 +1131,8 @@
       statusState.style.display = 'none';
       bookWrapper.style.display = 'inline-block';
 
-      showPage(1, false);
+      const targetPage = initialPage === 'last' ? totalPages : initialPage;
+      showPage(targetPage, flipDir, oldImgSrc);
       history.replaceState(null, '', `#${encodeURIComponent(id)}`);
 
       if (window.innerWidth <= 768) {
@@ -1126,7 +1141,7 @@
     }
 
     // Gerçekçi 3D Kitap Sayfası Çevirme Animasyonu ile Sayfa Gösterimi
-    function showPage(n, direction = false) {
+    function showPage(n, direction = false, customOldImgPath = null) {
       if (!activeId) return;
       if (isFlipping && direction) return;
 
@@ -1136,21 +1151,25 @@
       const oldPage = currentPage;
       currentPage = targetPage;
 
+      const activeIdx = INDEX.findIndex(s => s.id === activeId);
+      const isVeryFirst = (activeIdx <= 0 && currentPage <= 1);
+      const isVeryLast = (activeIdx >= INDEX.length - 1 && currentPage >= totalPages);
+
       pageIndicator.textContent = `${currentPage} / ${totalPages}`;
-      prevBtn.disabled = (currentPage <= 1);
-      nextBtn.disabled = (currentPage >= totalPages);
+      prevBtn.disabled = isVeryFirst;
+      nextBtn.disabled = isVeryLast;
 
       if (isFullscreen) {
         fsCounter.textContent = `${currentPage} / ${totalPages}`;
-        fsPrev.disabled = (currentPage <= 1);
-        fsNext.disabled = (currentPage >= totalPages);
+        fsPrev.disabled = isVeryFirst;
+        fsNext.disabled = isVeryLast;
       }
 
       const fullImgPath = `./data/pages/${activeId}/p${currentPage}.jpg`;
 
-      if (direction && oldPage !== currentPage) {
+      if (direction && (oldPage !== currentPage || customOldImgPath)) {
         isFlipping = true;
-        const oldImgPath = `./data/pages/${activeId}/p${oldPage}.jpg`;
+        const oldImgPath = customOldImgPath || `./data/pages/${activeId}/p${oldPage}.jpg`;
 
         if (direction === 'next') {
           flipImage.src = oldImgPath;
@@ -1200,8 +1219,19 @@
     }
 
     function changePage(delta) {
+      if (isFlipping) return;
       const dir = delta > 0 ? 'next' : 'prev';
-      showPage(currentPage + delta, dir);
+      const nextNum = currentPage + delta;
+      if (nextNum >= 1 && nextNum <= totalPages) {
+        showPage(nextNum, dir);
+      } else {
+        const activeIdx = INDEX.findIndex(s => s.id === activeId);
+        if (delta > 0 && activeIdx < INDEX.length - 1) {
+          loadSection(INDEX[activeIdx + 1].id, 1, 'next');
+        } else if (delta < 0 && activeIdx > 0) {
+          loadSection(INDEX[activeIdx - 1].id, 'last', 'prev');
+        }
+      }
     }
 
     prevBtn.addEventListener('click', () => changePage(-1));

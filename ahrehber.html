@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>Aile Hekimliği Rehberi</title>
+  <meta name="description" content="Aile Hekimliği Uygulamasında Rehber Kitap — Hukuk, Mevzuat, Hasta Kayıtları, İdari İşler, Beyaz Kod, CİMER ve SABİM Başvuruları" />
   
   <style>
     :root {
@@ -26,7 +27,7 @@
       --badge-bg: rgba(0, 0, 0, 0.08);
       --badge-color: #334155;
       --header-height: 52px;
-      --sidebar-width: 320px;
+      --sidebar-width: 330px;
       --radius: 8px;
     }
 
@@ -80,14 +81,15 @@
       flex-shrink: 0;
       z-index: 50;
       transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
+      position: relative;
     }
 
     .sidebar-header {
-      padding: 0.85rem 1rem;
+      padding: 0.85rem 1rem 0.6rem;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.6rem;
       background: var(--bg-panel);
     }
 
@@ -122,6 +124,39 @@
       color: var(--text-main);
     }
 
+    /* Sekme Seçiciler: İçindekiler vs Tüm Sayfalar */
+    .view-tabs {
+      display: flex;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 3px;
+      gap: 4px;
+    }
+
+    .view-tab {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .view-tab.active {
+      background: var(--bg-panel);
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
     .search-box-wrapper {
       position: relative;
       width: 100%;
@@ -129,12 +164,12 @@
 
     #search {
       width: 100%;
-      padding: 0.6rem 0.75rem 0.6rem 2.2rem;
+      padding: 0.6rem 2rem 0.6rem 2.2rem;
       background: var(--bg-main);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
       color: var(--text-main);
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
@@ -155,17 +190,98 @@
       pointer-events: none;
     }
 
+    #search-clear {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: none;
+      padding: 2px 5px;
+      line-height: 1;
+    }
+
+    #search-clear.visible {
+      display: block;
+    }
+
+    /* Bölüm Filtre Hapları (2 Satır x 3 Sütun) */
+    .cat-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      padding: 0.15rem 0;
+    }
+
+    .cat-tab {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.35rem 0.4rem;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.15s ease;
+    }
+
+    .cat-tab:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .cat-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .sidebar-count-bar {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 0.4rem 1rem 0.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-panel);
+    }
+
     #menu-tree {
       flex: 1;
       overflow-y: auto;
-      padding: 0.75rem;
+      padding: 0.65rem 0.75rem 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
     }
 
+    .toc-category-header {
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      padding: 0.55rem 0.35rem 0.2rem;
+      margin-top: 0.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .toc-category-header:first-child {
+      margin-top: 0;
+    }
+
     .menu-item {
-      padding: 0.65rem 0.75rem;
+      padding: 0.6rem 0.75rem;
       border-radius: var(--radius);
       background-color: var(--item-bg);
       border: 1px solid transparent;
@@ -185,17 +301,45 @@
     }
 
     .menu-item.active .menu-snippet,
+    .menu-item.active .bolum-tag,
     .menu-item.active .page-badge {
       color: #ffffff !important;
-      opacity: 0.9;
+      opacity: 0.92;
+    }
+
+    .menu-item.active .page-badge,
+    .menu-item.active .bolum-tag {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .menu-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.84rem;
       font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .menu-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .bolum-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(2, 132, 199, 0.1);
+      padding: 1px 6px;
+      border-radius: 4px;
+      width: fit-content;
       margin-bottom: 2px;
     }
 
@@ -206,15 +350,32 @@
       padding: 2px 6px;
       border-radius: 4px;
       font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      font-weight: 600;
     }
 
     .menu-snippet {
       font-size: 0.75rem;
       color: var(--text-muted);
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.3;
+      line-height: 1.35;
+      margin-top: 2px;
+    }
+
+    mark.search-hl {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--primary);
+      padding: 0 2px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    .menu-item.active mark.search-hl {
+      background: rgba(255, 255, 255, 0.28);
+      color: #ffffff;
     }
 
     /* Sağ Sayfa / Viewer Alanı */
@@ -294,11 +455,33 @@
       flex-shrink: 0;
     }
 
-    #page-indicator {
+    .page-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 2px 8px;
+      min-height: 36px;
+    }
+
+    .page-input-box {
+      width: 46px;
+      border: none;
+      background: transparent;
+      color: var(--text-main);
       font-size: 0.875rem;
-      padding: 0 0.5rem;
+      font-weight: 600;
+      text-align: center;
+      outline: none;
       font-variant-numeric: tabular-nums;
+    }
+
+    .page-total-label {
+      font-size: 0.85rem;
       color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
       font-weight: 500;
     }
 
@@ -585,14 +768,21 @@
         top: 0;
         bottom: 0;
         left: 0;
-        width: 85%;
-        max-width: 320px;
+        width: 86%;
+        max-width: 330px;
         transform: translateX(-100%);
         box-shadow: 6px 0 24px rgba(0, 0, 0, 0.4);
       }
 
       #sidebar.open {
         transform: translateX(0);
+      }
+
+      #sidebar-overlay.open {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 40;
       }
 
       .close-btn {
@@ -636,14 +826,41 @@
         </h1>
         <button id="close-sidebar-btn" class="close-btn" aria-label="Menüyü Kapat">&times;</button>
       </div>
+
+      <!-- Görünüm Sekmeleri: İçindekiler vs Tüm Sayfalar -->
+      <div class="view-tabs">
+        <button id="tab-toc" class="view-tab active">
+          İçindekiler
+        </button>
+        <button id="tab-pages" class="view-tab">
+          Tüm Sayfalar
+        </button>
+      </div>
+
       <div class="search-box-wrapper">
         <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="search" placeholder="Konu veya sayfa ara..." autocomplete="off" />
+        <input type="search" id="search" placeholder="Bölüm, konu, form veya sayfa ara..." autocomplete="off" />
+        <button id="search-clear" aria-label="Aramayı Temizle">✕</button>
+      </div>
+
+      <div class="cat-tabs" id="cat-tabs">
+        <button class="cat-tab active" data-cat="all">Tümü</button>
+        <button class="cat-tab" data-cat="1. Bölüm">1. Hukuk</button>
+        <button class="cat-tab" data-cat="2. Bölüm">2. Uygulama</button>
+        <button class="cat-tab" data-cat="3. Bölüm">3. Hasta Kayıt</button>
+        <button class="cat-tab" data-cat="4. Bölüm">4. İdari İşler</button>
+        <button class="cat-tab" data-cat="5. Bölüm|Kaynakça">5. Başvuru & Ek</button>
       </div>
     </div>
+
+    <div class="sidebar-count-bar">
+      <span id="sidebar-count">Yükleniyor...</span>
+      <span style="font-size: 0.7rem; opacity: 0.75;">HSGM • Rehber Kitap</span>
+    </div>
+
     <div id="menu-tree"></div>
   </aside>
 
@@ -668,7 +885,12 @@
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
-          <span id="page-indicator">- / -</span>
+
+          <div class="page-input-wrapper">
+            <input type="number" id="page-input" class="page-input-box" min="1" max="210" value="1" />
+            <span class="page-total-label" id="total-pages-txt">/ 210</span>
+          </div>
+
           <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)" disabled>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="9 18 15 12 9 6"></polyline>
@@ -738,19 +960,169 @@
   <!-- Tam Ekran Yüzen Kontroller -->
   <div class="fs-floating-controls" id="fs-controls">
     <button class="btn-toolbar" id="fs-prev" style="padding: 0.3rem 0.6rem; color: #ffffff; background: rgba(255,255,255,0.15);">◀</button>
-    <span id="fs-counter" style="font-size: 0.85rem; font-weight: 600;">1 / 1</span>
+    <span id="fs-counter" style="font-size: 0.85rem; font-weight: 600;">1 / 210</span>
     <button class="btn-toolbar" id="fs-next" style="padding: 0.3rem 0.6rem; color: #ffffff; background: rgba(255,255,255,0.15);">▶</button>
     <button class="btn-toolbar" id="fs-close" style="padding: 0.3rem 0.6rem; color: #f87171; background: rgba(255,255,255,0.15);">✕ Çık</button>
   </div>
 
   <script>
     const CONFIG = {
-      jsonPath: './ahrehberassets/data/guide.json',
+      jsonPaths: [
+        './ahrehberassets/data/guide.json',
+        'ahrehberassets/data/guide.json'
+      ],
       pagesDir: './ahrehberassets/pages/'
     };
 
+    // Resmi İçindekiler (Fihrist) Ağacı
+    const TOC_DATA = [
+      {
+        category: "Giriş ve Ön Sayfalar",
+        items: [
+          { section: "Kapak", title: "Aile Hekimliği Uygulamasında Rehber Kitap (Kapak)", page: 1 },
+          { section: "Künye", title: "Künye ve Yayın Komisyonu", page: 4 },
+          { section: "Komisyon", title: "Katkıda Bulunanlar", page: 5 },
+          { section: "Önsöz", title: "Önsöz ve Sunuş", page: 7 },
+          { section: "İçindekiler", title: "Kitap İçindekiler", page: 9 },
+          { section: "Kısaltmalar", title: "Kısaltmalar, Tablo ve Şekiller Listesi", page: 12 }
+        ]
+      },
+      {
+        category: "1. Bölüm: Hukuk ve Mevzuat",
+        items: [
+          { section: "1.1", title: "Tanımlar: Hukuk, Yaptırım ve Mevzuat", page: 17 },
+          { section: "1.1.4", title: "Normlar Hiyerarşisi", page: 18 },
+          { section: "1.1.5", title: "Normlar Hiyerarşisinin Değişik Görünüm Şekilleri", page: 20 },
+          { section: "1.1.6", title: "Anayasal Koruma", page: 22 },
+          { section: "1.1.7", title: "Yargısal Koruma", page: 23 },
+          { section: "1.2", title: "Aile Hekimliği Uygulamasında Hiyerarşi ve Mevzuat", page: 25 },
+          { section: "1.2.1", title: "Sağlık Bakanlığı", page: 26 },
+          { section: "1.2.2", title: "Halk Sağlığı Genel Müdürlüğü (HSGM)", page: 27 },
+          { section: "1.2.3", title: "İl Sağlık Müdürlüğü", page: 30 },
+          { section: "1.2.4", title: "Aile Sağlığı Merkezi (ASM)", page: 35 }
+        ]
+      },
+      {
+        category: "2. Bölüm: Aile Hekimliği Uygulamaları",
+        items: [
+          { section: "2.1", title: "Gezici ve Yerinde Sağlık Hizmeti", page: 39 },
+          { section: "2.1.1", title: "Gezici Sağlık Hizmeti Planlaması ve Ödemesi", page: 40 },
+          { section: "2.2", title: "Yetkilendirilmiş Aile Hekimliği", page: 41 },
+          { section: "2.3 - 2.4", title: "Eğitim ASM, Mesai Dışı Hizmet ve GETAT Uygulamaları", page: 42 }
+        ]
+      },
+      {
+        category: "3. Bölüm: Hasta İle İlgili Kayıtlar",
+        items: [
+          { section: "3. Bölüm", title: "Hasta İle İlgili Kayıtlar (Giriş)", page: 43 },
+          { section: "3.1 - 3.2", title: "Tıbbi Kayıt ve Onam-Red Formları", page: 44 },
+          { section: "3.3.1", title: "Gebe İzlemi ve Kayıtları", page: 45 },
+          { section: "3.3.2", title: "Lohusa İzlemi", page: 48 },
+          { section: "3.4", title: "Anne Ölümü Bildirimi", page: 49 },
+          { section: "3.5 - 3.6", title: "15-49 Yaş Kadın İzlemi ve Bebek-Çocuk İzlemleri", page: 50 },
+          { section: "3.7 - 3.8", title: "Bebek Ölümü ve Çocuk Cinsel İstismar Bildirimi", page: 59 },
+          { section: "3.9", title: "Aşı Takibi ve Uygulamaları", page: 61 },
+          { section: "3.10.1", title: "Kronik Hastalık ve Kanser Taramaları", page: 65 },
+          { section: "3.10.2", title: "Yenidoğan Tarama Programları (NTP, İşitme, GKD, Görme)", page: 66 },
+          { section: "3.10.3", title: "Okul Çağı Çocuklarında Tarama Programları", page: 70 },
+          { section: "3.10.4", title: "Evlilik Öncesi Tarama Programları (SMA, Hemoglobinopati)", page: 71 },
+          { section: "3.10.5", title: "Tüberküloz Hastalarının Doğrudan Gözetimli Tedavisi (DGT)", page: 72 },
+          { section: "3.10.6", title: "Hastalık Yönetim Platformu (HYP)", page: 73 },
+          { section: "3.11", title: "Sağlık Raporları (Genel Esaslar)", page: 75 },
+          { section: "3.11.1 - 3.11.2", title: "İstirahat Raporları ve Askerlik Yoklaması Muayenesi", page: 76 },
+          { section: "3.11.3 - 3.11.4", title: "Sürücü ve Sporcu Lisans Sağlık Raporları", page: 77 },
+          { section: "3.11.5", title: "Evlilik İçin Sağlık Raporları", page: 78 },
+          { section: "3.11.6", title: "Durum Bildirir Tek Hekim Sağlık Raporu", page: 79 },
+          { section: "3.11.7 - 3.12", title: "Yatağa Bağımlı Seçmen Raporu ve Hasta Sevk Formu", page: 82 },
+          { section: "3.13", title: "Bildirimi Zorunlu Bulaşıcı Hastalıklar", page: 88 }
+        ]
+      },
+      {
+        category: "4. Bölüm: İdari İşler İle İlgili Kayıtlar",
+        items: [
+          { section: "4.1.1", title: "Yönetim İle İlgili İşlemler ve Yönetim Karar Defteri", page: 91 },
+          { section: "4.1.2", title: "Gruplandırma İşlemleri", page: 93 },
+          { section: "4.1.3", title: "ASM ve AHB İzleme-Değerlendirme Rehberi ve Formlar", page: 99 },
+          { section: "4.1.4", title: "Performans İtiraz Evrakları", page: 100 },
+          { section: "4.1.5", title: "Esnek Çalışma Planı", page: 103 },
+          { section: "4.1.6 - 4.1.7", title: "Saha Ziyareti, İdari İzinler ve Görevlendirme", page: 106 },
+          { section: "4.1.8", title: "Aile Hekimi Değiştirme Dilekçeleri", page: 108 },
+          { section: "4.2", title: "Atık Yönetimi İle İlgili Belgeler", page: 109 },
+          { section: "4.3 - 4.4", title: "Ücretli Çalıştırılan Personel ve ASM Mali İşler Belgeleri", page: 111 },
+          { section: "4.5", title: "Demirbaş, Tıbbi Cihaz Bakım ve Kalibrasyon Belgeleri", page: 112 },
+          { section: "4.5.3 - 4.5.4", title: "Yangın Önleme ve Tıbbi Sarf Malzeme Stok Belgeleri", page: 118 },
+          { section: "4.5.5 - 4.5.7", title: "Temizlik, İlaçlama ve Eğitim Belgeleri", page: 120 },
+          { section: "4.5.8 - 4.5.9", title: "Soğuk Zincir Sorumlusu ve Acil Eylem Planı Belgeleri", page: 124 }
+        ]
+      },
+      {
+        category: "5. Bölüm: Beyaz Kod, CİMER ve SABİM",
+        items: [
+          { section: "5.1", title: "Birinci Basamak Beyaz Kod Uygulaması", page: 129 },
+          { section: "5.2", title: "CİMER Başvuruları", page: 137 },
+          { section: "5.3", title: "SABİM Başvuruları", page: 138 }
+        ]
+      },
+      {
+        category: "Kaynakça ve Ekler",
+        items: [
+          { section: "Kaynakça", title: "Kaynakça", page: 140 },
+          { section: "Ek 1 - 7", title: "Aydınlatılmış Onam ve Tedavi/İzlem Red Formları", page: 144 },
+          { section: "Ek 8 - 11", title: "Öğrenci İzlem, Doğum/Ölüm Bildirimi ve ASİE Formları", page: 154 },
+          { section: "Ek 12 - 19", title: "Evlilik, SMA, Sürücü ve Silah Ruhsatı Rapor Formları", page: 159 },
+          { section: "Ek 20 - 25", title: "Seçmen Raporu, Entegrasyon ve Gruplandırma Belgeleri", page: 169 },
+          { section: "Ek 26 - 29", title: "ASM/AHB Denetim ve Performans İtiraz Formları", page: 181 },
+          { section: "Ek 30 - 41", title: "Göç, Doğum, Tıbbi Neden, İzlem/Aşı ve Vefat Tutanakları", page: 185 },
+          { section: "Ek 42 - 51", title: "Göz Muayenesi, DGT, Gezici Hizmet, Form 014, SAHU, GKD ve ÇKK", page: 198 }
+        ]
+      }
+    ];
+
+    // Düzleştirilmiş TOC listesi (sayfaya göre aktif bölümü bulmak için)
+    const FLAT_TOC = [];
+    TOC_DATA.forEach(group => {
+      group.items.forEach(item => {
+        FLAT_TOC.push({
+          ...item,
+          category: group.category
+        });
+      });
+    });
+
+    // Gelişmiş Türkçe Arama Normalizasyonu
+    function normalizeTr(text) {
+      if (!text) return '';
+      return text
+        .toLocaleLowerCase('tr-TR')
+        .replace(/â|á|à/g, 'a')
+        .replace(/ê|é|è/g, 'e')
+        .replace(/î|í|ì/g, 'i')
+        .replace(/ı/g, 'i')
+        .replace(/ô|ó|ò/g, 'o')
+        .replace(/û|ú|ù/g, 'u')
+        .replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u')
+        .replace(/ş/g, 's')
+        .replace(/ö/g, 'o')
+        .replace(/ç/g, 'c');
+    }
+
+    function findTocEntryForPage(pageNum) {
+      let current = FLAT_TOC[0];
+      for (const entry of FLAT_TOC) {
+        if (pageNum >= entry.page) {
+          current = entry;
+        } else {
+          break;
+        }
+      }
+      return current;
+    }
+
     let items = [];
-    let currentIndex = -1;
+    let currentTab = 'toc'; // 'toc' | 'pages'
+    let activeCatFilter = 'all';
+    let currentIndex = 0;
     let isFlipping = false;
     let isFullscreen = false;
 
@@ -774,6 +1146,11 @@
     const toggleMenuBtn = document.getElementById('toggle-menu-btn');
     const closeSidebarBtn = document.getElementById('close-sidebar-btn');
     const menuTree = document.getElementById('menu-tree');
+    const sidebarCount = document.getElementById('sidebar-count');
+    const tabToc = document.getElementById('tab-toc');
+    const tabPages = document.getElementById('tab-pages');
+    const searchInput = document.getElementById('search');
+    const searchClear = document.getElementById('search-clear');
     const bookStage = document.getElementById('book-stage');
     const bookWrapper = document.getElementById('book-wrapper');
     const guideImage = document.getElementById('guide-image');
@@ -785,10 +1162,10 @@
     const canvasContainer = document.getElementById('canvas-container');
     const statusState = document.getElementById('status-state');
     const currentTitle = document.getElementById('current-title');
-    const pageIndicator = document.getElementById('page-indicator');
+    const pageInput = document.getElementById('page-input');
+    const totalPagesTxt = document.getElementById('total-pages-txt');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    const searchInput = document.getElementById('search');
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
     const themeIconLight = document.getElementById('theme-icon-light');
     const themeIconDark = document.getElementById('theme-icon-dark');
@@ -877,67 +1254,262 @@
 
     // Veri Yükleme
     async function init() {
-      try {
-        const res = await fetch(CONFIG.jsonPath);
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-        }
-        const data = await res.json();
+      let data = null;
 
-        items = data.map((d, idx) => {
-          const pageNum = d.page !== undefined ? d.page : idx + 1;
-          const imgPath = d.image ? d.image.replace(/^.*[\\\/]/, '') : `page_${pageNum}.jpg`;
-          return {
-            page: pageNum,
-            file: imgPath,
-            text: d.text || ''
-          };
+      for (const path of CONFIG.jsonPaths) {
+        try {
+          const res = await fetch(path);
+          if (res.ok) {
+            data = await res.json();
+            break;
+          }
+        } catch (e) {}
+      }
+
+      if (!data || !Array.isArray(data) || data.length === 0) {
+        // JSON yüklenemese bile 210 sayfayı TOC verisiyle hazırla
+        data = Array.from({ length: 210 }, (_, idx) => ({
+          page: idx + 1,
+          image: `pages/page_${idx + 1}.jpg`,
+          text: ''
+        }));
+      }
+
+      items = data.map((d, idx) => {
+        const pageNum = d.page !== undefined ? d.page : idx + 1;
+        const imgPath = d.image ? d.image.replace(/^.*[\\\/]/, '') : `page_${pageNum}.jpg`;
+        const tocInfo = findTocEntryForPage(pageNum);
+        const category = d.category || tocInfo.category;
+        const section = d.section || tocInfo.section;
+        const title = d.title || tocInfo.title;
+        const rawText = (d.text || '').replace(/\s+/g, ' ').trim();
+
+        return {
+          page: pageNum,
+          file: imgPath,
+          category,
+          section,
+          title,
+          text: rawText,
+          _normTitle: normalizeTr(`${section} ${title} ${category}`),
+          _normText: normalizeTr(rawText)
+        };
+      });
+
+      totalPagesTxt.textContent = `/ ${items.length}`;
+      pageInput.max = items.length;
+
+      setupTabsAndFilters();
+
+      // URL Hash kontrolü (#sayfaNo)
+      const hashPage = parseInt(window.location.hash.replace('#', ''), 10);
+      const startIndex = (!isNaN(hashPage) && hashPage >= 1 && hashPage <= items.length) ? (hashPage - 1) : 0;
+
+      renderSidebar();
+      selectItem(startIndex, false);
+    }
+
+    function setupTabsAndFilters() {
+      tabToc.addEventListener('click', () => {
+        currentTab = 'toc';
+        tabToc.classList.add('active');
+        tabPages.classList.remove('active');
+        renderSidebar();
+      });
+
+      tabPages.addEventListener('click', () => {
+        currentTab = 'pages';
+        tabPages.classList.add('active');
+        tabToc.classList.remove('active');
+        renderSidebar();
+      });
+
+      document.querySelectorAll('.cat-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeCatFilter = btn.dataset.cat;
+          document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderSidebar();
         });
+      });
 
-        renderMenu(items);
+      searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim();
+        searchClear.classList.toggle('visible', q.length > 0);
+        renderSidebar();
+      });
 
-        if (items.length > 0) {
-          selectItem(0, false);
-        } else {
-          statusState.textContent = 'JSON verisi boş.';
-        }
-      } catch (err) {
-        console.error('Yükleme hatası:', err);
-        statusState.innerHTML = `
-          <strong style="color: #f87171;">Veri Yüklenemedi</strong><br><br>
-          İstek: <code>${CONFIG.jsonPath}</code><br>
-          Hata: ${err.message}
-        `;
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.classList.remove('visible');
+        renderSidebar();
+        searchInput.focus();
+      });
+    }
+
+    function matchesCategory(catName) {
+      if (activeCatFilter === 'all') return true;
+      const parts = activeCatFilter.split('|');
+      return parts.some(prefix => (catName || '').startsWith(prefix));
+    }
+
+    function highlightMatch(text, query) {
+      if (!query || !text) return text || '';
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      try {
+        const regex = new RegExp(`(${escaped})`, 'gi');
+        return text.replace(regex, '<mark class="search-hl">$1</mark>');
+      } catch (e) {
+        return text;
       }
     }
 
-    function renderMenu(list) {
+    function buildSearchSnippet(item, rawQuery, normQuery) {
+      const txt = item.text || '';
+      if (!txt) return '';
+      const normTxt = item._normText || normalizeTr(txt);
+      const idx = normTxt.indexOf(normQuery);
+      if (idx === -1) {
+        return txt.substring(0, 100) + (txt.length > 100 ? '…' : '');
+      }
+      const start = Math.max(0, idx - 35);
+      const end = Math.min(txt.length, idx + normQuery.length + 75);
+      let slice = txt.substring(start, end);
+      if (start > 0) slice = '…' + slice;
+      if (end < txt.length) slice = slice + '…';
+      return highlightMatch(slice, rawQuery);
+    }
+
+    function renderSidebar() {
+      const rawQuery = searchInput.value.trim();
+      const normQuery = normalizeTr(rawQuery);
       menuTree.innerHTML = '';
-      if (list.length === 0) {
-        menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem;">Eşleşen sonuç bulunamadı.</div>';
+
+      const currentPageNum = items[currentIndex] ? items[currentIndex].page : 1;
+      const activeTocEntry = findTocEntryForPage(currentPageNum);
+
+      // 1) ARAMA AKTİF İSE: JSON içindeki tüm başlıklar, bölümler ve sayfa metinlerinde ara
+      if (normQuery.length > 0) {
+        const results = items.filter(item => {
+          if (!matchesCategory(item.category)) return false;
+          return (
+            item.page.toString() === normQuery ||
+            `sayfa ${item.page}` === normQuery ||
+            item._normTitle.includes(normQuery) ||
+            item._normText.includes(normQuery)
+          );
+        });
+
+        results.sort((a, b) => {
+          const aTitleMatch = a._normTitle.includes(normQuery) ? 1 : 0;
+          const bTitleMatch = b._normTitle.includes(normQuery) ? 1 : 0;
+          if (aTitleMatch !== bTitleMatch) return bTitleMatch - aTitleMatch;
+          return a.page - b.page;
+        });
+
+        sidebarCount.textContent = `${results.length} sayfa eşleşti`;
+
+        if (results.length === 0) {
+          menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem; text-align: center;">Aramanızla eşleşen sonuç bulunamadı.</div>';
+          return;
+        }
+
+        results.forEach(item => {
+          const targetIdx = item.page - 1;
+          const isCurrent = targetIdx === currentIndex;
+          const el = document.createElement('div');
+          el.className = `menu-item ${isCurrent ? 'active' : ''}`;
+          const snippetHtml = buildSearchSnippet(item, rawQuery, normQuery);
+          const shortCat = item.category.split(':')[0].trim();
+
+          el.innerHTML = `
+            <div class="menu-header">
+              <div class="menu-title-wrap">
+                <span class="bolum-tag">${highlightMatch(item.section, rawQuery)} • ${shortCat}</span>
+                <span>${highlightMatch(item.title, rawQuery)}</span>
+              </div>
+              <span class="page-badge">S.${item.page}</span>
+            </div>
+            ${snippetHtml ? `<div class="menu-snippet">${snippetHtml}</div>` : ''}
+          `;
+
+          el.addEventListener('click', () => {
+            selectItem(targetIdx, targetIdx > currentIndex ? 'next' : (targetIdx < currentIndex ? 'prev' : false));
+            if (window.innerWidth <= 768) toggleDrawer(false);
+          });
+          menuTree.appendChild(el);
+        });
         return;
       }
 
-      list.forEach((item) => {
+      // 2) İÇİNDEKİLER (FİHRİST) SEKMESİ
+      if (currentTab === 'toc') {
+        let totalTocCount = 0;
+
+        TOC_DATA.forEach(group => {
+          if (!matchesCategory(group.category)) return;
+
+          const headerEl = document.createElement('div');
+          headerEl.className = 'toc-category-header';
+          headerEl.textContent = group.category;
+          menuTree.appendChild(headerEl);
+
+          group.items.forEach(tocItem => {
+            totalTocCount++;
+            const isActive = activeTocEntry && activeTocEntry.page === tocItem.page;
+            const el = document.createElement('div');
+            el.className = `menu-item ${isActive ? 'active' : ''}`;
+            el.dataset.page = tocItem.page;
+
+            el.innerHTML = `
+              <div class="menu-header">
+                <div class="menu-title-wrap">
+                  <span class="bolum-tag">${tocItem.section}</span>
+                  <span>${tocItem.title}</span>
+                </div>
+                <span class="page-badge">S.${tocItem.page}</span>
+              </div>
+            `;
+
+            el.addEventListener('click', () => {
+              const targetIdx = tocItem.page - 1;
+              selectItem(targetIdx, targetIdx > currentIndex ? 'next' : (targetIdx < currentIndex ? 'prev' : false));
+              if (window.innerWidth <= 768) toggleDrawer(false);
+            });
+            menuTree.appendChild(el);
+          });
+        });
+
+        sidebarCount.textContent = `${totalTocCount} konu başlığı`;
+        return;
+      }
+
+      // 3) TÜM SAYFALAR SEKMESİ (Sayfa 1 - 210)
+      const filteredPages = items.filter(item => matchesCategory(item.category));
+      sidebarCount.textContent = `${filteredPages.length} sayfa listelendi`;
+
+      filteredPages.forEach(item => {
+        const idx = item.page - 1;
+        const isCurrent = idx === currentIndex;
         const el = document.createElement('div');
-        const originalIndex = items.findIndex(i => i.page === item.page);
-        
-        el.className = `menu-item ${originalIndex === currentIndex ? 'active' : ''}`;
-        const previewText = item.text ? item.text.substring(0, 55) + '...' : 'Görsel Sayfa';
-        
+        el.className = `menu-item ${isCurrent ? 'active' : ''}`;
+        el.dataset.page = item.page;
+        const previewText = item.text ? item.text.substring(0, 85) + (item.text.length > 85 ? '…' : '') : item.category;
+
         el.innerHTML = `
           <div class="menu-header">
-            <span>Sayfa ${item.page}</span>
+            <div class="menu-title-wrap">
+              <span class="bolum-tag">${item.section}</span>
+              <span>${item.title}</span>
+            </div>
             <span class="page-badge">#${item.page}</span>
           </div>
           <div class="menu-snippet">${previewText}</div>
         `;
-        
+
         el.addEventListener('click', () => {
-          selectItem(originalIndex, originalIndex > currentIndex ? 'next' : 'prev');
-          if (window.innerWidth <= 768) {
-            toggleDrawer(false);
-          }
+          selectItem(idx, idx > currentIndex ? 'next' : (idx < currentIndex ? 'prev' : false));
+          if (window.innerWidth <= 768) toggleDrawer(false);
         });
         menuTree.appendChild(el);
       });
@@ -954,9 +1526,9 @@
       currentIndex = index;
       const target = items[index];
 
-      const snippet = target.text ? ` — ${target.text.substring(0, 75)}...` : '';
-      currentTitle.textContent = `Sayfa ${target.page}${snippet}`;
-      pageIndicator.textContent = `${index + 1} / ${items.length}`;
+      window.location.hash = target.page;
+      currentTitle.textContent = `${target.section}: ${target.title} — ${target.category} (Sayfa ${target.page})`;
+      pageInput.value = target.page;
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index === items.length - 1;
 
@@ -966,10 +1538,14 @@
         fsNext.disabled = index === items.length - 1;
       }
 
-      // Sidebar aktiflik senkronu
-      document.querySelectorAll('.menu-item').forEach(el => {
-        el.classList.toggle('active', el.textContent.includes(`Sayfa ${target.page}`));
-      });
+      // Sol menü aktifliğini güncelle
+      if (!searchInput.value.trim()) {
+        renderSidebar();
+        const activeEl = menuTree.querySelector('.menu-item.active');
+        if (activeEl) {
+          activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      }
 
       const fullImgPath = `${CONFIG.pagesDir}${target.file}`;
 
@@ -1034,24 +1610,27 @@
       };
     }
 
-    // Gezinme Butonları
+    // Gezinme Butonları ve Sayfa Giriş Kutusu
     prevBtn.addEventListener('click', () => selectItem(currentIndex - 1, 'prev'));
     nextBtn.addEventListener('click', () => selectItem(currentIndex + 1, 'next'));
     fsPrev.addEventListener('click', () => selectItem(currentIndex - 1, 'prev'));
     fsNext.addEventListener('click', () => selectItem(currentIndex + 1, 'next'));
 
-    // Arama Filtresi
-    searchInput.addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase().trim();
-      if (!term) {
-        renderMenu(items);
+    pageInput.addEventListener('change', (e) => {
+      let val = parseInt(e.target.value, 10);
+      if (isNaN(val)) {
+        pageInput.value = currentIndex + 1;
         return;
       }
-      const filtered = items.filter(i => 
-        i.page.toString().includes(term) || 
-        i.text.toLowerCase().includes(term)
-      );
-      renderMenu(filtered);
+      val = Math.max(1, Math.min(items.length, val));
+      const targetIdx = val - 1;
+      selectItem(targetIdx, targetIdx > currentIndex ? 'next' : (targetIdx < currentIndex ? 'prev' : false));
+    });
+
+    pageInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        pageInput.blur();
+      }
     });
 
     // Tam Ekran Fonksiyonu
