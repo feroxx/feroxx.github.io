@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <title>Periyodik Muayene ve İzlem Rehberi</title>
+  <title>Kanıta Dayalı Periyodik Muayene Rehberi</title>
+  <meta name="description" content="Kanıta Dayalı Periyodik Muayene Rehberi — Bebeklik, Çocukluk, Adölesan, Erişkinlik, Gebelik ve Yaşlılık Dönemi İzlemleri" />
   
   <style>
     :root {
-      --bg-main: #f8fafc;
+      /* Varsayılan Açık Tema */
+      --bg-main: #f1f5f9;
       --bg-panel: #ffffff;
       --bg-card: #ffffff;
       --bg-active: #0284c7;
@@ -16,20 +18,21 @@
       --text-muted: #64748b;
       --primary: #0284c7;
       --primary-hover: #0369a1;
-      --canvas-bg: radial-gradient(circle at center, #f1f5f9 0%, #cbd5e1 100%);
+      --canvas-bg: radial-gradient(circle at center, #e2e8f0 0%, #cbd5e1 100%);
       --book-bg: #ffffff;
-      --book-shadow: 0 12px 32px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
-      --spine-shadow: linear-gradient(to right, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.02) 60%, transparent 100%);
+      --book-shadow: 0 16px 36px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.06);
+      --spine-shadow: linear-gradient(to right, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.03) 60%, transparent 100%);
       --item-bg: rgba(0, 0, 0, 0.02);
       --item-hover: rgba(0, 0, 0, 0.05);
-      --badge-bg: rgba(0, 0, 0, 0.07);
+      --badge-bg: rgba(0, 0, 0, 0.08);
       --badge-color: #334155;
       --header-height: 52px;
-      --sidebar-width: 320px;
+      --sidebar-width: 330px;
       --radius: 8px;
     }
 
     body.dark-theme {
+      /* Koyu Tema */
       --bg-main: #0b1120;
       --bg-panel: #131d31;
       --bg-card: #1e293b;
@@ -77,15 +80,16 @@
       flex-direction: column;
       flex-shrink: 0;
       z-index: 50;
-      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease;
+      position: relative;
     }
 
     .sidebar-header {
-      padding: 0.85rem 1rem;
+      padding: 0.85rem 1rem 0.6rem;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.6rem;
       background: var(--bg-panel);
     }
 
@@ -96,18 +100,12 @@
     }
 
     .sidebar-header h1 {
-      font-size: 1rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--primary);
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .sidebar-header h1 svg {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
     }
 
     .close-btn {
@@ -119,6 +117,11 @@
       cursor: pointer;
       padding: 0.25rem;
       line-height: 1;
+      border-radius: 4px;
+    }
+
+    .close-btn:hover {
+      color: var(--text-main);
     }
 
     /* Sekme Seçiciler: İçindekiler vs Sayfalar */
@@ -136,15 +139,15 @@
       border: none;
       background: transparent;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      padding: 6px;
+      padding: 6px 4px;
       border-radius: 6px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.15s ease;
     }
 
@@ -161,52 +164,128 @@
 
     #search {
       width: 100%;
-      height: 38px;
-      padding: 0 0.75rem 0 2.2rem;
+      padding: 0.6rem 2rem 0.6rem 2.2rem;
       background: var(--bg-main);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
       color: var(--text-main);
       font-size: 0.85rem;
       outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
 
     #search:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
     }
 
-    /* İkon Boyut Sabitleme */
     .search-icon-svg {
       position: absolute;
-      left: 0.7rem;
+      left: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px !important;
-      height: 16px !important;
-      max-width: 16px !important;
-      max-height: 16px !important;
+      width: 15px;
+      height: 15px;
       color: var(--text-muted);
       pointer-events: none;
-      flex-shrink: 0;
+    }
+
+    #search-clear {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: none;
+      padding: 2px 5px;
+      line-height: 1;
+    }
+
+    #search-clear.visible {
+      display: block;
+    }
+
+    /* Kısım Filtre Hapları */
+    .cat-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 0.15rem 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .cat-tabs::-webkit-scrollbar { display: none; }
+
+    .cat-tab {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .cat-tab:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .cat-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .sidebar-count-bar {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 0.4rem 1rem 0.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-panel);
     }
 
     #menu-tree {
       flex: 1;
       overflow-y: auto;
-      padding: 0.75rem;
+      padding: 0.65rem 0.75rem 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
     }
 
+    .toc-category-header {
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      padding: 0.55rem 0.35rem 0.2rem;
+      margin-top: 0.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .toc-category-header:first-child {
+      margin-top: 0;
+    }
+
     .menu-item {
-      padding: 0.65rem 0.75rem;
+      padding: 0.6rem 0.75rem;
       border-radius: var(--radius);
       background-color: var(--item-bg);
       border: 1px solid transparent;
       cursor: pointer;
-      transition: background-color 0.15s, border-color 0.15s;
+      transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
     }
 
     .menu-item:hover {
@@ -221,17 +300,46 @@
     }
 
     .menu-item.active .menu-snippet,
+    .menu-item.active .menu-sub,
+    .menu-item.active .bolum-tag,
     .menu-item.active .page-badge {
       color: #ffffff !important;
-      opacity: 0.95;
+      opacity: 0.92;
+    }
+
+    .menu-item.active .page-badge,
+    .menu-item.active .bolum-tag {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .menu-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.84rem;
       font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 3px;
+    }
+
+    .menu-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .bolum-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: rgba(2, 132, 199, 0.1);
+      padding: 1px 6px;
+      border-radius: 4px;
+      width: fit-content;
       margin-bottom: 2px;
     }
 
@@ -242,15 +350,38 @@
       padding: 2px 6px;
       border-radius: 4px;
       font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+
+    .menu-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
     .menu-snippet {
       font-size: 0.75rem;
       color: var(--text-muted);
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.3;
+      line-height: 1.35;
+      margin-top: 2px;
+    }
+
+    mark.search-hl {
+      background: rgba(2, 132, 199, 0.22);
+      color: var(--primary);
+      padding: 0 2px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    .menu-item.active mark.search-hl {
+      background: rgba(255, 255, 255, 0.28);
+      color: #ffffff;
     }
 
     /* Sağ Sayfa / Viewer Alanı */
@@ -263,6 +394,7 @@
       background-color: var(--bg-main);
     }
 
+    /* 1. Satır: Kontrol Butonları & Araç Çubuğu */
     .toolbar {
       height: var(--header-height);
       background-color: var(--bg-panel);
@@ -273,9 +405,16 @@
       padding: 0 1rem;
       z-index: 30;
       gap: 0.75rem;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
-    .toolbar-left, .toolbar-right {
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toolbar-right {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -289,27 +428,21 @@
       border-radius: var(--radius);
       cursor: pointer;
       font-size: 0.85rem;
-      font-weight: 500;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
-      min-height: 36px;
       transition: all 0.15s ease;
-    }
-
-    .btn-toolbar svg {
-      width: 16px !important;
-      height: 16px !important;
-      max-width: 16px !important;
-      max-height: 16px !important;
-      flex-shrink: 0;
+      min-height: 36px;
     }
 
     .btn-toolbar:hover:not(:disabled) {
       background: var(--item-hover);
       border-color: var(--primary);
       color: var(--primary);
+    }
+
+    .btn-toolbar:active:not(:disabled) {
+      transform: scale(0.97);
     }
 
     .btn-toolbar:disabled {
@@ -325,18 +458,42 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      flex-shrink: 0;
     }
 
-    #page-indicator {
-      font-size: 0.85rem;
-      padding: 0 0.5rem;
-      font-variant-numeric: tabular-nums;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .title-bar {
+    .page-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 2px 8px;
       min-height: 36px;
+    }
+
+    .page-input-box {
+      width: 46px;
+      border: none;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-align: center;
+      outline: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .page-total-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+
+    /* 2. Satır: Sadece Aktif Başlık Satırı */
+    .title-bar {
+      min-height: 38px;
       background-color: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
       display: flex;
@@ -345,18 +502,20 @@
       padding: 0.35rem 1rem;
       z-index: 25;
       text-align: center;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
     }
 
     .title-content {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--primary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 100%;
     }
 
-    /* Viewer Sahnesi */
+    /* ─── Gerçekçi 3D Kitap Sahnesi & Sayfa Çevirme & Zoom Motoru ─── */
     .canvas-container {
       flex: 1;
       overflow: hidden;
@@ -365,18 +524,22 @@
       align-items: center;
       padding: 1rem;
       background: var(--canvas-bg);
-      perspective: 2000px;
+      perspective: 2400px;
       touch-action: none;
       position: relative;
+      transition: background 0.2s ease;
+      user-select: none;
     }
 
     .book-stage {
       position: relative;
+      max-width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       transform-style: preserve-3d;
       transform-origin: center center;
+      will-change: transform;
     }
 
     .book-wrapper {
@@ -384,18 +547,23 @@
       border-radius: 6px;
       box-shadow: var(--book-shadow);
       background-color: var(--book-bg);
+      perspective: 2000px;
+      transform-style: preserve-3d;
+      user-select: none;
       display: inline-block;
       max-width: 100%;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
     }
 
+    /* Sol Cilt Dikiş & Gölgelendirme Derinliği */
     .book-spine-shadow {
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
-      width: 24px;
+      width: 28px;
       background: var(--spine-shadow);
-      z-index: 10;
+      z-index: 25;
       pointer-events: none;
     }
 
@@ -406,28 +574,142 @@
       height: auto;
       width: auto;
       object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
       border-radius: 4px;
       pointer-events: none;
     }
 
+    /* Alt Sayfa Gölge Katmanı */
+    .base-page-shadow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.05) 50%, transparent 100%);
+    }
+
+    /* Dönen 3D Yaprak (Flip Leaf) */
+    .flip-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      transform-style: preserve-3d;
+      z-index: 20;
+      display: none;
+    }
+
+    .flip-overlay.active {
+      display: block;
+    }
+
+    .flip-leaf {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .flip-leaf img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      backface-visibility: hidden;
+    }
+
+    .flip-lighting-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Gerçekçi İleri Sayfa Çevirme Animasyonu */
+    .turn-next-anim {
+      animation: realisticFlipNext 0.46s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+    }
+
+    @keyframes realisticFlipNext {
+      0% {
+        transform: rotateY(0deg);
+        filter: brightness(1);
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+      35% {
+        transform: rotateY(-55deg) scaleY(0.98);
+        filter: brightness(0.94);
+        box-shadow: -15px 5px 25px rgba(0,0,0,0.25);
+      }
+      70% {
+        transform: rotateY(-125deg) scaleY(0.97);
+        filter: brightness(0.86);
+        box-shadow: -25px 10px 35px rgba(0,0,0,0.32);
+      }
+      100% {
+        transform: rotateY(-180deg) scaleY(0.96);
+        filter: brightness(0.8);
+        opacity: 0;
+        box-shadow: -35px 15px 45px rgba(0,0,0,0.4);
+      }
+    }
+
+    /* Gerçekçi Geri Sayfa Çevirme Animasyonu */
+    .turn-prev-anim {
+      animation: realisticFlipPrev 0.46s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+    }
+
+    @keyframes realisticFlipPrev {
+      0% {
+        transform: rotateY(-180deg) scaleY(0.96);
+        filter: brightness(0.8);
+        opacity: 0;
+        box-shadow: -35px 15px 45px rgba(0,0,0,0.4);
+      }
+      35% {
+        transform: rotateY(-125deg) scaleY(0.97);
+        filter: brightness(0.86);
+        opacity: 1;
+        box-shadow: -25px 10px 35px rgba(0,0,0,0.32);
+      }
+      70% {
+        transform: rotateY(-55deg) scaleY(0.98);
+        filter: brightness(0.94);
+        box-shadow: -15px 5px 25px rgba(0,0,0,0.25);
+      }
+      100% {
+        transform: rotateY(0deg) scaleY(1);
+        filter: brightness(1);
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+    }
+
+    /* Durum ve Yükleme Bildirimi */
     .status-state {
       margin: auto;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       text-align: center;
-      max-width: 440px;
-      line-height: 1.5;
+      max-width: 480px;
+      line-height: 1.6;
       padding: 1.5rem;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: var(--radius);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
 
     .loading-spinner {
       display: inline-block;
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border: 3px solid rgba(2, 132, 199, 0.2);
       border-top-color: var(--primary);
       border-radius: 50%;
@@ -439,15 +721,61 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Mobil */
+    /* Fullscreen Modu */
+    body.fs-mode .toolbar,
+    body.fs-mode .title-bar {
+      display: none;
+    }
+
+    body.fs-mode #sidebar {
+      display: none;
+    }
+
+    body.fs-mode .canvas-container {
+      padding: 0;
+      background: #000000;
+    }
+
+    body.fs-mode .book-wrapper {
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    body.fs-mode .page-image {
+      max-height: 100vh;
+      max-width: 100vw;
+    }
+
+    .fs-floating-controls {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+      color: #ffffff;
+    }
+
+    body.fs-mode .fs-floating-controls {
+      display: flex;
+    }
+
+    /* Mobil Duyarlılık (< 768px) */
     @media (max-width: 768px) {
       #sidebar {
         position: fixed;
         top: 0;
         bottom: 0;
         left: 0;
-        width: 85%;
-        max-width: 320px;
+        width: 86%;
+        max-width: 330px;
         transform: translateX(-100%);
         box-shadow: 6px 0 24px rgba(0, 0, 0, 0.4);
       }
@@ -456,44 +784,65 @@
         transform: translateX(0);
       }
 
-      .close-btn, #toggle-menu-btn {
-        display: inline-flex;
-      }
-
       #sidebar-overlay.open {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.45);
         z-index: 40;
+      }
+
+      .close-btn {
+        display: block;
+      }
+
+      #toggle-menu-btn {
+        display: inline-flex;
+      }
+
+      .canvas-container {
+        padding: 0.5rem;
+      }
+
+      .book-wrapper {
+        border-radius: 4px;
+      }
+
+      .btn-toolbar {
+        padding: 0.4rem 0.55rem;
+        font-size: 0.8rem;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Mobil Menü Karartması -->
   <div id="sidebar-overlay"></div>
 
-  <!-- Sol Menü -->
+  <!-- Sol Menü Çekmecesi -->
   <aside id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-header-top">
         <h1>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
           </svg>
-          Periyodik Rehber
+          Periyodik Muayene Rehberi
         </h1>
-        <button id="close-sidebar-btn" class="close-btn" aria-label="Kapat">&times;</button>
+        <button id="close-sidebar-btn" class="close-btn" aria-label="Menüyü Kapat">&times;</button>
       </div>
 
-      <!-- Sekmeler: Rehber vs İçindekiler -->
+      <!-- Görünüm Sekmeleri: İçindekiler vs Tüm Sayfalar vs Ön Sayfalar -->
       <div class="view-tabs">
-        <button id="tab-pages" class="view-tab active">
-          Sayfalar
-        </button>
-        <button id="tab-index" class="view-tab">
+        <button id="tab-toc" class="view-tab active">
           İçindekiler
+        </button>
+        <button id="tab-pages" class="view-tab">
+          Tüm Sayfalar
+        </button>
+        <button id="tab-front" class="view-tab">
+          Ön Sayfalar
         </button>
       </div>
 
@@ -502,34 +851,57 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="search" placeholder="Sayfa veya konu ara..." autocomplete="off" />
+        <input type="search" id="search" placeholder="Bölüm, konu, öneri veya sayfa ara..." autocomplete="off" />
+        <button id="search-clear" aria-label="Aramayı Temizle">✕</button>
+      </div>
+
+      <div class="cat-tabs" id="cat-tabs">
+        <button class="cat-tab active" data-kisim="all">Tümü</button>
+        <button class="cat-tab" data-kisim="Kısım I">Bebek & Çocuk</button>
+        <button class="cat-tab" data-kisim="Kısım II">Adölesan</button>
+        <button class="cat-tab" data-kisim="Kısım III">Erişkin</button>
+        <button class="cat-tab" data-kisim="Kısım IV">Gebelik</button>
+        <button class="cat-tab" data-kisim="Kısım V">Yaşlılık</button>
       </div>
     </div>
+
+    <div class="sidebar-count-bar">
+      <span id="sidebar-count">Yükleniyor...</span>
+      <span style="font-size: 0.7rem; opacity: 0.75;">AHEF • Kanıta Dayalı Rehber</span>
+    </div>
+
     <div id="menu-tree"></div>
   </aside>
 
-  <!-- Sağ Görüntüleyici -->
+  <!-- Sağ Sayfa Alanı (Viewer) -->
   <main id="viewer">
+    
+    <!-- 1. Satır: Kontrol Butonları & Araç Çubuğu -->
     <div class="toolbar">
       <div class="toolbar-left">
-        <button id="toggle-menu-btn" class="btn-toolbar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button id="toggle-menu-btn" class="btn-toolbar" aria-label="Menüyü Aç">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
-          Menü
+          Fihrist
         </button>
 
         <div class="page-controls">
-          <button id="prev-btn" class="btn-toolbar" title="Önceki Sayfa" disabled>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <button id="prev-btn" class="btn-toolbar" title="Önceki Sayfa (Sol Ok)" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
-          <span id="page-indicator">- / -</span>
-          <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa" disabled>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+
+          <div class="page-input-wrapper">
+            <input type="number" id="page-input" class="page-input-box" min="1" max="246" value="1" />
+            <span class="page-total-label" id="total-pages-txt">/ 246</span>
+          </div>
+
+          <button id="next-btn" class="btn-toolbar" title="Sonraki Sayfa (Sağ Ok)" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </button>
@@ -537,14 +909,37 @@
       </div>
 
       <div class="toolbar-right">
-        <button id="theme-toggle-btn" class="btn-toolbar" title="Temayı Değiştir">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- Tema Değiştirme Butonu (Koyu / Açık) -->
+        <button id="theme-toggle-btn" class="btn-toolbar" title="Temayı Değiştir (Açık/Koyu)">
+          <svg id="theme-icon-dark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="theme-icon-light" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Tam Ekran Butonu -->
+        <button id="fullscreen-btn" class="btn-toolbar" title="Tam Ekran (F)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+            <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
+            <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
           </svg>
         </button>
       </div>
     </div>
 
+    <!-- 2. Satır: Sadece Aktif Başlık Satırı -->
     <div class="title-bar">
       <div class="title-content" id="current-title">Yükleniyor...</div>
     </div>
@@ -552,284 +947,854 @@
     <div class="canvas-container" id="canvas-container">
       <div class="book-stage" id="book-stage">
         <div class="book-wrapper" id="book-wrapper" style="display: none;">
-          <img id="guide-image" class="page-image" alt="Rehber Görseli" />
+          <img id="guide-image" class="page-image" alt="Rehber Sayfası" />
           <div class="book-spine-shadow"></div>
+          <div class="base-page-shadow" id="base-shadow"></div>
+
+          <div class="flip-overlay" id="flip-overlay">
+            <div class="flip-leaf" id="flip-leaf">
+              <img id="flip-image" alt="" />
+              <div class="flip-lighting-overlay" id="flip-light"></div>
+            </div>
+          </div>
         </div>
       </div>
       <div id="status-state" class="status-state">
         <div class="loading-spinner"></div>
-        <div>Veriler taranıyor ve yükleniyor...</div>
+        <div>Rehber verisi yükleniyor...</div>
       </div>
     </div>
   </main>
 
+  <!-- Tam Ekran Yüzen Kontroller -->
+  <div class="fs-floating-controls" id="fs-controls">
+    <button class="btn-toolbar" id="fs-prev" style="padding: 0.3rem 0.6rem; color: #ffffff; background: rgba(255,255,255,0.15);">◀</button>
+    <span id="fs-counter" style="font-size: 0.85rem; font-weight: 600;">1 / 246</span>
+    <button class="btn-toolbar" id="fs-next" style="padding: 0.3rem 0.6rem; color: #ffffff; background: rgba(255,255,255,0.15);">▶</button>
+    <button class="btn-toolbar" id="fs-close" style="padding: 0.3rem 0.6rem; color: #f87171; background: rgba(255,255,255,0.15);">✕ Çık</button>
+  </div>
+
   <script>
-    // Klasör Yapılandırması
-    const BASE_PAGES_DIR = 'periyodikassets/pages/';
-    const BASE_INDEX_DIR = 'periyodikassets/pages/index/';
-    const BASE_DATA_DIR = 'periyodikassets/data/';
+    const CONFIG = {
+      jsonPaths: [
+        './periyodikassets/data/mevzuat_index.json',
+        'periyodikassets/data/mevzuat_index.json'
+      ],
+      pagesDir: './periyodikassets/pages/',
+      indexDir: './periyodikassets/pages/index/'
+    };
+
+    // Ön Sayfalar (Kapak, Önsöz, Katkıda Bulunanlar, Kitap İçindekiler, Metodoloji)
+    const FRONT_MATTER_ITEMS = [
+      { page: 0, roman: 'Kapak', title: 'Kitap Kapağı', kisim: 'Ön Sayfalar', bolum: 'Kapak', text: 'Kanıta Dayalı Periyodik Muayene Rehberi — AHEF (Editörler: Prof. Dr. Hüseyin CAN, Uzm. Dr. Çiğdem AKAYDIN)', file: `${CONFIG.indexDir}page_0.jpg` },
+      { page: 1, roman: 'i', title: 'İç Kapak', kisim: 'Ön Sayfalar', bolum: 'i', text: 'Kanıta Dayalı Periyodik Muayene Rehberi — İç Kapak', file: `${CONFIG.indexDir}page_1.jpg` },
+      { page: 2, roman: 'ii', title: 'Künye ve Yayın Bilgileri', kisim: 'Ön Sayfalar', bolum: 'ii', text: 'Hipokrat Yayıncılık — ISBN ve Basım Bilgileri', file: `${CONFIG.indexDir}page_2.jpg` },
+      { page: 3, roman: 'iii', title: 'Önsöz', kisim: 'Ön Sayfalar', bolum: 'iii', text: 'Periyodik sağlık muayeneleri ve birinci basamakta kanıta dayalı koruyucu hekimlik yaklaşımı', file: `${CONFIG.indexDir}page_3.jpg` },
+      { page: 4, roman: 'iv', title: 'Önsöz (Devamı)', kisim: 'Ön Sayfalar', bolum: 'iv', text: 'Editörler Kurulu Önsözü', file: `${CONFIG.indexDir}page_4.jpg` },
+      { page: 5, roman: 'v', title: 'Katkıda Bulunanlar (Editörler)', kisim: 'Ön Sayfalar', bolum: 'v', text: 'Editörler, Editör Yardımcısı ve Kısım Editörleri', file: `${CONFIG.indexDir}page_5.jpg` },
+      { page: 6, roman: 'vi', title: 'Katkıda Bulunanlar (Yazarlar 1)', kisim: 'Ön Sayfalar', bolum: 'vi', text: 'Bölüm Yazarları Listesi', file: `${CONFIG.indexDir}page_6.jpg` },
+      { page: 7, roman: 'vii', title: 'Katkıda Bulunanlar (Yazarlar 2)', kisim: 'Ön Sayfalar', bolum: 'vii', text: 'Bölüm Yazarları Listesi', file: `${CONFIG.indexDir}page_7.jpg` },
+      { page: 8, roman: 'viii', title: 'Katkıda Bulunanlar (Yazarlar 3)', kisim: 'Ön Sayfalar', bolum: 'viii', text: 'Bölüm Yazarları Listesi', file: `${CONFIG.indexDir}page_8.jpg` },
+      { page: 9, roman: 'ix', title: 'Katkıda Bulunanlar (Yazarlar 4)', kisim: 'Ön Sayfalar', bolum: 'ix', text: 'Bölüm Yazarları Listesi', file: `${CONFIG.indexDir}page_9.jpg` },
+      { page: 10, roman: 'x', title: 'Katkıda Bulunanlar (Yazarlar 5)', kisim: 'Ön Sayfalar', bolum: 'x', text: 'Bölüm Yazarları Listesi', file: `${CONFIG.indexDir}page_10.jpg` },
+      { page: 11, roman: 'xi', title: 'Katkıda Bulunanlar (Yazarlar 6)', kisim: 'Ön Sayfalar', bolum: 'xi', text: 'Bölüm Yazarları Listesi', file: `${CONFIG.indexDir}page_11.jpg` },
+      { page: 12, roman: 'xii', title: 'Boş Sayfa', kisim: 'Ön Sayfalar', bolum: 'xii', text: '', file: `${CONFIG.indexDir}page_12.jpg` },
+      { page: 13, roman: 'xiii', title: 'Kitap İçindekiler (Kısım I: Bölüm 1–5)', kisim: 'Ön Sayfalar', bolum: 'xiii', text: 'Bebeklik ve Çocukluk Dönemi — Bölüm 1–5', file: `${CONFIG.indexDir}page_13.jpg` },
+      { page: 14, roman: 'xiv', title: 'Kitap İçindekiler (Kısım I: Bölüm 6–14)', kisim: 'Ön Sayfalar', bolum: 'xiv', text: 'Bebeklik ve Çocukluk Dönemi — Bölüm 6–14', file: `${CONFIG.indexDir}page_14.jpg` },
+      { page: 15, roman: 'xv', title: 'Kitap İçindekiler (Kısım II: Bölüm 15–22)', kisim: 'Ön Sayfalar', bolum: 'xv', text: 'Adölesan Dönem — Bölüm 15–22', file: `${CONFIG.indexDir}page_15.jpg` },
+      { page: 16, roman: 'xvi', title: 'Kitap İçindekiler (Kısım II–III: Bölüm 23–30)', kisim: 'Ön Sayfalar', bolum: 'xvi', text: 'Adölesan Dönem ve Erişkinlik Dönemi — Bölüm 23–30', file: `${CONFIG.indexDir}page_16.jpg` },
+      { page: 17, roman: 'xvii', title: 'Kitap İçindekiler (Kısım III: Bölüm 31–40)', kisim: 'Ön Sayfalar', bolum: 'xvii', text: 'Erişkinlik Dönemi — Bölüm 31–40', file: `${CONFIG.indexDir}page_17.jpg` },
+      { page: 18, roman: 'xviii', title: 'Kitap İçindekiler (Kısım III–IV: Bölüm 41–49)', kisim: 'Ön Sayfalar', bolum: 'xviii', text: 'Erişkinlik ve Gebelik Dönemi — Bölüm 41–49', file: `${CONFIG.indexDir}page_18.jpg` },
+      { page: 19, roman: 'xix', title: 'Kitap İçindekiler (Kısım IV–V: Bölüm 50–57)', kisim: 'Ön Sayfalar', bolum: 'xix', text: 'Gebelik, Lohusalık ve Yaşlılık Dönemi — Bölüm 50–57', file: `${CONFIG.indexDir}page_19.jpg` },
+      { page: 20, roman: 'xx', title: 'Kitap İçindekiler (Kısım V: Bölüm 58–65)', kisim: 'Ön Sayfalar', bolum: 'xx', text: 'Yaşlılık Dönemi — Bölüm 58–65', file: `${CONFIG.indexDir}page_20.jpg` },
+      { page: 21, roman: 'xxi', title: 'Rehber Geliştirme Metodolojisi (1–2)', kisim: 'Ön Sayfalar', bolum: 'xxi', text: 'Literatür Taraması, İlgili Rehberlerin Belirlenmesi ve Önerilerin Belirlenmesi', file: `${CONFIG.indexDir}page_21.jpg` },
+      { page: 22, roman: 'xxii', title: 'Rehber Geliştirme Metodolojisi (3–4)', kisim: 'Ön Sayfalar', bolum: 'xxii', text: 'Önerilerin AGREE-REX ile Değerlendirilmesi ve Değerlendirme Süreci', file: `${CONFIG.indexDir}page_22.jpg` },
+      { page: 23, roman: 'xxiii', title: 'Rehber Geliştirme Metodolojisi (5)', kisim: 'Ön Sayfalar', bolum: 'xxiii', text: 'AGREE-REX Puanlama ve Uzlaşı Süreci', file: `${CONFIG.indexDir}page_23.jpg` },
+      { page: 24, roman: 'xxiv', title: 'Rehber Geliştirme Metodolojisi (6)', kisim: 'Ön Sayfalar', bolum: 'xxiv', text: 'Nihai Önerilerin Oluşturulması ve Kaynaklar', file: `${CONFIG.indexDir}page_24.jpg` }
+    ];
+
+    // Gelişmiş Türkçe Arama Normalizasyonu
+    function normalizeTr(text) {
+      if (!text) return '';
+      return text
+        .toLocaleLowerCase('tr-TR')
+        .replace(/â|á|à/g, 'a')
+        .replace(/ê|é|è/g, 'e')
+        .replace(/î|í|ì/g, 'i')
+        .replace(/ı/g, 'i')
+        .replace(/ô|ó|ò/g, 'o')
+        .replace(/û|ú|ù/g, 'u')
+        .replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u')
+        .replace(/ş/g, 's')
+        .replace(/ö/g, 'o')
+        .replace(/ç/g, 'c');
+    }
+
+    function cleanDisplaySnippet(rawText) {
+      if (!rawText) return '';
+      return rawText
+        .replace(/^\|\s*[^|]+\|\s*[^|]+\|\s*\|\s*---\s*\|\s*---\s*\|\s*/g, '')
+        .replace(/^Bölüm\s+\d+\s+/i, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
 
     // Durum Değişkenleri
-    let currentMode = 'pages'; // 'pages' veya 'index'
     let pageItems = [];
-    let indexItems = [];
-    let currentIndex = 0;
+    let tocChapters = [];
+    let currentTab = 'toc'; // 'toc' | 'pages' | 'front'
+    let activeKisimFilter = 'all';
+    let currentSource = 'main'; // 'main' (pages 1..246) veya 'front' (index 0..24)
+    let currentIndex = 0; // aktif dizideki index
+    let isFlipping = false;
+    let isFullscreen = false;
 
-    // Zoom & Pan
+    // ─── Mobil Pinch to Zoom & Pan Değişkenleri ───
     let zoomScale = 1;
     let zoomPosX = 0;
     let zoomPosY = 0;
+    let initialPinchDist = 0;
+    let initialPinchScale = 1;
+    let isPinching = false;
+    let isPanning = false;
+    let panStartX = 0;
+    let panStartY = 0;
     let lastTapTime = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
 
+    // DOM Elementleri
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
     const toggleMenuBtn = document.getElementById('toggle-menu-btn');
     const closeSidebarBtn = document.getElementById('close-sidebar-btn');
     const menuTree = document.getElementById('menu-tree');
+    const sidebarCount = document.getElementById('sidebar-count');
+    const tabToc = document.getElementById('tab-toc');
     const tabPages = document.getElementById('tab-pages');
-    const tabIndex = document.getElementById('tab-index');
+    const tabFront = document.getElementById('tab-front');
+    const catTabs = document.getElementById('cat-tabs');
+    const searchInput = document.getElementById('search');
+    const searchClear = document.getElementById('search-clear');
     const bookStage = document.getElementById('book-stage');
     const bookWrapper = document.getElementById('book-wrapper');
     const guideImage = document.getElementById('guide-image');
+    const flipOverlay = document.getElementById('flip-overlay');
+    const flipLeaf = document.getElementById('flip-leaf');
+    const flipImage = document.getElementById('flip-image');
+    const flipLight = document.getElementById('flip-light');
+    const baseShadow = document.getElementById('base-shadow');
     const canvasContainer = document.getElementById('canvas-container');
     const statusState = document.getElementById('status-state');
     const currentTitle = document.getElementById('current-title');
-    const pageIndicator = document.getElementById('page-indicator');
+    const pageInput = document.getElementById('page-input');
+    const totalPagesTxt = document.getElementById('total-pages-txt');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    const searchInput = document.getElementById('search');
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIconLight = document.getElementById('theme-icon-light');
+    const themeIconDark = document.getElementById('theme-icon-dark');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const fsPrev = document.getElementById('fs-prev');
+    const fsNext = document.getElementById('fs-next');
+    const fsClose = document.getElementById('fs-close');
+    const fsCounter = document.getElementById('fs-counter');
 
-    // Tema
-    function applyTheme(isDark) {
-      document.body.classList.toggle('dark-theme', isDark);
+    // Tema Yönetimi
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark-theme');
+        if (themeIconLight) themeIconLight.style.display = 'block';
+        if (themeIconDark) themeIconDark.style.display = 'none';
+      } else {
+        document.body.classList.remove('dark-theme');
+        if (themeIconLight) themeIconLight.style.display = 'none';
+        if (themeIconDark) themeIconDark.style.display = 'block';
+      }
     }
-    const savedTheme = localStorage.getItem('app-theme') === 'dark';
+
+    const savedTheme = localStorage.getItem('app-theme') || 'light';
     applyTheme(savedTheme);
+
     themeToggleBtn.addEventListener('click', () => {
-      const isDark = !document.body.classList.contains('dark-theme');
-      applyTheme(isDark);
-      localStorage.setItem('app-theme', isDark ? 'dark' : 'light');
+      const isDark = document.body.classList.contains('dark-theme');
+      const newTheme = isDark ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('app-theme', newTheme);
     });
 
-    // Sidebar Kontrol
-    function toggleSidebar(open) {
-      sidebar.classList.toggle('open', open);
-      sidebarOverlay.classList.toggle('open', open);
-    }
-    toggleMenuBtn.addEventListener('click', () => toggleSidebar(true));
-    closeSidebarBtn.addEventListener('click', () => toggleSidebar(false));
-    sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
-
-    // Olası JSON dosyalarını dene (data/guide.json, data/search.json vb.)
-    async function tryLoadJsonData() {
-      const candidates = ['guide.json', 'search.json', 'data.json', 'index.json'];
-      for (const file of candidates) {
-        try {
-          const res = await fetch(`${BASE_DATA_DIR}${file}`);
-          if (res.ok) {
-            const json = await res.json();
-            return Array.isArray(json) ? json : (json.pages || json.items || null);
-          }
-        } catch (e) {
-          // Devam et
-        }
-      }
-      return null;
-    }
-
-    // Klasör tespiti / Fallback oluşturucu
-    async function initializeData() {
-      const jsonData = await tryLoadJsonData();
-
-      if (jsonData && jsonData.length > 0) {
-        pageItems = jsonData.map((d, i) => {
-          const num = d.page || i + 1;
-          const fileName = d.image ? d.image.replace(/^.*[\\\/]/, '') : `${num}.jpg`;
-          return {
-            page: num,
-            title: d.title || `Sayfa ${num}`,
-            text: d.text || '',
-            file: `${BASE_PAGES_DIR}${fileName}`
-          };
-        });
+    // Menü Aç/Kapat
+    function toggleDrawer(open) {
+      if (open) {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('open');
       } else {
-        // Doğrudan dosya erişiminde (file:// veya JSON yoksa) 1'den 100'e kadar akıllı liste üret
-        pageItems = Array.from({ length: 246 }, (_, i) => {
-          const p = i + 1;
-          return {
-            page: p,
-            title: `Sayfa ${p}`,
-            text: `Periyodik Muayene Rehberi Sayfa ${p}`,
-            file: `${BASE_PAGES_DIR}${p}.jpg`
-          };
-        });
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('open');
+      }
+    }
+
+    toggleMenuBtn.addEventListener('click', () => toggleDrawer(true));
+    closeSidebarBtn.addEventListener('click', () => toggleDrawer(false));
+    sidebarOverlay.addEventListener('click', () => toggleDrawer(false));
+
+    // ─── Zoom & Pan Fonksiyonları ───
+    function applyZoomTransform(animate = false) {
+      if (animate) {
+        bookStage.style.transition = 'transform 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
+      } else {
+        bookStage.style.transition = 'none';
+      }
+      bookStage.style.transform = `translate3d(${zoomPosX}px, ${zoomPosY}px, 0) scale(${zoomScale})`;
+    }
+
+    function resetZoom(animate = true) {
+      zoomScale = 1;
+      zoomPosX = 0;
+      zoomPosY = 0;
+      applyZoomTransform(animate);
+    }
+
+    function getDistance(t1, t2) {
+      const dx = t1.clientX - t2.clientX;
+      const dy = t1.clientY - t2.clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function clampPan() {
+      if (zoomScale <= 1) {
+        zoomPosX = 0;
+        zoomPosY = 0;
+        return;
+      }
+      const rect = bookWrapper.getBoundingClientRect();
+      const containerRect = canvasContainer.getBoundingClientRect();
+      
+      const maxPanX = Math.max(0, (rect.width - containerRect.width) / 2 + 60);
+      const maxPanY = Math.max(0, (rect.height - containerRect.height) / 2 + 60);
+
+      zoomPosX = Math.max(-maxPanX, Math.min(maxPanX, zoomPosX));
+      zoomPosY = Math.max(-maxPanY, Math.min(maxPanY, zoomPosY));
+    }
+
+    // JSON Veri Yükleme (periyodikassets/data/mevzuat_index.json)
+    async function init() {
+      let rawData = null;
+
+      for (const path of CONFIG.jsonPaths) {
+        try {
+          const res = await fetch(path);
+          if (res.ok) {
+            rawData = await res.json();
+            break;
+          }
+        } catch (e) {}
       }
 
-      // İçindekiler klasöründeki sayfalar (Örn: 1.jpg, 2.jpg veya index_1.jpg)
-      indexItems = Array.from({ length: 24 }, (_, i) => {
-        const p = i + 1;
-        return {
-          page: p,
-          title: `İçindekiler ${p}`,
-          text: `İçindekiler Bölümü Sayfa ${p}`,
-          file: `${BASE_INDEX_DIR}${p}.jpg`
-        };
-      });
-
-      switchTab('pages');
-    }
-
-    function getActiveList() {
-      return currentMode === 'pages' ? pageItems : indexItems;
-    }
-
-    function switchTab(mode) {
-      currentMode = mode;
-      tabPages.classList.toggle('active', mode === 'pages');
-      tabIndex.classList.toggle('active', mode === 'index');
-      searchInput.value = '';
-      renderMenu(getActiveList());
-      selectItem(0);
-    }
-
-    tabPages.addEventListener('click', () => switchTab('pages'));
-    tabIndex.addEventListener('click', () => switchTab('index'));
-
-    function renderMenu(list) {
-      menuTree.innerHTML = '';
-      if (!list || list.length === 0) {
-        menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem;">Kayıt bulunamadı.</div>';
+      if (!rawData || !Array.isArray(rawData) || rawData.length === 0) {
+        statusState.innerHTML = `
+          <strong style="color: #f87171;">Veri Yüklenemedi</strong><br><br>
+          İstek: <code>${CONFIG.jsonPaths[0]}</code><br>
+          Lütfen yerel sunucu üzerinden çalıştırdığınızdan emin olun.
+        `;
         return;
       }
 
-      list.forEach((item, idx) => {
+      pageItems = rawData.map((d, idx) => {
+        const pageNum = d.page !== undefined ? d.page : idx + 1;
+        const fileName = d.image ? d.image.replace(/^.*[\\\/]/, '') : `page_${pageNum}.jpg`;
+        const cleanTxt = cleanDisplaySnippet(d.text || '');
+        const title = d.title || `Sayfa ${pageNum}`;
+        const kisim = d.kisim || '';
+        const bolum = d.bolum || '';
+        const author = d.author || '';
+        const tocType = d.tocType || null;
+
+        return {
+          page: pageNum,
+          file: `${CONFIG.pagesDir}${fileName}`,
+          title,
+          kisim,
+          bolum,
+          author,
+          tocType,
+          text: d.text || '',
+          cleanText: cleanTxt,
+          _normTitle: normalizeTr(`${bolum} ${title} ${kisim} ${author}`),
+          _normText: normalizeTr(d.text || '')
+        };
+      });
+
+      // JSON'dan İçindekiler (TOC) ağacını oluştur
+      tocChapters = pageItems.filter(item => item.tocType === 'bolum' || item.tocType === 'kisim');
+
+      // Ön sayfalar için arama normalizasyonu
+      FRONT_MATTER_ITEMS.forEach(f => {
+        f._normTitle = normalizeTr(`${f.roman} ${f.title} ${f.text}`);
+      });
+
+      setupTabsAndFilters();
+
+      // URL Hash kontrolü (#sayfaNo)
+      const hashVal = window.location.hash.replace('#', '');
+      if (hashVal.startsWith('on-')) {
+        const frontIdx = parseInt(hashVal.replace('on-', ''), 10);
+        if (!isNaN(frontIdx) && frontIdx >= 0 && frontIdx < FRONT_MATTER_ITEMS.length) {
+          switchTab('front', false);
+          selectItem(frontIdx, false, 'front');
+          return;
+        }
+      } else {
+        const hashPage = parseInt(hashVal, 10);
+        if (!isNaN(hashPage) && hashPage >= 1 && hashPage <= pageItems.length) {
+          renderSidebar();
+          selectItem(hashPage - 1, false, 'main');
+          return;
+        }
+      }
+
+      renderSidebar();
+      selectItem(0, false, 'main');
+    }
+
+    function setupTabsAndFilters() {
+      tabToc.addEventListener('click', () => switchTab('toc'));
+      tabPages.addEventListener('click', () => switchTab('pages'));
+      tabFront.addEventListener('click', () => switchTab('front'));
+
+      document.querySelectorAll('.cat-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeKisimFilter = btn.dataset.kisim;
+          document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderSidebar();
+        });
+      });
+
+      searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim();
+        searchClear.classList.toggle('visible', q.length > 0);
+        renderSidebar();
+      });
+
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.classList.remove('visible');
+        renderSidebar();
+        searchInput.focus();
+      });
+    }
+
+    function switchTab(tabName, autoSelect = false) {
+      currentTab = tabName;
+      tabToc.classList.toggle('active', tabName === 'toc');
+      tabPages.classList.toggle('active', tabName === 'pages');
+      tabFront.classList.toggle('active', tabName === 'front');
+
+      catTabs.style.display = tabName === 'front' ? 'none' : 'flex';
+      renderSidebar();
+
+      if (autoSelect) {
+        if (tabName === 'front' && currentSource !== 'front') {
+          selectItem(0, false, 'front');
+        } else if (tabName !== 'front' && currentSource === 'front') {
+          selectItem(0, false, 'main');
+        }
+      }
+    }
+
+    function highlightMatch(text, query) {
+      if (!query || !text) return text || '';
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      try {
+        const regex = new RegExp(`(${escaped})`, 'gi');
+        return text.replace(regex, '<mark class="search-hl">$1</mark>');
+      } catch (e) {
+        return text;
+      }
+    }
+
+    function buildSearchSnippet(item, rawQuery, normQuery) {
+      const txt = item.cleanText || '';
+      if (!txt) return '';
+      const normTxt = normalizeTr(txt);
+      const idx = normTxt.indexOf(normQuery);
+      if (idx === -1) {
+        return txt.substring(0, 110) + (txt.length > 110 ? '…' : '');
+      }
+      const start = Math.max(0, idx - 35);
+      const end = Math.min(txt.length, idx + normQuery.length + 75);
+      let slice = txt.substring(start, end);
+      if (start > 0) slice = '…' + slice;
+      if (end < txt.length) slice = slice + '…';
+      return highlightMatch(slice, rawQuery);
+    }
+
+    function matchesKisim(item) {
+      if (activeKisimFilter === 'all') return true;
+      return (item.kisim || '').startsWith(activeKisimFilter);
+    }
+
+    function renderSidebar() {
+      const rawQuery = searchInput.value.trim();
+      const normQuery = normalizeTr(rawQuery);
+      menuTree.innerHTML = '';
+
+      // 1) ARAMA AKTİF İSE: JSON içindeki tüm başlıklar, bölümler ve sayfa metinlerinde ara
+      if (normQuery.length > 0) {
+        const results = pageItems.filter(item => {
+          if (!matchesKisim(item)) return false;
+          return (
+            item.page.toString() === normQuery ||
+            `sayfa ${item.page}` === normQuery ||
+            item._normTitle.includes(normQuery) ||
+            item._normText.includes(normQuery)
+          );
+        });
+
+        // Başlık eşleşmelerini önce sırala
+        results.sort((a, b) => {
+          const aTitleMatch = a._normTitle.includes(normQuery) ? 1 : 0;
+          const bTitleMatch = b._normTitle.includes(normQuery) ? 1 : 0;
+          if (aTitleMatch !== bTitleMatch) return bTitleMatch - aTitleMatch;
+          const aToc = a.tocType === 'bolum' ? 1 : 0;
+          const bToc = b.tocType === 'bolum' ? 1 : 0;
+          if (aToc !== bToc) return bToc - aToc;
+          return a.page - b.page;
+        });
+
+        sidebarCount.textContent = `${results.length} sayfa eşleşti`;
+
+        if (results.length === 0) {
+          menuTree.innerHTML = '<div style="padding: 1rem; color: var(--text-muted); font-size: 0.85rem; text-align: center;">Aramanızla eşleşen sonuç bulunamadı.</div>';
+          return;
+        }
+
+        results.forEach(item => {
+          const isCurrent = currentSource === 'main' && currentIndex === (item.page - 1);
+          const el = document.createElement('div');
+          el.className = `menu-item ${isCurrent ? 'active' : ''}`;
+          const snippetHtml = buildSearchSnippet(item, rawQuery, normQuery);
+
+          el.innerHTML = `
+            <div class="menu-header">
+              <div class="menu-title-wrap">
+                ${item.bolum ? `<span class="bolum-tag">${highlightMatch(item.bolum, rawQuery)} • ${item.kisim.split('—')[0].trim()}</span>` : `<span class="bolum-tag">${item.kisim.split('—')[0].trim()}</span>`}
+                <span>${highlightMatch(item.title, rawQuery)}</span>
+              </div>
+              <span class="page-badge">S.${item.page}</span>
+            </div>
+            ${snippetHtml ? `<div class="menu-snippet">${snippetHtml}</div>` : ''}
+          `;
+
+          el.addEventListener('click', () => {
+            const targetIdx = item.page - 1;
+            const dir = currentSource === 'main' ? (targetIdx > currentIndex ? 'next' : (targetIdx < currentIndex ? 'prev' : false)) : false;
+            selectItem(targetIdx, dir, 'main');
+            if (window.innerWidth <= 768) toggleDrawer(false);
+          });
+          menuTree.appendChild(el);
+        });
+        return;
+      }
+
+      // 2) ÖN SAYFALAR SEKMESİ (Kapak, Önsöz, İçindekiler, Metodoloji)
+      if (currentTab === 'front') {
+        sidebarCount.textContent = `${FRONT_MATTER_ITEMS.length} ön sayfa`;
+        FRONT_MATTER_ITEMS.forEach((item, idx) => {
+          const isCurrent = currentSource === 'front' && currentIndex === idx;
+          const el = document.createElement('div');
+          el.className = `menu-item ${isCurrent ? 'active' : ''}`;
+          el.innerHTML = `
+            <div class="menu-header">
+              <div class="menu-title-wrap">
+                <span class="bolum-tag">Ön Sayfa • ${item.roman}</span>
+                <span>${item.title}</span>
+              </div>
+              <span class="page-badge">${item.roman}</span>
+            </div>
+            ${item.text ? `<div class="menu-snippet">${item.text}</div>` : ''}
+          `;
+          el.addEventListener('click', () => {
+            const dir = currentSource === 'front' ? (idx > currentIndex ? 'next' : (idx < currentIndex ? 'prev' : false)) : false;
+            selectItem(idx, dir, 'front');
+            if (window.innerWidth <= 768) toggleDrawer(false);
+          });
+          menuTree.appendChild(el);
+        });
+        return;
+      }
+
+      // 3) İÇİNDEKİLER (FİHRİST) SEKMESİ: Kısım I-V ve Bölüm 1-65
+      if (currentTab === 'toc') {
+        const chaptersOnly = tocChapters.filter(item => item.tocType === 'bolum' && matchesKisim(item));
+        sidebarCount.textContent = `${chaptersOnly.length} bölüm listelendi`;
+
+        let lastKisim = '';
+        tocChapters.forEach(item => {
+          if (!matchesKisim(item)) return;
+
+          if (item.tocType === 'kisim') {
+            lastKisim = item.kisim;
+            const headerEl = document.createElement('div');
+            headerEl.className = 'toc-category-header';
+            headerEl.textContent = item.kisim;
+            headerEl.style.cursor = 'pointer';
+            headerEl.title = `Sayfa ${item.page}'e git`;
+            headerEl.addEventListener('click', () => {
+              const targetIdx = item.page - 1;
+              const dir = currentSource === 'main' ? (targetIdx > currentIndex ? 'next' : (targetIdx < currentIndex ? 'prev' : false)) : false;
+              selectItem(targetIdx, dir, 'main');
+              if (window.innerWidth <= 768) toggleDrawer(false);
+            });
+            menuTree.appendChild(headerEl);
+            return;
+          }
+
+          if (item.kisim !== lastKisim) {
+            lastKisim = item.kisim;
+            const headerEl = document.createElement('div');
+            headerEl.className = 'toc-category-header';
+            headerEl.textContent = item.kisim;
+            menuTree.appendChild(headerEl);
+          }
+
+          // Aktif sayfa bu bölüme mi ait?
+          const currentPageObj = currentSource === 'main' ? pageItems[currentIndex] : null;
+          const isCurrentChapter = currentPageObj && currentPageObj.bolum === item.bolum;
+
+          const el = document.createElement('div');
+          el.className = `menu-item ${isCurrentChapter ? 'active' : ''}`;
+          el.dataset.page = item.page;
+          el.innerHTML = `
+            <div class="menu-header">
+              <div class="menu-title-wrap">
+                <span class="bolum-tag">${item.bolum}</span>
+                <span>${item.title}</span>
+              </div>
+              <span class="page-badge">S.${item.page}</span>
+            </div>
+            ${item.author ? `<div class="menu-sub">${item.author}</div>` : ''}
+          `;
+          el.addEventListener('click', () => {
+            const targetIdx = item.page - 1;
+            const dir = currentSource === 'main' ? (targetIdx > currentIndex ? 'next' : (targetIdx < currentIndex ? 'prev' : false)) : false;
+            selectItem(targetIdx, dir, 'main');
+            if (window.innerWidth <= 768) toggleDrawer(false);
+          });
+          menuTree.appendChild(el);
+        });
+        return;
+      }
+
+      // 4) TÜM SAYFALAR SEKMESİ (Sayfa 1 - 246)
+      const filteredPages = pageItems.filter(matchesKisim);
+      sidebarCount.textContent = `${filteredPages.length} sayfa listelendi`;
+
+      filteredPages.forEach(item => {
+        const idx = item.page - 1;
+        const isCurrent = currentSource === 'main' && idx === currentIndex;
         const el = document.createElement('div');
-        el.className = `menu-item ${idx === currentIndex ? 'active' : ''}`;
+        el.className = `menu-item ${isCurrent ? 'active' : ''}`;
+        el.dataset.page = item.page;
+        const preview = item.cleanText ? item.cleanText.substring(0, 85) + (item.cleanText.length > 85 ? '…' : '') : item.kisim;
+
         el.innerHTML = `
           <div class="menu-header">
-            <span>${item.title}</span>
+            <div class="menu-title-wrap">
+              <span class="bolum-tag">${item.bolum || item.kisim.split('—')[0].trim()}</span>
+              <span>${item.title}</span>
+            </div>
             <span class="page-badge">#${item.page}</span>
           </div>
-          <div class="menu-snippet">${item.text}</div>
+          <div class="menu-snippet">${preview}</div>
         `;
         el.addEventListener('click', () => {
-          selectItem(idx);
-          if (window.innerWidth <= 768) toggleSidebar(false);
+          const dir = currentSource === 'main' ? (idx > currentIndex ? 'next' : (idx < currentIndex ? 'prev' : false)) : false;
+          selectItem(idx, dir, 'main');
+          if (window.innerWidth <= 768) toggleDrawer(false);
         });
         menuTree.appendChild(el);
       });
     }
 
-    function selectItem(index) {
-      const list = getActiveList();
-      if (!list || index < 0 || index >= list.length) return;
+    function getActiveList() {
+      return currentSource === 'front' ? FRONT_MATTER_ITEMS : pageItems;
+    }
 
+    // Gerçekçi 3D Kitap Sayfa Çevirme Animasyonlu Seçim
+    function selectItem(index, direction = false, source = currentSource) {
+      const list = source === 'front' ? FRONT_MATTER_ITEMS : pageItems;
+      if (!list || index < 0 || index >= list.length) return;
+      if (isFlipping && direction) return;
+
+      resetZoom(false);
+
+      const oldIndex = currentIndex;
+      const oldSource = currentSource;
+      currentSource = source;
       currentIndex = index;
       const target = list[index];
 
-      currentTitle.textContent = `${target.title} — ${target.text}`;
-      pageIndicator.textContent = `${index + 1} / ${list.length}`;
+      // Başlık çubuğu ve sayfa göstergelerini güncelle
+      if (source === 'front') {
+        currentTitle.textContent = `Ön Sayfalar (${target.roman}) — ${target.title}`;
+        pageInput.value = index + 1;
+        pageInput.max = list.length;
+        totalPagesTxt.textContent = `/ ${list.length} (Ön)`;
+        window.location.hash = `on-${index}`;
+      } else {
+        const bolumPrefix = target.bolum ? `${target.bolum}: ` : '';
+        currentTitle.textContent = `${bolumPrefix}${target.title} — ${target.kisim} (Sayfa ${target.page})`;
+        pageInput.value = target.page;
+        pageInput.max = list.length;
+        totalPagesTxt.textContent = `/ ${list.length}`;
+        window.location.hash = target.page;
+      }
+
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index === list.length - 1;
 
-      // Sidebar aktiflik
-      Array.from(menuTree.children).forEach((child, i) => {
-        child.classList.toggle('active', i === index);
-      });
+      if (isFullscreen) {
+        fsCounter.textContent = `${index + 1} / ${list.length}`;
+        fsPrev.disabled = index === 0;
+        fsNext.disabled = index === list.length - 1;
+      }
 
-      // Görsel yükle
+      // Sol menü aktifliğini güncelle
+      if (!searchInput.value.trim()) {
+        renderSidebar();
+        const activeEl = menuTree.querySelector('.menu-item.active');
+        if (activeEl) {
+          activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      }
+
+      const fullImgPath = target.file;
+
+      if (direction && oldSource === source && oldIndex !== -1 && oldIndex !== index) {
+        isFlipping = true;
+        const oldTarget = list[oldIndex];
+        const oldImgPath = oldTarget.file;
+
+        if (direction === 'next') {
+          flipImage.src = oldImgPath;
+          flipLeaf.className = 'flip-leaf turn-next-anim';
+          flipLight.style.background = 'linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4) 100%)';
+          flipOverlay.classList.add('active');
+          baseShadow.style.opacity = '1';
+
+          guideImage.src = fullImgPath;
+
+          setTimeout(() => {
+            baseShadow.style.opacity = '0';
+          }, 250);
+
+          setTimeout(() => {
+            flipOverlay.classList.remove('active');
+            flipLeaf.className = 'flip-leaf';
+            isFlipping = false;
+          }, 460);
+        } else {
+          flipImage.src = fullImgPath;
+          flipLeaf.className = 'flip-leaf turn-prev-anim';
+          flipLight.style.background = 'linear-gradient(to left, rgba(0,0,0,0.15) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.4) 100%)';
+          flipOverlay.classList.add('active');
+
+          guideImage.src = fullImgPath;
+
+          setTimeout(() => {
+            flipOverlay.classList.remove('active');
+            flipLeaf.className = 'flip-leaf';
+            isFlipping = false;
+          }, 460);
+        }
+      } else {
+        guideImage.src = fullImgPath;
+      }
+
       statusState.style.display = 'none';
       bookWrapper.style.display = 'inline-block';
-      guideImage.src = target.file;
 
-      resetZoom();
+      // Komşu sayfaları önceden belleğe al (Preload)
+      if (index + 1 < list.length) {
+        const nextImg = new Image();
+        nextImg.src = list[index + 1].file;
+      }
+      if (index - 1 >= 0) {
+        const prevImg = new Image();
+        prevImg.src = list[index - 1].file;
+      }
 
-      // Görsel yüklenemezse alternatif dosya isimlendirmelerini dene (örn: page_1.jpg veya 01.jpg)
       guideImage.onerror = () => {
-        const padNum = String(target.page).padStart(2, '0');
-        const alt1 = currentMode === 'pages' 
-          ? `${BASE_PAGES_DIR}page_${target.page}.jpg` 
-          : `${BASE_INDEX_DIR}page_${target.page}.jpg`;
-        const alt2 = currentMode === 'pages'
-          ? `${BASE_PAGES_DIR}${padNum}.jpg`
-          : `${BASE_INDEX_DIR}${padNum}.jpg`;
-
-        if (guideImage.src.endsWith(target.file)) {
-          guideImage.src = alt1;
-        } else if (guideImage.src.endsWith(alt1)) {
-          guideImage.src = alt2;
-        } else {
-          bookWrapper.style.display = 'none';
-          statusState.style.display = 'block';
-          statusState.innerHTML = `
-            <strong style="color: #ef4444;">Görsel Bulunamadı</strong><br>
-            Aranan Yol: <code>${target.file}</code><br><br>
-            <small style="color: var(--text-muted);">Lütfen klasör adının <code>periyodikassets/pages/</code> ve görsellerin <code>1.jpg</code> formatında olduğunu kontrol edin.</small>
-          `;
-        }
+        bookWrapper.style.display = 'none';
+        statusState.style.display = 'block';
+        statusState.innerHTML = `<strong style="color: #f87171;">Görsel Bulunamadı:</strong><br><code style="font-size: 0.8rem;">${fullImgPath}</code>`;
       };
     }
 
-    // Buton Gezinmeleri
-    prevBtn.addEventListener('click', () => selectItem(currentIndex - 1));
-    nextBtn.addEventListener('click', () => selectItem(currentIndex + 1));
+    // Gezinme Butonları
+    prevBtn.addEventListener('click', () => selectItem(currentIndex - 1, 'prev', currentSource));
+    nextBtn.addEventListener('click', () => selectItem(currentIndex + 1, 'next', currentSource));
+    fsPrev.addEventListener('click', () => selectItem(currentIndex - 1, 'prev', currentSource));
+    fsNext.addEventListener('click', () => selectItem(currentIndex + 1, 'next', currentSource));
 
-    // Arama
-    searchInput.addEventListener('input', (e) => {
-      const term = e.target.value.toLowerCase().trim();
+    // Sayfa Numarası Girişi
+    pageInput.addEventListener('change', (e) => {
       const list = getActiveList();
-      if (!term) {
-        renderMenu(list);
-        return;
+      const val = parseInt(e.target.value, 10);
+      if (!isNaN(val) && val >= 1 && val <= list.length) {
+        const targetIdx = val - 1;
+        const dir = targetIdx > currentIndex ? 'next' : (targetIdx < currentIndex ? 'prev' : false);
+        selectItem(targetIdx, dir, currentSource);
+      } else {
+        pageInput.value = currentIndex + 1;
       }
-      const filtered = list.filter(item => 
-        item.title.toLowerCase().includes(term) ||
-        item.text.toLowerCase().includes(term) ||
-        item.page.toString().includes(term)
-      );
-      renderMenu(filtered);
     });
 
-    // Zoom & Pan
-    function applyZoom() {
-      bookStage.style.transform = `translate3d(${zoomPosX}px, ${zoomPosY}px, 0) scale(${zoomScale})`;
-    }
-
-    function resetZoom() {
-      zoomScale = 1;
-      zoomPosX = 0;
-      zoomPosY = 0;
-      bookStage.style.transition = 'none';
-      applyZoom();
-    }
-
-    // Çift tıklama / Dokunma ile Yakınlaştırma
-    canvasContainer.addEventListener('click', (e) => {
-      const now = Date.now();
-      if (now - lastTapTime < 300) {
-        if (zoomScale > 1.2) {
-          resetZoom();
-        } else {
-          zoomScale = 2.4;
-          bookStage.style.transition = 'transform 0.25s ease';
-          applyZoom();
-        }
-        lastTapTime = 0;
-        return;
+    // Tam Ekran Fonksiyonu
+    function toggleFullscreen() {
+      const list = getActiveList();
+      isFullscreen = !isFullscreen;
+      document.body.classList.toggle('fs-mode', isFullscreen);
+      if (isFullscreen) {
+        fsCounter.textContent = `${currentIndex + 1} / ${list.length}`;
+        fsPrev.disabled = currentIndex === 0;
+        fsNext.disabled = currentIndex === list.length - 1;
       }
-      lastTapTime = now;
-    });
+    }
 
-    // Klavye Yön Tuşları
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fsClose.addEventListener('click', toggleFullscreen);
+
+    // Klavye Kısayolları
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT') return;
-      if (e.key === 'ArrowLeft') { e.preventDefault(); selectItem(currentIndex - 1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); selectItem(currentIndex + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); selectItem(currentIndex - 1, 'prev', currentSource); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); selectItem(currentIndex + 1, 'next', currentSource); }
+      if (e.key === 'Escape') {
+        if (isFullscreen) toggleFullscreen();
+        else toggleDrawer(false);
+      }
+      if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      }
     });
 
-    // Başlat
-    initializeData();
+    // ─── Mobil Pinch to Zoom, Pan & Swipe Event Dinleyicileri ───
+    canvasContainer.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        isPinching = true;
+        isPanning = false;
+        initialPinchDist = getDistance(e.touches[0], e.touches[1]);
+        initialPinchScale = zoomScale;
+      } else if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+
+        if (zoomScale > 1.05) {
+          isPanning = true;
+          panStartX = touch.clientX - zoomPosX;
+          panStartY = touch.clientY - zoomPosY;
+        } else {
+          isPanning = false;
+        }
+
+        // Çift Dokunma (Double Tap) ile Yakınlaştırma
+        const now = Date.now();
+        if (now - lastTapTime < 300) {
+          if (zoomScale > 1.2) {
+            resetZoom(true);
+          } else {
+            zoomScale = 2.5;
+            const containerRect = canvasContainer.getBoundingClientRect();
+            const tapX = touch.clientX - containerRect.left - containerRect.width / 2;
+            const tapY = touch.clientY - containerRect.top - containerRect.height / 2;
+            zoomPosX = -tapX * 1.2;
+            zoomPosY = -tapY * 1.2;
+            clampPan();
+            applyZoomTransform(true);
+          }
+          lastTapTime = 0;
+          return;
+        }
+        lastTapTime = now;
+      }
+    }, { passive: false });
+
+    canvasContainer.addEventListener('touchmove', (e) => {
+      if (isPinching && e.touches.length === 2) {
+        e.preventDefault();
+        const dist = getDistance(e.touches[0], e.touches[1]);
+        if (initialPinchDist > 0) {
+          const rawScale = initialPinchScale * (dist / initialPinchDist);
+          zoomScale = Math.min(Math.max(rawScale, 1), 4.5);
+          clampPan();
+          applyZoomTransform(false);
+        }
+      } else if (isPanning && e.touches.length === 1 && zoomScale > 1.05) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        zoomPosX = touch.clientX - panStartX;
+        zoomPosY = touch.clientY - panStartY;
+        clampPan();
+        applyZoomTransform(false);
+      }
+    }, { passive: false });
+
+    canvasContainer.addEventListener('touchend', (e) => {
+      if (isPinching && e.touches.length < 2) {
+        isPinching = false;
+        if (zoomScale < 1.05) {
+          resetZoom(true);
+        } else {
+          clampPan();
+          applyZoomTransform(true);
+        }
+      } else if (e.touches.length === 0) {
+        if (isPanning) {
+          isPanning = false;
+          clampPan();
+          applyZoomTransform(true);
+        } else if (zoomScale <= 1.05) {
+          // Sayfa Çevirme (Swipe)
+          const touchEndX = e.changedTouches[0].clientX;
+          const touchEndY = e.changedTouches[0].clientY;
+          const diffX = touchEndX - touchStartX;
+          const diffY = touchEndY - touchStartY;
+
+          if (Math.abs(diffX) > Math.abs(diffY) * 1.4 && Math.abs(diffX) > 45) {
+            if (diffX < 0) {
+              selectItem(currentIndex + 1, 'next', currentSource);
+            } else {
+              selectItem(currentIndex - 1, 'prev', currentSource);
+            }
+          }
+        }
+      }
+    }, { passive: true });
+
+    // Masaüstü Touchpad / Mouse Wheel Zoom
+    canvasContainer.addEventListener('wheel', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const zoomDelta = e.deltaY * -0.01;
+        const newScale = Math.min(Math.max(zoomScale + zoomDelta, 1), 4.5);
+        if (newScale !== zoomScale) {
+          zoomScale = newScale;
+          if (zoomScale <= 1.02) {
+            resetZoom(true);
+          } else {
+            clampPan();
+            applyZoomTransform(false);
+          }
+        }
+      }
+    }, { passive: false });
+
+    init();
   </script>
 </body>
 </html>
