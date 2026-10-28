@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHEF Mobil Yayında</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --accent-cyan: #38bdf8;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 100%);
+      color: var(--text-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 20px;
+      overflow-x: hidden;
+    }
+
+    .header-area {
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-wrapper {
+      background-color: #ffffff;
+      padding: 12px;
+      border-radius: 24px;
+      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .header-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-bottom: 12px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-cyan);
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cards-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 36px;
+      width: 100%;
+      max-width: 950px;
+    }
+
+    .store-card {
+      flex: 1;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .store-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .card-header svg {
+      width: 28px;
+      height: 28px;
+      fill: #ffffff;
+    }
+
+    .card-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .qr-container {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 20px;
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.2);
+      margin-bottom: 20px;
+      width: 232px;
+      height: 232px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .qr-container img {
+      width: 200px;
+      height: 200px;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .action-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      text-align: center;
+    }
+
+    .sub-action-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .cards-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+      .store-card {
+        width: 100%;
+        max-width: 380px;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-area">
+    <div class="logo-wrapper">
+      <img 
+        class="header-logo" 
+        src="https://raw.githubusercontent.com/feroxx/feroxx.github.io/main/ahef-logo.png" 
+        alt="AHEF Logosu" 
+      />
+    </div>
+    
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Resmi Mobil Uygulama
+    </div>
+    
+    <h1>AHEF Mobil <span>Yayında</span></h1>
+  </div>
+
+  <div class="cards-wrapper">
+    <!-- Sol Kart: Apple App Store -->
+    <a id="apple-card-link" class="store-card" href="#" target="_blank" rel="noopener noreferrer">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.85-.9.04-2 .6-2.65 1.35-.56.64-.99 1.68-.86 2.69 1.01.08 2.02-.51 2.59-1.19z"/>
+        </svg>
+        <h2>App Store</h2>
+      </div>
+
+      <div class="qr-container">
+        <img id="apple-qr-img" src="" alt="App Store QR Kod" />
+      </div>
+
+      <div class="action-text">iPhone ile Okutun</div>
+      <div class="sub-action-text">iOS 14.0 ve üzeri cihazlar</div>
+    </a>
+
+    <!-- Sağ Kart: Google Play Store -->
+    <a id="google-card-link" class="store-card" href="#" target="_blank" rel="noopener noreferrer">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24">
+          <path d="M3.609 1.814L13.793 12 3.61 22.186c-.365-.365-.61-.955-.61-1.686V3.5c0-.731.245-1.321.609-1.686zM15.207 13.414l2.45 2.45-12.72 7.34 10.27-9.79zm0-2.828L4.937.796 17.657 8.136l-2.45 2.45zm1.414 1.414l3.197 1.846c.86.496.86 1.306 0 1.802l-3.197 1.846-2.222-2.222 2.222-2.272z"/>
+        </svg>
+        <h2>Google Play</h2>
+      </div>
+
+      <div class="qr-container">
+        <img id="google-qr-img" src="" alt="Google Play QR Kod" />
+      </div>
+
+      <div class="action-text">Android ile Okutun</div>
+      <div class="sub-action-text">Tüm Android cihazlar</div>
+    </a>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- KONFİGÜRASYON VE UYGULAMA MANTIĞI -->
+  <!-- ========================================== -->
+  <script>
+    /**
+     * Store bağlantılarını yalnızca aşağıdaki objeden yönetin.
+     */
+    const STORE_CONFIG = {
+      appStore: "https://apps.apple.com/tr/app/ahef-mobi-l/id6805622977",
+      playStore: "https://play.google.com/store/apps/details?id=org.ferox.ahef&hl=tr-tr"
+    };
+
+    (function initStoreLinks() {
+      const getQrApiUrl = (targetUrl) => 
+        `https://api.qrserver.com/v1/create-qr-code/?size=250x250&ecc=H&data=${encodeURIComponent(targetUrl)}`;
+
+      // App Store Entegrasyonu
+      const appleQrImg = document.getElementById("apple-qr-img");
+      const appleCardLink = document.getElementById("apple-card-link");
+      if (appleQrImg && appleCardLink) {
+        appleQrImg.src = getQrApiUrl(STORE_CONFIG.appStore);
+        appleCardLink.href = STORE_CONFIG.appStore;
+      }
+
+      // Play Store Entegrasyonu
+      const googleQrImg = document.getElementById("google-qr-img");
+      const googleCardLink = document.getElementById("google-card-link");
+      if (googleQrImg && googleCardLink) {
+        googleQrImg.src = getQrApiUrl(STORE_CONFIG.playStore);
+        googleCardLink.href = STORE_CONFIG.playStore;
+      }
+    })();
+  </script>
+
+</body>
+</html>
