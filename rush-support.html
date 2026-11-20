@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Crossroad Rush</title>
+  <style>
+    :root {
+      --bg: #0D0D0D;
+      --surface: #1A1A1A;
+      --border: #2C2C2C;
+      --text: #EAEAEA;
+      --text-muted: #9E9E9E;
+      --accent: #FFCC00;
+      --danger: #FF4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--danger));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #0D0D0D;
+      font-size: 1.1rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--surface);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #0D0D0D;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-hero {
+      border-color: rgba(255, 204, 0, 0.35);
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.08) 0%, var(--surface) 100%);
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    h3 {
+      color: var(--text);
+      font-size: 1.02rem;
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    h3:first-of-type {
+      margin-top: 0.25rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      color: #D4D4D4;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 0.75rem;
+      background: var(--accent);
+      color: #0D0D0D;
+      font-weight: 700;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .cta-btn:hover {
+      opacity: 0.9;
+      text-decoration: none;
+    }
+
+    ul {
+      margin: 0.5rem 0 0.75rem 1.25rem;
+      color: #D4D4D4;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    [data-lang="tr"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo-badge">CR</div>
+        <div>
+          <h1 data-lang="en">Support Center</h1>
+          <h1 data-lang="tr">Destek Merkezi</h1>
+          <div class="subtitle">Crossroad Rush (Crazy Intersection)</div>
+        </div>
+      </div>
+      <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('tr')">TR</button>
+      </div>
+    </header>
+
+    <!-- ENGLISH CONTENT -->
+    <div data-lang="en">
+      <div class="card contact-hero">
+        <h2>Need Help or Have Feedback?</h2>
+        <p>We're here to help you with any technical issues, bug reports, or suggestions for <strong>Crossroad Rush</strong>. We typically respond within 24–48 hours.</p>
+        <a class="cta-btn" href="mailto:frhatfrat@gmail.com?subject=Crossroad%20Rush%20Support">Email Support</a>
+      </div>
+
+      <div class="card">
+        <h2>How to Play</h2>
+        <ul>
+          <li><strong>Tap a Vehicle to Stop / Go:</strong> Tap any approaching vehicle to make it brake before the intersection. Tap it again to release.</li>
+          <li><strong>3-Second Wait Limit:</strong> Vehicles cannot stay stopped for more than 3 seconds—watch the warning bar above stopped cars!</li>
+          <li><strong>Double-Tap for Turbo Boost:</strong> Quickly double-tap a moving vehicle to boost it safely across the intersection.</li>
+          <li><strong>Emergency Vehicles:</strong> Ambulances, Police cars, and Fire trucks have priority and cannot be stopped. Clear their lane!</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Frequently Asked Questions (FAQ)</h2>
+
+        <h3>1. Why isn't my score showing on the Leaderboard?</h3>
+        <p>Make sure you are signed in to <strong>Apple Game Center</strong> (on iOS) or <strong>Google Play Games</strong> (on Android) in your device settings and have an active internet connection.</p>
+
+        <h3>2. How do I mute sound effects or background music?</h3>
+        <p>You can toggle audio directly from the top control bar on the main menu or pause screen. Your preference is saved automatically.</p>
+
+        <h3>3. How can I change the game language?</h3>
+        <p>Crossroad Rush supports 10 languages. Tap the language button on the main screen to switch languages at any time.</p>
+
+        <h3>4. How do I delete my data?</h3>
+        <p>All game progress and high scores are stored locally on your device. Uninstalling the app removes all local data immediately.</p>
+      </div>
+    </div>
+
+    <!-- TURKISH CONTENT -->
+    <div data-lang="tr">
+      <div class="card contact-hero">
+        <h2>Yardıma mı İhtiyacınız Var?</h2>
+        <p><strong>Crossroad Rush</strong> ile ilgili yaşadığınız teknik sorunlar, hata bildirimleri veya önerileriniz için bizimle iletişime geçebilirsiniz. Genellikle 24–48 saat içinde dönüş yapıyoruz.</p>
+        <a class="cta-btn" href="mailto:frhatfrat@gmail.com?subject=Crossroad%20Rush%20Destek">Destek Ekibine E-posta Gönder</a>
+      </div>
+
+      <div class="card">
+        <h2>Nasıl Oynanır?</h2>
+        <ul>
+          <li><strong>Durdur / Devam Ettir:</strong> Kavşağa yaklaşan bir aracı durdurmak için üzerine dokunun. Tekrar hareket ettirmek için yeniden dokunun.</li>
+          <li><strong>3 Saniye Bekleme Sınırı:</strong> Araçlar en fazla 3 saniye bekleyebilir; duran araçların üzerindeki süre çubuğuna dikkat edin!</li>
+          <li><strong>Turbo Hızlanma (Çift Dokunuş):</strong> Hareket halindeki bir araca hızlıca çift dokunarak kavşaktan hızla geçmesini sağlayabilirsiniz.</li>
+          <li><strong>Acil Durum Araçları:</strong> Ambulans, Polis ve İtfaiye araçları durdurulamaz. Onların geçiş üstünlüğü vardır, şeritlerini açık tutun!</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Sıkça Sorulan Sorular (SSS)</h2>
+
+        <h3>1. Skorum neden Liderlik Tablosunda görünmüyor?</h3>
+        <p>Cihaz ayarlarınızdan <strong>Apple Game Center</strong> (iOS) veya <strong>Google Play Oyunlar</strong> (Android) hesabınıza giriş yaptığınızdan ve internet bağlantınızın aktif olduğundan emin olun.</p>
+
+        <h3>2. Sesleri veya müziği nasıl kapatabilirim?</h3>
+        <p>Ana menüdeki veya oyun ekranındaki ses simgesine dokunarak ses efektlerini ve müziği istediğiniz zaman açıp kapatabilirsiniz.</p>
+
+        <h3>3. Oyun dilini nasıl değiştirebilirim?</h3>
+        <p>Crossroad Rush 10 farklı dili destekler. Ana ekrandaki dil seçiciyi kullanarak istediğiniz dili seçebilirsiniz.</p>
+
+        <h3>4. Verilerimi nasıl silebilirim?</h3>
+        <p>Oyun ilerlemeniz ve yüksek skorlarınız cihazınızda yerel olarak saklanır. Uygulamayı sildiğinizde tüm yerel veriler otomatik olarak kaldırılır.</p>
+      </div>
+    </div>
+
+    <footer>
+      &copy; 2026 Crossroad Rush. All rights reserved. &bull; <a href="privacy.html">Privacy Policy</a>
+    </footer>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      });
+      document.documentElement.lang = lang;
+    }
+  </script>
+</body>
+</html>

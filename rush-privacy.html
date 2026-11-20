@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Crossroad Rush</title>
+  <style>
+    :root {
+      --bg: #0D0D0D;
+      --surface: #1A1A1A;
+      --border: #2C2C2C;
+      --text: #EAEAEA;
+      --text-muted: #9E9E9E;
+      --accent: #FFCC00;
+      --danger: #FF4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--danger));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #0D0D0D;
+      font-size: 1.1rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--surface);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #0D0D0D;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin-bottom: 0.85rem;
+      color: #D4D4D4;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul {
+      margin: 0.5rem 0 0.85rem 1.25rem;
+      color: #D4D4D4;
+    }
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    [data-lang="tr"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo-badge">CR</div>
+        <div>
+          <h1 data-lang="en">Privacy Policy</h1>
+          <h1 data-lang="tr">Gizlilik Politikası</h1>
+          <div class="subtitle">Crossroad Rush (Crazy Intersection)</div>
+        </div>
+      </div>
+      <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('tr')">TR</button>
+      </div>
+    </header>
+
+    <!-- ENGLISH CONTENT -->
+    <div data-lang="en">
+      <div class="card">
+        <h2>1. Overview</h2>
+        <p>This Privacy Policy explains how <strong>Crossroad Rush</strong> ("we", "our", or "the App") handles information when you use our mobile game. We respect your privacy and do not require you to create an account or provide personal information such as your name, address, or phone number to play.</p>
+        <p><strong>Effective Date:</strong> November 21, 2026</p>
+      </div>
+
+      <div class="card">
+        <h2>2. Information Collected &amp; Stored</h2>
+        <ul>
+          <li><strong>Local Game Data:</strong> High scores, sound preferences, and selected language settings are stored locally on your device and are never transmitted to our servers.</li>
+          <li><strong>Usage &amp; Analytics Data:</strong> We use <strong>Google Firebase Analytics</strong> to collect anonymous gameplay metrics (such as session duration, difficulty selected, and score events) to improve game balance and stability.</li>
+          <li><strong>Advertising Data:</strong> We use <strong>Google AdMob</strong> to display advertisements. AdMob may use device identifiers (such as Advertising ID / IDFA) and coarse location or diagnostic data in accordance with your device's privacy permissions.</li>
+          <li><strong>Game Center / Play Games:</strong> If you use leaderboards via Apple Game Center or Google Play Games Services, your score and public gamer profile are processed under Apple's or Google's respective privacy terms.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>3. Third-Party Services</h2>
+        <p>The App integrates the following third-party services, each governed by its own privacy policy:</p>
+        <ul>
+          <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Play Services &amp; AdMob Privacy Policy</a></li>
+          <li><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy and Security</a></li>
+          <li><a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple Privacy Policy (Game Center)</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>4. Children's Privacy</h2>
+        <p>We do not knowingly collect personally identifiable information from children under 13. If you are a parent or guardian and believe your child has provided personal data to us, please contact us so we can delete it promptly.</p>
+      </div>
+
+      <div class="card">
+        <h2>5. Your Choices &amp; Controls</h2>
+        <p>You can reset or limit ad tracking at any time in your device's system settings (<em>iOS: Settings &gt; Privacy &amp; Security &gt; Tracking</em> or <em>Android: Settings &gt; Google &gt; Ads</em>). Uninstalling the App deletes all locally stored game data.</p>
+      </div>
+
+      <div class="card">
+        <h2>6. Contact Us</h2>
+        <p>If you have any questions about this Privacy Policy, please visit our <a href="support.html">Support Page</a> or email us at: <a href="mailto:frhatfrat@gmail.com">frhatfrat@gmail.com</a></p>
+      </div>
+    </div>
+
+    <!-- TURKISH CONTENT -->
+    <div data-lang="tr">
+      <div class="card">
+        <h2>1. Genel Bakış</h2>
+        <p>Bu Gizlilik Politikası, <strong>Crossroad Rush</strong> ("Uygulama") mobil oyununu kullandığınızda verilerin nasıl işlendiğini açıklar. Gizliliğinize önem veriyoruz; oyunu oynamak için hesap oluşturmanız veya ad, adres, telefon numarası gibi kişisel bilgilerinizi paylaşmanız gerekmez.</p>
+        <p><strong>Yürürlük Tarihi:</strong> 21 Kasım 2026</p>
+      </div>
+
+      <div class="card">
+        <h2>2. Toplanan ve Saklanan Bilgiler</h2>
+        <ul>
+          <li><strong>Yerel Oyun Verileri:</strong> En yüksek skorlar, ses tercihleri ve dil seçimi yalnızca cihazınızda yerel olarak saklanır.</li>
+          <li><strong>Analitik Verileri:</strong> Oyun dengesini ve performansını iyileştirmek amacıyla anonim oyun istatistiklerini (oyun süresi, zorluk seviyesi, skor etkinlikleri vb.) toplamak için <strong>Google Firebase Analytics</strong> kullanılmaktadır.</li>
+          <li><strong>Reklam Verileri:</strong> Oyun içi reklam gösterimi için <strong>Google AdMob</strong> kullanılmaktadır. AdMob, cihazınızdaki izinlere bağlı olarak reklam kimliği (IDFA / AAID) ve tanı verilerini işleyebilir.</li>
+          <li><strong>Game Center / Play Games:</strong> Skor tablosu özelliklerini kullandığınızda, skorunuz ve oyuncu profiliniz Apple veya Google'ın kendi gizlilik politikaları kapsamında işlenir.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>3. Üçüncü Taraf Hizmetleri</h2>
+        <p>Uygulamada kullanılan üçüncü taraf hizmetlerin gizlilik politikalarına aşağıdaki bağlantılardan ulaşabilirsiniz:</p>
+        <ul>
+          <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Play Hizmetleri ve AdMob Gizlilik Politikası</a></li>
+          <li><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Gizlilik ve Güvenlik</a></li>
+          <li><a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple Gizlilik Politikası (Game Center)</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>4. Çocukların Gizliliği</h2>
+        <p>13 yaşın altındaki çocuklardan bilerek kişisel bilgi toplamıyoruz. Ebeveyn veya vasi olarak çocuğunuzun kişisel veri paylaştığını düşünüyorsanız, verilerin silinmesi için bizimle iletişime geçebilirsiniz.</p>
+      </div>
+
+      <div class="card">
+        <h2>5. Kullanıcı Kontrolleri</h2>
+        <p>Cihaz ayarlarınızdan reklam takibini istediğiniz zaman sınırlandırabilir veya sıfırlayabilirsiniz. Uygulamayı cihazınızdan kaldırdığınızda tüm yerel oyun verileri silinir.</p>
+      </div>
+
+      <div class="card">
+        <h2>6. İletişim</h2>
+        <p>Gizlilik Politikamız hakkında sorularınız için <a href="support.html">Destek Sayfamızı</a> ziyaret edebilir veya bize e-posta gönderebilirsiniz: <a href="mailto:frhatfrat@gmail.com">frhatfrat@gmail.com</a></p>
+      </div>
+    </div>
+
+    <footer>
+      &copy; 2026 Crossroad Rush. All rights reserved. &bull; <a href="support.html">Support</a>
+    </footer>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+      });
+      document.documentElement.lang = lang;
+    }
+  </script>
+</body>
+</html>
